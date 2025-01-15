@@ -66,8 +66,8 @@ export const Box = styled.div`
     box-shadow: 0 0 7.64px 0 rgba(0, 0, 0, 0.25);
     border-radius: 8px;
     @media (max-width: 480px) {
-        width: 150px;
-        height: 170px;
+        width: 130px;
+        height: 150px;
     }
 `
 export const User = styled.div`
@@ -75,7 +75,7 @@ export const User = styled.div`
     background: rgba(255, 255, 255, 0.9);
     box-shadow: 0 0 7.64px 0 rgba(0, 0, 0, 0.25);
     border-radius: 8px;
-    padding: 10px;
+    padding: 6px;
 `
 export const Name = styled.h3`
     text-align: center;
@@ -89,18 +89,24 @@ export const JobBox = styled.div`
 `
 export const Job = styled.h3`
     color: #797979;
+    @media (max-width: 480px) {
+        font-size: 12px;
+    }
 `
 export const Git = styled.a`
     color: #4970FB;
     cursor: pointer;
     text-decoration-line: none;
     font-size: 18px;
+    @media (max-width: 480px) {
+        font-size: 10px;
+    }
 `
 export const UnBox = styled.div`
     width: 250px;
     height: 270px;
     @media (max-width: 480px) {
-        width: 140px;
-        height: 160px;
+        width: 130px;
+        height: 150px;
     }
 `
