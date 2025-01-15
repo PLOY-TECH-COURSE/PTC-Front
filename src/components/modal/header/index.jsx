@@ -45,6 +45,7 @@ export const Black = styled.div`
     align-items: center;
     justify-content: flex-end;
     background: rgb(0,0,0,0.4);
+    z-index: 10;
 `
 export const Box = styled.main`
     width: 200px;
