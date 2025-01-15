@@ -96,7 +96,7 @@ export const Box = styled.div`
     align-items: center;
     position: relative;
     @media (max-width: 480px) {
-        gap: 50px;
+        gap: 40px;
         width: 100%;
     }
     

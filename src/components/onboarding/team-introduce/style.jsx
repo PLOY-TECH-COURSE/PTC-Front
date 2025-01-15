@@ -44,6 +44,9 @@ export const Main = styled.main`
     justify-content: space-between;
     gap: 30px;
     align-items: center;
+    @media (max-width: 480px) {
+        gap: 5px;
+    }
 `
 export const NavText = styled.h1`
     font-size: 24px;
