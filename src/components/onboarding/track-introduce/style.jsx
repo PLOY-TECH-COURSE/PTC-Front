@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, {keyframes} from "styled-components";
 
 export const TrackIntroduce = styled.div`
     display: flex;
@@ -48,7 +48,7 @@ export const BlueText = styled.h3`
 `
 export const Article = styled.article`
     width: 200px;
-    background: #D9D9D9;
+    background: #f1f1f1;
     display: flex;
     justify-content: center;
     align-items: center;

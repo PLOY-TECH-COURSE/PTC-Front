@@ -5,13 +5,7 @@ import TrackIntroduce from "../../components/onboarding/track-introduce/index.js
 import TeamIntroduce from "../../components/onboarding/team-introduce/index.jsx";
 
 const Main = () => {
-    // Fullpage 스크롤을 적용할 섹션들의 내용을 배열로 정의합니다.
-    const sections = [
-        { component: <First /> },
-        { component: <PTCIntroduce /> },
-        { component: <TrackIntroduce /> },
-        {component: <TeamIntroduce />}
-    ];
+
     // SectionsContainer에 사용할 options 설정을 정의합니다.
     const options = {
         sectionClassName: 'section', // 각 섹션에 적용될 클래스 이름을 설정합니다.
@@ -22,6 +16,15 @@ const Main = () => {
         sectionPaddingTop: '0', // 각 섹션의 상단 여백을 설정합니다.
         sectionPaddingBottom: '0', // 각 섹션의 하단 여백을 설정합니다.
     };
+
+    // Fullpage 스크롤을 적용할 섹션들의 내용을 배열로 정의합니다.
+    const sections = [
+        { component: <First /> },
+        { component: <PTCIntroduce /> },
+        { component: <TrackIntroduce /> },
+        {component: <TeamIntroduce />}
+    ];
+
     return (
         <div>
             <SectionsContainer {...options}>

@@ -1,8 +1,7 @@
 import * as S from "./style.jsx";
 import Header from '../../header/index.jsx'
 import Logo from '../../../assets/Logo.svg';
-import Beautiful from '../../../assets/butiful.svg';
-import Laptop from '../../../assets/laptop.svg';
+import Icon from '../../../assets/main.svg'
 
 export default function Index(){
     return(
@@ -20,8 +19,7 @@ export default function Index(){
                         <S.Btn onClick={()=>alert('아직 준비중입니다')}>신청하기</S.Btn>
                     </S.Description>
                     <S.ImgBox>
-                        <S.Img src={Beautiful} alt={'woman'} width={560}/>
-                        <S.LapTop src={Laptop} alt={'laptopIcon'} width={280}/>
+                        <S.Img src={Icon} alt={'woman'} width={560}/>
                     </S.ImgBox>
                 </S.Section>
             </S.Wrap>

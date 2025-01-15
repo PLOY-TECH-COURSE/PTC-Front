@@ -90,9 +90,11 @@ export const JobBox = styled.div`
 export const Job = styled.h3`
     color: #797979;
 `
-export const Git = styled.h3`
+export const Git = styled.a`
     color: #4970FB;
     cursor: pointer;
+    text-decoration-line: none;
+    font-size: 18px;
 `
 export const UnBox = styled.div`
     width: 250px;
