@@ -3,6 +3,7 @@ import LogoIcon from '../../../assets/onboarding/introduce/Group 8782.svg';
 import Skill1 from '../../../assets/onboarding/introduce/skill1.svg';
 import Skill2 from '../../../assets/onboarding/introduce/skill2.svg';
 import Skill3 from '../../../assets/onboarding/introduce/skill3.svg';
+import {SkillImg} from "./style.jsx";
 
 export default function PTCIntroduce(){
     const Skills = [
@@ -26,7 +27,7 @@ export default function PTCIntroduce(){
                         {Skills.map((item, index)=>{
                             return(
                                 <S.SkillBox key={index}>
-                                    <img src={item.src} width={70} alt={'skillIcon'} />
+                                    <S.SkillImg src={item.src} alt={'skillIcon'} />
                                     <S.BlueText2>{item.name}</S.BlueText2>
                                     <S.Text dangerouslySetInnerHTML={{ __html: item.des }} />
                                 </S.SkillBox>

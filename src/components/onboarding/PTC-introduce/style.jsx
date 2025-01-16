@@ -48,8 +48,8 @@ export const Main = styled.main`
     gap:50px;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25);
     @media (max-width: 480px) {
-        gap: 25px;
-        padding: 6%;
+        gap: 20px;
+        padding: 10%;
     }
 `
 export const Section = styled.section`
@@ -74,12 +74,21 @@ export const Skill = styled.section`
 export const BlueText = styled.h3`
     color: #4970FB;
     font-size: 20px;
+    @media (max-width: 480px) {
+        font-size: 16px;
+    }
+`
+export const SkillImg = styled.img`
+    width: 70px;
+    @media (max-width: 480px) {
+        width: 50px;
+    }
 `
 export const BlueText2 = styled.h3`
     color: #4970FB;
     font-size: 26px;
     @media (max-width: 480px) {
-        font-size: 22px;
+        font-size: 18px;
     }
 `
 export const Text = styled.p`
@@ -87,13 +96,13 @@ export const Text = styled.p`
     font-size: 22px;
     font-weight: 550;
     @media (max-width: 480px) {
-        font-size: 18px;
+        font-size: 14px;
     }
 `
 export const Title = styled.h2`
     font-size: 32px;
     @media (max-width: 480px) {
-        font-size: 20px;
+        font-size: 18px;
     }
 `
 export const SkillBox = styled.div`
@@ -104,5 +113,6 @@ export const SkillBox = styled.div`
     justify-content: start;
     @media (max-width: 480px) {
         width: 90%;
+        gap: 10px;
     }
 `

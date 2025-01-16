@@ -19,7 +19,7 @@ export default function Index(){
                         <S.Btn onClick={()=>alert('아직 준비중입니다')}>신청하기</S.Btn>
                     </S.Description>
                     <S.ImgBox>
-                        <S.Img src={Icon} alt={'woman'} width={560}/>
+                        <S.Img src={Icon} alt={'Icon'} width={560}/>
                     </S.ImgBox>
                 </S.Section>
             </S.Wrap>

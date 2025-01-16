@@ -17,7 +17,7 @@ export const Wrap = styled.div`
     padding: 3% 10%;
     gap: 4px;
     @media (max-width: 480px) {
-        padding: 3% 6%;
+        padding: 6% 10%;
     }
 `;
 export const BlueText = styled.h3`
@@ -69,8 +69,8 @@ export const Box = styled.div`
     box-shadow: 0 0 7.64px 0 rgba(0, 0, 0, 0.25);
     border-radius: 8px;
     @media (max-width: 480px) {
-        width: 130px;
-        height: 150px;
+        width: 120px;
+        height: 140px;
     }
 `
 export const User = styled.div`
@@ -109,7 +109,7 @@ export const UnBox = styled.div`
     width: 250px;
     height: 270px;
     @media (max-width: 480px) {
-        width: 130px;
-        height: 150px;
+        width: 120px;
+        height: 140px;
     }
 `
