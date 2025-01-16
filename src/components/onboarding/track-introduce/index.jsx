@@ -1,14 +1,14 @@
 import * as S from './style.jsx';
-import Git from '../../../assets/github.svg';
-import HTML from '../../../assets/html.svg';
-import CSS from '../../../assets/css.svg';
-import JS from '../../../assets/javascript.svg';
-import Algorithm from '../../../assets/algorizm.svg';
-import Server from '../../../assets/server.svg';
-import Bg from '../../../assets/bg.svg';
+import Git from '../../../assets/onboarding/track-introduce/github.svg';
+import HTML from '../../../assets/onboarding/track-introduce/html.svg';
+import CSS from '../../../assets/onboarding/track-introduce/css.svg';
+import JS from '../../../assets/onboarding/track-introduce/javascript.svg';
+import Algorithm from '../../../assets/onboarding/track-introduce/algorizm.svg';
+import Server from '../../../assets/onboarding/track-introduce/server.svg';
+import Bg from '../../../assets/onboarding/track-introduce/bg.svg';
 import {useEffect, useState} from "react";
 import ModalOnboarding from "../../modal/onboarding/index.jsx";
-import Bg2 from '../../../assets/bg2.svg';
+import Bg2 from '../../../assets/onboarding/track-introduce/bg2.svg';
 
 export default function TrackIntroduce(){
     const [isModal, setIsModal] = useState(false);

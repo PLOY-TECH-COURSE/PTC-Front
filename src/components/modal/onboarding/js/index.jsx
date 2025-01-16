@@ -1,5 +1,5 @@
 import * as S from '../style.jsx';
-import JSIcon from '../../../../assets/javascript.svg'
+import JSIcon from '../../../../assets/onboarding/track-introduce/javascript.svg'
 
 export default function JS(){
     return(

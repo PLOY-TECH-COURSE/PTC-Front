@@ -1,5 +1,5 @@
 import * as S from '../style.jsx';
-import HTMLIcon from '../../../../assets/html.svg'
+import HTMLIcon from '../../../../assets/onboarding/track-introduce/html.svg'
 
 export default function Html(){
     return(

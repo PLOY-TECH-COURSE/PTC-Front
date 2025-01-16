@@ -1,5 +1,5 @@
 import styled, {keyframes} from 'styled-components';
-import X from '../../../assets/xmark.svg'
+import X from '../../../assets/header/xmark.svg'
 
 export default function HeaderModal({setIsModal, isModal}){
     return(
