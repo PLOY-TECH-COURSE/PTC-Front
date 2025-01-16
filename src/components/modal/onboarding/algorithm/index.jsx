@@ -1,5 +1,5 @@
 import * as S from '../style.jsx';
-import AlgorithmIcon from '../../../../assets/algorizm.svg'
+import AlgorithmIcon from '../../../../assets/onboarding/track-introduce/algorizm.svg'
 
 export default function Algorithm(){
     return(

@@ -1,6 +1,6 @@
 import * as S from '../style.jsx';
-import GitImg from '../../../../assets/github.svg'
-import Record from '../../../../assets/skill2.svg';
+import GitImg from '../../../../assets/onboarding/track-introduce/github.svg'
+import Record from '../../../../assets/onboarding/introduce/skill2.svg';
 
 export default function Git(){
     return(

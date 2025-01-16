@@ -1,6 +1,6 @@
 import * as S from '../style.jsx';
-import Node from '../../../../assets/node.svg'
-import Mongo from '../../../../assets/mongo.svg';
+import Node from '../../../../assets/onboarding/track-introduce/node.svg'
+import Mongo from '../../../../assets/onboarding/track-introduce/mongo.svg';
 
 export default function Server(){
     return(

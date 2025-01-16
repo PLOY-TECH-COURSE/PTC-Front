@@ -1,8 +1,8 @@
 import * as S from "./style.jsx";
-import LogoIcon from '../../../assets/Group 8782.svg';
-import Skill1 from '../../../assets/skill1.svg';
-import Skill2 from '../../../assets/skill2.svg';
-import Skill3 from '../../../assets/skill3.svg';
+import LogoIcon from '../../../assets/onboarding/introduce/Group 8782.svg';
+import Skill1 from '../../../assets/onboarding/introduce/skill1.svg';
+import Skill2 from '../../../assets/onboarding/introduce/skill2.svg';
+import Skill3 from '../../../assets/onboarding/introduce/skill3.svg';
 
 export default function PTCIntroduce(){
     const Skills = [

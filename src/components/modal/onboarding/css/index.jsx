@@ -1,5 +1,5 @@
 import * as S from '../style.jsx';
-import CSSIcon from '../../../../assets/css.svg'
+import CSSIcon from '../../../../assets/onboarding/track-introduce/css.svg'
 
 export default function Css(){
     return(
