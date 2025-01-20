@@ -32,12 +32,18 @@ export const ApTitle = styled.div`
 export const ApMForm = styled.div`
 	display : flex;
 	flex-direction : column;
+	.warning{
+		color : red;
+		position : absolute;
+		bottom : -20px;
+	}
 `;
 export const ApField = styled.fieldset`
 	border : 1px solid #7C7C7C;
 	border-radius: 10px;
 	padding : 12px;
-	margin-bottom : 12px;
+	margin-bottom : 20px;
+	position : relative;
 	legend{
 		margin-left : 12px;
 		padding : 2px;
@@ -51,9 +57,6 @@ export const ApField = styled.fieldset`
 	textarea:focus {
 		outline: none;
 	}	
-	.warning{
-		color : red;
-	}
 `;
 
 export const ApBtn = styled.button`

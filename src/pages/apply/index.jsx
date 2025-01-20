@@ -48,7 +48,7 @@ export default function Apply() {
               onChange={(e) => handleChange(e, setIntro, setIntroWarning)}
               maxLength={500}
             />
-            {introWarning && <div className="warning">500자가 최대입니다.</div>}
+						{introWarning && <div className="warning">500자가 최대입니다.</div>}
           </_.ApField>
           <_.ApField>
             <legend>다짐</legend>
@@ -57,7 +57,7 @@ export default function Apply() {
               onChange={(e) => handleChange(e, setPromise, setPromiseWarning)}
               maxLength={500}
             />
-            {promiseWarning && <div className="warning">500자가 최대입니다.</div>}
+					{promiseWarning && <div className="warning">500자가 최대입니다.</div>}
           </_.ApField>
           <_.ApBtn
             type="submit"
