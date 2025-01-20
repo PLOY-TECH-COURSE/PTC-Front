@@ -29,15 +29,17 @@ const Main = () => {
     const [isAnimation, setIsAnimation] = useState(false);
     const [isModal, setIsModal] = useRecoilState(modalAtom);
     const isModalRef = useRef(isModal);
+    const fullpageRef = useRef(null);
 
     useEffect(() => {
         isModalRef.current = isModal;
-        // 모달 상태가 변경될 때마다 스크롤을 비활성화
-        fullpage_api.setAllowScrolling(!isModal);
+        if (fullpageRef.current) {
+            fullpage_api.setAllowScrolling(!isModal);
+        }
     }, [isModal]);
 
     useEffect(() => {
-        const instance = new fullpage('#fullpage', {
+        fullpageRef.current = new fullpage('#fullpage', {
             licenseKey: 'OPEN-SOURCE-GPLV3-LICENSE',
             autoScrolling: true,
             navigation: true,
@@ -46,7 +48,7 @@ const Main = () => {
             onLeave: (origin, destination) => {
 
                 if (isModalRef.current || isScrolling) {
-                    return false; // 페이지 이동 방지
+                    return false;
                 }
 
                 setIsScrolling(true);
@@ -64,8 +66,8 @@ const Main = () => {
         });
 
         return () => {
-            if (instance) {
-                instance.destroy('all');
+            if (fullpageRef.current) {
+                fullpage_api.destroy('all');
             }
         };
     }, []);
