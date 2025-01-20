@@ -3,11 +3,12 @@ import Header from '../../header/index.jsx'
 import Logo from '../../../assets/header/Logo.svg';
 import Icon from '../../../assets/onboarding/first/main.svg'
 
-export default function Index(){
+
+export default function First(){
     return(
         <S.FirstContainer>
             <S.HeaderBox>
-                <Header />
+                <Header/>
             </S.HeaderBox>
             <S.Wrap>
                 <S.Section>
@@ -26,4 +27,3 @@ export default function Index(){
         </S.FirstContainer>
     )
 }
-

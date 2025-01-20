@@ -7,6 +7,7 @@ export const PTCContainer = styled.div`
     flex-direction: column;
     height: 100vh;
     position: relative;
+    width: 100vw;
 `;
 export const Wrap = styled.div`
     width: 100%;

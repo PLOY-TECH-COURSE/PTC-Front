@@ -1,10 +1,11 @@
 import styled, {keyframes} from 'styled-components';
 import X from '../../../assets/header/xmark.svg'
 
-export default function HeaderModal({setIsModal, isModal}){
+export default function HeaderModal({isModal, setIsModal}){
+
     return(
         <Black onClick={()=>setIsModal(false)}>
-            <Box isOpen = {isModal} onClick={(e) => e.stopPropagation()}>
+            <Box $isOpen = {isModal} onClick={(e) => e.stopPropagation()}>
                 <Img >
                     <img onClick={()=>setIsModal(false)} src={X} alt={'xicon'} />
                 </Img>
@@ -52,7 +53,7 @@ export const Box = styled.main`
     height: 100%;
     background: white;
     padding: 30px 0;
-    animation: ${({ isOpen }) => (isOpen ? slideIn : slideOut)} 0.5s ease forwards;
+    animation: ${({ $isOpen }) => ($isOpen ? slideIn : slideOut)} 0.5s ease forwards;
 `
 export const Nav = styled.div`
     width: 100%;
