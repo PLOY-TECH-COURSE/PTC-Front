@@ -5,6 +5,7 @@ export const FirstContainer = styled.div`
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    width: 100vw;
     height: 100vh;
 `;
 export const Wrap = styled.div`

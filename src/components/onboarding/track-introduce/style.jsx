@@ -1,4 +1,4 @@
-import styled, {keyframes} from "styled-components";
+import styled, {keyframes, css} from "styled-components";
 
 export const TrackIntroduce = styled.div`
     display: flex;
@@ -46,6 +46,18 @@ export const BlueText = styled.h3`
     color: #4970FB;
     font-size: 28px;
 `
+const show = keyframes`
+    0%{
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    100%{
+        opacity: 1;
+        transform: translateY(0);
+    }
+`
+
+
 export const Article = styled.article`
     width: 200px;
     background: #f1f1f1;
@@ -55,11 +67,17 @@ export const Article = styled.article`
     height: 200px;
     border-radius: 100%;
     position: relative;
+
+    animation: ${(props) =>
+            props.$isAnimation &&
+            css`
+      ${show} 1.3s ease-in-out;
+    `};
     @media (max-width: 480px) {
         width: 120px;
         height: 120px;
     }
-`
+`;
 export const Section = styled.section`
     width: 155px;
     background: white;

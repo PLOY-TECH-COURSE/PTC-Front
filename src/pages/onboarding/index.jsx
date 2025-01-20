@@ -1,40 +1,87 @@
-import { SectionsContainer, Section } from 'react-fullpage';
+import styled from "styled-components";
+import fullpage from 'fullpage.js';
 import First from "../../components/onboarding/first";
 import PTCIntroduce from "../../components/onboarding/PTC-introduce/index.jsx";
 import TrackIntroduce from "../../components/onboarding/track-introduce/index.jsx";
 import TeamIntroduce from "../../components/onboarding/team-introduce/index.jsx";
+import { useEffect, useState, useRef } from "react";
+import { useRecoilState } from "recoil";
+import { modalAtom } from "../../recoil/modalAtom.js";
+
+const FullPageWrapper = styled.div`
+    #fullpage {
+        .section {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            transition: background-color 0.5s ease;
+        }
+    }
+    .fp-watermark {
+        display: none !important;
+    }
+`;
 
 const Main = () => {
+    const [isScrolling, setIsScrolling] = useState(false);
+    const [isAnimation, setIsAnimation] = useState(false);
+    const [isModal, setIsModal] = useRecoilState(modalAtom);
+    const isModalRef = useRef(isModal);
+    const fullpageRef = useRef(null);
 
-    // SectionsContainer에 사용할 options 설정을 정의합니다.
-    const options = {
-        sectionClassName: 'section', // 각 섹션에 적용될 클래스 이름을 설정합니다.
-        anchors: ['PloyTechCourse', '소개', '트랙소개', '팀소개'], // 각 섹션의 앵커를 설정합니다.
-        scrollBar: false, // 스크롤 바를 표시할지 여부를 설정합니다.
-        navigation: false, // 페이지 내비게이션을 표시할지 여부를 설정합니다.
-        verticalAlign: false, // 섹션을 수직으로 정렬할지 여부를 설정합니다.
-        sectionPaddingTop: '0', // 각 섹션의 상단 여백을 설정합니다.
-        sectionPaddingBottom: '0', // 각 섹션의 하단 여백을 설정합니다.
-    };
+    useEffect(() => {
+        isModalRef.current = isModal;
+        if (fullpageRef.current) {
+            fullpage_api.setAllowScrolling(!isModal);
+        }
+    }, [isModal]);
 
-    // Fullpage 스크롤을 적용할 섹션들의 내용을 배열로 정의합니다.
-    const sections = [
-        { component: <First /> },
-        { component: <PTCIntroduce /> },
-        { component: <TrackIntroduce /> },
-        {component: <TeamIntroduce />}
-    ];
+    useEffect(() => {
+        fullpageRef.current = new fullpage('#fullpage', {
+            licenseKey: 'OPEN-SOURCE-GPLV3-LICENSE',
+            autoScrolling: true,
+            navigation: true,
+            credits: false,
+            anchors: ['메인', '플테코소개', '트랙소개', '팀소개'],
+            onLeave: (origin, destination) => {
+
+                if (isModalRef.current || isScrolling) {
+                    return false;
+                }
+
+                setIsScrolling(true);
+
+                if (destination.index === 2) {
+                    setIsAnimation(true);
+                } else {
+                    setIsAnimation(false);
+                }
+
+                setTimeout(() => {
+                    setIsScrolling(false);
+                }, 1000);
+            },
+        });
+
+        return () => {
+            if (fullpageRef.current) {
+                fullpage_api.destroy('all');
+            }
+        };
+    }, []);
 
     return (
-        <div>
-            <SectionsContainer {...options}>
-                {sections.map((section, index) => (
-                    <Section key={index}>
-                        {section.component}
-                    </Section>
-                ))}
-            </SectionsContainer>
-        </div>
+        <FullPageWrapper>
+            <div id={'fullpage'}>
+                <div className={'section'}><First /></div>
+                <div className={'section'}><PTCIntroduce /></div>
+                <div className={'section'}><TrackIntroduce isAnimation={isAnimation} /></div>
+                <div className={'section'}><TeamIntroduce /></div>
+            </div>
+        </FullPageWrapper>
     );
 };
+
 export default Main;

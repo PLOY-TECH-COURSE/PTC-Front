@@ -11,7 +11,7 @@ export default function Algorithm(){
                     <h1>정렬 알고리즘</h1>
                 </S.ContentName>
                 <S.Content>
-                    <S.Text>네임 컨벤션, 자료형 등등을 알려드려요</S.Text>
+                    <S.Text>요소들을 정렬시키는 알고리즘을 알려드려요</S.Text>
                     <S.Text>버블정렬, 선택정렬, 삽입정렬 등<br/>
                         정렬에대해서 알려드려요</S.Text>
                 </S.Content>
