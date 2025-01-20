@@ -9,9 +9,16 @@ import Bg from '../../../assets/onboarding/track-introduce/bg.svg';
 import {useEffect, useState} from "react";
 import ModalOnboarding from "../../modal/onboarding/index.jsx";
 import Bg2 from '../../../assets/onboarding/track-introduce/bg2.svg';
+import PropTypes from 'prop-types';
+import {useRecoilState} from "recoil";
+import {modalAtom} from "../../../recoil/modalAtom.js";
 
-export default function TrackIntroduce(){
-    const [isModal, setIsModal] = useState(false);
+TrackIntroduce.propTypes = {
+    isAnimation: PropTypes.bool.isRequired,
+};
+
+export default function TrackIntroduce({isAnimation}){
+    const [isModal, setIsModal] = useRecoilState(modalAtom);
     const [num, setNum] = useState(null);
     const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 480);
 
@@ -83,7 +90,7 @@ export default function TrackIntroduce(){
                 <S.Box>
                     {currentData.map((item)=>{
                         return(
-                            <S.Article key={item.id}>
+                            <S.Article $isAnimation = {isAnimation} key={item.id}>
                                 <S.UnderText>{item.text}</S.UnderText>
                                 <S.Section onClick={()=>modal(item.id)}>
                                     <S.Icon src={item.src} alt={item.alt} $width={item.width} $width2={item.width2}/>
@@ -96,3 +103,4 @@ export default function TrackIntroduce(){
         </S.TrackIntroduce>
     )
 }
+

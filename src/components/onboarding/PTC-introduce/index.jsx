@@ -3,7 +3,6 @@ import LogoIcon from '../../../assets/onboarding/introduce/Group 8782.svg';
 import Skill1 from '../../../assets/onboarding/introduce/skill1.svg';
 import Skill2 from '../../../assets/onboarding/introduce/skill2.svg';
 import Skill3 from '../../../assets/onboarding/introduce/skill3.svg';
-import {SkillImg} from "./style.jsx";
 
 export default function PTCIntroduce(){
     const Skills = [

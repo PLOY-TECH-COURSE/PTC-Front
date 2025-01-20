@@ -1,19 +1,20 @@
 import * as S from "./style.jsx";
 import Logo from '../../assets/header/Logo.svg';
 import Hambuger from '../../assets/header/hambuger.svg'
-import {useState} from "react";
 import HeaderModal from '../modal/header'
+import {useRecoilState} from "recoil";
+import {modalAtom} from "../../recoil/modalAtom.js";
 
 function Header() {
     function alert1() {
         alert("아직 준비되지 않음!");
-    }
-    const [nav, setNav] = useState(false);
+    }const [isModal, setIsModal] = useRecoilState(modalAtom);
+
     return (
         <S.Container>
-            {nav ? <HeaderModal isModal={nav} setIsModal={setNav}/> : null}
+            {isModal ? <HeaderModal isModal={isModal} setIsModal={setIsModal}/> : null}
             <S.LogoImg src={Logo} alt="Logo" />
-            <S.Hambuger onClick={()=>setNav(true)}>
+            <S.Hambuger onClick={()=>setIsModal(true)}>
                 <img src={Hambuger} alt={'hambuger'} width={35}/>
             </S.Hambuger>
             <S.TextBox>
