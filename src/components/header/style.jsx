@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, {keyframes, css} from "styled-components";
 
 export const Container = styled.div`
     width: 100%;
@@ -93,4 +93,75 @@ export const LoginBox = styled.div`
     display: flex;
     align-items: center;
     gap: 10px;
+`
+export const Info = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    position: relative;
+    &>p:hover{
+        color: #555;
+    }
+`
+const down = keyframes`
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(180deg);
+    }
+`
+const up = keyframes`
+    0% {
+        transform: rotate(180deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+`
+const show = keyframes`
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+`
+
+export const DownImg = styled.img`
+    animation: ${(props) =>
+            props.$isOpen && css`${down} 0.4s ease-in-out;`};
+
+    animation: ${(props) =>
+            props.$isOpen2 && css`${up} 0.4s ease-in-out;`};
+
+    ${(props) => props.$isOpen ? 'transform: rotate(180deg);' : 'transform: rotate(0deg);'}
+`;
+
+export const Dropdown =styled.div`
+    display: ${(props) => props.$isOpen ? 'block' : 'none'};
+    animation: ${show} 0.2s ease-in-out;
+    position: absolute;
+    top: 42px;
+    left: -14px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    z-index: 2;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    &>p{
+        transition: 0.2s;
+        padding: 10px 20px;
+    }
+    &>p:hover{
+        background-color: #f1f1f1;
+    }
+`
+export const Cancel = styled.div`
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: 1;
 `
