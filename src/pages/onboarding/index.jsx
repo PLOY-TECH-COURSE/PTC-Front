@@ -4,6 +4,7 @@ import First from "../../components/onboarding/first";
 import PTCIntroduce from "../../components/onboarding/PTC-introduce/index.jsx";
 import TrackIntroduce from "../../components/onboarding/track-introduce/index.jsx";
 import TeamIntroduce from "../../components/onboarding/team-introduce/index.jsx";
+import Footer from "../../components/onboarding/footer/index.jsx";
 import { useEffect, useState, useRef } from "react";
 import { useRecoilState } from "recoil";
 import { modalAtom } from "../../recoil/modalAtom.js";
@@ -44,7 +45,7 @@ const Main = () => {
             autoScrolling: true,
             navigation: true,
             credits: false,
-            anchors: ['메인', '플테코소개', '트랙소개', '팀소개'],
+            anchors: ['메인', '플테코소개', '트랙소개', '팀소개', '하단'],
             onLeave: (origin, destination) => {
 
                 if (isModalRef.current || isScrolling) {
@@ -71,7 +72,11 @@ const Main = () => {
             }
         };
     }, []);
-
+    const scrollToSection = (anchor) => {
+        if (fullpageRef) {
+            fullpageRef.current.moveTo(anchor);
+        }
+    };
     return (
         <FullPageWrapper>
             <div id={'fullpage'}>
@@ -79,6 +84,7 @@ const Main = () => {
                 <div className={'section'}><PTCIntroduce /></div>
                 <div className={'section'}><TrackIntroduce isAnimation={isAnimation} /></div>
                 <div className={'section'}><TeamIntroduce /></div>
+                <div className={'section'}><Footer change = {scrollToSection} /></div>
             </div>
         </FullPageWrapper>
     );
