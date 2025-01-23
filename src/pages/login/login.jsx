@@ -148,4 +148,8 @@ export const Text2 = styled.div`
   margin-top: 20px;
   display: flex;
   justify-content: center;
+    cursor: pointer;
+    &:hover{
+        text-decoration: underline;
+    }
 `;

@@ -16,6 +16,7 @@ export const LogoImg = styled.img`
     align-items: flex-start;
     flex-shrink: 0;
     width: 300px;
+    cursor: pointer;
 `;
 
 export const TextBox = styled.div`
@@ -54,6 +55,16 @@ export const Text = styled.p`
     color: #555;
     cursor: pointer;
     width: max-content;
+    &:hover {
+        color: #000;
+    }
+`;
+export const Text2 = styled.p`
+    padding: 0;
+    font-size: 1rem;
+    color: #555;
+    cursor: pointer;
+    width: 100%;
     &:hover {
         color: #000;
     }

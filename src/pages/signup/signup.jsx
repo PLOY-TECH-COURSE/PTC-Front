@@ -122,8 +122,13 @@ const Login = () => {
         break;
     }
   };
-  
- 
+
+  const handleEmailCode = async (e) => {
+    const isValid = await emailcode(email);
+    if (isValid) {
+      start(e);
+    }
+  };
 
   return (
     <Box11>
@@ -152,11 +157,7 @@ const Login = () => {
               />
               <Ingk
               type="button"
-              onClick={(e) => {
-                e.preventDefault();
-                start(e); 
-                emailcode(email);  
-              }}
+              onClick={(e) => handleEmailCode(e)}
             > 인증하기</Ingk>
             </Inptie>
             <Smalltext0>이메일</Smalltext0>

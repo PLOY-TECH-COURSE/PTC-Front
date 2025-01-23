@@ -9,10 +9,10 @@ export default function HeaderModal({isModal, setIsModal}){
                 <Img >
                     <img onClick={()=>setIsModal(false)} src={X} alt={'xicon'} />
                 </Img>
-                <Nav onClick={()=>alert('아직 준비중입니다!')}>로그인</Nav>
-                <Nav onClick={()=>alert('아직 준비중입니다!')}>홈</Nav>
-                <Nav onClick={()=>alert('아직 준비중입니다!')}>글목록</Nav>
-                <Nav onClick={()=>alert('아직 준비중입니다!')}>공지사항</Nav>
+                <Nav onClick={()=>alert('모바일에서는 불가능합니다!')}>로그인</Nav>
+                <Nav onClick={()=>alert('모바일에서는 불가능합니다!')}>홈</Nav>
+                <Nav onClick={()=>alert('모바일에서는 불가능합니다!')}>글목록</Nav>
+                <Nav onClick={()=>alert('모바일에서는 불가능합니다!')}>공지사항</Nav>
 
             </Box>
         </Black>
