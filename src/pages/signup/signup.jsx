@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";  
 import icon from '../../assets/Logo.svg';
-import { Link } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 import { signupData } from "../../api/signlogin";
 import { emailcode } from "../../api/signlogin";
 
 const Login = () => {
-
   const [time, setTime] = useState(600);
   const [min, setMin] = useState(Math.floor(600 / 60));
   const [sec, setSec] = useState(600 % 60);
@@ -23,7 +22,9 @@ const Login = () => {
   const [ban, setBan] = useState(1);
   const [bunho, setBunho] = useState(1);
   const [old, setold] = useState(1);
-
+  const navigate = useNavigate();
+  const pwPattern = /^(?=.*[a-zA-Z])(?=.*[~!@#$%^&*+=()-])(?=.*[0-9]).+$/;
+  
   useEffect(() => {
     if (time <= 0) {
       clearInterval(intervalId);
@@ -131,11 +132,11 @@ const Login = () => {
         <Text1>회원가입</Text1>
         <Form>
           <Inp1>
-            <Input id="name" value={name} onChange={handleInputChange} />
+            <Input id="name" placeholder={"이름을 입력해주세요"} value={name} onChange={handleInputChange} />
             <Smalltext0>이름</Smalltext0>
           </Inp1>
           <Inp1>
-            <Input id="id" value={id} onChange={handleInputChange} />
+            <Input id="id" placeholder={"아이디를 5자이상 15자이하로 입력해주세요"} value={id} onChange={handleInputChange} />
             <Smalltext0>아이디</Smalltext0>
           </Inp1>
 
@@ -145,6 +146,7 @@ const Login = () => {
                 id="email"
                 type="email"
                 value={email}
+                placeholder={"이메일을 입력해주세요"}
                 onChange={(e)=>setEmail(e.target.value)}
                 style={{ borderColor: emailValid ? "" : "red" }}
               />
@@ -155,7 +157,7 @@ const Login = () => {
                 start(e); 
                 emailcode(email);  
               }}
-            > 이메일보내기</Ingk>
+            > 인증하기</Ingk>
             </Inptie>
             <Smalltext0>이메일</Smalltext0>
           </Inp1>
@@ -174,18 +176,18 @@ const Login = () => {
           </Inp1>
 
           <Inp1>
-            <Input id="password" type="password" value={password} onChange={handleInputChange} />
+            <Input id="password" placeholder={"대문자와 소문자 하나이상, 특수문자, 숫자를 포함시켜주세요"} type="password" value={password} onChange={handleInputChange} />
             <Smalltext0>비밀번호</Smalltext0>
           </Inp1>
 
           <Inp1>
-            <Input id="confirmPassword" type="password" value={confirmPassword} onChange={handleInputChange} />
+            <Input id="confirmPassword" placeholder={"비밀번호를 다시 입력해주세요"} type="password" value={confirmPassword} onChange={handleInputChange} />
             <Smalltext0>비밀번호 확인</Smalltext0>
             {passwordError && <ErrorText>{passwordError}</ErrorText>}
           </Inp1>
 
           <Inp1>
-            <Input id="profile" type="text" value={profile} onChange={handleInputChange} />
+            <Input id="profile" placeholder={"프로필에들어갈 소개를 입력해주세요"} type="text" value={profile} onChange={handleInputChange} />
             <Smalltext0>프로필 소개</Smalltext0>
           </Inp1>
           <Tie>
@@ -220,23 +222,32 @@ const Login = () => {
             <option value="15">15번</option>
             <option value="16">16번</option>
           </Inp2>
-
-            
           </Tie>
+          <p style={{ marginTop: '20px' }}>학년반 번호가 없다면 그대로 놔두어주세요</p>
           <Button 
                 type="submit" 
                 onClick={(e) => {
-                  e.preventDefault(); 
-                  if (password !== confirmPassword) {
+                  e.preventDefault();
+                  if(!name || !id || !email || !code || !password || !confirmPassword || !profile){
+                      alert("데이터를 완성해주세요.");
+                  }
+                  else if(id.length > 15){
+                      alert("id 15자를 초과했습니다.");
+                  }
+                  else if(pwPattern.test(password) === false){
+                      alert("비밀번호에 대문자와 소문자 하나이상, 특수문자, 숫자를 포함시켜주세요");
+                  }
+                  else if (password !== confirmPassword) {
                     alert("비밀번호가 일치하지 않습니다.");
                     return;
                   }
-                  
-                  signupData(name, id, email, code, password, profile,old,ban,bunho);
+                  else {
+                    if(signupData(name, id, email, code, password, confirmPassword, profile,old,ban,bunho)) navigate('/login');
+                  }
                 }}
               >회원가입</Button>
         </Form>
-        <Link to="/login"><Text2>뒤로가기</Text2></Link>
+        <Text2 onClick={()=>navigate('/login')}>로그인</Text2>
       </Container>
     </Box11>  
   );
@@ -256,7 +267,7 @@ export const Box11 = styled.div`
   justify-content: center;
   align-items: center;
   min-height: 100vh; 
-  padding: 20px; 
+  padding: 10px 20px; 
   background-color: #f0f0f0; 
 `;
 
@@ -267,7 +278,7 @@ export const Container = styled.div`
   border-radius: 5.4px;
   background: #FFF;
   box-shadow: 0px 0px 5.4px 0px rgba(0, 0, 0, 0.25);
-  padding: 40px;
+  padding: 20px 40px;
 `;
 
 export const Img = styled.img`
@@ -303,6 +314,7 @@ export const Inp1 = styled.div`
   position: relative;
   width: 90%;
   margin: 0 auto 20px auto; 
+  padding: 2px;
 `;
 
 export const Smalltext0 = styled.label`
@@ -343,9 +355,15 @@ export const Button = styled.button`
 export const Text2 = styled.div`
   color: #000;
   font-size: 14px;
-  margin-top: 20px;
   display: flex;
   justify-content: center;
+  width: max-content;
+  margin: 0 auto;
+  margin-top: 20px;
+  cursor: pointer;
+  &:hover{
+    text-decoration-line: underline;
+  }
 `;
 
 export const Inp2 = styled.select`
@@ -369,7 +387,7 @@ export const Ingk = styled.button`
   border-radius: 4px;
   height:40px;
   width: 60px;
-  font-size: 10px;
+  font-size: 12px;
   background: #4970FB;
   margin-left: 16px;
   border: none;
