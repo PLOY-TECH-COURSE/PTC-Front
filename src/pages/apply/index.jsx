@@ -1,34 +1,47 @@
 import Header from "../../components/header";
 import Logo from '../../assets/header/Logo.svg';
 import * as _ from "./style";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 export default function Apply() {
-  const [intro, setIntro] = useState("");
-  const [promise, setPromise] = useState("");
-  const [introWarning, setIntroWarning] = useState(false);
-  const [promiseWarning, setPromiseWarning] = useState(false);
-  const isFormValid = intro.trim() !== "" && promise.trim() !== "";
+  const [formState, setFormState] = useState({
+    intro: "",
+    promise: "",
+    introWarning: false,
+    promiseWarning: false,
+  });
+  const introRef = useRef(null);
+  const promiseRef = useRef(null);
 
-  const handleChange = (e, setter, warningSetter) => {
+  const isFormValid = formState.intro.trim() !== "" && formState.promise.trim() !== "";
+
+  const handleChange = (e, field) => {
     const value = e.target.value;
-    setter(value);
-    warningSetter(value.length >= 500);
+    setFormState((prevState) => ({
+      ...prevState,
+      [field]: value,
+      [`${field}Warning`]: value.length >= 500,
+    }));
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // 기본 제출 동작 방지
-    if (!intro.trim()) {
+    e.preventDefault();
+
+    const introValue = introRef.current?.value.trim() || "";
+    const promiseValue = promiseRef.current?.value.trim() || "";
+
+    if (!introValue) {
       alert("자기소개란을 작성해주세요.");
       return;
     }
-    if (!promise.trim()) {
+    if (!promiseValue) {
       alert("다짐란을 작성해주세요.");
       return;
     }
+
     if (window.confirm("신청하시겠습니까?")) {
-      console.log("Form Submitted", { intro, promise });
-      alert("신청이 완료되었습니다."); // 예시로 신청 완료 메시지 추가
+      console.log("Form Submitted", { intro: introValue, promise: promiseValue });
+      alert("신청이 완료되었습니다.");
     }
   };
 
@@ -40,30 +53,20 @@ export default function Apply() {
       <_.ApForm>
         <_.ApImg src={Logo} alt="PLOY Tech course" />
         <_.ApTitle>테크코스 신청</_.ApTitle>
-        <_.ApMForm action="">
-          <_.ApField>
-            <legend>자기소개</legend>
-            <textarea
-              value={intro}
-              onChange={(e) => handleChange(e, setIntro, setIntroWarning)}
-              maxLength={500}
-            />
-						{introWarning && <div className="warning">500자가 최대입니다.</div>}
-          </_.ApField>
-          <_.ApField>
-            <legend>다짐</legend>
-            <textarea
-              value={promise}
-              onChange={(e) => handleChange(e, setPromise, setPromiseWarning)}
-              maxLength={500}
-            />
-					{promiseWarning && <div className="warning">500자가 최대입니다.</div>}
-          </_.ApField>
-          <_.ApBtn
-            type="submit"
-            disabled={!isFormValid}
-            onClick={handleSubmit}
-          >
+        <_.ApMForm onSubmit={handleSubmit}>
+          {["intro", "promise"].map((field) => (
+            <_.ApField key={field}>
+              <legend>{field === "intro" ? "자기소개" : "다짐"}</legend>
+              <textarea
+                value={formState[field]}
+                onChange={(e) => handleChange(e, field)}
+                maxLength={500}
+                ref={field === "intro" ? introRef : promiseRef}
+              />
+              {formState[`${field}Warning`] && <div className="warning">500자가 최대입니다.</div>}
+            </_.ApField>
+          ))}
+          <_.ApBtn type="submit" disabled={!isFormValid} onClick={handleSubmit}>
             신청하기
           </_.ApBtn>
         </_.ApMForm>

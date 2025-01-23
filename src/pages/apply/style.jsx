@@ -29,7 +29,7 @@ export const ApTitle = styled.div`
 	margin-bottom : 18px;
 `;
 
-export const ApMForm = styled.div`
+export const ApMForm = styled.form`
 	display : flex;
 	flex-direction : column;
 	.warning{
