@@ -1,6 +1,6 @@
 import * as S from "./style.jsx";
 import Header from '../../header/index.jsx'
-import Logo from '../../../assets/header/Logo.svg';
+import Logo from '../../../assets/Logo.svg';
 import Icon from '../../../assets/onboarding/first/main.svg'
 
 
