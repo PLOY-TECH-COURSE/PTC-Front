@@ -1,5 +1,4 @@
 import { createRoot } from 'react-dom/client'
-import { useNavigate } from 'react-router-dom';
 
 import {
     BrowserRouter,
@@ -11,9 +10,14 @@ import {RecoilRoot} from 'recoil';
 
 import Onboarding from './pages/onboarding/index.jsx';
 import Apply from './pages/apply/index.jsx';
+<<<<<<< HEAD
 import Proposer from './pages/proposer/index.jsx';
 import Login from './pages/login.jsx';
 import Signup from './pages/signup.jsx';
+=======
+import Login from './pages/login/login.jsx';
+import Signup from './pages/signup/signup.jsx';
+>>>>>>> origin/main
 
 createRoot(document.getElementById('root')).render(
 <RecoilRoot>

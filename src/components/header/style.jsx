@@ -53,7 +53,7 @@ export const Text = styled.p`
     font-size: 1rem;
     color: #555;
     cursor: pointer;
-
+    width: max-content;
     &:hover {
         color: #000;
     }
@@ -144,7 +144,7 @@ export const Dropdown =styled.div`
     animation: ${show} 0.2s ease-in-out;
     position: absolute;
     top: 42px;
-    left: -14px;
+    right: 0;
     background-color: #fff;
     border: 1px solid #ccc;
     z-index: 2;

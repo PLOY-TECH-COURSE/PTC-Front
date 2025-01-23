@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";  
-import icon from "../assets/Logo.svg";
-import {Link} from 'react-router-dom';
+import icon from '../../assets/Logo.svg';
+import {postLogin} from '../../api/auth.js';
+import {useNavigate} from 'react-router-dom';
 
 const Login = () => {
+
+  const [email,setemail]=useState("");
+  const [password,setPassword]=useState("");
+  
+  const navigate = useNavigate();
+
+  
   return (
     <Box11>
       <Container>
@@ -11,16 +19,37 @@ const Login = () => {
         <Text1>로그인</Text1>
         <Form>
           <Inp1>
-            <Input id="id" />
-            <Smalltext1>로그인</Smalltext1>
+            <Input
+                value={email}
+                onChange={(e)=>setemail(e.target.value)}
+            />
+            <Smalltext2>이메일</Smalltext2>
           </Inp1>
           <Inp1>
-            <Input id="password" type="password"  />
+            <Input
+                type="password"
+                value={password}
+                onChange={(e)=>setPassword(e.target.value)}
+                onKeyDown={(e)=>{
+                    if (e.key === 'Enter') {
+                        if(postLogin({email, password})){
+                            navigate('/');
+                        }
+                    }
+                }}
+            />
             <Smalltext2>비밀번호</Smalltext2>
           </Inp1>
-          <Button>로그인</Button>
+          <Button
+              type={"button"}
+              onClick={()=>{
+                  if(postLogin({email, password})) {
+                      navigate('/');
+                  }
+              }}
+          >로그인</Button>
         </Form>
-        <Link to="/signup"><Text2>회원가입</Text2></Link>
+        <Text2 onClick={()=>navigate('/signup')}>회원가입</Text2>
       </Container>
     </Box11>
   );
@@ -64,7 +93,6 @@ export const Text1 = styled.div`
   line-height: normal;
   margin-left: 25px;
   margin-top: 15px;
-  
 `;
 
 export const Form = styled.form`
@@ -78,25 +106,16 @@ export const Inp1 = styled.div`
   flex-direction: column-reverse;
   width: 90%;
   margin: 0 auto 40px auto;
+  position: relative;
 `;
 
-export const Smalltext1 = styled.label`
-  font-size: 14px;
-  margin-bottom: 5px; 
-  color: #555;
-  position: absolute;
-  left:37.5%;
-  top: 40%;
-  background-color:#FFF;
-  
-`;
 export const Smalltext2 = styled.label`
   font-size: 14px;
 
   color: #555;
   position: absolute;
-  left:37.5%;
-  top: 51.7%;
+  left:6%;
+  top: -18%;
   background-color:#FFF;
 
 `;
