@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";  
-import icon from "../../assets/Logo.svg";
+import icon from '../../assets/Logo.svg';
 import { Link } from 'react-router-dom';
-import axios from "axios";
+import { signupData } from "../../api/signlogin";
+import { emailcode } from "../../api/signlogin";
+
 const Login = () => {
-  axios.get('/signup')
+
   const [time, setTime] = useState(600);
   const [min, setMin] = useState(Math.floor(600 / 60));
   const [sec, setSec] = useState(600 % 60);
@@ -12,16 +14,15 @@ const Login = () => {
   const [intervalId, setIntervalId] = useState(null);
   const [passwordError, setPasswordError] = useState("");
   const [emailValid, setEmailValid] = useState(true);
-
-  const [formData, setFormData] = useState({
-    name: "",
-    id: "",
-    email: "",
-    code: "",
-    password: "",
-    confirmPassword: "",
-    profile: ""
-  });
+  const [name, setName] = useState("");
+  const [id, setId] = useState("");
+  const [code, setCode] = useState("");
+  const [profile, setProfile] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmpassword] = useState("");
+  const [ban, setBan] = useState(1);
+  const [bunho, setBunho] = useState(1);
+  const [old, setold] = useState(1);
 
   useEffect(() => {
     if (time <= 0) {
@@ -70,42 +71,58 @@ const Login = () => {
   };
 
   const resetForm = () => {
-    setFormData({
-      name: "",
-      id: "",
-      email: "",
-      code: "",
-      password: "",
-      confirmPassword: "",
-      profile: ""
-    });
-    setEmail("");
-    setTime(600);
-    setMin(10);
-    setSec(0);
-    setPasswordError("");
+    setId("");
+    setName("");
+    setPassword("");
+    setCode("");
+    setProfile("");
   };
-
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
+  
 
   const handleInputChange = (e) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value });
-
-    if (e.target.id === "confirmPassword") {
-      if (formData.password !== e.target.value) {
-        setPasswordError("비밀번호가 일치하지 않습니다.");
-      } else {
-        setPasswordError("");
-      }
+    const { id, value } = e.target;
+    switch (id) {
+      case "bunho":
+        setBunho((value));
+        break;
+      case "old":
+        setold((value));
+        break;
+      case "ban":
+        setBan((value));
+        break;
+      case "name":
+        setName(value);
+        break;
+      case "id":
+        setId(value);
+        break;
+      case "email":
+        setEmail(value);
+        break;
+      case "code":
+        setCode(value);
+        break;
+      case "password":
+        setPassword(value);
+        break;
+      case "confirmPassword":
+        setConfirmpassword(value);
+        if (password !== value) {
+          setPasswordError("비밀번호가 일치하지 않습니다.");
+        } else {
+          setPasswordError("");
+        }
+        break;
+      case "profile":
+        setProfile(value);
+        break;
+      default:
+        break;
     }
   };
-
-  const handleVerification = (e) => {
-    e.preventDefault();
-    alert("correct");
-  };
+  
+ 
 
   return (
     <Box11>
@@ -114,11 +131,11 @@ const Login = () => {
         <Text1>회원가입</Text1>
         <Form>
           <Inp1>
-            <Input id="name" value={formData.name} onChange={handleInputChange} />
+            <Input id="name" value={name} onChange={handleInputChange} />
             <Smalltext0>이름</Smalltext0>
           </Inp1>
           <Inp1>
-            <Input id="id" value={formData.id} onChange={handleInputChange} />
+            <Input id="id" value={id} onChange={handleInputChange} />
             <Smalltext0>아이디</Smalltext0>
           </Inp1>
 
@@ -128,45 +145,96 @@ const Login = () => {
                 id="email"
                 type="email"
                 value={email}
-                onChange={handleEmailChange}
+                onChange={(e)=>setEmail(e.target.value)}
                 style={{ borderColor: emailValid ? "" : "red" }}
               />
-              <Ingk type="button" onClick={start}>이메일보내기</Ingk>
+              <Ingk
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                start(e); 
+                emailcode(email);  
+              }}
+            > 이메일보내기</Ingk>
             </Inptie>
             <Smalltext0>이메일</Smalltext0>
           </Inp1>
 
           <Inp1>
             <Inptie>
-              <Input1
+              <Input
                 id="code"
                 type="text"
                 placeholder={`${min}:${sec}`}
-                value={formData.code}
+                value={code}
                 onChange={handleInputChange}
               />
-              <Ingk type="button" onClick={handleVerification}>인증하기</Ingk>
             </Inptie>
             <Smalltext0>이메일 인증</Smalltext0>
           </Inp1>
 
           <Inp1>
-            <Input id="password" type="password" value={formData.password} onChange={handleInputChange} />
+            <Input id="password" type="password" value={password} onChange={handleInputChange} />
             <Smalltext0>비밀번호</Smalltext0>
           </Inp1>
 
           <Inp1>
-            <Input id="confirmPassword" type="password" value={formData.confirmPassword} onChange={handleInputChange} />
+            <Input id="confirmPassword" type="password" value={confirmPassword} onChange={handleInputChange} />
             <Smalltext0>비밀번호 확인</Smalltext0>
             {passwordError && <ErrorText>{passwordError}</ErrorText>}
           </Inp1>
 
           <Inp1>
-            <Input id="profile" type="text" value={formData.profile} onChange={handleInputChange} />
+            <Input id="profile" type="text" value={profile} onChange={handleInputChange} />
             <Smalltext0>프로필 소개</Smalltext0>
           </Inp1>
+          <Tie>
+          <Inp2 name="old" value={old} onChange={(e) => setold(parseInt(e.target.value))}>
+            <option value="1">1학년</option>
+            <option value="2">2학년</option>
+            <option value="3">3학년</option>
+          </Inp2>
 
-          <Button type="submit">회원가입</Button>
+          <Inp2 name="ban" value={ban} onChange={(e) => setBan(parseInt(e.target.value))}>
+            <option value="1">1반</option>
+            <option value="2">2반</option>
+            <option value="3">3반</option>
+            <option value="4">4반</option>
+          </Inp2>
+
+          <Inp2 name="bunho" value={bunho} onChange={(e) => setBunho(parseInt(e.target.value))}>
+            <option value="1">1번</option>
+            <option value="2">2번</option>
+            <option value="3">3번</option>
+            <option value="4">4번</option>
+            <option value="5">5번</option>
+            <option value="6">6번</option>
+            <option value="7">7번</option>
+            <option value="8">8번</option>
+            <option value="9">9번</option>
+            <option value="10">10번</option>
+            <option value="11">11번</option>
+            <option value="12">12번</option>
+            <option value="13">13번</option>
+            <option value="14">14번</option>
+            <option value="15">15번</option>
+            <option value="16">16번</option>
+          </Inp2>
+
+            
+          </Tie>
+          <Button 
+                type="submit" 
+                onClick={(e) => {
+                  e.preventDefault(); 
+                  if (password !== confirmPassword) {
+                    alert("비밀번호가 일치하지 않습니다.");
+                    return;
+                  }
+                  
+                  signupData(name, id, email, code, password, profile,old,ban,bunho);
+                }}
+              >회원가입</Button>
         </Form>
         <Link to="/login"><Text2>뒤로가기</Text2></Link>
       </Container>

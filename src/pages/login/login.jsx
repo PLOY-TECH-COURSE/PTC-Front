@@ -1,14 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";  
-import icon from "../../assets/Logo.svg";
-import {Link, useNavigate} from 'react-router-dom';
+import icon from '../../assets/Logo.svg';
 import {postLogin} from '../../api/auth.js';
+import {useNavigate} from 'react-router-dom';
 
 const Login = () => {
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
 
+  const [email,setemail]=useState("");
+  const [password,setPassword]=useState("");
+  
   const navigate = useNavigate();
+
+  const login = (e) => {
+    e.preventDefault(); // 새로고침 방지
+    const formData = new FormData();
+    formData.append("email", email);
+    formData.append("password", password);
+
+    loginData(formData); // API 호출
+  };
+  
   return (
     <Box11>
       <Container>
@@ -90,7 +101,6 @@ export const Text1 = styled.div`
   line-height: normal;
   margin-left: 25px;
   margin-top: 15px;
-  
 `;
 
 export const Form = styled.form`
