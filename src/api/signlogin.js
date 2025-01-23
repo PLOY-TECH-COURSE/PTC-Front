@@ -15,7 +15,10 @@ export const signupData = async (name,id,email,code,password, confirmPassword, t
         userClass:ban,
         number:number
     });
-    return response;
+    if(response.status === 200){
+        return true;
+    }
+    return false;
   } catch (error) {
     console.error("회원가입 오류:", error);
     throw error;

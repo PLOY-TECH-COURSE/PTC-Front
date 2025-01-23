@@ -23,6 +23,7 @@ const Login = () => {
   const [bunho, setBunho] = useState(1);
   const [old, setold] = useState(1);
   const navigate = useNavigate();
+  const pwPattern = /^(?=.*[a-zA-Z])(?=.*[~!@#$%^&*+=()-])(?=.*[0-9]).+$/;
   useEffect(() => {
     if (time <= 0) {
       clearInterval(intervalId);
@@ -175,7 +176,7 @@ const Login = () => {
           </Inp1>
 
           <Inp1>
-            <Input id="password" placeholder={"비밀번호를 입력해주세요"} type="password" value={password} onChange={handleInputChange} />
+            <Input id="password" placeholder={"대문자와 소문자 하나이상, 특수문자, 숫자를 포함시켜주세요"} type="password" value={password} onChange={handleInputChange} />
             <Smalltext0>비밀번호</Smalltext0>
           </Inp1>
 
@@ -230,15 +231,19 @@ const Login = () => {
                   if(!name || !id || !email || !code || !password || !confirmPassword || !profile){
                       alert("데이터를 완성해주세요.");
                   }
-                  if(id.length > 15){
+                  else if(id.length > 15){
                       alert("id 15자를 초과했습니다.");
                   }
-                  if (password !== confirmPassword) {
+                  else if(pwPattern.test(password) === false){
+                      alert("비밀번호에 대문자와 소문자 하나이상, 특수문자, 숫자를 포함시켜주세요");
+                  }
+                  else if (password !== confirmPassword) {
                     alert("비밀번호가 일치하지 않습니다.");
                     return;
                   }
-                  signupData(name, id, email, code, password, confirmPassword, profile,old,ban,bunho);
-                  navigate('/login');
+                  else {
+                    if(signupData(name, id, email, code, password, confirmPassword, profile,old,ban,bunho)) navigate('/login');
+                  }
                 }}
               >회원가입</Button>
 
@@ -263,7 +268,7 @@ export const Box11 = styled.div`
   justify-content: center;
   align-items: center;
   min-height: 100vh; 
-  padding: 20px; 
+  padding: 10px 20px; 
   background-color: #f0f0f0; 
 `;
 
@@ -274,7 +279,7 @@ export const Container = styled.div`
   border-radius: 5.4px;
   background: #FFF;
   box-shadow: 0px 0px 5.4px 0px rgba(0, 0, 0, 0.25);
-  padding: 40px;
+  padding: 20px 40px;
 `;
 
 export const Img = styled.img`
@@ -351,9 +356,11 @@ export const Button = styled.button`
 export const Text2 = styled.div`
   color: #000;
   font-size: 14px;
-  margin-top: 20px;
   display: flex;
   justify-content: center;
+  width: max-content;
+  margin: 0 auto;
+  margin-top: 20px;
   cursor: pointer;
   &:hover{
     text-decoration-line: underline;
