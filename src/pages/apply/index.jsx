@@ -1,22 +1,7 @@
 import Header from "../../components/header";
 import Logo from '../../assets/header/Logo.svg';
 import * as _ from "./style";
-<<<<<<< Updated upstream
 import { useState } from "react";  // useState만 사용
-=======
-<<<<<<< Updated upstream
-import { useRef, useState } from "react";
-// import axios from "axios";
-
-=======
-<<<<<<< Updated upstream
-import { useState } from "react";
-=======
-import { useRef, useState } from "react";
-import axios from "axios";
->>>>>>> Stashed changes
->>>>>>> Stashed changes
->>>>>>> Stashed changes
 
 export default function Apply() {
   const [intro, setIntro] = useState("");  // 자기소개
@@ -42,12 +27,7 @@ export default function Apply() {
       return;
     }
     if (window.confirm("신청하시겠습니까?")) {
-<<<<<<< Updated upstream
       console.log("Form Submitted", { intro, promise });
-=======
-<<<<<<< Updated upstream
-      console.log("Form Submitted", { intro: introValue, promise: promiseValue });
->>>>>>> Stashed changes
       alert("신청이 완료되었습니다.");
 
       // axios.post(/* 도메인 URL */, {
@@ -60,27 +40,6 @@ export default function Apply() {
       // .catch((error) => {
       //   console.error("Error creating the entry:", error);
       // });
-=======
-<<<<<<< Updated upstream
-      console.log("Form Submitted", { intro, promise });
-      alert("신청이 완료되었습니다."); // 예시로 신청 완료 메시지 추가
-=======
-      console.log("Form Submitted", { intro: introValue, promise: promiseValue });
-      alert("신청이 완료되었습니다.");
-      axios.post(/*도메인 뭔지 몰라용..ㅠ*/, {
-          // PloyTechCourse2025, //이름
-          // ploytechcourse@gmail.com,//이메일
-          introValue, // 자기소개
-          promise,// 다짐
-    })
-    .then((response) => {
-        console.log("신청값이 제대로 넘어갔습니다...아마?",{ intro: introValue, promise: promiseValue });
-    })
-    .catch((error) => {
-        console.error("Error creating the entry:", error);
-    });
->>>>>>> Stashed changes
->>>>>>> Stashed changes
     }
   };
 
