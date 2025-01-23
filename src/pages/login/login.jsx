@@ -11,14 +11,6 @@ const Login = () => {
   
   const navigate = useNavigate();
 
-  const login = (e) => {
-    e.preventDefault(); // 새로고침 방지
-    const formData = new FormData();
-    formData.append("email", email);
-    formData.append("password", password);
-
-    loginData(formData); // API 호출
-  };
   
   return (
     <Box11>
@@ -29,7 +21,7 @@ const Login = () => {
           <Inp1>
             <Input
                 value={email}
-                onChange={(e)=>setEmail(e.target.value)}
+                onChange={(e)=>setemail(e.target.value)}
             />
             <Smalltext2>이메일</Smalltext2>
           </Inp1>

@@ -9,6 +9,7 @@ export const postLogin = async ({email, password}) =>{
         });
         if(res.status === 200){
             localStorage.setItem('accessToken', res.headers.authorization);
+            window.location.reload();
             return true;
         }
         return false;
@@ -23,6 +24,7 @@ export const logout = async () =>{
         console.log(res);
         if(res.status === 200){
             localStorage.removeItem('accessToken');
+            window.location.reload();
         }
         return res;
     }catch (err){
