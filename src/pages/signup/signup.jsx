@@ -24,6 +24,7 @@ const Login = () => {
   const [old, setold] = useState(1);
   const navigate = useNavigate();
   const pwPattern = /^(?=.*[a-zA-Z])(?=.*[~!@#$%^&*+=()-])(?=.*[0-9]).+$/;
+  
   useEffect(() => {
     if (time <= 0) {
       clearInterval(intervalId);
@@ -35,11 +36,10 @@ const Login = () => {
     }
   
     return () => {
-      if (intervalId) {
+      if (intervalId === null) {
         clearInterval(intervalId);
       }
     };
-    
   }, [time]);
   
   const start = (e) => {
@@ -123,7 +123,7 @@ const Login = () => {
     }
   };
   
-  
+ 
 
   return (
     <Box11>
@@ -246,7 +246,6 @@ const Login = () => {
                   }
                 }}
               >회원가입</Button>
-
         </Form>
         <Text2 onClick={()=>navigate('/login')}>로그인</Text2>
       </Container>

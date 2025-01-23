@@ -8,6 +8,7 @@ import Down from '../../assets/header/down.svg';
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {authAtom} from "../../recoil/authAtom.js";
+import {logout} from '../../api/auth.js';
 
 function Header() {
     function alert1() {
@@ -64,7 +65,7 @@ function Header() {
                         <S.DownImg src={Down} $isOpen = {isOpen[0]} $isOpen2 = {isOpen[1]} alt={'down'} width={18}/>
                         <S.Dropdown $isOpen = {isOpen[0]}>
                             <S.Text onClick={alert1}>내 정보</S.Text>{/* navigate('/mypage') */}
-                            <S.Text onClick={alert1}>로그아웃</S.Text>
+                            <S.Text onClick={()=>logout()}>로그아웃</S.Text>
                         </S.Dropdown>
                     </S.Info>
                 }
