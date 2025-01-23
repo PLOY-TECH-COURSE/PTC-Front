@@ -12,7 +12,7 @@ const refreshAccessToken = async () => {
     const response = await axios.post('/api/refresh', null, {
         withCredentials: true,
     });
-    return response.data.accessToken;
+    console.log(response.headers);
 };
 
 // 요청 인터셉터
@@ -35,7 +35,7 @@ axiosInstance.interceptors.response.use(
     async (error) => {
         const originalRequest = error.config;
 
-        if (error.response.status === 401 && !originalRequest._retry) {
+        if (error.response.status === 400 && !originalRequest._retry) {
             originalRequest._retry = true;
 
             try {

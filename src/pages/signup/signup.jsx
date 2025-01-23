@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";  
-import icon from "../assets/Logo.svg";
+import icon from "../../assets/Logo.svg";
 import { Link } from 'react-router-dom';
 import axios from "axios";
 const Login = () => {
