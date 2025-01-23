@@ -29,7 +29,7 @@ export default function Apply() {
     }
     if (window.confirm("신청하시겠습니까?")) {
       // console.log("Form Submitted", { intro, promise });
-      alert("신청이 완료되었습니다.");
+   
       ApplyAPI({intro,promise});
       // <ApplyAPI intro={intro} promise={promise}/>
     }
