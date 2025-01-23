@@ -1,8 +1,9 @@
 import axiosInstance from "../lib/axiosInstance.js";
 
 export const postLogin = async ({email, password}) =>{
+    console.log(email, password)
     try{
-        const res = await axiosInstance.post('http://172.21.10.82:8080/login', {
+        const res = await axiosInstance.post('/login', {
             email:email,
             password:password
         });
