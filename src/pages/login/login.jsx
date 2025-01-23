@@ -1,13 +1,14 @@
 import React from "react";
 import styled from "styled-components";  
 import icon from "../../assets/Logo.svg";
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import {postLogin} from '../../api/auth.js';
 
 const Login = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 
+  const navigate = useNavigate();
   return (
     <Box11>
       <Container>
@@ -28,7 +29,9 @@ const Login = () => {
                 onChange={(e)=>setPassword(e.target.value)}
                 onKeyDown={(e)=>{
                     if (e.key === 'Enter') {
-                        postLogin({email, password});
+                        if(postLogin({email, password})){
+                            navigate('/');
+                        }
                     }
                 }}
             />
@@ -36,10 +39,14 @@ const Login = () => {
           </Inp1>
           <Button
               type={"button"}
-              onClick={()=>postLogin({email, password})}
+              onClick={()=>{
+                  if(postLogin({email, password})) {
+                      navigate('/');
+                  }
+              }}
           >로그인</Button>
         </Form>
-        <Link to="/signup"><Text2>회원가입</Text2></Link>
+        <Text2 onClick={()=>navigate('/signup')}>회원가입</Text2>
       </Container>
     </Box11>
   );

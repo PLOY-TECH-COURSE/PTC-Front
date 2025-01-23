@@ -7,9 +7,11 @@ export const postLogin = async ({email, password}) =>{
             email:email,
             password:password
         });
-
-        console.log(res);
-        return res;
+        if(res.status === 200){
+            localStorage.setItem('accessToken', res.headers.authorization);
+            return true;
+        }
+        return false;
     }catch (err){
         console.log(err);
     }
@@ -18,6 +20,10 @@ export const postLogin = async ({email, password}) =>{
 export const logout = async () =>{
     try{
         const res = await axiosInstance.post('/logout');
+        console.log(res);
+        if(res.status === 200){
+            localStorage.removeItem('accessToken');
+        }
         return res;
     }catch (err){
         console.log(err);
