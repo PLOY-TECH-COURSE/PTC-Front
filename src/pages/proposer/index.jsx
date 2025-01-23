@@ -49,7 +49,7 @@ export default function Proposer(){
 		},
 	]
 
-	const [modal,setModal] = useState(0);
+	// const [modal,setModal] = useState(0);
 
 	return(
 		<>
