@@ -23,6 +23,7 @@ const Login = () => {
   const [ban, setBan] = useState(1);
   const [bunho, setBunho] = useState(1);
   const [old, setold] = useState(1);
+
   useEffect(() => {
     if (time <= 0) {
       clearInterval(intervalId);
@@ -34,11 +35,10 @@ const Login = () => {
     }
   
     return () => {
-      if (intervalId) {
+      if (intervalId === null) {
         clearInterval(intervalId);
       }
     };
-    
   }, [time]);
   
   const start = (e) => {
@@ -122,7 +122,7 @@ const Login = () => {
     }
   };
   
-  
+ 
 
   return (
     <Box11>
@@ -235,7 +235,6 @@ const Login = () => {
                   signupData(name, id, email, code, password, profile,old,ban,bunho);
                 }}
               >회원가입</Button>
-
         </Form>
         <Link to="/login"><Text2>뒤로가기</Text2></Link>
       </Container>
