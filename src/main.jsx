@@ -11,8 +11,8 @@ import {RecoilRoot} from 'recoil';
 
 import Onboarding from './pages/onboarding/index.jsx';
 import Apply from './pages/apply/index.jsx';
-import Login from './pages/login.jsx';
-import Signup from './pages/signup.jsx';
+import Login from './pages/login/login.jsx';
+import Signup from './pages/signup/signup.jsx';
 
 createRoot(document.getElementById('root')).render(
    <RecoilRoot>
