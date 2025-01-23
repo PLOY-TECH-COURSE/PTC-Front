@@ -64,7 +64,7 @@ export const Text2 = styled.p`
     font-size: 1rem;
     color: #555;
     cursor: pointer;
-    width: 100%;
+    width: 98px;
     &:hover {
         color: #000;
     }
