@@ -25,8 +25,9 @@ export const logout = async () =>{
         if(res.status === 200){
             localStorage.removeItem('accessToken');
             window.location.reload();
+            return true;
         }
-        return res;
+        return false;
     }catch (err){
         console.log(err);
     }

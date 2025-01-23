@@ -28,7 +28,7 @@ function Header() {
     return (
         <S.Container>
             {isModal ? <HeaderModal isModal={isModal} setIsModal={setIsModal}/> : null}
-            <S.LogoImg src={Logo} alt="Logo" />
+            <S.LogoImg onClick={()=>navigate('/')} src={Logo} alt="Logo" />
             <S.Hambuger onClick={()=>setIsModal(true)}>
                 <img src={Hambuger} alt={'hambuger'} width={35}/>
             </S.Hambuger>
@@ -64,8 +64,12 @@ function Header() {
                         <S.Text>{user.uid}</S.Text>
                         <S.DownImg src={Down} $isOpen = {isOpen[0]} $isOpen2 = {isOpen[1]} alt={'down'} width={18}/>
                         <S.Dropdown $isOpen = {isOpen[0]}>
-                            <S.Text onClick={alert1}>내 정보</S.Text>{/* navigate('/mypage') */}
-                            <S.Text onClick={()=>logout()}>로그아웃</S.Text>
+                            <S.Text2 onClick={alert1}>내 정보</S.Text2>{/* navigate('/mypage') */}
+                            <S.Text2 onClick={()=> {
+                                if(logout()){
+                                    navigate('/');
+                                }
+                            }}>로그아웃</S.Text2>
                         </S.Dropdown>
                     </S.Info>
                 }

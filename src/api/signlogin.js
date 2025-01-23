@@ -25,15 +25,21 @@ export const signupData = async (name,id,email,code,password, confirmPassword, t
   }
 };
 export const emailcode = async (email)=>{
-    console.log(email);
     try {
       const response = await axiosInstance.post('/email',{
           email:email
       });
         console.log(response);
-      return response;
+        if(response.status === 200){
+            return true;
+        }
+        else if(response.status === 400){
+            alert('이미 등록된 이메일입니다.');
+            return false;
+        }
     } catch (error) {
-      console.error("인증번호 오류:", error);
-      throw error;
+        console.log(error);
+        alert('이미 등록된 이메일입니다.');
+      return false;
     }
 }
