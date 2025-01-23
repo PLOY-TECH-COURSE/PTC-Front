@@ -1,24 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";  
-import icon from "../assets/Logo.svg";
+import icon from '../../assets/Logo.svg';
 import {Link} from 'react-router-dom';
 
 const Login = () => {
+
+  const [email,setemail]=useState("");
+  const [password,setPassword]=useState("");
+
+  const login = (e) => {
+    e.preventDefault(); // 새로고침 방지
+    const formData = new FormData();
+    formData.append("email", email);
+    formData.append("password", password);
+
+    loginData(formData); // API 호출
+  };
   return (
     <Box11>
       <Container>
         <Img src={icon} />
         <Text1>로그인</Text1>
-        <Form>
+        <Form onSubmit={login}>
           <Inp1>
-            <Input id="id" />
-            <Smalltext1>로그인</Smalltext1>
+            <Input id="id" value={email} onChange={(e)=>setemail(e.target.value)}/>
+            <Smalltext1>이메일</Smalltext1>
           </Inp1>
           <Inp1>
-            <Input id="password" type="password"  />
+            <Input id="password" type="password" value={password} onChange={(e)=>setPassword(e.target.value)}/>
             <Smalltext2>비밀번호</Smalltext2>
           </Inp1>
-          <Button>로그인</Button>
+          <Button type="submit" onClick={login}>로그인</Button>
         </Form>
         <Link to="/signup"><Text2>회원가입</Text2></Link>
       </Container>
@@ -64,7 +76,6 @@ export const Text1 = styled.div`
   line-height: normal;
   margin-left: 25px;
   margin-top: 15px;
-  
 `;
 
 export const Form = styled.form`
