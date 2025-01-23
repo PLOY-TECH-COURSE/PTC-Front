@@ -8,13 +8,15 @@ import {RecoilRoot} from 'recoil';
 
 import Onboarding from './pages/onboarding/index.jsx';
 import Apply from './pages/apply/index.jsx';
+import Proposer from './pages/proposer/index.jsx';
 
 createRoot(document.getElementById('root')).render(
-   <RecoilRoot>
+<RecoilRoot>
     <BrowserRouter>
         <Routes>
             <Route path="/" element={<Onboarding />} />
-            <Route path="/apply" element={<Apply/>} />
+            <Route path="/apply" element={<Apply/>} /> 
+            <Route path="/proposer" element={<Proposer/>} /> 
         </Routes>
     </BrowserRouter>
 </RecoilRoot>
