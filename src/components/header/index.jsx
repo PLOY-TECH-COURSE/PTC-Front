@@ -1,5 +1,5 @@
 import * as S from "./style.jsx";
-import Logo from '../../assets/header/Logo.svg';
+import Logo from '../../assets/Logo.svg';
 import Hambuger from '../../assets/header/hambuger.svg'
 import HeaderModal from '../modal/header'
 import {useRecoilState, useRecoilValue} from "recoil";
