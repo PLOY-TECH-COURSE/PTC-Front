@@ -2,7 +2,6 @@ import axiosInstance from '../lib/axiosInstance';
 
 export const signupData = async (name,id,email,code,password, confirmPassword, text, grade, ban, number) => {
   try {
-    console.log(name,id,email,code,password,text,grade,ban,number);
     const response = await axiosInstance.post('/signup', {
         uid:id,
         name: name,
@@ -20,8 +19,8 @@ export const signupData = async (name,id,email,code,password, confirmPassword, t
     }
     return false;
   } catch (error) {
-    console.error("회원가입 오류:", error);
-    throw error;
+      console.error('회원가입 오류:', error);
+      return false;
   }
 };
 export const emailcode = async (email)=>{
@@ -29,7 +28,6 @@ export const emailcode = async (email)=>{
       const response = await axiosInstance.post('/email',{
           email:email
       });
-        console.log(response);
         if(response.status === 200){
             return true;
         }
