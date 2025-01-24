@@ -41,7 +41,7 @@ export const Main = styled.main`
     height: 80%;
     display: flex;
     flex-flow: wrap row;
-    justify-content: space-between;
+    justify-content: center;
     gap: 30px;
     align-items: center;
     @media (max-width: 480px) {
