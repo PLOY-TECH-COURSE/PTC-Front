@@ -4,7 +4,7 @@ export const userBox = styled.div`
 	@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css");
 	border: 2px solid #D1D1D1;
 	border-radius: 10px;
-	width : 372px;
+	width : 380px;
 	height : 160px;
 	padding : 16px 16px;
 	display:flex;
