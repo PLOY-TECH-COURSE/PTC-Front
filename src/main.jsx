@@ -12,6 +12,7 @@ import Onboarding from './pages/onboarding/index.jsx';
 import Apply from './pages/apply/index.jsx';
 import Login from './pages/login/login.jsx';
 import Signup from './pages/signup/signup.jsx';
+import Proposer from './pages/proposer/index.jsx';
 
 createRoot(document.getElementById('root')).render(
    <RecoilRoot>
@@ -20,6 +21,7 @@ createRoot(document.getElementById('root')).render(
             <Route path="/" element={<Onboarding />} />
             <Route path="/apply" element={<Apply/>} />
             <Route path="/login" element={<Login />} />
+            <Route path="/proposer" element={<Proposer />} />
             <Route path="/signup" element={<Signup />} />
         </Routes>
     </BrowserRouter>

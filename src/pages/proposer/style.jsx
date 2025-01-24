@@ -6,7 +6,7 @@ export const ProMain = styled.div`
 	justify-content: center;
 	align-items: center;
 `;
-export const userList = styled.div`
+export const UserList = styled.div`
 	width : 100vw;
 	padding : 124px;
 	display:flex;
