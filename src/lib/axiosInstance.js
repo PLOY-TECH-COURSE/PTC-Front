@@ -5,14 +5,15 @@ const axiosInstance = axios.create({
     baseURL: '/api',
     headers:{
         'Content-Type': 'application/json'
-    }
+    },
+    withCredentials: true
 });
 
 const refreshAccessToken = async () => {
     const response = await axios.post('/api/refresh', null, {
         withCredentials: true,
     });
-    return response.data.accessToken;
+    return response.headers.authorization;
 };
 
 // 요청 인터셉터

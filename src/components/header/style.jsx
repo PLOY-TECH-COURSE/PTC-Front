@@ -16,6 +16,7 @@ export const LogoImg = styled.img`
     align-items: flex-start;
     flex-shrink: 0;
     width: 300px;
+    cursor: pointer;
 `;
 
 export const TextBox = styled.div`
@@ -53,7 +54,17 @@ export const Text = styled.p`
     font-size: 1rem;
     color: #555;
     cursor: pointer;
-
+    width: max-content;
+    &:hover {
+        color: #000;
+    }
+`;
+export const Text2 = styled.p`
+    padding: 0;
+    font-size: 1rem;
+    color: #555;
+    cursor: pointer;
+    width: 98px;
     &:hover {
         color: #000;
     }
@@ -144,7 +155,7 @@ export const Dropdown =styled.div`
     animation: ${show} 0.2s ease-in-out;
     position: absolute;
     top: 42px;
-    left: -14px;
+    right: 0;
     background-color: #fff;
     border: 1px solid #ccc;
     z-index: 2;

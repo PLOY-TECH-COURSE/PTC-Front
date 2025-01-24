@@ -1,11 +1,20 @@
 import Header from "../../components/header";
 import Logo from '../../assets/Logo.svg';
 import * as _ from "./style";
+<<<<<<< HEAD
 import { useState } from "react";  // useState만 사용
 
 export default function Apply() {
   const [intro, setIntro] = useState("");  // 자기소개
   const [promise, setPromise] = useState("");  // 다짐
+=======
+import { useState } from "react";  
+import { ApplyAPI } from "../../api/apply";
+
+export default function Apply() {
+  const [intro, setIntro] = useState("");  // 자기소개
+  const [promise, setPromise] = useState("");  
+>>>>>>> origin/main
   const [introWarning, setIntroWarning] = useState(false);  // 자기소개 경고
   const [promiseWarning, setPromiseWarning] = useState(false);  // 다짐 경고
   const isFormValid = intro.trim() !== "" && promise.trim() !== "";  // 유효성 검사
@@ -27,6 +36,7 @@ export default function Apply() {
       return;
     }
     if (window.confirm("신청하시겠습니까?")) {
+<<<<<<< HEAD
       console.log("Form Submitted", { intro, promise });
       alert("신청이 완료되었습니다.");
 
@@ -40,6 +50,12 @@ export default function Apply() {
       // .catch((error) => {
       //   console.error("Error creating the entry:", error);
       // });
+=======
+      // console.log("Form Submitted", { intro, promise });
+   
+      ApplyAPI({intro,promise});
+      // <ApplyAPI intro={intro} promise={promise}/>
+>>>>>>> origin/main
     }
   };
 
