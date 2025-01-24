@@ -30,9 +30,9 @@ const Login = () => {
                 type="password"
                 value={password}
                 onChange={(e)=>setPassword(e.target.value)}
-                onKeyDown={(e)=>{
+                onKeyDown={ async (e)=>{
                     if (e.key === 'Enter') {
-                        if(postLogin({email, password})){
+                        if(await postLogin({email, password})){
                             navigate('/');
                         }
                     }
@@ -42,8 +42,8 @@ const Login = () => {
           </Inp1>
           <Button
               type={"button"}
-              onClick={()=>{
-                  if(postLogin({email, password})) {
+              onClick={ async ()=>{
+                  if(await postLogin({email, password})) {
                       navigate('/');
                   }
               }}
