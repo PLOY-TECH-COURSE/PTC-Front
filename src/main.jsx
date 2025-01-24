@@ -8,6 +8,7 @@ import {
 
 import {RecoilRoot} from 'recoil';
 
+import Block from './components/block/index.jsx';
 import Onboarding from './pages/onboarding/index.jsx';
 import Apply from './pages/apply/index.jsx';
 import Login from './pages/login/login.jsx';
@@ -19,8 +20,8 @@ createRoot(document.getElementById('root')).render(
         <Routes>
             <Route path="/" element={<Onboarding />} />
             <Route path="/apply" element={<Apply/>} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Block><Login /></Block>} />
+            <Route path="/signup" element={<Block><Signup /></Block>} />
         </Routes>
     </BrowserRouter>
 </RecoilRoot>
