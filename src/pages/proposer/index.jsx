@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Header from "../../components/header";
 import Users from "../../components/proposer/users";
-import * as _ from "./style";
 import UserModal from "../../components/proposer/modal";
 
 export default function Proposer() {
@@ -50,7 +49,10 @@ export default function Proposer() {
     <>
       <Header />
       <_.ProMain>
-        <input type="search" placeholder="유저 아이디를 입력하세요" />
+        <_.SInput>
+          <_.SImg src={SearchImg} alt="돋보가" />
+        <_.Search type="text" placeholder="유저 아이디를 입력하세요" />
+        </_.SInput>
         <_.UserList>
           {userInfo.map((user, index) => (
             <Users onClick={() => openModal(user)} key={index} {...user} />
