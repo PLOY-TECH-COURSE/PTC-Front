@@ -35,6 +35,7 @@ const Login = () => {
                         if(await postLogin({email, password})){
                             navigate('/');
                         }
+                        else alert('이메일이나 비밀번호가 틀렸습니다.');
                     }
                 }}
             />
@@ -46,6 +47,7 @@ const Login = () => {
                   if(await postLogin({email, password})) {
                       navigate('/');
                   }
+                  else alert('이메일이나 비밀번호가 틀렸습니다.');
               }}
           >로그인</Button>
         </Form>
