@@ -4,10 +4,20 @@ export default function UserModal({ user, onClose }) {
   return (
     <_.Overlay onClick={onClose}>
       <_.Modal onClick={(e) => e.stopPropagation()} > {/*모달 내부 이벤트 방지*/}
-        <h2>{user.name}</h2>
-        <p>이메일: {user.email}</p>
-        <p>소개: {user.intro}</p>
-        <p>다짐: {user.promise}</p>
+        <_.Info>
+          <_.Name>{user.name}</_.Name>
+          <p>이메일: {user.email}</p>
+        </_.Info>
+        <_.From>
+          <_.From>
+            <_.Title>소개</_.Title>
+            <p>{user.intro}</p>
+          </_.From>
+          <_.From>
+            <_.Title>다짐</_.Title>
+            <p>{user.promise}</p>
+          </_.From>
+        </_.From>
       </_.Modal>
     </_.Overlay>
   );
