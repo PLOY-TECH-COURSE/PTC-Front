@@ -53,6 +53,23 @@ export const userEmail = styled.div`
 	color : #D1D1D1;
 `;
 
+
+export const BtnDiv = styled.div`
+	display:flex;
+	gap: 12px;
+`;
 export const userBtn = styled.button`
-	
+	padding: 8px 12px;
+	background-color: #fff;
+	border: 2px solid #D1D1D1;
+	border-radius: 24px;
+	font-size : 12px;
+	font-weight : bold;
+	color : #D1D1D1;
+	cursor : pointer;
+	&:hover{
+		background-color: #4970FB;
+		color : #fff;
+		border: 2px solid #4970FB;
+	}
 `;

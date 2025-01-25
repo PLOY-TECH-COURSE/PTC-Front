@@ -10,10 +10,10 @@ const Users = ({ onClick,img, name, email, intro, promise }) => {
 					<_.userName>{name}</_.userName>
 					<_.userEmail>{email}</_.userEmail>
 				</_.userInfo>
-				<div>
-					<button>승인</button>
-					<button>거부</button>
-				</div>
+				<_.BtnDiv>
+					<_.userBtn>승인</_.userBtn>
+					<_.userBtn>거부</_.userBtn>
+				</_.BtnDiv>
 			</_.userDesc>
 
     </_.userBox>

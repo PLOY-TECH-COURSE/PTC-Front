@@ -6,7 +6,7 @@ export const Overlay = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(108, 108, 108, 0.5); /* 반투명 #6C6C6C */
+  background-color: rgba(108, 108, 108, 0.5);
   backdrop-filter: blur(4px); /* 배경 흐림 효과 */
   z-index: 1000;
   display: flex;
