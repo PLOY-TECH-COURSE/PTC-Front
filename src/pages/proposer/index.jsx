@@ -31,9 +31,16 @@ export default function Proposer() {
 		{
       img: "",
       name: "에이치",
-      email: "htmlhate@.com",
-      intro: "자바 넘 어려워ㅓ",
-      promise: "어렵워도 이겨내겠습니다.",
+      email: "htmlhate@hi.com",
+      intro: "집에 가고 싶어요",
+      promise: "요즘 애들 너무 무섭게 생겨가지고\n 어케 잘 할 수 있을지 모르겟네요..",
+    },
+    {
+      img: "",
+      name: "씨에스",
+      email: "css1234@.byecom",
+      intro: "부산대 겨울캠프 신입생 과정에 디게 많은게 있어가지고,\n 음.. 일단 부딪혀 봐야지 과정이 젤 중요하지..",
+      promise: "그래도 염심히 살아보겠스빈다.",
     },
   ];
 

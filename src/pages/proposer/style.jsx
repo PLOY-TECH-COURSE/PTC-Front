@@ -11,8 +11,8 @@ export const UserList = styled.div`
 	padding : 8px 124px;
 	display:flex;
 	flex-wrap: wrap;
-	gap: 16px;
-	justify-content: space-between;
+	gap: 24px;
+	justify-content: start;
 	
 `;
 
