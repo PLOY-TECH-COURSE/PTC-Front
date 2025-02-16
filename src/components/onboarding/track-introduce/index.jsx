@@ -5,7 +5,7 @@ import CSS from '../../../assets/onboarding/track-introduce/css.svg';
 import JS from '../../../assets/onboarding/track-introduce/javascript.svg';
 import Algorithm from '../../../assets/onboarding/track-introduce/algorizm.svg';
 import Server from '../../../assets/onboarding/track-introduce/server.svg';
-import Bg from '../../../assets/onboarding/track-introduce/bg.svg';
+import Bg from '../../../assets/onboarding/track-introduce/bg1.svg';
 import {useEffect, useState} from "react";
 import ModalOnboarding from "../../modal/onboarding/index.jsx";
 import Bg2 from '../../../assets/onboarding/track-introduce/bg2.svg';
