@@ -51,11 +51,11 @@ export const Recent = styled.div`
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    color: ${(props) => (props.active ? "gray" : "black")};
+    color: ${(props) => (props.active ? "#D1D1D1" : "black")};
 
     button{
         border-radius: 50%;
-        background-color: ${(props) => (props.active ? "gray" : "#4970FB")};
+        background-color: ${(props) => (props.active ? "#D1D1D1" : "#4970FB")};
         width: 0.4vw;
         height: 0.7vh;
         border: none;
@@ -68,11 +68,12 @@ export const Like = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    color: ${(props) => (props.active ? "gray" : "black")};
+    cursor: pointer;
+    color: ${(props) => (props.active ? "#D1D1D1" : "black")};
 
     button{
         border-radius: 50%;
-        background-color: ${(props) => (props.active ? "gray" : "#4970FB")};
+        background-color: ${(props) => (props.active ? "#D1D1D1" : "#4970FB")};
         width: 0.4vw;
         height: 0.7vh;
         border: none;
