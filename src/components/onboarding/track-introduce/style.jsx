@@ -13,15 +13,17 @@ export const Wrap = styled.div`
     height: 100vh;
     display: flex;
     flex-flow: column  nowrap;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     position: relative;
     padding: 3% 10%;
 `;
 export const Bg = styled.img`
     position: absolute;
-    margin-top: 150px;
-    width :1300px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width :90%;
     @media (max-width: 480px) {
         margin-top: 10px;
         width :300px;
@@ -30,7 +32,10 @@ export const Bg = styled.img`
 `
 export const Title = styled.div`
     width: 100%;
-    margin-bottom: 50px;
+    position: absolute;
+    top: 8%;
+    left: 8%;
+    
     @media (max-width: 480px) {
         margin-bottom: 80px;
     }
