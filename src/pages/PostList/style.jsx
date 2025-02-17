@@ -68,7 +68,7 @@ export const Like = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    color: ${(props) => (props.active ? "gray" : "")};
+    color: ${(props) => (props.active ? "gray" : "black")};
 
     button{
         border-radius: 50%;
