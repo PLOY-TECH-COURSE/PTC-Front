@@ -34,7 +34,7 @@ function Header() {
             </S.Hambuger>
             <S.TextBox>
                 <S.SelectText>홈</S.SelectText>
-                <S.Text onClick={alert1}>글목록</S.Text>{/* navigate('/') */}
+                <S.Text onClick={()=>navigate('/postList')}>글목록</S.Text>{/* navigate('/') */}
                 <S.Text onClick={alert1}>공지사항</S.Text>{/* navigate('/') */}
                 {user.role === "ROLE_SUPERADMIN" ?
                     <S.Text onClick={alert1}>권한관리</S.Text>

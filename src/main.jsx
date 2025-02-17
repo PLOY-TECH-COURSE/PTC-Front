@@ -13,6 +13,7 @@ import Onboarding from './pages/onboarding/index.jsx';
 import Apply from './pages/apply/index.jsx';
 import Login from './pages/login/login.jsx';
 import Signup from './pages/signup/signup.jsx';
+import PostList from './pages/PostList/index.jsx';
 
 createRoot(document.getElementById('root')).render(
    <RecoilRoot>
@@ -22,6 +23,7 @@ createRoot(document.getElementById('root')).render(
             <Route path="/apply" element={<Apply/>} />
             <Route path="/login" element={<Block><Login /></Block>} />
             <Route path="/signup" element={<Block><Signup /></Block>} />
+            <Route path='/postList' element={<PostList />} />
         </Routes>
     </BrowserRouter>
 </RecoilRoot>
