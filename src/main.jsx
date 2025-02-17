@@ -14,6 +14,7 @@ import Apply from './pages/apply/index.jsx';
 import Login from './pages/login/login.jsx';
 import Signup from './pages/signup/signup.jsx';
 import PostList from './pages/PostList/index.jsx';
+import Write from './pages/write/index.jsx';
 
 createRoot(document.getElementById('root')).render(
    <RecoilRoot>

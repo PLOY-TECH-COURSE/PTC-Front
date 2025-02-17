@@ -4,7 +4,7 @@ import Hambuger from '../../assets/header/hambuger.svg'
 import HeaderModal from '../modal/header'
 import {useRecoilState, useRecoilValue} from "recoil";
 import {modalAtom} from "../../recoil/modalAtom.js";
-import Down from '../../assets/header/down.svg';
+import Down from '../../assets/down.svg';
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {authAtom} from "../../recoil/authAtom.js";
