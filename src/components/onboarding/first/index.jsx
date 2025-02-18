@@ -19,7 +19,7 @@ export default function First(){
                 <S.Section>
                     <S.Description>
                         <S.Title>신입생을 위한 선물, 플테코</S.Title>
-                        <img src={Logo} alt={"logo"} width={280} />
+                        <img src={Logo} alt={"logo"} />
                         <S.SubText>신입생을 위한 첫걸음, 개발 기초부터 협업까지</S.SubText>
                         <S.SubText>신입생 여러분이 헤매지 않도록 친절하게 알려드립니다!</S.SubText>
                         <S.Btn onClick={()=>{
