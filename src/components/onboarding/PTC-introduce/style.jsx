@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, {css, keyframes} from "styled-components";
 
 export const PTCContainer = styled.div`
     display: flex;
@@ -53,6 +53,16 @@ export const Main = styled.main`
         padding: 10%;
     }
 `
+const show = keyframes`
+    0%{
+        opacity: 0.2;
+        transform: translateY(60px);
+    }
+    100%{
+        opacity: 1;
+        transform: translateY(0);
+    }
+`
 export const Section = styled.section`
     width: 100%;
     display: flex;
@@ -75,6 +85,10 @@ export const Skill = styled.section`
 export const BlueText = styled.h3`
     color: #4970FB;
     font-size: 20px;
+    animation: ${(props) =>
+            props.$isAnimation
+                    ? css`${show} 0.6s ease-in-out`
+                    : 'none'};
     @media (max-width: 480px) {
         font-size: 16px;
     }
@@ -102,16 +116,25 @@ export const Text = styled.p`
 `
 export const Title = styled.h2`
     font-size: 32px;
+    animation: ${(props) =>
+            props.$isAnimation
+                    ? css`${show} 0.65s ease-in-out`
+                    : 'none'};
     @media (max-width: 480px) {
         font-size: 18px;
     }
 `
+
 export const SkillBox = styled.div`
     width: 30%;
     display: flex;
     flex-flow: column wrap;
     gap: 20px;
     justify-content: start;
+    animation: ${(props) =>
+            props.$isAnimation
+                    ? css`${show} ${props.$time}s ease-in-out`
+                    : 'none'};
     @media (max-width: 480px) {
         width: 90%;
         gap: 10px;

@@ -16,7 +16,6 @@ import {useRecoilState} from "recoil";
 import {modalAtom} from "../../recoil/modalAtom.js";
 import WriteModal from "../../components/modal/write/index.jsx";
 import makeDocument from "../../utils/makeDocument.jsx";
-import {Function, ToolBar, ToolBox} from "./style.jsx";
 
 export default function Write(){
     const navigate = useNavigate()
