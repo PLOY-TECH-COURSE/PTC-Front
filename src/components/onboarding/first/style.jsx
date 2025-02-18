@@ -37,9 +37,9 @@ export const Description = styled.div`
     }
 `
 export const Title = styled.h1`
-    font-size: 44px;
+    font-size: 2.75rem;
     @media (max-width: 480px) {
-        font-size: 24px;
+        font-size: 1.5rem;
     }
 `
 export const SubText = styled.h4`
