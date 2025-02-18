@@ -17,4 +17,3 @@ export default defineConfig({
   },
 });
 //http://35.216.81.32:8080
-//http://172.21.10.82:8080
