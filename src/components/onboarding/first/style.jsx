@@ -86,7 +86,7 @@ export const Slide = styled.div`
 export const ImgBox = styled.div`
     position: relative;
     display: flex;
-    transition: transform 0.5s ease;
+    transition: transform ${(props)=>props.$time}s ease;
     transform: translateX(-${(props) => props.$ImgIndex * 100}%);
 `
 export const LapTop = styled.img`
@@ -109,10 +109,10 @@ export const BtnBox = styled.div`
     justify-content: space-between;
 `
 export const Circle =styled.div`
-    width: 16px;
-    height: 16px;
     border-radius: 100px;
-    background-color: ${(props)=>props.$index === props.$ImgIndex ? "#4970FB" : "#ffffff"};
+    width: ${(props)=>props.$index === props.$ImgIndex || props.$index2 === props.$ImgIndex ? "16px" : "12px"};
+    height: ${(props)=>props.$index === props.$ImgIndex || props.$index2 === props.$ImgIndex ? "16px" : "12px"};
+    background-color: ${(props)=>props.$index === props.$ImgIndex || props.$index2 === props.$ImgIndex ? "#4970FB" : "#ffffff"};
 `
 export const ArrowBtn = styled.button`
     all: unset;
