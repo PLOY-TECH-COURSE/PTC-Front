@@ -1,48 +1,40 @@
 import * as S from './style.jsx'
-import Dropdown from "../../dropdown/index.jsx";
-import {useEffect, useRef, useState} from "react";
+import {useRef, useState} from "react";
 import ImgGray from '../../../assets/write/ImgGray.svg'
+import {uploadImg, postDocument} from "../../../api/write.js";
+import {useNavigate} from "react-router-dom";
 
-export default function WriteModal({setIsModal}){
+export default function WriteModal({title, tag, content, setIsModal, base64}){
     const fileRef = useRef(null);
-    const item = [
-        "깃허브",
-        "HTML",
-        "CSS",
-        "Javascript",
-        "알고리즘",
-        "서버"
-    ]
     const [isOpen, setIsOpen] = useState(false);
-    const [selectItem, setSelectItem] = useState("카테고리");
     const [img, setImg] = useState("");
 
-    const changeFile = (event) => {
-        const reader = new FileReader();
-        const file = event.target.files[0];
-
-        if (file) {
-            reader.readAsDataURL(file);
-            reader.onloadend = () => {
-                const allowedImageTypes = ["image/jpeg", "image/png", "image/jpg"];
-                if (!allowedImageTypes.includes(file.type)) {
-                    alert("이미지 파일만 업로드할 수 있습니다. (jpg, png, jpeg)");
-                    return;
-                }
-                setImg(reader.result);
-                event.target.value = "";
-            };
+    const navigate = useNavigate();
+    const changeFile = async (event) => {
+        const allowedImageTypes = ["image/jpeg", "image/png", "image/jpg"];
+        if (!allowedImageTypes.includes(event.target.files[0].type)) {
+            alert("이미지 파일만 업로드할 수 있습니다. (jpg, png, jpeg)");
+            return;
         }
+
+        const file = await base64(event.target.files[0])
+        setImg(file);
+        event.target.value = "";
+        const upload = async () => {
+            const res = await uploadImg(file);
+            if(res){
+                setImg(res);
+                return true;
+            }
+            return false;
+        }
+        await upload()
     };
 
-    useEffect(() => {
-        console.log("이건 useEffct임", fileRef.current);
-    }, [fileRef.current]);
     return(
         <S.Black onClick={()=>setIsModal(false)}>
             <S.Content onClick={(e) => e.stopPropagation()}>
                 {isOpen && <S.CloseDropdown onClick={() => setIsOpen(false)}/>}
-                <Dropdown item={item} isOpen={isOpen} name={selectItem} change={(event) => setSelectItem(event)} click={() => setIsOpen(!isOpen)}/>
                 <S.ImgUploadBox $Img={img} onClick={()=>{if(fileRef.current) fileRef.current.click()}}>
                     {img ? <S.SelectImg src={img} alt={"img"} /> :
                         <>
@@ -58,7 +50,11 @@ export default function WriteModal({setIsModal}){
                 <S.Textarea placeholder={"글에대한 설명을 입력해주세요"} />
                 <S.BtnBox>
                     <S.Btn onClick={()=>setIsModal(false)} $Success={false}>취소</S.Btn>
-                    <S.Btn $Success={true}>등록</S.Btn>
+                    <S.Btn $Success={true} onClick={async ()=>{
+                        if(await postDocument(title, content, tag, img, content)){
+                            navigate('/postList');
+                        }
+                    }}>등록</S.Btn>
                 </S.BtnBox>
             </S.Content>
         </S.Black>

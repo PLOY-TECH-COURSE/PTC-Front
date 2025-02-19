@@ -26,3 +26,4 @@ dist-ssr
 vite.config.js
 package.json
 package-lock.json
+vercel.json
