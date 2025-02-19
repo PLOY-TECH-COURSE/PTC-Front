@@ -40,7 +40,6 @@ export default function makeDocument(text = "") {
         {
             pattern:/<이미지 src="(.*?)"><\/이미지>/,
             component : (src) => {
-                console.log(src)
                 return <S.img src={src} alt={"추가된이미지"} />
             }
         }

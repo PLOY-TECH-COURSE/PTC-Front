@@ -239,4 +239,6 @@ export const hr = styled.div`
 export const img = styled.img`
         width: 100%;
         margin: 0 auto;
+        height: 100%;
+        object-fit: contain;
 `
