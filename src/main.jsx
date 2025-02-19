@@ -27,6 +27,7 @@ createRoot(document.getElementById('root')).render(
             <Route path="/signup" element={<Block><Signup /></Block>} />
             <Route path='/postList' element={<PostList />} />
             <Route path='/mypage' element={<MyPage />} />
+            <Route path='/write' element={<Write />} />
         </Routes>
     </BrowserRouter>
 </RecoilRoot>
