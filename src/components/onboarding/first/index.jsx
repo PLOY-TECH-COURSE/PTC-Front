@@ -12,25 +12,63 @@ import MainImg3 from '../../../assets/onboarding/first/mento3.jpeg'
 import MainImg4 from '../../../assets/onboarding/first/mento4.jpeg'
 import ArrowLeft from '../../../assets/onboarding/first/leftArrow.svg'
 import ArrowRight from  '../../../assets/onboarding/first/rightArrow.svg'
+import {useThrottle} from "../../../hooks/useThrottle.jsx";
 
 export default function First(){
     const navigate = useNavigate();
     const auth = useRecoilValue(authAtom);
-    const imgList = [MainImg, MainImg2, MainImg3, MainImg4];
-    const [imgIdx , setImgIdx] = useState(0);
+    const imgList = [MainImg4, MainImg, MainImg2, MainImg3, MainImg4, MainImg];
+    const [imgIdx , setImgIdx] = useState(1);
+    const [isAnimation, setIsAnimation] = useState(false);
+
 
     useEffect(() => {
-        const interval = setInterval(nextSlide, 3000);
+        const interval = setInterval(()=>{
+            if(imgIdx === 3){
+                setIsAnimation(true);
+            }
+            setImgIdx((prevIndex) => {
+                return (prevIndex + 1) % imgList.length;
+            });
+        }, 2000);
         return () => clearInterval(interval);
-    }, []);
+    }, [imgIdx]);
 
-    const nextSlide = () => {
-        setImgIdx((prevIndex) => (prevIndex + 1) % imgList.length);
-    };
+    useEffect(() => {
+        setTimeout(()=>{
+            if(imgIdx === 5) setImgIdx(1);
+            if(imgIdx === 0) setImgIdx(4);
+        }, 600);
+    }, [imgIdx]);
 
-    const prevSlide = () => {
-        setImgIdx((prevIndex) => (prevIndex - 1 + imgList.length) % imgList.length);
-    };
+    const nextSlide = useThrottle(() => {
+        if(imgIdx === 3){
+            setIsAnimation(true);
+        }
+        setImgIdx((prevIndex) => {
+            return (prevIndex + 1) % imgList.length;
+        });
+    }, 700);
+
+    const prevSlide = useThrottle(() => {
+        if(imgIdx === 2) {
+            setIsAnimation(true);
+        }
+        setImgIdx((prevIndex) => {
+            if(prevIndex === 0) return 4;
+            return (prevIndex - 1 + imgList.length) % imgList.length
+        });
+    }, 700);
+
+    const animation = () =>{
+        if(isAnimation){
+            setTimeout(()=>{
+                setIsAnimation(false);
+            }, 100)
+            return 0.5;
+        }
+        return imgIdx === 1 || imgIdx === 4 ? 0 : 0.5
+    }
 
     return(
         <S.FirstContainer>
@@ -52,11 +90,13 @@ export default function First(){
                     </S.Description>
                     <S.SlideBox>
                         <S.Slide>
-                            <S.ImgBox $ImgIndex = {imgIdx} >
+                            <S.ImgBox $time = {animation()} $ImgIndex = {imgIdx} >
                                 <S.Img src={imgList[0]} alt={'Icon'} width={'100%'}/>
                                 <S.Img src={imgList[1]} alt={'Icon'} width={'100%'}/>
                                 <S.Img src={imgList[2]} alt={'Icon'} width={'100%'}/>
                                 <S.Img src={imgList[3]} alt={'Icon'} width={'100%'}/>
+                                <S.Img src={imgList[4]} alt={'Icon'} width={'100%'}/>
+                                <S.Img src={imgList[5]} alt={'Icon'} width={'100%'}/>
                             </S.ImgBox>
                         </S.Slide>
 
@@ -65,10 +105,10 @@ export default function First(){
                             <S.ArrowBtn onClick={()=>{prevSlide()}}>
                                 <img src={ArrowLeft} alt={'arrow'} />
                             </S.ArrowBtn>
-                            <S.Circle $index = {0} $ImgIndex = {imgIdx}/>
-                            <S.Circle $index = {1} $ImgIndex = {imgIdx}/>
+                            <S.Circle $index = {1} $index2 = {5} $ImgIndex = {imgIdx}/>
                             <S.Circle $index = {2} $ImgIndex = {imgIdx}/>
                             <S.Circle $index = {3} $ImgIndex = {imgIdx}/>
+                            <S.Circle $index = {4} $index2 = {0} $ImgIndex = {imgIdx}/>
                             <S.ArrowBtn onClick={()=>{nextSlide()}}>
                                 <img src={ArrowRight} alt={'arrow'} />
                             </S.ArrowBtn>
