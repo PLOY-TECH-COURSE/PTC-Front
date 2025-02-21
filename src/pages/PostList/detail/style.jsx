@@ -122,6 +122,7 @@ export const PostDetailData = styled.div`
     }
 `
 
+
 export const PostDetailDataTop = styled.div`
     display: flex;
     width: 100%;
