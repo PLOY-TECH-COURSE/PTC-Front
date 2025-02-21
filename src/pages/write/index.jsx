@@ -16,7 +16,7 @@ import {useRecoilState} from "recoil";
 import {modalAtom} from "../../recoil/modalAtom.js";
 import WriteModal from "../../components/modal/write/index.jsx";
 import makeDocument from "../../utils/makeDocument.jsx";
-import {Function, ToolBar, ToolBox} from "./style.jsx";
+import {uploadImg} from "../../api/write.js";
 
 export default function Write(){
     const navigate = useNavigate()
@@ -68,21 +68,20 @@ export default function Write(){
     }
 
     const fileRef = useRef(null);
-    const addImg = (img) =>{
-        // const reader = new FileReader();
-        //
-        // reader.onloadend = () => {
-        //     setImageSrc(reader.result);
-        // };
-        //
-        // reader.readAsDataURL(file);
-        // const allowedImageTypes = ["image/jpeg", "image/png", "image/jpg"];
-        // if (!allowedImageTypes.includes(file.type)) {
-        //     alert("이미지 파일만 업로드할 수 있습니다. (jpg, png, jpeg)");
-        //     return;
-        // }
-        console.log(img);
-        return img
+    const addImgText = async (img) =>{
+        fileRef.current.value = "";
+        if(!img) {
+            alert("이미지 파일만 업로드할 수 있습니다. (jpg, png, jpeg)");
+            return ;
+        }
+        const data = new FormData();
+        data.append('file', img);
+        const src = await uploadImg(data);
+        if(src){
+            addText(`<이미지 src="${src.url}"></이미지>`)
+        }else{
+            alert("img 등록에 실패")
+        }
     }
     const [isOver, setIsOver] = useState(false);
 
@@ -104,7 +103,7 @@ export default function Write(){
             const files = e.dataTransfer.files;
             if (files.length > 0) {
                 const file = files[0]; // 첫 번째 파일 선택
-                addText(`<이미지 src=${addImg(file)}></이미지>`)
+                addImgText(file)
             }
         };
         window.addEventListener('dragover', handleDragOver);
@@ -129,7 +128,7 @@ export default function Write(){
     }
     return(
         <S.WriteContainer>
-            {isModal && <WriteModal setIsModal={()=>setIsModal()} />}
+            {isModal && <WriteModal title = {title} content = {content} tag = {showTag} base64 = {makeBase64}  setIsModal={()=>setIsModal()} />}
             {isOver && <S.DragBox/>}
             <S.Header>
                 <img style ={{cursor:"pointer"}} onClick={()=>navigate('/')} src={Logo} alt={"logo"} width={300}/>
@@ -230,7 +229,7 @@ export default function Write(){
                 </S.Section>
             </S.Main>
             <input ref={fileRef} type={"file"} style={{display: "none"}} onChange={(e)=> {
-                addText(`<이미지 src=${addImg(e.target.files[0])}></이미지>`)
+                addImgText(e.target.files[0])
             }} />
         </S.WriteContainer>
     )
