@@ -75,16 +75,6 @@ export const ProfileBottom = styled.div`
     }
 `
 
-// export const Date = styled.div`
-//     display: flex;
-
-//     span{
-//         font-size: 10px;
-//         color: #D1D1D1;
-//         border: none;
-//     }
-// `
-
 export const PostLike = styled.div`
     display: flex;
     justify-content: centers;
@@ -101,5 +91,71 @@ export const PostLike = styled.div`
     p{
         font-size: 15px;
         color: #4970FB;
+    }
+`
+
+export const PostDetailMain = styled.div`
+    width: 85%;
+    display: flex;
+    gap: 100px;
+`
+
+export const PostDetailData = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 1% 0%;
+
+    span{
+        font-size: 17px;
+        color: #727272;
+        border: none;
+        opacity: 0.5;
+        margin-top: 25px;
+    }
+
+    p{
+        font-size: 16px;
+        color: #000;
+        font-family: 'Courier New', Courier, monospace;
+        margin-top: 18px;
+    }
+`
+
+export const PostDetailDataTop = styled.div`
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 20px;
+
+    h1{
+        margin-top: 15px;
+    }
+
+    img{
+        margin-left: 400px;
+        margin-top: 15px;
+        width: 32px;
+        cursor: pointer;
+    }
+`
+
+export const Edit = styled.div`
+    display: flex;
+    gap: 20px;
+
+    p{
+        font-family: 'Courier New', Courier, monospace;
+        color: #909090;
+        cursor: pointer;
+    }
+
+    p:not(:last-child)::after {
+        content: "";
+        display: inline-block;
+        width: 1px; 
+        height: 13.5px;
+        background-color: #ccc; 
+        margin-left: 17px;
     }
 `

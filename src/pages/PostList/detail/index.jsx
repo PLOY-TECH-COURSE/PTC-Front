@@ -3,6 +3,7 @@ import * as S from './style';
 import Header from '../../../components/header';
 import { useParams } from 'react-router-dom';
 import Like2 from '../../../assets/like2.svg';
+import Star from '../../../assets/star.svg';
 
 export default function Detail() {
     const { id } = useParams();
@@ -167,19 +168,33 @@ export default function Detail() {
             <Header />
             <S.Content>
                 {post && (
-                    <S.Profile>
-                        <S.ProfileTop>
-                            <img src={post.user.profile} alt={post.user.name} />
-                            <S.RightProfile>
-                                <span>{post.generation}기</span>
-                                <p>{post.user.name}</p>
-                            </S.RightProfile>
-                        </S.ProfileTop>
-                        <S.ProfileBottom>
-                            <span>생성일자 {new Date(post.document.date).toISOString().split('T')[0]}</span>
-                            <S.PostLike><img src={Like2} /><p>{post.likes}</p></S.PostLike>
-                        </S.ProfileBottom>
-                    </S.Profile>
+                    <S.PostDetailMain>
+                        <S.Profile>
+                            <S.ProfileTop>
+                                <img src={post.user.profile} alt={post.user.name} />
+                                <S.RightProfile>
+                                    <span>{post.generation}기</span>
+                                    <p>{post.user.name}</p>
+                                </S.RightProfile>
+                            </S.ProfileTop>
+                            <S.ProfileBottom>
+                                <span>생성일자 {new Date(post.document.date).toISOString().split('T')[0]}</span>
+                                <S.PostLike><img src={Like2} /><p>{post.likes}</p></S.PostLike>
+                            </S.ProfileBottom>
+                        </S.Profile>
+                        <S.PostDetailData>
+                            <S.PostDetailDataTop>
+                                <h1>{post.document.title}</h1>
+                                <img src={Star} />
+                                <S.Edit>
+                                    <p>삭제</p>
+                                    <p>수정</p>
+                                </S.Edit>
+                            </S.PostDetailDataTop>
+                            <span>{post.hash_tag.map(tag => `#${tag}`).join(' ')}</span>
+                            <p>{post.document.content}</p>
+                        </S.PostDetailData>
+                    </S.PostDetailMain>
                 )}
             </S.Content>
         </S.Container>
