@@ -4,7 +4,7 @@ import ImgGray from '../../../assets/write/ImgGray.svg'
 import {uploadImg, postDocument} from "../../../api/write.js";
 import {useNavigate} from "react-router-dom";
 
-export default function WriteModal({title, tag, content, setIsModal, base64}){
+export default function WriteModal({title, tag, content, setIsModal}){
     const fileRef = useRef(null);
     const [isOpen, setIsOpen] = useState(false);
     const [img, setImg] = useState("");
@@ -17,16 +17,21 @@ export default function WriteModal({title, tag, content, setIsModal, base64}){
             return;
         }
 
-        const file = await base64(event.target.files[0])
-        setImg(file);
+        const file = event.target.files[0]
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+
+        reader.onload = () => {
+            setImg(reader.result);
+        };
         event.target.value = "";
+        const data = new FormData();
+        data.append("file", file);
         const upload = async () => {
-            const res = await uploadImg(file);
+            const res = await uploadImg(data);
             if(res){
-                setImg(res);
-                return true;
+                setImg(res.url);
             }
-            return false;
         }
         await upload()
     };
