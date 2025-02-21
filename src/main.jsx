@@ -17,6 +17,8 @@ import PostList from './pages/PostList/index.jsx';
 import Write from './pages/write/index.jsx';
 import MyPage from './pages/mypage/mypage.jsx';
 import Detail from './pages/postList/detail/index.jsx';
+import Broadcast from './pages/broadcast/index.jsx';
+import Detail2 from './pages/broadcast/detail/index.jsx';
 
 createRoot(document.getElementById('root')).render(
    <RecoilRoot>
@@ -30,6 +32,8 @@ createRoot(document.getElementById('root')).render(
             <Route path='/mypage' element={<MyPage />} />
             <Route path='/write' element={<Write />} />
             <Route path="/post/:id" element={<Detail />} /> 
+            <Route path='/broadcast' element={<Broadcast />} />
+            <Route path="/announcement/:id" element={<Detail2 />} /> 
         </Routes>
     </BrowserRouter>
 </RecoilRoot>
