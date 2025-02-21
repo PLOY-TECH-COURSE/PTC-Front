@@ -32,6 +32,7 @@ createRoot(document.getElementById('root')).render(
             <Route path='/mypage' element={<MyPage />} />
             <Route path='/write' element={<Write />} />
             <Route path="/post/:id" element={<Detail />} /> 
+            <Route path="/select" element={<Select/>} />
         </Routes>
     </BrowserRouter>
 </RecoilRoot>
