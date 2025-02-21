@@ -128,7 +128,7 @@ export default function Write(){
     }
     return(
         <S.WriteContainer>
-            {isModal && <WriteModal title = {title} content = {content} tag = {showTag} base64 = {makeBase64}  setIsModal={()=>setIsModal()} />}
+            {isModal && <WriteModal title = {title} content = {content} tag = {showTag} setIsModal={()=>setIsModal()} />}
             {isOver && <S.DragBox/>}
             <S.Header>
                 <img style ={{cursor:"pointer"}} onClick={()=>navigate('/')} src={Logo} alt={"logo"} width={300}/>
