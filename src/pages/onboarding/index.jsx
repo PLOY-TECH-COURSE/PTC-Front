@@ -2,6 +2,7 @@ import styled from "styled-components";
 import fullpage from 'fullpage.js';
 import First from "../../components/onboarding/first";
 import PTCIntroduce from "../../components/onboarding/PTC-introduce/index.jsx";
+import Process from "../../components/onboarding/process/index.jsx";
 import TrackIntroduce from "../../components/onboarding/track-introduce/index.jsx";
 import TeamIntroduce from "../../components/onboarding/team-introduce/index.jsx";
 import Footer from "../../components/onboarding/footer/index.jsx";
@@ -28,6 +29,9 @@ const FullPageWrapper = styled.div`
 const Main = () => {
     const [isScrolling, setIsScrolling] = useState(false);
     const [isAnimation, setIsAnimation] = useState(false);
+    const [isAnimation2, setIsAnimation2] = useState(false);
+    const [isAnimation3, setIsAnimation3] = useState(false);
+    const [isAnimation4, setIsAnimation4] = useState(false);
     const [isModal, setIsModal] = useRecoilState(modalAtom);
     const isModalRef = useRef(isModal);
     const fullpageRef = useRef(null);
@@ -45,7 +49,7 @@ const Main = () => {
             autoScrolling: true,
             navigation: true,
             credits: false,
-            anchors: ['메인', '플테코소개', '트랙소개', '팀소개', '하단'],
+            anchors: ['main', 'introduce', 'track', "process", 'team', 'footer'],
             onLeave: (origin, destination) => {
 
                 if (isModalRef.current || isScrolling) {
@@ -54,12 +58,26 @@ const Main = () => {
 
                 setIsScrolling(true);
 
-                if (destination.index === 2) {
+                if(destination.index === 1) {
                     setIsAnimation(true);
                 } else {
                     setIsAnimation(false);
                 }
-
+                if (destination.index === 2) {
+                    setIsAnimation2(true);
+                } else {
+                    setIsAnimation2(false);
+                }
+                if(destination.index === 3) {
+                    setIsAnimation3(true);
+                } else {
+                    setIsAnimation3(false);
+                }
+                if(destination.index === 4) {
+                    setIsAnimation4(true);
+                } else {
+                    setIsAnimation4(false);
+                }
                 setTimeout(() => {
                     setIsScrolling(false);
                 }, 1000);
@@ -81,9 +99,10 @@ const Main = () => {
         <FullPageWrapper>
             <div id={'fullpage'}>
                 <div className={'section'}><First /></div>
-                <div className={'section'}><PTCIntroduce /></div>
-                <div className={'section'}><TrackIntroduce isAnimation={isAnimation} /></div>
-                <div className={'section'}><TeamIntroduce /></div>
+                <div className={'section'}><PTCIntroduce isAnimation={isAnimation} /></div>
+                <div className={'section'}><TrackIntroduce isAnimation={isAnimation2} /></div>
+                <div className={'section'}><Process change = {scrollToSection} isAnimation={isAnimation3} /></div>
+                <div className={'section'}><TeamIntroduce isAnimation={isAnimation4} /></div>
                 <div className={'section'}><Footer change = {scrollToSection} /></div>
             </div>
         </FullPageWrapper>

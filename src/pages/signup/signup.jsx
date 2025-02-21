@@ -227,7 +227,7 @@ const Login = () => {
           <p style={{ marginTop: '20px' }}>학년반 번호가 없다면 그대로 놔두어주세요</p>
           <Button 
                 type="submit" 
-                onClick={(e) => {
+                onClick={ async (e) => {
                   e.preventDefault();
                   if(!name || !id || !email || !code || !password || !confirmPassword || !profile){
                       alert("데이터를 완성해주세요.");
@@ -240,10 +240,13 @@ const Login = () => {
                   }
                   else if (password !== confirmPassword) {
                     alert("비밀번호가 일치하지 않습니다.");
-                    return;
                   }
                   else {
-                    if(signupData(name, id, email, code, password, confirmPassword, profile,old,ban,bunho)) navigate('/login');
+                    if (await signupData(name, id, email, code, password, confirmPassword, profile, old, ban, bunho)) {
+                      navigate('/login');
+                    } else {
+                      alert('회원가입에 실패했습니다. 다시 시도해주세요.');
+                    }
                   }
                 }}
               >회원가입</Button>

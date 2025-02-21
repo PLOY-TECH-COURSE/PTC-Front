@@ -13,15 +13,17 @@ export const Wrap = styled.div`
     height: 100vh;
     display: flex;
     flex-flow: column  nowrap;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     position: relative;
     padding: 3% 10%;
 `;
 export const Bg = styled.img`
     position: absolute;
-    margin-top: 150px;
-    width :1300px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width :90%;
     @media (max-width: 480px) {
         margin-top: 10px;
         width :300px;
@@ -30,7 +32,10 @@ export const Bg = styled.img`
 `
 export const Title = styled.div`
     width: 100%;
-    margin-bottom: 50px;
+    position: absolute;
+    top: 8%;
+    left: 8%;
+    animation: ${(props) => props.$isAnimation && css`${show} 0.5s ease-in-out`};
     @media (max-width: 480px) {
         margin-bottom: 80px;
     }
@@ -42,21 +47,20 @@ export const Icon = styled.img`
         width: ${(props)=>props.$width2}px;
     }
 `
-export const BlueText = styled.h3`
-    color: #4970FB;
-    font-size: 28px;
-`
 const show = keyframes`
     0%{
-        opacity: 0;
-        transform: translateY(50px);
+        opacity: 0.2;
+        transform: translateY(60px);
     }
     100%{
         opacity: 1;
         transform: translateY(0);
     }
 `
-
+export const BlueText = styled.h3`
+    color: #4970FB;
+    font-size: 28px;
+`
 
 export const Article = styled.article`
     width: 200px;
@@ -69,10 +73,9 @@ export const Article = styled.article`
     position: relative;
 
     animation: ${(props) =>
-            props.$isAnimation &&
-            css`
-      ${show} 1.3s ease-in-out;
-    `};
+            props.$isAnimation
+                    ? css`${show} ${props.$time}s ease-in-out`
+                    : 'none'};
     @media (max-width: 480px) {
         width: 120px;
         height: 120px;
@@ -105,7 +108,7 @@ export const UnderText = styled.h1`
     }
 `
 export const Box = styled.div`
-    width: 80%;
+    width: 80vw;
     display: flex;
     height: 70vh;
     gap: 110px;
@@ -118,4 +121,46 @@ export const Box = styled.div`
         width: 100%;
     }
     
+`
+export const Half = styled.div`
+    position: absolute;
+    top: 15%;
+    right: 0;
+    width: 30%;
+    height: 70%;
+    border: 40px solid #96ADFD;
+    border-radius: 50%; /* Make a circle */
+    clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%);
+`
+export const Bar = styled.div`
+    position: absolute;
+    top: ${(props)=>props.$top}%;
+    bottom: ${(props)=>props.$bottom}%;
+    left: 5%;
+    width: 80%;
+    height: 40px;
+    background-color: #96ADFD;
+`
+export const Circle = styled.div`
+    position: absolute;
+    top: ${(props)=>props.$top}%;
+    bottom: ${(props)=>props.$bottom}%;
+    left: 2%;
+    width: 90px;
+    height: 90px;
+    background-color: #96ADFD;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+
+`
+
+
+export const BoxChild = styled.div`
+    position: absolute;
+    top: ${(props)=>props.$top}%;
+    left: ${(props)=>props.$left}%;
+    bottom: ${(props)=>props.$bottom}%;
 `

@@ -4,16 +4,13 @@ import Hambuger from '../../assets/header/hambuger.svg'
 import HeaderModal from '../modal/header'
 import {useRecoilState, useRecoilValue} from "recoil";
 import {modalAtom} from "../../recoil/modalAtom.js";
-import Down from '../../assets/header/down.svg';
+import Down from '../../assets/down.svg';
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {authAtom} from "../../recoil/authAtom.js";
 import {logout} from '../../api/auth.js';
 
 function Header() {
-    function alert1() {
-        alert("아직 준비되지 않음!");
-    }
     const [isModal, setIsModal] = useRecoilState(modalAtom);
 
     const [isOpen, setIsOpen] = useState([false, false]);
@@ -21,6 +18,17 @@ function Header() {
         if(!isOpen[0]) setIsOpen([true, false]);
         else if(isOpen[0]) setIsOpen([false, true]);
     }
+
+    const routing = [
+        {id:1, path : "/", name : "홈", role : "ALL"},
+        {id:2, path : "/postList", name : "글목록", role : "ALL"},
+        {id:3, path : "/broadcast", name : "공지사항", role: "ALL"},
+        {id:4, path : "/authority", name : "권한관리", role: "ROLE_SUPERADMIN"},
+        {id:5, path : "/proposer", name : "신청자", role: "ROLE_SUPERADMIN, ROLE_ADMIN"},
+        {id:6, path : "/apply", name: "신청하기", role: "ROLE_USER"},
+        {id:7, path : "/write", name : "새글작성", role: "ROLE_SUPERADMIN, ROLE_ADMIN, ROLE_STUDENT"},
+
+    ]
 
     const user = useRecoilValue(authAtom);
     const navigate = useNavigate()
@@ -33,24 +41,41 @@ function Header() {
                 <img src={Hambuger} alt={'hambuger'} width={35}/>
             </S.Hambuger>
             <S.TextBox>
-                <S.SelectText>홈</S.SelectText>
-                <S.Text onClick={alert1}>글목록</S.Text>{/* navigate('/') */}
-                <S.Text onClick={alert1}>공지사항</S.Text>{/* navigate('/') */}
-                {user.role === "ROLE_SUPERADMIN" ?
-                    <S.Text onClick={alert1}>권한관리</S.Text>
-                    : null}{/* navigate('/') */}
+                {
+                    location.pathname === "/" ?
+                        routing.map((item)=>{
+                            if(item.path === "/"){
+                                return (
+                                    <S.SelectText key={item.id} onClick={()=>navigate(item.path)}>{item.name}</S.SelectText>
+                                )
+                            }else if(user.role !== '' && item.role.includes(user.role) || item.role === "ALL"){
+                                return (
+                                    <S.Text key={item.id} onClick={()=>navigate(item.path)}>{item.name}</S.Text>
+                                )
+                            }
+                        }) :
 
-                {user.role === "ROLE_ADMIN" || user.role === "ROLE_SUPERADMIN" ?
-                    <S.Text onClick={alert1}>신청자</S.Text>
-                    : null}{/* navigate('/') */}
+                    routing.map((item)=>{
+                        const isActive = location.pathname.slice(1).includes(item.path.slice(1));
+                        if(item.path === "/"){
+                            return (
+                                <S.Text key={item.id} onClick={()=>navigate(item.path)}>{item.name}</S.Text>
+                            )
+                        }
+                        if(isActive){
+                            return (
+                                <S.SelectText key={item.id} onClick={()=>navigate(item.path)}>{item.name}</S.SelectText>
+                            )
+                        }else if(user.role !== '' && item.role.includes(user.role) || item.role === "ALL"){
+                            console.log(item.role, user.role)
+                            return (
+                                <S.Text key={item.id} onClick={()=>navigate(item.path)}>{item.name}</S.Text>
+                            )
+                        }
+                    })
+                }
 
-                {user.role === "ROLE_USER" ?
-                    <S.Text onClick={()=>navigate('/apply')}>신청하기</S.Text>
-                    : null}
 
-                {user.role === "ROLE_ADMIN" || user.role === "ROLE_SUPERADMIN" || user.role === "ROLE_STUDENT" ?
-                    <S.Text onClick={alert1}>새글작성</S.Text>
-                    : null}{/* navigate('/write') */}
 
                 {!user.uid &&
                     <S.LoginBox>
@@ -64,7 +89,7 @@ function Header() {
                         <S.Text>{user.uid}</S.Text>
                         <S.DownImg src={Down} $isOpen = {isOpen[0]} $isOpen2 = {isOpen[1]} alt={'down'} width={18}/>
                         <S.Dropdown $isOpen = {isOpen[0]}>
-                            <S.Text2 onClick={alert1}>내 정보</S.Text2>{/* navigate('/mypage') */}
+                            <S.Text2 onClick={()=>{navigate('/mypage')}}>내 정보</S.Text2>
                             <S.Text2 onClick={()=> {
                                 if(logout()){
                                     navigate('/');

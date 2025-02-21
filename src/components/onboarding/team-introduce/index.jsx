@@ -11,33 +11,34 @@ import Ara from '../../../assets/onboarding/team-introduce/Ara.jpeg';
 import Yunchan from '../../../assets/onboarding/team-introduce/yunchan.jpeg';
 import Huhon from '../../../assets/onboarding/team-introduce/huhon.jpeg';
 
-export default function TeamIntroduce(){
-    const [isGrade, setIsGrade] = useState(false);
+export default function TeamIntroduce({isAnimation}){
+    console.log(isAnimation)
+    const [isGrade, setIsGrade] = useState(true);
     const member = [
-        {id : 1, name : '허동운', job : 'Backend', git : 'https://github.com/heodongun', bg : Heodongun},
-        {id : 2, name : '허온', job : 'Backend', git : 'https://github.com/KDev-Huh', bg : Huhon},
-        {id : 3, name : '조재민', job : 'Backend', git : 'https://github.com/jmj732', bg : Jemin},
-        {id : 4, name : '윤도훈', job : 'Frontend', git : 'https://github.com/dohun08', bg : Dohun},
-        {id : 5, name : '이효준', job : 'Frontend', git : 'https://github.com/123isi', bg : Hyojun},
-        {id : 6, name : '조아라', job : 'Frontend', git : 'https://github.com/whdkfk', bg : Ara},
-        {id : 7, name : '박소은', job : 'Frontend', git : 'https://github.com/soeun823', bg : Soeun},
+        {id : 2, name : '허온', job : 'Backend', git : 'https://github.com/KDev-Huh', bg : Huhon, time : 0.6},
+        {id : 3, name : '조재민', job : 'Backend', git : 'https://github.com/jmj732', bg : Jemin, time : 0.7},
+        {id : 4, name : '윤도훈', job : 'Frontend', git : 'https://github.com/dohun08', bg : Dohun, time : 0.8},
+        {id : 5, name : '이효준', job : 'Frontend', git : 'https://github.com/123isi', bg : Hyojun, time : 0.9},
+        {id : 6, name : '조아라', job : 'Frontend', git : 'https://github.com/whdkfk', bg : Ara, time : 1.},
+        {id : 7, name : '박소은', job : 'Frontend', git : 'https://github.com/soeun823', bg : Soeun, time : 1.1},
+        {id : 1, name : '허동운', job : 'Backend', git : 'https://github.com/heodongun', bg : Heodongun, time : 1.2},
         {id : 8, name : '', job : '', git : '', bg : ''},
     ]
     const mento = [
-        {id : 1, name : '오윤찬', job : 'Backend', git : 'https://github.com/YunChan-Oh', bg : Yunchan},
-        {id : 2, name : '한태영', job : 'Backend', git : 'https://github.com/noahmik', bg : Taeyoung},
-        {id : 3, name : '강시우', job : 'Frontend', git : 'https://github.com/kangsiwoo', bg : Siwoo},
-        {id : 4, name : '', job : '', git : '', bg : ''},
-        {id : 5, name : '', job : '', git : '', bg : ''},
-        {id : 6, name : '', job : '', git : '', bg : ''},
-        {id : 7, name : '', job : '', git : '', bg : ''},
-        {id : 8, name : '', job : '', git : '', bg : ''},
+        {id : 9, name : '오윤찬', job : 'Backend', git : 'https://github.com/YunChan-Oh', bg : Yunchan, time:0.7},
+        {id : 10, name : '한태영', job : 'Backend', git : 'https://github.com/noahmik', bg : Taeyoung, time:0.9},
+        {id : 11, name : '강시우', job : 'Frontend', git : 'https://github.com/kangsiwoo', bg : Siwoo, time:1.1},
+        {id : 12, name : '', job : '', git : '', bg : ''},
+        {id : 13, name : '', job : '', git : '', bg : ''},
+        {id : 14, name : '', job : '', git : '', bg : ''},
+        {id : 15, name : '', job : '', git : '', bg : ''},
+        {id : 16, name : '', job : '', git : '', bg : ''},
     ]
     return(
         <S.TeamContainer>
             <S.Wrap>
                 <S.Title>
-                    <S.BlueText>팀소개</S.BlueText>
+                    <S.BlueText>Team</S.BlueText>
                 </S.Title>
                 <S.Nav>
                     <S.NavText $color = {!isGrade} onClick={()=>setTimeout(()=>setIsGrade(false), 100)}>3기</S.NavText>
@@ -48,7 +49,7 @@ export default function TeamIntroduce(){
                         member.map((item)=>{
                                 if(item.name){
                                     return(
-                                        <S.Box key={item.id} $bg={item.bg}>
+                                        <S.Box $time = {item.time} $isAnimation = {isAnimation} key={item.id}  $bg={item.bg}>
                                             <S.User>
                                                 <S.Name>{item.name}</S.Name>
                                                 <S.JobBox>
@@ -64,7 +65,7 @@ export default function TeamIntroduce(){
                         mento.map((item)=>{
                             if(item.name){
                                 return(
-                                    <S.Box key={item.id} $bg={item.bg}>
+                                    <S.Box $time = {item.time} $isAnimation = {isAnimation} key={item.id}  $bg={item.bg}>
                                         <S.User>
                                             <S.Name>{item.name}</S.Name>
                                             <S.JobBox>

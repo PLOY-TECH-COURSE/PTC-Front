@@ -95,7 +95,6 @@ export const SignUpButton = styled.button`
     cursor: pointer;
     border-radius: 30px;
     transition: 0.1s;
-    width: 90px;
     &:hover {
         background-color: #446bf6;
     }

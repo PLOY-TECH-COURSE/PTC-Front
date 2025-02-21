@@ -1,7 +1,6 @@
 import axiosInstance from "../lib/axiosInstance.js";
 
 export const postLogin = async ({email, password}) =>{
-    console.log(email, password)
     try{
         const res = await axiosInstance.post('/login', {
             email:email,
@@ -21,7 +20,6 @@ export const postLogin = async ({email, password}) =>{
 export const logout = async () =>{
     try{
         const res = await axiosInstance.post('/logout');
-        console.log(res);
         if(res.status === 200){
             localStorage.removeItem('accessToken');
             window.location.reload();

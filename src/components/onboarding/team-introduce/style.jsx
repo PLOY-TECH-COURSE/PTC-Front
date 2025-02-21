@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, {css, keyframes} from "styled-components";
 
 export const TeamContainer = styled.div`
     display: flex;
@@ -41,7 +41,7 @@ export const Main = styled.main`
     height: 80%;
     display: flex;
     flex-flow: wrap row;
-    justify-content: space-between;
+    justify-content: center;
     gap: 30px;
     align-items: center;
     @media (max-width: 480px) {
@@ -56,6 +56,16 @@ export const NavText = styled.h1`
     color: ${(props)=>props.$color ? "#4970FB" : "#D1D1D1"};
     border-bottom: ${(props) => (props.$color ? "3px solid #4970FB" : "3px solid transparent")};
 `
+const show = keyframes`
+    0%{
+        opacity: 0;
+        transform: translateY(60px);
+    }
+    100%{
+        opacity: 1;
+        transform: translateY(0);
+    }
+`
 export const Box = styled.div`
     width: 250px;
     height: 270px;
@@ -68,6 +78,10 @@ export const Box = styled.div`
     padding: 16px;
     box-shadow: 0 0 7.64px 0 rgba(0, 0, 0, 0.25);
     border-radius: 8px;
+    animation: ${(props) =>
+            props.$isAnimation
+                    ? css`${show} ${props.$time}s ease-in-out`
+                    : 'none'};
     @media (max-width: 480px) {
         width: 120px;
         height: 140px;

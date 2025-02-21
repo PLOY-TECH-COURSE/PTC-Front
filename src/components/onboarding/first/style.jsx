@@ -37,9 +37,9 @@ export const Description = styled.div`
     }
 `
 export const Title = styled.h1`
-    font-size: 44px;
+    font-size: 2.75rem;
     @media (max-width: 480px) {
-        font-size: 24px;
+        font-size: 1.5rem;
     }
 `
 export const SubText = styled.h4`
@@ -68,20 +68,63 @@ export const HeaderBox = styled.div`
     left: 0;
 `
 export const Img = styled.img`
+    transition: 0.5s;
+    
     @media (max-width: 480px) {
         width: 100%;
     }
 `
-export const ImgBox = styled.div`
-    width: 540px;
+export const SlideBox = styled.div`
     position: relative;
-    
+`
+export const Slide = styled.div`
+    position: relative;
+    width: 550px;
+    overflow: hidden;
+    border-radius: 10px;
+`
+export const ImgBox = styled.div`
+    position: relative;
+    display: flex;
+    transition: transform ${(props)=>props.$time}s ease;
+    transform: translateX(-${(props) => props.$ImgIndex * 100}%);
 `
 export const LapTop = styled.img`
     position: absolute;
-    right: 0;
-    bottom: -30px;
+    right: -100px;
+    bottom: -20px;
+    width: 240px;
     @media (max-width: 480px) {
         display: none;
+    }
+`
+export const BtnBox = styled.div`
+    position: absolute;
+    top: 110%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: space-between;
+`
+export const Circle =styled.div`
+    border-radius: 100px;
+    width: ${(props)=>props.$index === props.$ImgIndex || props.$index2 === props.$ImgIndex ? "16px" : "12px"};
+    height: ${(props)=>props.$index === props.$ImgIndex || props.$index2 === props.$ImgIndex ? "16px" : "12px"};
+    background-color: ${(props)=>props.$index === props.$ImgIndex || props.$index2 === props.$ImgIndex ? "#4970FB" : "#ffffff"};
+`
+export const ArrowBtn = styled.button`
+    all: unset;
+    cursor: pointer;
+    color: #4970FB;
+    border-radius: 100px;
+    border: 2px solid #4970FB;
+    transition: 0.1s;
+    width: 24px;
+    height: 24px;
+    background-color: #ffffff;
+    &:hover{
+        background-color: #fafafa;
     }
 `
