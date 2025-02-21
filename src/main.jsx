@@ -16,7 +16,7 @@ import Signup from './pages/signup/signup.jsx';
 import PostList from './pages/PostList/index.jsx';
 import Write from './pages/write/index.jsx';
 import MyPage from './pages/mypage/mypage.jsx';
-import Detail from './pages/postList/detail/index.jsx';
+import Detail from './pages/PostList/detail/index.jsx';
 import Broadcast from './pages/broadcast/index.jsx';
 import Detail2 from './pages/broadcast/detail/index.jsx';
 
