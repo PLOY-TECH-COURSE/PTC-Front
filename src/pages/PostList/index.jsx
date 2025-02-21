@@ -3,9 +3,15 @@ import * as S from './style';
 import Header from '../../components/header';
 import Search from '../../assets/search.svg';
 import Like from '../../assets/like.svg';
+import { useNavigate } from "react-router-dom";
 
 export default function () {
     const [activeSort, setActiveSort] = useState("recent");
+    const navigate = useNavigate();
+
+    const handlePostClick = (id) => {
+        navigate(`/post/${id}`);
+    };
 
     const PostList = [
         {
@@ -123,19 +129,19 @@ export default function () {
                 </S.Sort>
                 <S.PostListMain>
                     {PostList.map((row, index) => (
-                        <S.RowData key={index}>
+                        <S.RowData key={index}  onClick={() => handlePostClick(row.document_id)}>
                             <S.PostImg><img src={row.thumbnail} /></S.PostImg>
                             <S.PostRightData>
                                 <S.PostRightTopData>
                                     <S.PostData>{row.title}</S.PostData>
                                     <p>{row.introduction}</p>
                                 </S.PostRightTopData>
-                                <span></span>
+                                <span />
                                 <S.PostRightBottomData>
                                     <S.PostProfile><img src={row.profile} /></S.PostProfile>
                                     <S.PostbottomData>
                                         <S.Name>{row.name}</S.Name>
-                                        <span>{new Date(row.date).toLocaleDateString()}</span>
+                                        <span>{new Date(row.date).toISOString().split('T')[0]}</span>
                                     </S.PostbottomData>
                                     <S.PostLike><img src={Like} /><p>{row.likes}</p></S.PostLike>
                                 </S.PostRightBottomData>

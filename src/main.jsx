@@ -16,6 +16,7 @@ import Signup from './pages/signup/signup.jsx';
 import PostList from './pages/PostList/index.jsx';
 import Write from './pages/write/index.jsx';
 import MyPage from './pages/mypage/mypage.jsx';
+import Detail from './pages/PostList/detail/index.jsx';
 
 createRoot(document.getElementById('root')).render(
    <RecoilRoot>
@@ -28,6 +29,7 @@ createRoot(document.getElementById('root')).render(
             <Route path='/postList' element={<PostList />} />
             <Route path='/mypage' element={<MyPage />} />
             <Route path='/write' element={<Write />} />
+            <Route path="/post/:id" element={<Detail />} /> 
         </Routes>
     </BrowserRouter>
 </RecoilRoot>
