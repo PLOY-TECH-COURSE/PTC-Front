@@ -2,10 +2,16 @@ import { useState } from "react";
 import * as S from './style';
 import Header from '../../components/header';
 import Search from '../../assets/search.svg';
-import Like from '../../assets/like.svg';
+import PostItem from "../../components/postItem";
+import { useNavigate } from "react-router-dom";
 
 export default function () {
     const [activeSort, setActiveSort] = useState("recent");
+    const navigate = useNavigate();
+
+    const handlePostClick = (id) => {
+        navigate(`/post/${id}`);
+    };
 
     const PostList = [
         {
@@ -93,57 +99,31 @@ export default function () {
         }
     ];
 
-
-
     return (
         <S.Container>
             <Header />
             <S.Content>
                 <S.PostListTop>
                     <S.Search>
-                        <img src={Search} width={20} />
+                        <img src={Search} width={20} alt="Search" />
                         <S.Input type="text" placeholder="검색어를 입력하세요" />
                     </S.Search>
                 </S.PostListTop>
 
                 <S.Sort>
-                    <S.Recent
-                        onClick={() => setActiveSort("recent")}
-                        active={activeSort === "like"}
-                    >
+                    <S.Recent onClick={() => setActiveSort("recent")} active={activeSort === "like"}>
                         <button /><p>최신순</p>
                     </S.Recent>
-
-                    <S.Like
-                        onClick={() => setActiveSort("like")}
-                        active={activeSort === "recent"}
-                    >
+                    <S.Like onClick={() => setActiveSort("like")} active={activeSort === "recent"}>
                         <button /><p>좋아요순</p>
                     </S.Like>
                 </S.Sort>
+
                 <S.PostListMain>
-                    {PostList.map((row, index) => (
-                        <S.RowData key={index}>
-                            <S.PostImg><img src={row.thumbnail} /></S.PostImg>
-                            <S.PostRightData>
-                                <S.PostRightTopData>
-                                    <S.PostData>{row.title}</S.PostData>
-                                    <p>{row.introduction}</p>
-                                </S.PostRightTopData>
-                                <span></span>
-                                <S.PostRightBottomData>
-                                    <S.PostProfile><img src={row.profile} /></S.PostProfile>
-                                    <S.PostbottomData>
-                                        <S.Name>{row.name}</S.Name>
-                                        <span>{new Date(row.date).toLocaleDateString()}</span>
-                                    </S.PostbottomData>
-                                    <S.PostLike><img src={Like} /><p>{row.likes}</p></S.PostLike>
-                                </S.PostRightBottomData>
-                            </S.PostRightData>
-                        </S.RowData>
+                    {PostList.map((post) => (
+                        <PostItem key={post.document_id} post={post} onClick={handlePostClick} />
                     ))}
                 </S.PostListMain>
-
             </S.Content>
         </S.Container>
     );
