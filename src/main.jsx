@@ -13,7 +13,7 @@ import Onboarding from './pages/onboarding/index.jsx';
 import Apply from './pages/apply/index.jsx';
 import Login from './pages/login/login.jsx';
 import Signup from './pages/signup/signup.jsx';
-import PostList from './pages/PostList/index.jsx';
+import PostList from './pages/postList/index.jsx';
 import Write from './pages/write/index.jsx';
 import MyPage from './pages/mypage/mypage.jsx';
 import Detail from './pages/postList/detail/index.jsx';
