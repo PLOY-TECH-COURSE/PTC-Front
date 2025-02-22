@@ -47,10 +47,26 @@ export default function Select() {
     <>
       <Header />
       <_.ProMain>
-        <_.SInput>
-          <_.SImg src={SearchImg} alt="돋보기" />
-          <_.Search type="text" placeholder="유저 아이디를 입력하세요" />
-        </_.SInput>
+        <_.Input>
+          <_.SInput>
+            <_.SImg src={SearchImg} alt="돋보기" />
+            <_.Search type="text" placeholder="유저 아이디를 입력하세요" />
+          </_.SInput>
+          <_.Check>
+            <_.CDiv>
+              <input type="checkbox" name="USER" />
+              <label for="USER">USER</label>
+            </_.CDiv>
+            <_.CDiv>
+              <input type="checkbox" name="STUDENT" />
+              <label for="STUDENT">STUDENT</label>
+            </_.CDiv>
+            <_.CDiv>
+              <input type="checkbox" name="ADMIN" />
+              <label for="ADMIN">ADMIN</label>
+            </_.CDiv>
+          </_.Check>
+        </_.Input>
         <_.UserList>
           {userInfo.map((user, index) => (
             <Users key={index} {...user} />

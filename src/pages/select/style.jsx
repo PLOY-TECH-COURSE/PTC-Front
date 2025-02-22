@@ -15,12 +15,18 @@ export const UserList = styled.div`
 	justify-content: start;
 	
 `;
-
+export const Input = styled.div`
+	display:flex;
+	flex-direction: column;
+	align-items: start;
+	justify-content: center;
+	gap : 12px;
+	margin :24px;
+`;
 export const SInput = styled.div`
 	display:flex;
 	align-items: center;
 	justify-content: center;
-	margin :24px;
 	border: 2px solid #4970FB;
 	border-radius: 10px;
 `;
@@ -37,4 +43,27 @@ export const Search = styled.input`
 	&:focus{
 		outline: none;
 	}
+`;
+export const Check = styled.div`
+	padding: 8px 12px;
+	background-color: #fff;
+	border-radius: 8px;
+	font-size : 8px;
+	font-weight : 600;
+	color : #000;
+	display:flex;
+	align-items: center;
+	gap : 1.5rem;
+`;
+export const CDiv = styled.div`
+	font-size : 10px;
+	color : #000;
+	cursor : pointer;
+	display:flex;
+	align-items: center;
+	gap : 8px;
+	    /* on */
+    input{
+			accent-color: #4970FB;
+    }
 `;
