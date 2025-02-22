@@ -22,9 +22,9 @@ export const userDesc = styled.div`
 	padding : 8px 0;
 `;
 export const userInfo = styled.div`
-	width:152px;
+	width:164px;
 	position: relative;
-	padding-bottom:16px;
+	padding-bottom:8px;
 	margin-bottom: 16px;
 	display:flex;
 	flex-direction:column;
