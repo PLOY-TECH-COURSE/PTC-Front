@@ -1,4 +1,5 @@
 import Profile from "../../../assets/proposer/default.png";
+import Down from "../../../assets/down.svg";
 import * as _ from "./style";
 
 const Users = ({ onClick,img, name, email, promise, auth }) => {
@@ -13,7 +14,10 @@ const Users = ({ onClick,img, name, email, promise, auth }) => {
 				</_.userInfo>
 				<_.BtnDiv>
 					<_.auth>권한</_.auth>
-					<_.userDD>{auth}</_.userDD>
+					<_.userDD>
+						{auth}
+						<_.authImg src={Down} alt="열기"/>
+					</_.userDD>
 				</_.BtnDiv>
 			</_.userDesc>
 

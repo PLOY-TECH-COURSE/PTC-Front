@@ -57,7 +57,7 @@ export const BtnDiv = styled.div`
 	gap: 12px;
 `;
 export const auth = styled.div`
-	padding: 8px 12px 8px 0;
+	padding: 8px 4px 8px 0;
 	background-color: #fff;
 	border-radius: 8px;
 	font-size : 12px;
@@ -65,7 +65,7 @@ export const auth = styled.div`
 	color : #4970FB;
 `;
 export const userDD = styled.button`
-	padding: 8px 32px 8px 12px;
+	padding: 8px 12px;
 	background-color: #fff;
 	border: 1px solid #D1D1D1;
 	border-radius: 8px;
@@ -73,9 +73,12 @@ export const userDD = styled.button`
 	font-weight : 600;
 	color : #000;
 	cursor : pointer;
-	// &:hover{
-	// 	background-color: #4970FB;
-	// 	color : #fff;
-	// 	border: 2px solid #4970FB;
-	// }
+	display:flex;
+	align-items: center;
+	gap : 2rem;
 `;
+export const authImg = styled.img`
+	width : 14px;
+	height : 14px;
+`;
+
