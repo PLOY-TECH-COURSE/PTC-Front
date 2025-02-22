@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Header from "../../components/header";
-import Users from "../../components/selet/users";
+import Users from "../../components/select/users/index.jsx";
 import SearchImg from "../../assets/proposer/search.svg";
 import * as _ from "./style";
 

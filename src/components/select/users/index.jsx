@@ -11,8 +11,8 @@ const Users = ({ onClick,img, name, email, promise }) => {
 					<_.userEmail>{email}</_.userEmail>
 				</_.userInfo>
 				<_.BtnDiv>
-					<>권한</>
-					<_.userBtn>USER</_.userBtn>
+					<_.auth>권한</_.auth>
+					<_.userDD>USER</_.userDD>
 				</_.BtnDiv>
 			</_.userDesc>
 

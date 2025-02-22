@@ -18,6 +18,7 @@ import Write from './pages/write/index.jsx';
 import MyPage from './pages/mypage/mypage.jsx';
 import Detail from './pages/PostList/detail/index.jsx';
 import Proposer from './pages/proposer/index.jsx';
+import Select from './pages/select/index.jsx';
 
 createRoot(document.getElementById('root')).render(
    <RecoilRoot>
