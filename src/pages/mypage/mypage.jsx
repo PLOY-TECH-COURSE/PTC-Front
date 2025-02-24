@@ -122,6 +122,7 @@ const Inputtag2 = styled.input`
 
 const Mypage = () => {
   const auth=useRecoilValue(authAtom);
+  const userId = auth.uid;
   console.log({auth});
   const [isEditing, setIsEditing] = useState(false);
   const [userData, setUserData] = useState(null);
@@ -157,8 +158,7 @@ const Mypage = () => {
 
   return (
     <>
-      <Header />
-      
+      <Header />   
       <Container>
         <ProfileSection>
           <Avatar src={userData?.profile || ""} alt="Profile" />
