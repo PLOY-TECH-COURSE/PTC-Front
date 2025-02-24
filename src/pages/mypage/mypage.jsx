@@ -131,7 +131,7 @@ const Mypage = () => {
   const [editedBio, setEditedBio] = useState("");
   const [activeTab, setActiveTab] = useState("글");
   useEffect(() => {
-    axios.get(`/users/${userId}`)
+    axios.get(`/mypage`)
       .then((response) => {
         setUserData(response.data);
         setEditedUid(response.data.uid);
