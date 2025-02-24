@@ -17,11 +17,14 @@ export default function () {
     const handleSearchChange = (e) => {
         const query = e.target.value;
         setSearchQuery(query);
-        setStart(0); 
+        setStart(0);
 
         if (query) {
             setLoading(true);
-            getSearchPost(query, sort, start)
+
+            const encodedQuery = encodeURIComponent(query);
+
+            getSearchPost(encodedQuery, sort, start)
                 .then((data) => {
                     setPosts(data.documents);
                     setLoading(false);
@@ -38,9 +41,13 @@ export default function () {
     const handleSortChange = (newSort) => {
         setSort(newSort);
         setStart(0);
+
         if (searchQuery) {
             setLoading(true);
-            getSearchPost(searchQuery, newSort, start)
+
+            const encodedQuery = encodeURIComponent(searchQuery);
+
+            getSearchPost(encodedQuery, newSort, start)
                 .then((data) => {
                     setPosts(data.documents);
                     setLoading(false);
@@ -59,7 +66,10 @@ export default function () {
     useEffect(() => {
         if (searchQuery) {
             setLoading(true);
-            getSearchPost(searchQuery, sort, start)
+
+            const encodedQuery = encodeURIComponent(searchQuery);
+
+            getSearchPost(encodedQuery, sort, start)
                 .then((data) => {
                     setPosts(data.documents);
                     setLoading(false);
