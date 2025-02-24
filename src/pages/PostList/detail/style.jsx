@@ -144,13 +144,11 @@ export const PostDetailDataTop = styled.div`
 export const Edit = styled.div`
     display: flex;
     gap: 20px;
-
     p{
         font-family: 'Courier New', Courier, monospace;
         color: #909090;
         cursor: pointer;
     }
-
     p:not(:last-child)::after {
         content: "";
         display: inline-block;
@@ -160,3 +158,101 @@ export const Edit = styled.div`
         margin-left: 17px;
     }
 `
+export const CommentSection = styled.div`
+    margin-top: 40px;
+    width: 100%;
+    background: #fff;
+    padding: 20px;
+    position:absolute;
+    left:27%;
+`;
+
+export const CommentInputWrapper = styled.div`
+    display: flex;
+    margin-top: 20px;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 10px;
+    width: 50%;
+    
+    input {
+        flex: 1;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-family: 'Pretendard', sans-serif;
+    }
+
+    button {
+        background-color: #4970FB;
+        color: white;
+        border: none;
+        padding: 12px;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100px;
+        align-self: flex-end; 
+    }
+`;
+
+export const CommentItem = styled.div`
+    display: flex;
+    width: 50%;
+    align-items: center;
+    background: #fff;  
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+`;
+
+export const CommentProfile = styled.div`
+    width: 40px;
+    height: 40px;
+    background: #ccc;
+    border-radius: 50%;
+    margin-right: 10px;
+`;
+
+export const CommentContent = styled.div`
+    flex: 1;
+    font-family: 'Pretendard', sans-serif;
+
+    p {
+        margin: 3px 0;
+    }
+`;
+
+export const CommentBottom = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 5px;
+`;
+
+export const Like = styled.div`
+    color: #4970FB;
+    font-size: 14px;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+`;
+
+export const CommentActions = styled.div`
+    display: flex;
+    gap: 10px;
+    
+    p {
+        color: #909090;
+        cursor: pointer;
+        font-family: 'Pretendard', sans-serif;
+    }
+
+    p:not(:last-child)::after {
+        content: "";
+        display: inline-block;
+        width: 1px; 
+        height: 13.5px;
+        background-color: #ccc; 
+        margin-left: 10px;
+    }
+`;

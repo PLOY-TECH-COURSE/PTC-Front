@@ -70,8 +70,6 @@ export const Box = styled.div`
     width: 250px;
     height: 270px;
     display: flex;
-    background: url(${(props)=>props.$bg}) no-repeat;
-    background-size: cover;
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
@@ -82,6 +80,21 @@ export const Box = styled.div`
             props.$isAnimation
                     ? css`${show} ${props.$time}s ease-in-out`
                     : 'none'};
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    & > img{
+        z-index: 3;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    & > img:hover{
+        transform: scale(1.1);
+        transition: 0.8s;
+    }
     @media (max-width: 480px) {
         width: 120px;
         height: 140px;
@@ -93,6 +106,7 @@ export const User = styled.div`
     box-shadow: 0 0 7.64px 0 rgba(0, 0, 0, 0.25);
     border-radius: 8px;
     padding: 6px;
+    z-index: 4;
 `
 export const Name = styled.h3`
     text-align: center;

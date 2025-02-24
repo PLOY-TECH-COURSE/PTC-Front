@@ -56,7 +56,7 @@ export default function WriteModal({title, tag, content, setIsModal}){
                 <S.BtnBox>
                     <S.Btn onClick={()=>setIsModal(false)} $Success={false}>취소</S.Btn>
                     <S.Btn $Success={true} onClick={async ()=>{
-                        if(await postDocument(title, content, tag, img, content)){
+                        if(await postDocument(title, content, tag.map((item) => item.tag), img, content)){
                             navigate('/postList');
                         }
                     }}>등록</S.Btn>
