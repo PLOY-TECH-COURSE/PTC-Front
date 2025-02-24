@@ -4,8 +4,8 @@ import icon from "../../assets/sujung.svg";
 import book from "../../assets/book.svg";
 import like from "../../assets/like.svg";
 import { useState, useEffect } from "react";
-import axios from "axios";
-import {authAtom} from "../../recoil/authAtom.js";
+import axiosInstance from "../lib/axiosInstance.js";
+import { authAtom } from "../../recoil/authAtom.js";
 import { useRecoilValue } from "recoil";
 
 const Container = styled.div`
@@ -121,27 +121,32 @@ const Inputtag2 = styled.input`
 `;
 
 const Mypage = () => {
-  const auth=useRecoilValue(authAtom);
+  const auth = useRecoilValue(authAtom);
   const userId = auth.uid;
-  console.log({auth});
+  console.log({ auth });
+
   const [isEditing, setIsEditing] = useState(false);
   const [userData, setUserData] = useState(null);
   const [editedUid, setEditedUid] = useState("");
   const [editedBio, setEditedBio] = useState("");
   const [activeTab, setActiveTab] = useState("글");
+
   useEffect(() => {
-  
-    axios.get(`http://218.235.187.45:8081/mypage`, {  
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    })
-    .then((response) => {
-      console.log("API 응답 데이터:", response.data);
-      setUserData(response.data);
-    })
-    .catch((error) => console.error("API 요청 실패:", error));
+    if (!userId) {
+      console.warn("❗ userId가 없음, API 요청 중단");
+      return;
+    }
+
+    axiosInstance.get(`/mypage`)
+      .then((response) => {
+        console.log("✅ API 응답 데이터:", response.data);
+        setUserData(response.data);
+        setEditedUid(response.data.uid);
+        setEditedBio(response.data.bio);
+      })
+      .catch((error) => console.error("❌ API 요청 실패:", error));
   }, [userId]);
+
   const handleEditClick = () => {
     if (isEditing) {
       setUserData((prev) => ({
@@ -152,7 +157,7 @@ const Mypage = () => {
     }
     setIsEditing(!isEditing);
   };
-  
+
   return (
     <>
       <Header />   
