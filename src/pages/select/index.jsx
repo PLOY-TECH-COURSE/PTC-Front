@@ -15,7 +15,7 @@ export default function Select() {
     },
     {
       img: "",
-      name: "김파랑",
+      name: "김초랑",
       email: "9876@naver.com",
       promise: "수업 중에 딴짓 안할게요..ㅠㅠ",
       auth: "USER",
@@ -43,11 +43,31 @@ export default function Select() {
     },
   ]);
 
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedAuth, setSelectedAuth] = useState({
+    USER: false,
+    STUDENT: false,
+    ADMIN: false,
+  });
+
   const updateAuth = (index, newAuth) => {
     const updatedUsers = [...userInfo];
     updatedUsers[index].auth = newAuth;
-    setUserInfo(updatedUsers); // 상태 업데이트
+    setUserInfo(updatedUsers);
   };
+
+  const handleAuthChange = (e) => {
+    setSelectedAuth((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.checked,
+    }));
+  };
+
+  const filteredUsers = userInfo.filter(
+    (user) =>
+      (user.name.toLowerCase().includes(searchQuery.toLowerCase()) || searchQuery === "") && 
+      (selectedAuth[user.auth] || Object.values(selectedAuth).includes(true) === false)
+  );
 
   return (
     <>
@@ -56,15 +76,49 @@ export default function Select() {
         <_.Input>
           <_.SInput>
             <_.SImg src={SearchImg} alt="돋보기" />
-            <_.Search type="text" placeholder="유저 아이디를 입력하세요" />
+            <_.Search
+              type="text"
+              placeholder="유저 아이디를 입력하세요"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
           </_.SInput>
+          <_.Check>
+            <_.CDiv>
+              <input
+                type="checkbox"
+                name="USER"
+                checked={selectedAuth.USER}
+                onChange={handleAuthChange}
+              />
+              <label htmlFor="USER">USER</label>
+            </_.CDiv>
+            <_.CDiv>
+              <input
+                type="checkbox"
+                name="STUDENT"
+                checked={selectedAuth.STUDENT}
+                onChange={handleAuthChange}
+              />
+              <label htmlFor="STUDENT">STUDENT</label>
+            </_.CDiv>
+            <_.CDiv>
+              <input
+                type="checkbox"
+                name="ADMIN"
+                checked={selectedAuth.ADMIN}
+                onChange={handleAuthChange}
+              />
+              <label htmlFor="ADMIN">ADMIN</label>
+            </_.CDiv>
+          </_.Check>
         </_.Input>
         <_.UserList>
-          {userInfo.map((user, index) => (
-            <Users 
-              key={user.email} 
-              {...user} 
-              setAuth={(newAuth) => updateAuth(index, newAuth)} // 권한 업데이트 함수 전달
+          {filteredUsers.map((user, index) => (
+            <Users
+              key={user.email}
+              {...user}
+              setAuth={(newAuth) => updateAuth(index, newAuth)}
             />
           ))}
         </_.UserList>
