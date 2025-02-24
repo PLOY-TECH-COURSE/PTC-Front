@@ -54,19 +54,19 @@ export const SubText = styled.h4`
 `
 const rotateFromStart = keyframes`
     0% {
-        transform: translate(-50%, -50%) rotate(0deg) translateY(-30px);
+        transform: translate(-50%, -80%) rotate(0deg) translateY(-30px);
     }
     100% {
-        transform: translate(-50%, -50%) rotate(360deg) translateY(-30px);
+        transform: translate(-50%, -80%) rotate(360deg) translateY(-30px);
     }
 `;
 
 const rotateFromHalf = keyframes`
     0% {
-        transform: translate(-50%, -50%) rotate(180deg) translateY(-30px); /* 50% 위치에서 시작 */
+        transform: translate(-50%, -80%) rotate(180deg) translateY(-30px); /* 50% 위치에서 시작 */
     }
     100% {
-        transform: translate(-50%, -50%) rotate(540deg) translateY(-30px);
+        transform: translate(-50%, -80%) rotate(540deg) translateY(-30px);
     }
 `;
 export const Btn = styled.button`
