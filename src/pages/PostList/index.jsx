@@ -18,45 +18,11 @@ export default function () {
         const query = e.target.value;
         setSearchQuery(query);
         setStart(0);
-
-        if (query) {
-            setLoading(true);
-
-            const encodedQuery = encodeURIComponent(query);
-
-            getSearchPost(encodedQuery, sort, start)
-                .then((data) => {
-                    setPosts(data.documents);
-                    setLoading(false);
-                })
-                .catch((error) => {
-                    console.error("게시물을 불러오는 데 실패했습니다.", error);
-                    setLoading(false);
-                });
-        } else {
-            setPosts([]);
-        }
     };
 
     const handleSortChange = (newSort) => {
         setSort(newSort);
         setStart(0);
-
-        if (searchQuery) {
-            setLoading(true);
-
-            const encodedQuery = encodeURIComponent(searchQuery);
-
-            getSearchPost(encodedQuery, newSort, start)
-                .then((data) => {
-                    setPosts(data.documents);
-                    setLoading(false);
-                })
-                .catch((error) => {
-                    console.error("게시물을 불러오는 데 실패했습니다.", error);
-                    setLoading(false);
-                });
-        }
     };
 
     const handlePostClick = (id) => {
@@ -78,7 +44,6 @@ export default function () {
                 setLoading(false);
             });
     }, [searchQuery, sort, start]);
-
 
     return (
         <S.Container>
@@ -106,8 +71,8 @@ export default function () {
                 </S.Sort>
 
                 <S.PostListMain>
-                    {searchQuery && posts.length === 0 ? (
-                        <h2>검색 결과가 없습니다.</h2>
+                    {posts.length === 0 ? (
+                        <h2>{searchQuery ? "검색 결과가 없습니다." : "모든 게시물이 없습니다."}</h2>
                     ) : (
                         posts.map((post) => (
                             <PostItem key={post.document_id} post={post} onClick={handlePostClick} />
