@@ -8,6 +8,7 @@ export default function WriteModal({title, tag, content, setIsModal}){
     const fileRef = useRef(null);
     const [isOpen, setIsOpen] = useState(false);
     const [img, setImg] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
     const navigate = useNavigate();
     const changeFile = async (event) => {
@@ -56,7 +57,10 @@ export default function WriteModal({title, tag, content, setIsModal}){
                 <S.BtnBox>
                     <S.Btn onClick={()=>setIsModal(false)} $Success={false}>취소</S.Btn>
                     <S.Btn $Success={true} onClick={async ()=>{
+                        if(isLoading) return ;
+                        setIsLoading(true);
                         if(await postDocument(title, content, tag.map((item) => item.tag), img, content)){
+                            setIsLoading(false);
                             navigate('/postList');
                         }
                     }}>등록</S.Btn>
