@@ -23,12 +23,12 @@ export default function Proposer() {
     },
     {
       img: "",
-      name: "수푸링",
+      name: "수푸랑",
       email: "spring@kakao.com",
       intro: "자바 넘 어려워ㅓ",
       promise: "어렵워도 이겨내겠습니다.",
     },
-		{
+    {
       img: "",
       name: "에이치",
       email: "htmlhate@hi.com",
@@ -45,6 +45,7 @@ export default function Proposer() {
   ];
 
   const [selectedUser, setSelectedUser] = useState(0);
+  const [searchQuery, setSearchQuery] = useState("");  // 검색어 상태 추가
 
   const openModal = (user) => {
     setSelectedUser(user);
@@ -54,16 +55,26 @@ export default function Proposer() {
     setSelectedUser(0);
   };
 
+  // 검색어에 맞는 유저 필터링
+  const filteredUsers = userInfo.filter(user =>
+    user.name.toLowerCase().includes(searchQuery.toLowerCase())  // 대소문자 구분 없이 검색
+  );
+
   return (
     <>
       <Header />
       <_.ProMain>
         <_.SInput>
           <_.SImg src={SearchImg} alt="돋보가" />
-        <_.Search type="text" placeholder="유저 아이디를 입력하세요" />
+          <_.Search
+            type="text"
+            placeholder="유저 아이디를 입력하세요"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}  // 검색어 입력 시 상태 업데이트
+          />
         </_.SInput>
         <_.UserList>
-          {userInfo.map((user, index) => (
+          {filteredUsers.map((user, index) => (
             <Users onClick={() => openModal(user)} key={index} {...user} />
           ))}
         </_.UserList>
