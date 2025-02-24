@@ -142,6 +142,16 @@ const Mypage = () => {
     })
     .catch((error) => console.error("API 요청 실패:", error));
   }, [userId]);
+  const handleEditClick = () => {
+    if (isEditing) {
+      setUserData((prev) => ({
+        ...prev,
+        uid: editedUid,
+        bio: editedBio,
+      }));
+    }
+    setIsEditing(!isEditing);
+  };
   
   return (
     <>
