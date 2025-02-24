@@ -64,21 +64,24 @@ export const auth = styled.div`
 	font-weight : bold;
 	color : #4970FB;
 `;
-export const userDD = styled.button`
-	padding: 8px 12px;
-	background-color: #fff;
-	border: 1px solid #D1D1D1;
-	border-radius: 8px;
-	font-size : 8px;
-	font-weight : 600;
-	color : #000;
-	cursor : pointer;
-	display:flex;
-	align-items: center;
-	gap : 2rem;
+export const userDD = styled.ul`
+  padding: 8px 12px;
+  background-color: #fff;
+  border: 1px solid #D1D1D1;
+  border-radius: 8px;
+  font-size: 8px;
+  font-weight: 600;
+  color: #000;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+	position:relative;
 `;
 export const authImg = styled.img`
-	width : 14px;
-	height : 14px;
+  width: 14px;
+  height: 14px;
+  transform: ${(props) => (props.isOpen ? "rotate(180deg)" : "rotate(0deg)")};
+  transition: transform 0.3s ease-in-out;
 `;
 

@@ -13,7 +13,7 @@ export const UserList = styled.div`
 	flex-wrap: wrap;
 	gap: 24px;
 	justify-content: start;
-	
+	z-index : 2;
 `;
 export const Input = styled.div`
 	display:flex;
