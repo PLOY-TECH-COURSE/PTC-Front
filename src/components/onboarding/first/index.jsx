@@ -13,6 +13,7 @@ import MainImg4 from '../../../assets/onboarding/first/mento4.jpeg'
 import ArrowLeft from '../../../assets/onboarding/first/leftArrow.svg'
 import ArrowRight from  '../../../assets/onboarding/first/rightArrow.svg'
 import {useThrottle} from "../../../hooks/useThrottle.jsx";
+import Mail from '../../../assets/onboarding/first/mail.svg'
 
 export default function First(){
     const navigate = useNavigate();
@@ -86,7 +87,22 @@ export default function First(){
                            if( auth.role === "") navigate('/login');
                            else if( auth.role === "ROLE_USER") navigate('/apply');
                            else alert('아직준비중입니다.');
-                        }}>신청하기</S.Btn>
+                        }}>
+                            <span>신청하기</span>
+                            <S.BtnText $isHalf = {false}>
+                                <span>s</span>
+                                <span>e</span>
+                                <span>n</span>
+                                <span>d</span>
+                            </S.BtnText>
+                            <img src={Mail} alt={'Icon'} />
+                            <S.BtnText $isHalf = {true}>
+                                <span>s</span>
+                                <span>e</span>
+                                <span>n</span>
+                                <span>d</span>
+                            </S.BtnText>
+                        </S.Btn>
                     </S.Description>
                     <S.SlideBox>
                         <S.Slide>

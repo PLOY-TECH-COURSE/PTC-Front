@@ -49,7 +49,8 @@ export default function TeamIntroduce({isAnimation}){
                         member.map((item)=>{
                                 if(item.name){
                                     return(
-                                        <S.Box $time = {item.time} $isAnimation = {isAnimation} key={item.id}  $bg={item.bg}>
+                                        <S.Box onClick={()=>window.open(item.git)} $time = {item.time} $isAnimation = {isAnimation} key={item.id} >
+                                            <img src={item.bg} alt=""/>
                                             <S.User>
                                                 <S.Name>{item.name}</S.Name>
                                                 <S.JobBox>
@@ -66,6 +67,7 @@ export default function TeamIntroduce({isAnimation}){
                             if(item.name){
                                 return(
                                     <S.Box $time = {item.time} $isAnimation = {isAnimation} key={item.id}  $bg={item.bg}>
+                                        <img src={item.bg} alt=""/>
                                         <S.User>
                                             <S.Name>{item.name}</S.Name>
                                             <S.JobBox>

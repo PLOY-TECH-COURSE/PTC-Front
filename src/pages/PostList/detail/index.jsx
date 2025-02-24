@@ -196,6 +196,47 @@ export default function Detail() {
                         </S.PostDetailData>
                     </S.PostDetailMain>
                 )}
+                <S.CommentSection>
+            <h3>2개의 댓글</h3>
+            <S.CommentInputWrapper>
+                <input type="text" placeholder="댓글을 입력해주세요" />
+                <button>댓글 작성</button>
+            </S.CommentInputWrapper>
+
+            <S.CommentItem>
+                <S.CommentProfile />
+                <S.CommentContent>
+                    <p><strong>heodongun</strong></p>
+                    <p>허온 대머리</p>
+                    <S.CommentBottom>
+                        <S.Like>
+                            <img src={Like2} width="20px"></img>12
+                        </S.Like>
+                        <S.CommentActions>
+                            <p>삭제</p>
+                            <p>수정</p>
+                                </S.CommentActions>
+                            </S.CommentBottom>
+                        </S.CommentContent>
+                    </S.CommentItem>
+
+                    <S.CommentItem>
+                        <S.CommentProfile />
+                        <S.CommentContent>
+                            <p><strong>huhon123</strong></p>
+                            <p>허동운 대머리</p>
+                            <S.CommentBottom>
+                                <S.Like>
+                                    <img src={Like2} width="20px"></img>12
+                                </S.Like>
+                                <S.CommentActions>
+                                    <p>삭제</p>
+                                    <p>수정</p>
+                                </S.CommentActions>
+                            </S.CommentBottom>
+                        </S.CommentContent>
+                    </S.CommentItem>
+                </S.CommentSection>
             </S.Content>
         </S.Container>
     );

@@ -140,6 +140,7 @@ export const ArrowUp = styled.div`
     transform: translate(-50%, -50%);
     gap: 8px;
     width: 80%;
+    cursor: pointer;
     padding: 3% 0;
     font-weight: 550;
     &:hover > div > img{
@@ -158,6 +159,7 @@ export const ArrowDown = styled.div`
     border-top-right-radius: 100px;
     transform: translate(-50%, -50%);
     gap: 8px;
+    cursor: pointer;
     width: 80%;
     padding: 2% 0;
     font-weight: 550;
@@ -170,9 +172,7 @@ export const Black = styled.div`
     width: 60px;
     height: 60px;
     padding: 4px;
-    cursor: pointer;
     border-radius: 100%;
-    background-color: rgb(0,0,0,0.5);
     display: flex;
     justify-content: center;
     align-items: center;
