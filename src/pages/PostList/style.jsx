@@ -94,6 +94,10 @@ export const PostListMain = styled.div`
     height: 70vh;
     justify-content: space-between;
     row-gap: 40px;
+
+    h2{
+        margin-left: 320px;
+    }
 `
 
 export const PostData = styled.div`

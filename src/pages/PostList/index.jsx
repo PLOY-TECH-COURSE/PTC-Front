@@ -1,103 +1,85 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import * as S from './style';
 import Header from '../../components/header';
 import Search from '../../assets/search.svg';
 import PostItem from "../../components/postItem";
 import { useNavigate } from "react-router-dom";
+import { getSearchPost } from "../../api/postList";
 
 export default function () {
-    const [activeSort, setActiveSort] = useState("recent");
     const navigate = useNavigate();
+    const [searchQuery, setSearchQuery] = useState("");
+    const [sort, setSort] = useState("recent");
+    const [start, setStart] = useState(0);
+    const [posts, setPosts] = useState([]);
+    const [loading, setLoading] = useState(false);
+
+    const handleSearchChange = (e) => {
+        const query = e.target.value;
+        setSearchQuery(query);
+        setStart(0);
+
+        if (query) {
+            setLoading(true);
+
+            const encodedQuery = encodeURIComponent(query);
+
+            getSearchPost(encodedQuery, sort, start)
+                .then((data) => {
+                    setPosts(data.documents);
+                    setLoading(false);
+                })
+                .catch((error) => {
+                    console.error("게시물을 불러오는 데 실패했습니다.", error);
+                    setLoading(false);
+                });
+        } else {
+            setPosts([]);
+        }
+    };
+
+    const handleSortChange = (newSort) => {
+        setSort(newSort);
+        setStart(0);
+
+        if (searchQuery) {
+            setLoading(true);
+
+            const encodedQuery = encodeURIComponent(searchQuery);
+
+            getSearchPost(encodedQuery, newSort, start)
+                .then((data) => {
+                    setPosts(data.documents);
+                    setLoading(false);
+                })
+                .catch((error) => {
+                    console.error("게시물을 불러오는 데 실패했습니다.", error);
+                    setLoading(false);
+                });
+        }
+    };
 
     const handlePostClick = (id) => {
         navigate(`/post/${id}`);
     };
 
-    const PostList = [
-        {
-            "document_id": 10,
-            "title": "플테코 첫 수업",
-            "introduction": "소마고 선배님들께 배운 재미난 HTML 이야기",
-            "date": "2024-12-25 10:24:34",
-            "user_id": 12,
-            "name": "허온",
-            "profile": "https://velog.velcdn.com/images/huhon/post/5c510375-11a6-4fcf-864d-70db704c667f/image.png",
-            "thumbnail": "https://velog.velcdn.com/images/huhon/post/5c510375-11a6-4fcf-864d-70db704c667f/image.png",
-            "likes": 10,
-            "hash_tag": ["혼공컴운", "HTML"]
-        },
-        {
-            "document_id": 11,
-            "title": "두 번째 수업",
-            "introduction": "CSS를 배우고 스타일링에 대해 고민한 시간",
-            "date": "2025-01-10 14:00:00",
-            "user_id": 13,
-            "name": "윤도훈",
-            "profile": "https://cdn.newsworks.co.kr/news/photo/202002/433057_327801_345.jpg",
-            "thumbnail": "https://velog.velcdn.com/images/huhon/post/5c510375-11a6-4fcf-864d-70db704c667f/image.png",
-            "likes": 5,
-            "hash_tag": ["CSS", "디자인"]
-        },
-        {
-            "document_id": 12,
-            "title": "JavaScript 기초",
-            "introduction": "변수, 함수, 이벤트 핸들링 기초 학습",
-            "date": "2025-01-15 09:30:00",
-            "user_id": 14,
-            "name": "박소은",
-            "profile": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAT4AAACfCAMAAABX0UX9AAAAA1BMVEVKT1omKN7sAAAASElEQVR4nO3BMQEAAADCoPVPbQ0PoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABODcYhAAEl463hAAAAAElFTkSuQmCC",
-            "thumbnail": "https://velog.velcdn.com/images/huhon/post/5c510375-11a6-4fcf-864d-70db704c667f/image.png",
-            "likes": 750,
-            "hash_tag": ["JavaScript", "프로그래밍"]
-        },
-        {
-            "document_id": 13,
-            "title": "React 시작하기",
-            "introduction": "React의 기본 개념과 컴포넌트 이해",
-            "date": "2025-02-01 16:45:00",
-            "user_id": 15,
-            "name": "이효준",
-            "profile": "https://velog.velcdn.com/images/huhon/post/5c510375-11a6-4fcf-864d-70db704c667f/image.png",
-            "thumbnail": "https://velog.velcdn.com/images/huhon/post/5c510375-11a6-4fcf-864d-70db704c667f/image.png",
-            "likes": 10,
-            "hash_tag": ["React", "프론트엔드"]
-        },
-        {
-            "document_id": 14,
-            "title": "API와 데이터 통신",
-            "introduction": "REST API와 Fetch 사용법 학습",
-            "date": "2025-02-10 13:20:00",
-            "user_id": 16,
-            "name": "허동운",
-            "profile": "https://velog.velcdn.com/images/huhon/post/5c510375-11a6-4fcf-864d-70db704c667f/image.png",
-            "thumbnail": "https://velog.velcdn.com/images/huhon/post/5c510375-11a6-4fcf-864d-70db704c667f/image.png",
-            "likes": 80,
-            "hash_tag": ["API", "백엔드", "프론트엔드"]
-        },
-        {
-            "document_id": 15,
-            "title": "React 시작하기",
-            "introduction": "React의 기본 개념과 컴포넌트 이해",
-            "date": "2025-02-01 16:45:00",
-            "user_id": 17,
-            "name": "조재민",
-            "profile": "https://velog.velcdn.com/images/huhon/post/5c510375-11a6-4fcf-864d-70db704c667f/image.png",
-            "thumbnail": "https://velog.velcdn.com/images/huhon/post/5c510375-11a6-4fcf-864d-70db704c667f/image.png",
-            "likes": 60,
-            "hash_tag": ["React", "프론트엔드"]
-        },
-        {
-            "document_id": 16,
-            "title": "API와 데이터 통신",
-            "introduction": "REST API와 Fetch 사용법 학습",
-            "date": "2025-02-10 13:20:00",
-            "user_id": 18,
-            "name": "조아라",
-            "profile": "https://velog.velcdn.com/images/huhon/post/5c510375-11a6-4fcf-864d-70db704c667f/image.png",
-            "thumbnail": "https://velog.velcdn.com/images/huhon/post/5c510375-11a6-4fcf-864d-70db704c667f/image.png",
-            "likes": 9,
+    useEffect(() => {
+        if (searchQuery) {
+            setLoading(true);
+
+            const encodedQuery = encodeURIComponent(searchQuery);
+
+            getSearchPost(encodedQuery, sort, start)
+                .then((data) => {
+                    setPosts(data.documents);
+                    setLoading(false);
+                })
+                .catch((error) => {
+                    console.error("게시물을 불러오는 데 실패했습니다.", error);
+                    setLoading(false);
+                });
         }
-    ];
+    }, [searchQuery, sort, start]);
 
     return (
         <S.Container>
@@ -106,23 +88,34 @@ export default function () {
                 <S.PostListTop>
                     <S.Search>
                         <img src={Search} width={20} alt="Search" />
-                        <S.Input type="text" placeholder="검색어를 입력하세요" />
+                        <S.Input
+                            type="text"
+                            placeholder="검색어를 입력하세요"
+                            value={searchQuery}
+                            onChange={handleSearchChange}
+                        />
                     </S.Search>
                 </S.PostListTop>
 
                 <S.Sort>
-                    <S.Recent onClick={() => setActiveSort("recent")} active={activeSort === "like"}>
+                    <S.Recent onClick={() => handleSortChange("recent")} active={sort === "recent"}>
                         <button /><p>최신순</p>
                     </S.Recent>
-                    <S.Like onClick={() => setActiveSort("like")} active={activeSort === "recent"}>
+                    <S.Like onClick={() => handleSortChange("like")} active={sort === "like"}>
                         <button /><p>좋아요순</p>
                     </S.Like>
                 </S.Sort>
 
                 <S.PostListMain>
-                    {PostList.map((post) => (
-                        <PostItem key={post.document_id} post={post} onClick={handlePostClick} />
-                    ))}
+                    {loading ? (
+                        <p>로딩 중...</p>
+                    ) : posts.length > 0 ? (
+                        posts.map((post) => (
+                            <PostItem key={post.document_id} post={post} onClick={handlePostClick} />
+                        ))
+                    ) : (
+                        <h2>검색 결과가 없습니다.</h2>
+                    )}
                 </S.PostListMain>
             </S.Content>
         </S.Container>
