@@ -9,7 +9,7 @@ import { getSearchPost } from "../../api/postList";
 export default function () {
     const navigate = useNavigate();
     const [searchQuery, setSearchQuery] = useState("");
-    const [sort, setSort] = useState("CREAT_AT");
+    const [sort, setSort] = useState("CREATE_AT");
     const [start, setStart] = useState(0);
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
