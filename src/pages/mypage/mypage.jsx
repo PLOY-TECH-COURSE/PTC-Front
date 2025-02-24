@@ -122,7 +122,6 @@ const Inputtag2 = styled.input`
 
 const Mypage = () => {
   const auth=useRecoilValue(authAtom);
-  const userId = auth.uid;
   console.log({auth});
   const [isEditing, setIsEditing] = useState(false);
   const [userData, setUserData] = useState(null);
@@ -130,14 +129,21 @@ const Mypage = () => {
   const [editedBio, setEditedBio] = useState("");
   const [activeTab, setActiveTab] = useState("글");
   useEffect(() => {
-    axios.get(`/mypage`)
-      .then((response) => {
-        setUserData(response.data);
-        setEditedUid(response.data.uid);
-        setEditedBio(response.data.bio);
-      });
-  }, []);
-
+    axios.get(`/mypage`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    })
+    .then((response) => {
+      console.log("API 데이터:", response.data); 
+      if (!response.data || Object.keys(response.data).length === 0) {
+        console.warn("응답 데이터가 없음!!");
+      }
+      setUserData(response.data);
+    })
+    .catch((error) => console.error("API 요청 실패:", error));
+  }, [userId]);
+  
   const handleEditClick = () => {
     if (isEditing) {
       setUserData((prev) => ({
