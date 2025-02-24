@@ -26,8 +26,10 @@ export default function () {
     };
 
     const handlePostClick = (id) => {
-        navigate(`/post/${id}`);
+        const numericId = Number(id);
+        navigate(`/post/${numericId}`);
     };
+    
 
     useEffect(() => {
         setLoading(true);
