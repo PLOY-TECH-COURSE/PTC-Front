@@ -62,10 +62,10 @@ export default function () {
                 </S.PostListTop>
 
                 <S.Sort>
-                    <S.Recent onClick={() => handleSortChange("CREAT_AT")} active={sort === "like"}>
+                    <S.Recent onClick={() => handleSortChange("CREAT_AT")} active={sort === "LIKE"}>
                         <button /><p>최신순</p>
                     </S.Recent>
-                    <S.Like onClick={() => handleSortChange("LIKE")} active={sort === "recent"}>
+                    <S.Like onClick={() => handleSortChange("LIKE")} active={sort === "CREAT_AT"}>
                         <button /><p>좋아요순</p>
                     </S.Like>
                 </S.Sort>
