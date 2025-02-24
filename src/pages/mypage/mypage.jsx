@@ -130,7 +130,7 @@ const Mypage = () => {
   const [editedBio, setEditedBio] = useState("");
   const [activeTab, setActiveTab] = useState("글");
   useEffect(() => {
-    axios.get(`/mypage`, {
+    axios.get('/mypage', {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
