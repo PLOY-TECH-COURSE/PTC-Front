@@ -130,32 +130,19 @@ const Mypage = () => {
   const [editedBio, setEditedBio] = useState("");
   const [activeTab, setActiveTab] = useState("글");
   useEffect(() => {
-    axios.get('/mypage', {
+  
+    axios.get(`http://218.235.187.45:8081/mypage`, {  
       headers: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
     })
     .then((response) => {
-      console.log("API 데이터:", response.data); 
-      if (!response.data || Object.keys(response.data).length === 0) {
-        console.warn("응답 데이터가 없음!!");
-      }
+      console.log("API 응답 데이터:", response.data);
       setUserData(response.data);
     })
     .catch((error) => console.error("API 요청 실패:", error));
   }, [userId]);
   
-  const handleEditClick = () => {
-    if (isEditing) {
-      setUserData((prev) => ({
-        ...prev,
-        uid: editedUid,
-        bio: editedBio,
-      }));
-    }
-    setIsEditing(!isEditing);
-  };
-
   return (
     <>
       <Header />   
