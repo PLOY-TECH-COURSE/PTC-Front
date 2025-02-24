@@ -9,7 +9,7 @@ import { getSearchPost } from "../../api/postList";
 export default function () {
     const navigate = useNavigate();
     const [searchQuery, setSearchQuery] = useState("");
-    const [sort, setSort] = useState("recent");
+    const [sort, setSort] = useState("CREAT_AT");
     const [start, setStart] = useState(0);
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -62,10 +62,10 @@ export default function () {
                 </S.PostListTop>
 
                 <S.Sort>
-                    <S.Recent onClick={() => handleSortChange("recent")} active={sort === "like"}>
+                    <S.Recent onClick={() => handleSortChange("CREAT_AT")} active={sort === "like"}>
                         <button /><p>최신순</p>
                     </S.Recent>
-                    <S.Like onClick={() => handleSortChange("like")} active={sort === "recent"}>
+                    <S.Like onClick={() => handleSortChange("LIKE")} active={sort === "recent"}>
                         <button /><p>좋아요순</p>
                     </S.Like>
                 </S.Sort>
