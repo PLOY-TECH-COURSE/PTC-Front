@@ -1,6 +1,6 @@
 import * as S from "./style.jsx";
 import Logo from '../../assets/Logo.svg'
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useLocation} from "react-router-dom";
 import {useState, useRef, useEffect} from "react";
 import UnderLine from '../../assets/write/underline.svg'
 import CancelLine from '../../assets/write/cancelline.svg';
@@ -20,6 +20,7 @@ import {uploadImg} from "../../api/write.js";
 
 export default function Write(){
     const navigate = useNavigate()
+    const location = useLocation();
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [isModal, setIsModal] = useRecoilState(modalAtom);
@@ -124,8 +125,8 @@ export default function Write(){
             setShowTag([...showTag, {tag :e.target.value, id : showTag.length+1}]);
             setTag("");
         }
-
     }
+    console.log(location.state)
     return(
         <S.WriteContainer>
             {isModal && <WriteModal title = {title} content = {content} tag = {showTag} setIsModal={()=>setIsModal()} />}
