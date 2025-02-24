@@ -2,6 +2,7 @@ import * as S from './style';
 import Like from '../../assets/like.svg';
 
 const PostItem = ({ post, onClick }) => {
+
     return (
         <S.RowData onClick={() => onClick(post.document_id)}>
             <S.PostImg><img src={post.thumbnail} alt="Thumbnail" /></S.PostImg>
