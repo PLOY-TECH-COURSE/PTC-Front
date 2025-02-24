@@ -20,9 +20,9 @@ export const postDocument = async (title, content, tag, img, des) =>{
         const res = await axiosInstance.post('/documents', {
             title:title,
             content:content,
-            tag:tag,
-            image:img,
-            introduce:des
+            hash_tag:tag,
+            thumbnail:img,
+            introduction:des
         });
         if(res.status === 200){
             return true;
