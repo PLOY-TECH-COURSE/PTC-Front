@@ -27,6 +27,10 @@ export default function () {
 
     const handlePostClick = (id) => {
         const numericId = Number(id);
+        if (isNaN(numericId)) {
+            console.error("Invalid ID:", id);
+            return;
+        }
         navigate(`/post/${numericId}`);
     };
     
