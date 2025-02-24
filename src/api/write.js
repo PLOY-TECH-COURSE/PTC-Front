@@ -17,7 +17,7 @@ export const uploadImg = async (file) =>{
 
 export const postDocument = async (title, content, tag, img, des) =>{
     try{
-        const res = await axiosInstance.post('/document', {
+        const res = await axiosInstance.post('/documents', {
             title:title,
             content:content,
             tag:tag,
