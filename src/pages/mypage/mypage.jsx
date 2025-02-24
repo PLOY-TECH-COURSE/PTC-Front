@@ -4,9 +4,9 @@ import icon from "../../assets/sujung.svg";
 import book from "../../assets/book.svg";
 import like from "../../assets/like.svg";
 import { useState, useEffect } from "react";
-import axiosInstance from "../lib/axiosInstance.js";
 import { authAtom } from "../../recoil/authAtom.js";
 import { useRecoilValue } from "recoil";
+import { getUserProfile } from "../../api/mypage"; 
 
 const Container = styled.div`
   max-width: 800px;
@@ -137,12 +137,12 @@ const Mypage = () => {
       return;
     }
 
-    axiosInstance.get(`/mypage`)
-      .then((response) => {
-        console.log("✅ API 응답 데이터:", response.data);
-        setUserData(response.data);
-        setEditedUid(response.data.uid);
-        setEditedBio(response.data.bio);
+    getUserProfile()
+      .then((data) => {
+        console.log("✅ API 응답 데이터:", data);
+        setUserData(data);
+        setEditedUid(data.uid);
+        setEditedBio(data.bio);
       })
       .catch((error) => console.error("❌ API 요청 실패:", error));
   }, [userId]);
@@ -160,7 +160,7 @@ const Mypage = () => {
 
   return (
     <>
-      <Header />   
+      <Header />
       <Container>
         <ProfileSection>
           <Avatar src={userData?.profile || ""} alt="Profile" />
@@ -207,16 +207,10 @@ const Mypage = () => {
           </Sojung>
         </ProfileSection>
         <Tabs>
-          <TabButton 
-            active={activeTab === "글"} 
-            onClick={() => setActiveTab("글")}
-          >
+          <TabButton active={activeTab === "글"} onClick={() => setActiveTab("글")}>
             글
           </TabButton>
-          <TabButton 
-            active={activeTab === "즐겨찾기"} 
-            onClick={() => setActiveTab("즐겨찾기")}
-          >
+          <TabButton active={activeTab === "즐겨찾기"} onClick={() => setActiveTab("즐겨찾기")}>
             즐겨찾기
           </TabButton>
         </Tabs>
