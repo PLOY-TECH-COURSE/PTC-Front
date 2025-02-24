@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, {keyframes, css} from "styled-components";
 
 export const FirstContainer = styled.div`
     display: flex;
@@ -30,7 +30,10 @@ export const Section = styled.section`
 `
 export const Description = styled.div`
     display: flex;
-    gap: 20px;
+    justify-content: flex-start;
+    & > * {
+        margin-bottom: 20px;
+    }
     flex-flow: column nowrap;
     @media (max-width: 480px) {
         order: 1;
@@ -59,7 +62,31 @@ export const Btn = styled.button`
     font-weight: 600;
     border-radius: 30px;
     transition: 0.1s;
-    width: max-content;
+    width: 120px;
+    position: relative;
+    &:hover{
+        appearance: none;
+        background-color: transparent;
+        width: 120px;
+        border: 3px solid #246bf6;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        & > img{
+            width: 24px;
+            display: block;
+        }
+        & > p{
+            display: none;
+        }
+    }
+    & > p{
+        display: block;
+    }
+    & > img{
+        display: none;
+    }
 `
 export const HeaderBox = styled.div`
     position: absolute;

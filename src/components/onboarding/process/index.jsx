@@ -1,8 +1,8 @@
 import * as S from './style.jsx'
 import Mail from '../../../assets/onboarding/process/mail.svg'
 import BlueArrow from '../../../assets/onboarding/process/blueArrow.svg'
-import UpWhite from '../../../assets/onboarding/process/upWhite.svg';
-import DownWhite from '../../../assets/onboarding/process/downWhite.svg';
+import UpWhite from '../../../assets/onboarding/process/upBlack.svg';
+import DownWhite from '../../../assets/onboarding/process/downBlack.svg';
 
 export default function Process({change, isAnimation}) {
     const content = [
@@ -14,8 +14,8 @@ export default function Process({change, isAnimation}) {
     return (
         <S.ProcessContainer>
             <S.Wrap>
-                <S.ArrowUp>
-                    <S.Black onClick={()=>change(3)}>
+                <S.ArrowUp onClick={()=>change(3)}>
+                    <S.Black>
                         <img src={UpWhite} alt={'up'}/>
                     </S.Black>
                     <p>Track</p>
@@ -40,9 +40,9 @@ export default function Process({change, isAnimation}) {
                     <img src={Mail} alt={"mailIcon"} />
                     궁금한 내용은 ploytechcourse@gmail.com 로 문의해주세요
                 </S.Mail>
-                <S.ArrowDown>
+                <S.ArrowDown onClick={()=>change(5)}>
                     <p>Mento</p>
-                    <S.Black onClick={()=>change(5)}>
+                    <S.Black >
                         <img src={DownWhite} alt={'down'}/>
                     </S.Black>
                 </S.ArrowDown>
