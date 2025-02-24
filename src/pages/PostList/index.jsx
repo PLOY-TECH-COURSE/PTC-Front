@@ -98,23 +98,21 @@ export default function () {
                 </S.PostListTop>
 
                 <S.Sort>
-                    <S.Recent onClick={() => handleSortChange("recent")} active={sort === "recent"}>
+                    <S.Recent onClick={() => handleSortChange("recent")} active={sort === "like"}>
                         <button /><p>최신순</p>
                     </S.Recent>
-                    <S.Like onClick={() => handleSortChange("like")} active={sort === "like"}>
+                    <S.Like onClick={() => handleSortChange("like")} active={sort === "recent"}>
                         <button /><p>좋아요순</p>
                     </S.Like>
                 </S.Sort>
 
                 <S.PostListMain>
-                    {loading ? (
-                        <p>로딩 중...</p>
-                    ) : posts.length > 0 ? (
+                    {searchQuery && posts.length === 0 ? (
+                        <h2>검색 결과가 없습니다.</h2>
+                    ) : (
                         posts.map((post) => (
                             <PostItem key={post.document_id} post={post} onClick={handlePostClick} />
                         ))
-                    ) : (
-                        <h2>검색 결과가 없습니다.</h2>
                     )}
                 </S.PostListMain>
             </S.Content>
