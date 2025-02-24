@@ -1,13 +1,16 @@
 import * as S from './style.jsx'
 import {useRef, useState} from "react";
 import ImgGray from '../../../assets/write/ImgGray.svg'
-import {uploadImg, postDocument} from "../../../api/write.js";
+import {uploadImg, postDocument, postBroad, patchDocument, patchBroad} from "../../../api/write.js";
 import {useNavigate} from "react-router-dom";
+import {authAtom} from '../../../recoil/authAtom.js'
+import {useRecoilValue} from "recoil";
 
 export default function WriteModal({title, tag, content, setIsModal}){
     const fileRef = useRef(null);
-    const [isOpen, setIsOpen] = useState(false);
+    const [isBroad, setIsBroad] = useState(false);
     const [img, setImg] = useState("");
+    const {role} = useRecoilValue(authAtom);
 
     const navigate = useNavigate();
     const changeFile = async (event) => {
@@ -35,11 +38,16 @@ export default function WriteModal({title, tag, content, setIsModal}){
         }
         await upload()
     };
-
     return(
         <S.Black onClick={()=>setIsModal(false)}>
             <S.Content onClick={(e) => e.stopPropagation()}>
-                {isOpen && <S.CloseDropdown onClick={() => setIsOpen(false)}/>}
+                <S.Broad>
+                    <input type={'checkbox'} value={isBroad}  onChange={(e)=>setIsBroad(e.target.value)}/>  공지사항
+                </S.Broad>
+                {role === "ROLE_ADMIN" &&
+                    <S.Broad>
+                    공지사항 <input type={'radio'} />
+                </S.Broad>}
                 <S.ImgUploadBox $Img={img} onClick={()=>{if(fileRef.current) fileRef.current.click()}}>
                     {img ? <S.SelectImg src={img} alt={"img"} /> :
                         <>
@@ -56,6 +64,11 @@ export default function WriteModal({title, tag, content, setIsModal}){
                 <S.BtnBox>
                     <S.Btn onClick={()=>setIsModal(false)} $Success={false}>취소</S.Btn>
                     <S.Btn $Success={true} onClick={async ()=>{
+                        if(isBroad){
+                            if(await postBroad(title, content, tag.map(item=>item.tag), img, content)){
+                                navigate('/broadcast');
+                            }
+                        }
                         if(await postDocument(title, content, tag.map((item) => item.tag), img, content)){
                             navigate('/postList');
                         }

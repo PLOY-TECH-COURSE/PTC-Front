@@ -32,3 +32,55 @@ export const postDocument = async (title, content, tag, img, des) =>{
         console.log(err);
     }
 }
+export const patchDocument = async (title, content, tag, img, des) =>{
+    try{
+        const res = await axiosInstance.patch('/documents', {
+            title:title,
+            content:content,
+            hash_tag:tag,
+            thumbnail:img,
+            introduction:des
+        });
+        if(res.status === 200){
+            return true;
+        }
+        return false;
+    }catch (err){
+        console.log(err);
+    }
+}
+export const postBroad = async (title, content, tag, img) => {
+    try {
+        const res = await axiosInstance.post('/announcements', {
+            title: title,
+            content: content,
+            thumbnail: img,
+        });
+
+        if (res.status === 200) {
+            return true;
+        }
+        return false;
+    } catch (err) {
+        return false;
+    }
+};
+
+export const patchBroad = async (title, content, tag, img, des) => {
+    try {
+        const res = await axiosInstance.patch('/announcements', {
+            title: title,
+            content: content,
+            hash_tag: tag,
+            thumbnail: img,
+            introduction: des
+        });
+
+        if (res.status === 200) {
+            return true;
+        }
+        return false;
+    } catch (err) {
+        return false;
+    }
+};

@@ -31,12 +31,11 @@ export const Content = styled.main`
     gap: 20px;
     animation: ${show} 0.2s ease-in-out;
 `
-export const CloseDropdown = styled.div`
-    position: absolute;
+export const Broad = styled.div`
     width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
+    display: flex;
+    gap: 10px;
+    font-size: 16px;
 `
 export const ImgUploadBox = styled.div`
     width: 300px;

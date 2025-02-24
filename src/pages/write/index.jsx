@@ -121,7 +121,7 @@ export default function Write(){
     const [showTag, setShowTag] = useState([]);
 
     const enterTag = (e)=>{
-        if(e.keyCode == 13){
+        if(e.keyCode === 13){
             setShowTag([...showTag, {tag :e.target.value, id : showTag.length+1}]);
             setTag("");
         }
