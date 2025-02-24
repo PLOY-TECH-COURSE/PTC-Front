@@ -52,6 +52,23 @@ export const SubText = styled.h4`
         font-size: 14px;
     }
 `
+const rotateFromStart = keyframes`
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg) translateY(-30px);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg) translateY(-30px);
+    }
+`;
+
+const rotateFromHalf = keyframes`
+    0% {
+        transform: translate(-50%, -50%) rotate(180deg) translateY(-30px); /* 50% 위치에서 시작 */
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(540deg) translateY(-30px);
+    }
+`;
 export const Btn = styled.button`
     background-color: #4970FB;
     padding: 7px 20px;
@@ -65,28 +82,50 @@ export const Btn = styled.button`
     width: 120px;
     position: relative;
     &:hover{
-        appearance: none;
-        background-color: transparent;
         width: 120px;
-        border: 3px solid #246bf6;
+        background-color: transparent;
+        padding: 20px;
+        border: none;
         font-size: 14px;
         display: flex;
         align-items: center;
         justify-content: center;
         & > img{
-            width: 24px;
+            width: 40px;
             display: block;
         }
-        & > p{
+        & > span{
             display: none;
         }
-    }
-    & > p{
-        display: block;
+        & > div{
+            color: #4970FB;
+            display: block;
+        }
     }
     & > img{
         display: none;
     }
+`
+export const BtnText = styled.div`
+    display: none;
+    position: absolute;
+    width: 100px; /* 텍스트의 너비 설정 */
+    text-align: center; /* 텍스트 가운데 정렬 */
+    top: 50%; /* 부모 요소의 중앙에 위치 */
+    left: 50%; /* 부모 요소의 중앙에 위치 */
+    transform: translate(-50%, 100%);
+    transform-origin: 50% 100%; /* 아래쪽 중앙을 회전의 기준으로 설정 */
+    animation: ${(props)=>props.$isHalf ? css`${rotateFromHalf} 5s linear infinite` : css`${rotateFromStart} 5s linear infinite`};
+    & > span {
+        display: inline-block; /* inline-block으로 회전 적용 */
+        transform-origin: center; /* 회전 기준 설정 */
+        margin-right: 2px;
+    }
+
+    & > span:nth-child(1) { transform: rotate(-10deg); }
+    & > span:nth-child(2) {  transform: rotate(-5deg); }
+    & > span:nth-child(3) {transform: rotate(5deg); }
+    & > span:nth-child(4) { transform: rotate(10deg); }
 `
 export const HeaderBox = styled.div`
     position: absolute;
