@@ -64,22 +64,21 @@ export default function () {
     };
 
     useEffect(() => {
-        if (searchQuery) {
-            setLoading(true);
+        setLoading(true);
 
-            const encodedQuery = encodeURIComponent(searchQuery);
+        const encodedQuery = encodeURIComponent(searchQuery);
 
-            getSearchPost(encodedQuery, sort, start)
-                .then((data) => {
-                    setPosts(data.documents);
-                    setLoading(false);
-                })
-                .catch((error) => {
-                    console.error("게시물을 불러오는 데 실패했습니다.", error);
-                    setLoading(false);
-                });
-        }
+        getSearchPost(encodedQuery || "", sort, start)
+            .then((data) => {
+                setPosts(data.documents);
+                setLoading(false);
+            })
+            .catch((error) => {
+                console.error("게시물을 불러오는 데 실패했습니다.", error);
+                setLoading(false);
+            });
     }, [searchQuery, sort, start]);
+
 
     return (
         <S.Container>
