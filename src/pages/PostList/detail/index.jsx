@@ -29,6 +29,19 @@ export default function Detail() {
             });
     }, [postId]);
 
+    const handleEdit = () => {
+        navigate(`/write/${postId}`, {
+            state: {
+                title: post.document.title,
+                content: post.document.content,
+                thumbnail: post.document.thumbnail,
+                introduction: post.document.introduction,
+                isPost: true,
+                hash_tag: post.document.hash_tag || [],
+            },
+        });
+    };
+
 
     return (
         <S.Container>
@@ -55,7 +68,7 @@ export default function Detail() {
                                 <img src={Star} />
                                 <S.Edit>
                                     <p>삭제</p>
-                                    <p onClick={() => navigate(`/write/${postId}`)}>수정</p>
+                                    <p onClick={handleEdit}>수정</p>
                                 </S.Edit>
 
                             </S.PostDetailDataTop>
