@@ -8,7 +8,15 @@ export const getProposerList = async () => {
         Authorization: `Bearer ${token}`, // 토큰 추가
       },
     });
-    return res.data;
+
+    // 데이터 구조 변환 (introduction → intro, resolution → promise)
+    const formattedData = res.data.map(user => ({
+      ...user,
+      intro: user.introduction,
+      promise: user.resolution,
+    }));
+
+    return formattedData;
   } catch (err) {
     console.error("API 요청 실패:", err);
     return [];
