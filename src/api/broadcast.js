@@ -3,7 +3,7 @@ import axiosInstance from "../lib/axiosInstance";
 export const getBroadcastList = async (start) => {
     try {
         const res = await axiosInstance.get("/announcements", {
-            params: start // 명시적으로 start를 전달
+            params: start
         });
         
         if (res.status !== 200) {
