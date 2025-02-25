@@ -3,14 +3,20 @@ import Down from "../../../assets/down.svg";
 import { useState } from "react";
 import * as _ from "./style";
 import Dropdown from "../dropDown";
+import { updateUserRole } from "../../../api/permission";  
 
-const Users = ({ onClick, img, name, email, promise, auth, setAuth }) => {
+const Users = ({ onClick, img, name, email, promise, auth, setAuth, userId }) => {
   const [view, setView] = useState(false);
 
   // 권한을 변경하는 함수
-  const handleAuthChange = (newAuth) => {
-    setAuth(newAuth); // 선택한 권한을 상위 상태로 변경
-    setView(false); // 드롭다운 닫기
+  const handleAuthChange = async (newAuth) => {
+    const updatedRole = await updateUserRole(userId, newAuth); 
+    if (updatedRole) {
+      setAuth(newAuth); 
+    } else {
+      console.error("권한 변경 실패");
+    }
+    setView(false); 
   };
 
   return (

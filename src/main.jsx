@@ -37,7 +37,7 @@ createRoot(document.getElementById('root')).render(
             <Route path="/post/:id" element={<Detail />} /> 
             <Route path='/broadcast' element={<Broadcast />} />
             <Route path="/announcement/:id" element={<Detail2 />} /> 
-            <Route path="/select" element={<Select/>} />
+            <Route path="/authority" element={<Select/>} />
         </Routes>
     </BrowserRouter>
 </RecoilRoot>

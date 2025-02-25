@@ -2,7 +2,7 @@ import * as _ from "./style";
 
 function Dropdown({ onAuthChange }) {
   const handleClick = (auth) => {
-    onAuthChange(auth); // 클릭한 권한을 부모로 전달
+    onAuthChange(auth); 
   };
 
   return (
