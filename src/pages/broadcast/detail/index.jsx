@@ -1,6 +1,7 @@
 import * as S from './style';
 import Header from '../../../components/header';
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Bullhorn from '../../../assets/bullhorn.svg';
 import { getBroadcastDetail, deleteBroadcast } from '../../../api/broadcast';
