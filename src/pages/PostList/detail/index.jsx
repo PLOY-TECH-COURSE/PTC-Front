@@ -44,6 +44,7 @@ export default function Detail() {
 
     const handleDelete = () => {
         if (window.confirm('정말로 삭제하시겠습니까?')) {
+            console.log(postId)
             deletePost(postId)
                 .then(() => {
                     alert('게시물이 삭제되었습니다.');
@@ -64,10 +65,10 @@ export default function Detail() {
                     <S.PostDetailMain>
                         <S.Profile>
                             <S.ProfileTop>
-                                <img src={post.userInfoDTO.profile} alt={post.userInfoDTO.uid} />
+                                <img src={post.userInfoDTO.profile} alt={post.userInfoDTO.name} />
                                 <S.RightProfile>
                                     <span>{post.generation}기</span>
-                                    <p>{post.userInfoDTO.uid}</p>
+                                    <p>{post.userInfoDTO.name}</p>
                                 </S.RightProfile>
                             </S.ProfileTop>
                             <S.ProfileBottom>
