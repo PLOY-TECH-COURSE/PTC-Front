@@ -4,9 +4,11 @@ import icon from "../../assets/sujung.svg";
 import book from "../../assets/book.svg";
 import like from "../../assets/like.svg";
 import { useState, useEffect } from "react";
-import { authAtom } from "../../recoil/authAtom.js";
 import { useRecoilValue } from "recoil";
+import { authAtom } from "../../recoil/authAtom.js";
 import { getUserProfile } from "../../api/mypage"; 
+import { getFavoritePosts } from "../../api/favortie.js";  
+import PostItem from "../../components/postitem"; 
 
 const Container = styled.div`
   max-width: 800px;
@@ -110,43 +112,46 @@ const Inputtag = styled.input`
   outline: none; 
 `;
 
-const Inputtag2 = styled.input`
-  width: 120px;
-  padding: 1px;
-  font-size: 12px;
-  color: #000; 
-  border: 2px solid #ccc; 
-  border-radius: 4px; 
-  outline: none; 
+const NoFavoriteMessage = styled.p`
+  text-align: center;
+  color: #4970FB;
+  font-size: 16px;
+  font-weight: bold;
 `;
 
 const Mypage = () => {
   const auth = useRecoilValue(authAtom);
   const userId = auth.uid;
-  console.log({ auth });
 
   const [isEditing, setIsEditing] = useState(false);
   const [userData, setUserData] = useState(null);
   const [editedUid, setEditedUid] = useState("");
   const [editedBio, setEditedBio] = useState("");
   const [activeTab, setActiveTab] = useState("글");
+  const [favoritePosts, setFavoritePosts] = useState([]);
 
   useEffect(() => {
     if (!userId) {
-      console.warn("❗ userId가 없음, API 요청 중단");
+      console.warn("userId가 없음, API 요청 중단");
       return;
     }
 
+
     getUserProfile()
       .then((data) => {
-        console.log("✅ API 응답 데이터:", data);
         setUserData(data);
         setEditedUid(data.uid);
         setEditedBio(data.bio);
       })
-      .catch((error) => console.error("❌ API 요청 실패:", error));
-  }, [userId]);
+      .catch((error) => console.error("API 요청 실패:", error));
 
+
+    getFavoritePosts(userId)
+      .then((data) => {
+        setFavoritePosts(data);
+      })
+      .catch((error) => console.error("즐겨찾기 데이터 가져오기 실패:", error));
+  }, [userId]);
   const handleEditClick = () => {
     if (isEditing) {
       setUserData((prev) => ({
@@ -191,7 +196,7 @@ const Mypage = () => {
               </StatItem>
             </Stats>
             {isEditing ? (
-              <Inputtag2
+              <Inputtag
                 type="text"
                 value={editedBio}
                 onChange={(e) => setEditedBio(e.target.value)}
@@ -206,6 +211,7 @@ const Mypage = () => {
             {isEditing ? "완료" : "프로필 편집"}
           </Sojung>
         </ProfileSection>
+
         <Tabs>
           <TabButton active={activeTab === "글"} onClick={() => setActiveTab("글")}>
             글
@@ -214,6 +220,16 @@ const Mypage = () => {
             즐겨찾기
           </TabButton>
         </Tabs>
+
+        {activeTab === "즐겨찾기" && (
+          <div>
+            {favoritePosts.length > 0 ? (
+              favoritePosts.map((post) => <PostItem key={post.documents_id} post={post} />)
+            ) : (
+              <NoFavoriteMessage>즐겨찾기한 글이 없습니다.</NoFavoriteMessage>
+            )}
+          </div>
+        )}
       </Container>
     </>
   );
