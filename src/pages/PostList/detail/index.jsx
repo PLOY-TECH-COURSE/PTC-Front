@@ -4,7 +4,7 @@ import Header from '../../../components/header';
 import { useParams, useNavigate } from 'react-router-dom';
 import Like2 from '../../../assets/like2.svg';
 import Star from '../../../assets/star.svg';
-import { getPostDetail } from "../../../api/postList";
+import { getPostDetail,toggleFavorite } from "../../../api/postList";
 
 export default function Detail() {
     const { id } = useParams();
@@ -13,6 +13,7 @@ export default function Detail() {
     const [post, setPost] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [isFavorite, setIsFavorite] = useState(false);
 
     useEffect(() => {
         setLoading(true);
@@ -42,6 +43,14 @@ export default function Detail() {
         });
     };
 
+    const handleFavoriteClick = async () => {
+        if (!post) return;
+    
+        const result = await toggleFavorite(postId);
+        if (result) {
+            setIsFavorite(!isFavorite);
+        }
+    };
 
     return (
         <S.Container>
@@ -63,15 +72,19 @@ export default function Detail() {
                             </S.ProfileBottom>
                         </S.Profile>
                         <S.PostDetailData>
-                            <S.PostDetailDataTop>
-                                <h1>{post.document.title}</h1>
-                                <img src={Star} />
-                                <S.Edit>
-                                    <p>삭제</p>
-                                    <p onClick={handleEdit}>수정</p>
-                                </S.Edit>
-
-                            </S.PostDetailDataTop>
+                        <S.PostDetailDataTop>
+                            <h1>{post.document.title}</h1>
+                            <img 
+                                src={Star} 
+                                alt="즐겨찾기" 
+                                onClick={handleFavoriteClick} 
+                                style={{ cursor: "pointer", filter: isFavorite ? "grayscale(0%)" : "grayscale(100%)" }} 
+                            />
+                            <S.Edit>
+                                <p>삭제</p>
+                                <p onClick={handleEdit}>수정</p>
+                            </S.Edit>
+                        </S.PostDetailDataTop>
                             <span>
                                 {post.hash_tag && Array.isArray(post.hash_tag) && post.hash_tag.length > 0
                                     ? post.hash_tag.map(tag => `#${tag}`).join(' ')

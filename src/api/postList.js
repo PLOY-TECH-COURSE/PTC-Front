@@ -31,3 +31,19 @@ export const getPostDetail = async (document_id) => {
         return Promise.reject(err);
     }
 };
+
+export const toggleFavorite = async (documentId) => {
+    try {
+        const token = localStorage.getItem("accessToken");
+        const response = await axiosInstance.post(`/favorite/${documentId}`, {}, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
+        return response.data;
+    } catch (error) {
+        console.error("즐겨찾기 요청 실패:", error.response?.data || error);
+        return null;
+    }
+};
