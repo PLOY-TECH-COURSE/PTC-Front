@@ -7,7 +7,7 @@ export const Container = styled.div`
 export const Content = styled.div`
     width: 100%;
     align-items: center;
-    justify-content: centers;
+    justify-content: center;
     overflow-y: auto;
     padding: 4% 5%;
 `
@@ -161,7 +161,7 @@ export const Edit = styled.div`
 `
 export const CommentSection = styled.div`
     margin-top: 40px;
-    width: 100%;
+    width: 1500px;
     background: #fff;
     padding: 20px;
     position:absolute;
@@ -175,7 +175,6 @@ export const CommentInputWrapper = styled.div`
     gap: 10px;
     margin-bottom: 10px;
     width: 50%;
-    
     input {
         flex: 1;
         padding: 12px;
