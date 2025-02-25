@@ -114,14 +114,15 @@ export const RowData = styled.div`
 `
 
 export const PostImg = styled.div`
-    width: 40%;
+    width: 100%;
     height: 100px;
     margin-right: 10px;
     align-items: center;
     justify-content: center;
+    padding: 0 20px 0 0;
 
     img{
-        width: 100%;
+        max-width: 70%;
         object-fit: cover;
     }
 `
@@ -161,7 +162,6 @@ export const PostRightBottomData = styled.div`
 
 
 export const PostProfile = styled.div`
-
     img{
         border-radius: 50%;
         width: 30px;
