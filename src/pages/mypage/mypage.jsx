@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import Header from "../../components/header";
-import icon from "../../assets/sujung.svg";
 import book from "../../assets/book.svg";
 import like from "../../assets/like.svg";
 import { useState, useEffect } from "react";
@@ -8,6 +7,7 @@ import { useRecoilValue } from "recoil";
 import { authAtom } from "../../recoil/authAtom.js";
 import { getUserProfile } from "../../api/mypage"; 
 import { getFavoritePosts } from "../../api/favortie";  
+import { getMyPosts } from "../../api/mywrite";  
 import PostItem from "../../components/postItem"; 
 
 const Container = styled.div`
@@ -129,6 +129,7 @@ const Mypage = () => {
   const [editedBio, setEditedBio] = useState("");
   const [activeTab, setActiveTab] = useState("글");
   const [favoritePosts, setFavoritePosts] = useState([]);
+  const [myPosts, setMyPosts] = useState([]);
 
   useEffect(() => {
     if (!userId) {
@@ -149,6 +150,12 @@ const Mypage = () => {
         setFavoritePosts(data);
       })
       .catch((error) => console.error("즐겨찾기 데이터 가져오기 실패:", error));
+
+    getMyPosts(userId)
+      .then((data) => {
+        setMyPosts(data);  
+      })
+      .catch((error) => console.error("내가 쓴 글 데이터 가져오기 실패:", error));
   }, [userId]);
 
   const handleEditClick = () => {
@@ -161,7 +168,7 @@ const Mypage = () => {
     }
     setIsEditing(!isEditing);
   };
-  
+
   return (
     <>
       <Header />
@@ -206,7 +213,6 @@ const Mypage = () => {
           </Info>
 
           <Sojung onClick={handleEditClick}>
-            <img src={icon} alt="icon" width="16" height="16" />
             {isEditing ? "완료" : "프로필 편집"}
           </Sojung>
         </ProfileSection>
@@ -219,6 +225,16 @@ const Mypage = () => {
             즐겨찾기
           </TabButton>
         </Tabs>
+
+        {activeTab === "글" && (
+          <div>
+            {myPosts.length > 0 ? (
+              myPosts.map((post) => <PostItem key={post.documents_id} post={post} />)
+            ) : (
+              <NoFavoriteMessage>내가 쓴 글이 없습니다.</NoFavoriteMessage>
+            )}
+          </div>
+        )}
 
         {activeTab === "즐겨찾기" && (
           <div>
