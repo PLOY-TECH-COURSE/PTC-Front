@@ -11,6 +11,7 @@ export default function WriteModal({title, tag, content, setIsModal}){
     const [isBroad, setIsBroad] = useState(false);
     const [img, setImg] = useState("");
     const {role} = useRecoilValue(authAtom);
+    const [intro, setIntro] = useState('');
 
     const navigate = useNavigate();
     const changeFile = async (event) => {
@@ -42,12 +43,16 @@ export default function WriteModal({title, tag, content, setIsModal}){
         <S.Black onClick={()=>setIsModal(false)}>
             <S.Content onClick={(e) => e.stopPropagation()}>
                 <S.Broad>
-                    <input type={'checkbox'} value={isBroad}  onChange={(e)=>setIsBroad(e.target.value)}/>  공지사항
+                    <input type={'checkbox'} value={isBroad}  onChange={()=>{
+                        setIsBroad(!isBroad)
+                    }}/>  공지사항
                 </S.Broad>
                 {role === "ROLE_ADMIN" &&
                     <S.Broad>
-                    공지사항 <input type={'radio'} />
-                </S.Broad>}
+                        <input type={'checkbox'} value={isBroad}  onChange={()=>{
+                            setIsBroad(!isBroad)
+                        }}/>  공지사항
+                    </S.Broad>}
                 <S.ImgUploadBox $Img={img} onClick={()=>{if(fileRef.current) fileRef.current.click()}}>
                     {img ? <S.SelectImg src={img} alt={"img"} /> :
                         <>
@@ -60,16 +65,16 @@ export default function WriteModal({title, tag, content, setIsModal}){
                     }
                     <input ref={fileRef} type={"file"} onChange={(event)=>changeFile(event)} style={{display: "none"}} />
                 </S.ImgUploadBox>
-                <S.Textarea placeholder={"글에대한 설명을 입력해주세요"} />
+                <S.Textarea value={intro} onChange={e=>setIntro(e.target.value)} placeholder={"글에대한 설명을 입력해주세요"} />
                 <S.BtnBox>
                     <S.Btn onClick={()=>setIsModal(false)} $Success={false}>취소</S.Btn>
                     <S.Btn $Success={true} onClick={async ()=>{
                         if(isBroad){
-                            if(await postBroad(title, content, tag.map(item=>item.tag), img, content)){
+                            if(await postBroad(title, content, tag.map(item=>item.tag), img, intro)){
                                 navigate('/broadcast');
                             }
                         }
-                        if(await postDocument(title, content, tag.map((item) => item.tag), img, content)){
+                        else if(await postDocument(title, content, tag.map((item) => item.tag), img, intro)){
                             navigate('/postList');
                         }
                     }}>등록</S.Btn>

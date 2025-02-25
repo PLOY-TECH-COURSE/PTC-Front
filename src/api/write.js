@@ -32,9 +32,10 @@ export const postDocument = async (title, content, tag, img, des) =>{
         console.log(err);
     }
 }
-export const patchDocument = async (title, content, tag, img, des) =>{
+export const patchDocument = async (title, content, tag, img, des, id) =>{
     try{
         const res = await axiosInstance.patch('/documents', {
+            document_id:id,
             title:title,
             content:content,
             hash_tag:tag,
@@ -49,12 +50,13 @@ export const patchDocument = async (title, content, tag, img, des) =>{
         console.log(err);
     }
 }
-export const postBroad = async (title, content, tag, img) => {
+export const postBroad = async (title, content, tag, img, intro) => {
     try {
         const res = await axiosInstance.post('/announcements', {
             title: title,
             content: content,
             thumbnail: img,
+            introduction: intro
         });
 
         if (res.status === 200) {
@@ -66,12 +68,12 @@ export const postBroad = async (title, content, tag, img) => {
     }
 };
 
-export const patchBroad = async (title, content, tag, img, des) => {
+export const patchBroad = async (title, content, tag, img, des, id) => {
     try {
         const res = await axiosInstance.patch('/announcements', {
+            announcement_id:id,
             title: title,
             content: content,
-            hash_tag: tag,
             thumbnail: img,
             introduction: des
         });
