@@ -12,6 +12,7 @@ export default function WriteModal({title, tag, content, setIsModal}){
     const [img, setImg] = useState("");
     const {role} = useRecoilValue(authAtom);
     const [intro, setIntro] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     const navigate = useNavigate();
     const changeFile = async (event) => {
@@ -69,13 +70,20 @@ export default function WriteModal({title, tag, content, setIsModal}){
                 <S.BtnBox>
                     <S.Btn onClick={()=>setIsModal(false)} $Success={false}>취소</S.Btn>
                     <S.Btn $Success={true} onClick={async ()=>{
+                        if(isLoading) return;
+                        setIsLoading(true);
                         if(isBroad){
                             if(await postBroad(title, content, tag.map(item=>item.tag), img, intro)){
+                                setIsLoading(false);
                                 navigate('/broadcast');
                             }
+                            else setIsLoading(false);
                         }
                         else if(await postDocument(title, content, tag.map((item) => item.tag), img, intro)){
+                            setIsLoading(false);
                             navigate('/postList');
+                        }else {
+                            setIsLoading(false);
                         }
                     }}>등록</S.Btn>
                 </S.BtnBox>
