@@ -161,7 +161,7 @@ const Mypage = () => {
     }
     setIsEditing(!isEditing);
   };
-
+  
   return (
     <>
       <Header />
@@ -222,6 +222,7 @@ const Mypage = () => {
 
         {activeTab === "즐겨찾기" && (
           <div>
+            
             {favoritePosts.length > 0 ? (
               favoritePosts.map((post) => <PostItem key={post.documents_id} post={post} />)
             ) : (
