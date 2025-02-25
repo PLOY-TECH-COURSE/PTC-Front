@@ -10,7 +10,6 @@ export const Content = styled.div`
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    overflow-y: auto;
     padding: 3% 10%;
 `
 
@@ -28,6 +27,10 @@ export const PostListMain = styled.div`
     height: 70vh;
     justify-content: space-between;
     row-gap: 40px;
+
+    h2{
+        margin-left: 6px;
+    }
 `
 
 export const PostData = styled.div`

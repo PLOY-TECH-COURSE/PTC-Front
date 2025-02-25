@@ -88,34 +88,48 @@ export const Like = styled.div`
 
 export const PostListMain = styled.div`
     width: 100%;
-    padding: 3% 5%;
+    padding: 3% 0% 3% 6%;
     display: flex;
     flex-wrap: wrap;
-    height: 70vh;
-    justify-content: space-between;
-    row-gap: 40px;
+    justify-content: flex-start;
+    gap: 40px;
 
     h2{
-        margin-left: 320px;
+        margin-left: 310px;
     }
-`
+`;
 
-export const PostData = styled.div`
-    font-size: 18px;
-    font-weight: bold;
-`
 export const RowData = styled.div`
     display: flex;
     flex-direction: row;
     border: 1px solid #cccccc;
-    width: 27.5vw;
+    width: 45%;
     height: 25vh;
     border-radius: 10px;
     min-width: 27vw;
     padding: 2% 1.3%;
     gap: 10px;
     cursor: pointer;
+    margin-bottom: 20px;
+`;
+
+
+export const PostData = styled.div`
+    font-size: 18px;
+    font-weight: bold;
 `
+// export const RowData = styled.div`
+//     display: flex;
+//     flex-direction: row;
+//     border: 1px solid #cccccc;
+//     width: 27.5vw;
+//     height: 25vh;
+//     border-radius: 10px;
+//     min-width: 27vw;
+//     padding: 2% 1.3%;
+//     gap: 10px;
+//     cursor: pointer;
+// `
 
 export const PostImg = styled.div`
     width: 40%;
