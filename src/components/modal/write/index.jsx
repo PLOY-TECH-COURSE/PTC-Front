@@ -1,13 +1,17 @@
 import * as S from './style.jsx'
 import {useRef, useState} from "react";
 import ImgGray from '../../../assets/write/ImgGray.svg'
-import {uploadImg, postDocument} from "../../../api/write.js";
+import {uploadImg, postDocument, postBroad, patchDocument, patchBroad} from "../../../api/write.js";
 import {useNavigate} from "react-router-dom";
+import {authAtom} from '../../../recoil/authAtom.js'
+import {useRecoilValue} from "recoil";
 
 export default function WriteModal({title, tag, content, setIsModal}){
     const fileRef = useRef(null);
-    const [isOpen, setIsOpen] = useState(false);
+    const [isBroad, setIsBroad] = useState(false);
     const [img, setImg] = useState("");
+    const {role} = useRecoilValue(authAtom);
+    const [intro, setIntro] = useState('');
 
     const navigate = useNavigate();
     const changeFile = async (event) => {
@@ -35,11 +39,20 @@ export default function WriteModal({title, tag, content, setIsModal}){
         }
         await upload()
     };
-
     return(
         <S.Black onClick={()=>setIsModal(false)}>
             <S.Content onClick={(e) => e.stopPropagation()}>
-                {isOpen && <S.CloseDropdown onClick={() => setIsOpen(false)}/>}
+                <S.Broad>
+                    <input type={'checkbox'} value={isBroad}  onChange={()=>{
+                        setIsBroad(!isBroad)
+                    }}/>  공지사항
+                </S.Broad>
+                {role === "ROLE_ADMIN" &&
+                    <S.Broad>
+                        <input type={'checkbox'} value={isBroad}  onChange={()=>{
+                            setIsBroad(!isBroad)
+                        }}/>  공지사항
+                    </S.Broad>}
                 <S.ImgUploadBox $Img={img} onClick={()=>{if(fileRef.current) fileRef.current.click()}}>
                     {img ? <S.SelectImg src={img} alt={"img"} /> :
                         <>
@@ -52,11 +65,16 @@ export default function WriteModal({title, tag, content, setIsModal}){
                     }
                     <input ref={fileRef} type={"file"} onChange={(event)=>changeFile(event)} style={{display: "none"}} />
                 </S.ImgUploadBox>
-                <S.Textarea placeholder={"글에대한 설명을 입력해주세요"} />
+                <S.Textarea value={intro} onChange={e=>setIntro(e.target.value)} placeholder={"글에대한 설명을 입력해주세요"} />
                 <S.BtnBox>
                     <S.Btn onClick={()=>setIsModal(false)} $Success={false}>취소</S.Btn>
                     <S.Btn $Success={true} onClick={async ()=>{
-                        if(await postDocument(title, content, tag.map((item) => item.tag), img, content)){
+                        if(isBroad){
+                            if(await postBroad(title, content, tag.map(item=>item.tag), img, intro)){
+                                navigate('/broadcast');
+                            }
+                        }
+                        else if(await postDocument(title, content, tag.map((item) => item.tag), img, intro)){
                             navigate('/postList');
                         }
                     }}>등록</S.Btn>
