@@ -1,5 +1,5 @@
 import * as S from './style.jsx'
-import Mail from '../../../assets/onboarding/process/mail.svg'
+import Instargram from '../../../assets/onboarding/process/instargram.svg'
 import BlueArrow from '../../../assets/onboarding/process/blueArrow.svg'
 import UpWhite from '../../../assets/onboarding/process/upBlack.svg';
 import DownWhite from '../../../assets/onboarding/process/downBlack.svg';
@@ -37,8 +37,8 @@ export default function Process({change, isAnimation}) {
                     )}
                 </S.Main>
                 <S.Mail $isAnimation = {isAnimation}>
-                    <img src={Mail} alt={"mailIcon"} />
-                    궁금한 내용은 ploytechcourse@gmail.com 로 문의해주세요
+                    <img src={Instargram} alt={"instargramIcon"} />
+                    궁금한 내용은 인스타 bssm_ploy로 문의해주세요
                 </S.Mail>
                 <S.ArrowDown onClick={()=>change(5)}>
                     <p>Mento</p>

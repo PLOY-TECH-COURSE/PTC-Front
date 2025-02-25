@@ -21,8 +21,9 @@ import {uploadImg} from "../../api/write.js";
 export default function Write(){
     const navigate = useNavigate()
     const location = useLocation();
-    const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
+    const data = location.state;
+    const [title, setTitle] = useState(data?.title || '');
+    const [content, setContent] = useState(data?.content || '');
     const [isModal, setIsModal] = useRecoilState(modalAtom);
     const containerRef = useRef(null);
     const contentRef = useRef(null);
@@ -31,7 +32,7 @@ export default function Write(){
     const [under, setUnder] = useState(true);
     const [cancel, setCancel] = useState(true);
     const [img, setImg] = useState(true);
-
+    console.log(data);
     const addText = (num)=>{
         contentRef.current.focus();
         if(content.length > 0) setContent((prevText) =>prevText + "\n" + num);
@@ -119,17 +120,23 @@ export default function Write(){
     }, []);
     const [tag, setTag] = useState([""]);
     const [showTag, setShowTag] = useState([]);
-
+    useEffect(() => {
+        if(data?.hash_tag.length > 0){
+            const newTag = data.hash_tag.map((item, idx)=>{
+                return {tag : item, id : idx}
+            });
+            setShowTag(newTag);
+        }
+    }, []);
     const enterTag = (e)=>{
-        if(e.keyCode == 13){
+        if(e.keyCode === 13){
             setShowTag([...showTag, {tag :e.target.value, id : showTag.length+1}]);
             setTag("");
         }
     }
-    console.log(location.state)
     return(
         <S.WriteContainer>
-            {isModal && <WriteModal title = {title} content = {content} tag = {showTag} setIsModal={()=>setIsModal()} />}
+            {isModal && <WriteModal data = {data} title = {title} content = {content} tag = {showTag} setIsModal={()=>setIsModal()} />}
             {isOver && <S.DragBox/>}
             <S.Header>
                 <img style ={{cursor:"pointer"}} onClick={()=>navigate('/')} src={Logo} alt={"logo"} width={300}/>

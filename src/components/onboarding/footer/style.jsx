@@ -23,6 +23,11 @@ export const SectionLeft = styled.section`
     & > *{
         margin-bottom: 10px;
     }
+    & > p{
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
 `
 export const SectionRight = styled.section`
     color: #A2A2A2;
@@ -39,4 +44,10 @@ export const Navbar = styled.nav`
 `
 export const Git = styled.img`
     cursor: pointer;
+    width: 40px;
+`
+export const ImgBox = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 30px;
 `
