@@ -6,12 +6,12 @@ import {useNavigate, useParams} from "react-router-dom";
 import {authAtom} from '../../../recoil/authAtom.js'
 import {useRecoilValue} from "recoil";
 
-export default function WriteModal({title, tag, content, setIsModal}){
+export default function WriteModal({data, title, tag, content, setIsModal}){
     const fileRef = useRef(null);
-    const [isBroad, setIsBroad] = useState(false);
-    const [img, setImg] = useState("");
+    const [isBroad, setIsBroad] = useState(!data?.isPost);
+    const [img, setImg] = useState(data?.thumbnail || '');
     const {role} = useRecoilValue(authAtom);
-    const [intro, setIntro] = useState('');
+    const [intro, setIntro] = useState(data?.introduction || '');
     const [isLoading, setIsLoading] = useState(false);
     const {id}= useParams();
 
@@ -44,14 +44,13 @@ export default function WriteModal({title, tag, content, setIsModal}){
     return(
         <S.Black onClick={()=>setIsModal(false)}>
             <S.Content onClick={(e) => e.stopPropagation()}>
-                <S.Broad>
-                    <input type={'checkbox'} value={isBroad}  onChange={()=>{
-                        setIsBroad(!isBroad)
-                    }}/>  공지사항
-                </S.Broad>
                 {role === "ROLE_ADMIN" &&
                     <S.Broad>
                         <input type={'checkbox'} value={isBroad}  onChange={()=>{
+                            if(!data?.isPost){
+                                alert('이글은 공지사항 수정입니다')
+                                return ;
+                            }
                             setIsBroad(!isBroad)
                         }}/>  공지사항
                     </S.Broad>}
@@ -75,7 +74,7 @@ export default function WriteModal({title, tag, content, setIsModal}){
                         setIsLoading(true);
                         if(id !=="new"){
                             if(isBroad){
-                                if(await patchBroad(id, title, content, tag.map(item=>item.tag), img, intro)){
+                                if(await patchBroad(id, title, content, tag, img, intro)){
                                     setIsLoading(false);
                                     navigate('/broadcast');
                                 }
@@ -89,13 +88,13 @@ export default function WriteModal({title, tag, content, setIsModal}){
                             }
                         }
                         else if(isBroad){
-                            if(await postBroad(title, content, tag.map(item=>item.tag), img, intro)){
+                            if(await postBroad(title, content, tag, img, intro)){
                                 setIsLoading(false);
                                 navigate('/broadcast');
                             }
                             else setIsLoading(false);
                         }
-                        else if(await postDocument(title, content, tag.map((item) => item.tag), img, intro)){
+                        else if(await postDocument(title, content, tag.map(item=>item.tag), img, intro)){
                             setIsLoading(false);
                             navigate('/postList');
                         }else {
