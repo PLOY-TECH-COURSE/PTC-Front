@@ -59,7 +59,7 @@ export const postBroad = async (title, content, tag, img, intro) => {
             introduction: intro
         });
 
-        if(res.status === 200 || res.status === 201|| res.status === 204){
+        if(res.status === 200 || res.status === 201){
             return true;
         }
         return false;
@@ -78,7 +78,7 @@ export const patchBroad = async (title, content, tag, img, des, id) => {
             introduction: des
         });
 
-        if(res.status === 200 || res.status === 201){
+        if(res.status === 200 || res.status === 201 || res.status === 204){
             return true;
         }
         return false;

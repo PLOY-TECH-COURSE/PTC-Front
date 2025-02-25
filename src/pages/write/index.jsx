@@ -32,7 +32,7 @@ export default function Write(){
     const [under, setUnder] = useState(true);
     const [cancel, setCancel] = useState(true);
     const [img, setImg] = useState(true);
-
+    console.log(data);
     const addText = (num)=>{
         contentRef.current.focus();
         if(content.length > 0) setContent((prevText) =>prevText + "\n" + num);
@@ -121,11 +121,11 @@ export default function Write(){
     const [tag, setTag] = useState([""]);
     const [showTag, setShowTag] = useState([]);
     useEffect(() => {
-        if(data && data.hash_tag.length > 0){
-            const tag = data.hash_tag.map((item, idx)=>{
+        if(data?.hash_tag.length > 0){
+            const newTag = data.hash_tag.map((item, idx)=>{
                 return {tag : item, id : idx}
             });
-            setShowTag(tag);
+            setShowTag(newTag);
         }
     }, []);
     const enterTag = (e)=>{
