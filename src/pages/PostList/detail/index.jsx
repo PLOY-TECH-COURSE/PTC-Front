@@ -12,7 +12,7 @@ export default function Detail() {
     const postId = parseInt(id);
     const navigate = useNavigate();
     const [post, setPost] = useState(null);
-    const [comments, setComments] = useState([]);  // 댓글 상태 추가
+    const [comments, setComments] = useState([]);  
     const [newComment, setNewComment] = useState('');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -20,8 +20,6 @@ export default function Detail() {
     useEffect(() => {
         setLoading(true);
         setError(null);
-
-        // 게시물 불러오기
         getPostDetail(postId)
             .then((data) => {
                 setPost(data);
@@ -31,8 +29,7 @@ export default function Detail() {
                 setError('게시물을 불러오는 데 실패했습니다.');
                 setLoading(false);
             });
-
-        // 댓글 불러오기
+        console.log({postId});
         getComments(postId)
             .then((data) => {
                 setComments(data);
@@ -77,9 +74,9 @@ export default function Detail() {
         if (!newComment.trim()) return;
 
         try {
-            await createComment(postId, newComment); // 댓글 작성 API 호출
+            await createComment(postId, newComment); 
             setNewComment('');
-            const updatedComments = await getComments(postId);  // 댓글 목록 다시 불러오기
+            const updatedComments = await getComments(postId); 
             setComments(updatedComments);
         } catch (error) {
             console.error('댓글 작성 실패', error);
@@ -88,8 +85,8 @@ export default function Detail() {
 
     const handleCommentDelete = async (commentId) => {
         try {
-            await deleteComment(commentId);  // 댓글 삭제 API 호출
-            const updatedComments = await getComments(postId);  // 댓글 목록 다시 불러오기
+            await deleteComment(commentId); 
+            const updatedComments = await getComments(postId);  
             setComments(updatedComments);
         } catch (error) {
             console.error('댓글 삭제 실패', error);
