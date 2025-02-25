@@ -74,13 +74,13 @@ export default function WriteModal({data, title, tag, content, setIsModal}){
                         setIsLoading(true);
                         if(id !=="new"){
                             if(isBroad){
-                                if(await patchBroad(id, title, content, tag, img, intro)){
+                                if(await patchBroad(title, content, tag, img, intro, id)){
                                     setIsLoading(false);
                                     navigate('/broadcast');
                                 }
                                 else setIsLoading(false);
                             }
-                            else if(await patchDocument(id, title, content, tag.map((item) => item.tag), img, intro)){
+                            else if(await patchDocument(title, content, tag.map((item) => item.tag), img, intro, id)){
                                 setIsLoading(false);
                                 navigate('/postList');
                             }else {
