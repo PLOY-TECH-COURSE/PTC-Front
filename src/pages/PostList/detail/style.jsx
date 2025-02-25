@@ -134,7 +134,7 @@ export const PostDetailDataTop = styled.div`
     }
 
     img{
-        margin-left: 430px;
+        margin-left: 450px;
         margin-top: 15px;
         width: 32px;
         cursor: pointer;
