@@ -7,6 +7,7 @@ import Bullhorn from '../../../assets/bullhorn.svg';
 import { getBroadcastDetail, deleteBroadcast } from '../../../api/broadcast';
 
 export default function Detail() {
+    const navigate = useNavigate();
     const { id } = useParams();
     const postId = parseInt(id);
     const [post, setPost] = useState(null);
@@ -27,13 +28,13 @@ export default function Detail() {
                 setLoading(false);
             });
     }, [postId]);
-    
+
     const handleDelete = () => {
         if (window.confirm('정말로 삭제하시겠습니까?')) {
             deleteBroadcast(postId)
                 .then(() => {
                     alert('게시물이 삭제되었습니다.');
-                    navigate(-1); // 이전 페이지로 돌아가기
+                    navigate(-1);
                 })
                 .catch((err) => {
                     console.error('삭제 실패', err);

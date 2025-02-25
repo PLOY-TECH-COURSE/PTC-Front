@@ -134,7 +134,7 @@ export const PostDetailDataTop = styled.div`
     }
 
     img{
-        margin-left: 400px;
+        margin-left: 430px;
         margin-top: 15px;
         width: 32px;
         cursor: pointer;
@@ -144,7 +144,6 @@ export const PostDetailDataTop = styled.div`
 export const Edit = styled.div`
     display: flex;
     gap: 20px;
-    margin-left: 30px;
 
     p{
         font-family: 'Courier New', Courier, monospace;

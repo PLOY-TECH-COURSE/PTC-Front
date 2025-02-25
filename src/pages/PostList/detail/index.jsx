@@ -4,7 +4,7 @@ import Header from '../../../components/header';
 import { useParams, useNavigate } from 'react-router-dom';
 import Like2 from '../../../assets/like2.svg';
 import Star from '../../../assets/star.svg';
-import { getPostDetail } from "../../../api/postList";
+import { getPostDetail, deletePost } from "../../../api/postList";
 
 export default function Detail() {
     const { id } = useParams();
@@ -37,11 +37,24 @@ export default function Detail() {
                 thumbnail: post.document.thumbnail,
                 introduction: post.document.introduction,
                 isPost: true,
-                hash_tag: post.document.hash_tag || [],
+                hash_tag: post.hash_tag || [],
             },
         });
     };
 
+    const handleDelete = () => {
+        if (window.confirm('정말로 삭제하시겠습니까?')) {
+            deletePost(postId)
+                .then(() => {
+                    alert('게시물이 삭제되었습니다.');
+                    navigate(-1);
+                })
+                .catch((err) => {
+                    console.error('삭제 실패', err);
+                    alert('삭제에 실패했습니다.');
+                });
+        }
+    };
 
     return (
         <S.Container>
@@ -67,7 +80,7 @@ export default function Detail() {
                                 <h1>{post.document.title}</h1>
                                 <img src={Star} />
                                 <S.Edit>
-                                    <p>삭제</p>
+                                    <p onClick={handleDelete}>삭제</p>
                                     <p onClick={handleEdit}>수정</p>
                                 </S.Edit>
 
