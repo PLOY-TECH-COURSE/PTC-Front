@@ -64,10 +64,10 @@ export default function Detail() {
                     <S.PostDetailMain>
                         <S.Profile>
                             <S.ProfileTop>
-                                <img src={post.userInfoDTO.profile} alt={post.userInfoDTO.uid} />
+                                <img src={post.userInfoDTO.profile} alt={post.userInfoDTO.name} />
                                 <S.RightProfile>
                                     <span>{post.generation}</span>
-                                    <p>{post.userInfoDTO.uid}</p>
+                                    <p>{post.userInfoDTO.name}</p>
                                 </S.RightProfile>
                             </S.ProfileTop>
                             <S.ProfileBottom>
