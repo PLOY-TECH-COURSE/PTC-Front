@@ -5,12 +5,15 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Like2 from '../../../assets/like2.svg';
 import Star from '../../../assets/star.svg';
 import { getPostDetail, deletePost } from "../../../api/postList";
+import { getComments, createComment, deleteComment } from "../../../api/comment.js";
 
 export default function Detail() {
     const { id } = useParams();
     const postId = parseInt(id);
     const navigate = useNavigate();
     const [post, setPost] = useState(null);
+    const [comments, setComments] = useState([]);  // 댓글 상태 추가
+    const [newComment, setNewComment] = useState('');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -18,6 +21,7 @@ export default function Detail() {
         setLoading(true);
         setError(null);
 
+        // 게시물 불러오기
         getPostDetail(postId)
             .then((data) => {
                 setPost(data);
@@ -26,6 +30,15 @@ export default function Detail() {
             .catch((err) => {
                 setError('게시물을 불러오는 데 실패했습니다.');
                 setLoading(false);
+            });
+
+        // 댓글 불러오기
+        getComments(postId)
+            .then((data) => {
+                setComments(data);
+            })
+            .catch((err) => {
+                console.error('댓글을 불러오는 데 실패했습니다.', err);
             });
     }, [postId]);
 
@@ -56,6 +69,33 @@ export default function Detail() {
         }
     };
 
+    const handleCommentChange = (e) => {
+        setNewComment(e.target.value);
+    };
+
+    const handleCommentSubmit = async () => {
+        if (!newComment.trim()) return;
+
+        try {
+            await createComment(postId, newComment); // 댓글 작성 API 호출
+            setNewComment('');
+            const updatedComments = await getComments(postId);  // 댓글 목록 다시 불러오기
+            setComments(updatedComments);
+        } catch (error) {
+            console.error('댓글 작성 실패', error);
+        }
+    };
+
+    const handleCommentDelete = async (commentId) => {
+        try {
+            await deleteComment(commentId);  // 댓글 삭제 API 호출
+            const updatedComments = await getComments(postId);  // 댓글 목록 다시 불러오기
+            setComments(updatedComments);
+        } catch (error) {
+            console.error('댓글 삭제 실패', error);
+        }
+    };
+
     return (
         <S.Container>
             <Header />
@@ -83,58 +123,51 @@ export default function Detail() {
                                     <p onClick={handleDelete}>삭제</p>
                                     <p onClick={handleEdit}>수정</p>
                                 </S.Edit>
-
                             </S.PostDetailDataTop>
                             <span>
                                 {post.hash_tag && Array.isArray(post.hash_tag) && post.hash_tag.length > 0
                                     ? post.hash_tag.map(tag => `#${tag}`).join(' ')
                                     : 'No tags available'}
                             </span>
-
                             <p>{post.document.content}</p>
                         </S.PostDetailData>
                     </S.PostDetailMain>
                 )}
                 <S.CommentSection>
-                    <h3>2개의 댓글</h3>
+                    <h3>{comments.length}개의 댓글</h3>
                     <S.CommentInputWrapper>
-                        <input type="text" placeholder="댓글을 입력해주세요" />
-                        <button>댓글 작성</button>
+                        <input
+                            type="text"
+                            value={newComment}
+                            onChange={handleCommentChange}
+                            placeholder="댓글을 입력해주세요"
+                        />
+                        <button onClick={handleCommentSubmit}>댓글 작성</button>
                     </S.CommentInputWrapper>
 
-                    <S.CommentItem>
-                        <S.CommentProfile />
-                        <S.CommentContent>
-                            <p><strong>heodongun</strong></p>
-                            <p>허온 대머리</p>
-                            <S.CommentBottom>
-                                <S.Like>
-                                    <img src={Like2} width="20px"></img>12
-                                </S.Like>
-                                <S.CommentActions>
-                                    <p>삭제</p>
-                                    <p>수정</p>
-                                </S.CommentActions>
-                            </S.CommentBottom>
-                        </S.CommentContent>
-                    </S.CommentItem>
-
-                    <S.CommentItem>
-                        <S.CommentProfile />
-                        <S.CommentContent>
-                            <p><strong>huhon123</strong></p>
-                            <p>허동운 대머리</p>
-                            <S.CommentBottom>
-                                <S.Like>
-                                    <img src={Like2} width="20px"></img>12
-                                </S.Like>
-                                <S.CommentActions>
-                                    <p>삭제</p>
-                                    <p>수정</p>
-                                </S.CommentActions>
-                            </S.CommentBottom>
-                        </S.CommentContent>
-                    </S.CommentItem>
+                    {comments.length > 0 ? (
+                        comments.map((comment) => (
+                            <S.CommentItem key={comment.id}>
+                                <S.CommentProfile />
+                                <S.CommentContent>
+                                    <p><strong>{comment.username}</strong></p>
+                                    <p>{comment.commentText}</p>
+                                    <S.CommentBottom>
+                                        <S.Like>
+                                            <img src={Like2} width="20px" />
+                                            {comment.likeCount}
+                                        </S.Like>
+                                        <S.CommentActions>
+                                            <p onClick={() => handleCommentDelete(comment.id)}>삭제</p>
+                                            <p>수정</p>
+                                        </S.CommentActions>
+                                    </S.CommentBottom>
+                                </S.CommentContent>
+                            </S.CommentItem>
+                        ))
+                    ) : (
+                        <p>댓글이 없습니다.</p>
+                    )}
                 </S.CommentSection>
             </S.Content>
         </S.Container>
