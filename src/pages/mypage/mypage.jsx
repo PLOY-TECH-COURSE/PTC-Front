@@ -7,8 +7,8 @@ import { useState, useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import { authAtom } from "../../recoil/authAtom.js";
 import { getUserProfile } from "../../api/mypage"; 
-import { getFavoritePosts } from "../../api/favortie.js";  
-import PostItem from "../../components/postitem"; 
+import { getFavoritePosts } from "../../api/favortie";  
+import PostItem from "../../components/postItem"; 
 
 const Container = styled.div`
   max-width: 800px;
@@ -78,10 +78,10 @@ const TabButton = styled.button`
   font-weight: 600;
   width: 5em;
   height: 3em;
-  color: ${(props) => (props.active ? "#4970FB" : "#6B7280")}; 
+  color: ${(props) => (props.$active === "true" ? "#4970FB" : "#6B7280")}; 
   background: none;
   border: none;
-  border-bottom: ${(props) => (props.active ? "2px solid #4970FB" : "none")};
+  border-bottom: ${(props) => (props.$active === "true" ? "2px solid #4970FB" : "none")};
   cursor: pointer;
 `;
 
@@ -136,7 +136,6 @@ const Mypage = () => {
       return;
     }
 
-
     getUserProfile()
       .then((data) => {
         setUserData(data);
@@ -145,13 +144,13 @@ const Mypage = () => {
       })
       .catch((error) => console.error("API 요청 실패:", error));
 
-
     getFavoritePosts(userId)
       .then((data) => {
         setFavoritePosts(data);
       })
       .catch((error) => console.error("즐겨찾기 데이터 가져오기 실패:", error));
   }, [userId]);
+
   const handleEditClick = () => {
     if (isEditing) {
       setUserData((prev) => ({
@@ -162,7 +161,7 @@ const Mypage = () => {
     }
     setIsEditing(!isEditing);
   };
-
+  
   return (
     <>
       <Header />
@@ -213,10 +212,10 @@ const Mypage = () => {
         </ProfileSection>
 
         <Tabs>
-          <TabButton active={activeTab === "글"} onClick={() => setActiveTab("글")}>
+          <TabButton $active={activeTab === "글" ? "true" : "false"} onClick={() => setActiveTab("글")}>
             글
           </TabButton>
-          <TabButton active={activeTab === "즐겨찾기"} onClick={() => setActiveTab("즐겨찾기")}>
+          <TabButton $active={activeTab === "즐겨찾기" ? "true" : "false"} onClick={() => setActiveTab("즐겨찾기")}>
             즐겨찾기
           </TabButton>
         </Tabs>
