@@ -79,16 +79,16 @@ export default function First(){
             <S.Wrap>
                 <S.Section>
                     <S.Description>
-                        <S.Title>신입생을 위한 선물, 플테코</S.Title>
+                        <S.Title>개발자의 첫걸음, 플테코와 함께</S.Title>
                         <img src={Logo} alt={"logo"} />
-                        <S.SubText>신입생을 위한 첫걸음, 개발 기초부터 협업까지</S.SubText>
-                        <S.SubText>신입생 여러분이 헤매지 않도록 친절하게 알려드립니다!</S.SubText>
+                        <S.SubText>플로이 테크 코스는 IT 비영리 단체 ‘플로이’에서 운영하는</S.SubText>
+                        <S.SubText>1:1 맞춤형 멘토링 스터디 프로그램입니다.</S.SubText>
                         <S.Btn onClick={()=>{
                            if( auth.role === "") navigate('/login');
                            else if( auth.role === "ROLE_USER") navigate('/apply');
-                           else alert('아직준비중입니다.');
+                           else navigate('/write');
                         }}>
-                            <span>신청하기</span>
+                            <span>{auth.role === "ROLE_STUDENT" || auth.role === "ROLE_ADMIN" || auth.role === "ROLE_SUPERADMIN" ? "글 작성하기" : "신청하기"}</span>
                             <S.BtnText $isHalf = {false}>
                                 <span>s</span>
                                 <span>e</span>

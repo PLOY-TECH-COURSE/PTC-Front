@@ -91,7 +91,7 @@ export const Btn = styled.button`
         align-items: center;
         justify-content: center;
         & > img{
-            width: 40px;
+            width: 36px;
             display: block;
         }
         & > span{
@@ -111,8 +111,8 @@ export const BtnText = styled.div`
     position: absolute;
     width: 100px; /* 텍스트의 너비 설정 */
     text-align: center; /* 텍스트 가운데 정렬 */
-    top: 50%; /* 부모 요소의 중앙에 위치 */
-    left: 50%; /* 부모 요소의 중앙에 위치 */
+    top: 40%; /* 부모 요소의 중앙에 위치 */
+    left: 49.5%; /* 부모 요소의 중앙에 위치 */
     transform: translate(-50%, 100%);
     transform-origin: 50% 100%; /* 아래쪽 중앙을 회전의 기준으로 설정 */
     animation: ${(props)=>props.$isHalf ? css`${rotateFromHalf} 5s linear infinite` : css`${rotateFromStart} 5s linear infinite`};
