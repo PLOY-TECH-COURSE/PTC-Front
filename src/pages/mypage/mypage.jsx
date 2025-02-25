@@ -8,7 +8,7 @@ import { useRecoilValue } from "recoil";
 import { authAtom } from "../../recoil/authAtom.js";
 import { getUserProfile } from "../../api/mypage"; 
 import { getFavoritePosts } from "../../api/favortie";  
-import PostItem from "../../components/postitem"; 
+import PostItem from "../../components/postItem"; 
 
 const Container = styled.div`
   max-width: 800px;
@@ -222,7 +222,6 @@ const Mypage = () => {
 
         {activeTab === "즐겨찾기" && (
           <div>
-            
             {favoritePosts.length > 0 ? (
               favoritePosts.map((post) => <PostItem key={post.documents_id} post={post} />)
             ) : (
