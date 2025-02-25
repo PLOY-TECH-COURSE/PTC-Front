@@ -35,7 +35,9 @@ export const getBroadcastDetail = async (document_id) => {
 
 export const deleteBroadcast = async (document_id) =>{
     try{
-        const res = await axiosInstance.delete(`/announcements/${document_id}` );
+        const res = await axiosInstance.delete("/announcements", {
+            params: document_id
+        });
         if(res.status !== 200){
             return Promise.reject({
                 status: res.status,
