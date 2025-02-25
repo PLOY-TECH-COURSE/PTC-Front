@@ -10,12 +10,13 @@ export const getProposerList = async () => {
     });
     const formattedData = res.data.map(user => ({
       ...user,
+			id:user.id,
       auth: user.role === "ROLE_USER" ? "USER" : user.role === "ROLE_STUDENT" ? "STUDENT" : user.role === "ROLE_ADMIN" ? "ADMIN":"SUPERADMIN", 
     }));
 
     return formattedData;
   } catch (err) {
-    console.error("API 요청 실패:", err);
+    console.error("사용자 조회 API 요청 실패:", err);
     return [];
   }
 };
@@ -23,13 +24,15 @@ export const getProposerList = async () => {
 export const updateUserRole = async (userId, newRole) => {
   try {
     const token = localStorage.getItem("accessToken"); 
-    
-    const response = await axiosInstance.post(
+    const requestData = {
+      id: userId, 
+      role: `ROLE_${newRole.toUpperCase()}`, 
+    };
+    console.log("요청 데이터:", requestData);
+
+    const response = await axiosInstance.patch(
       "/permissions", 
-      {
-        id: userId, 
-        role: `ROLE_${newRole.toUpperCase()}`, 
-      },
+      requestData,
       {
         headers: {
           Authorization: `Bearer ${token}`, 
@@ -37,9 +40,14 @@ export const updateUserRole = async (userId, newRole) => {
       }
     );
 
+    console.log("서버 응답:", response.data);
     return response.data; 
   } catch (error) {
-    console.error("권한 변경 실패:", error);
+    if (error.response) {
+      console.error("서버 응답 에러:", error.response.data);
+    } else {
+      console.error("권한 변경 실패:", error);
+    }
     return null; 
   }
 };

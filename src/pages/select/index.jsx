@@ -19,7 +19,6 @@ export default function Select() {
       const data = await getProposerList();  // API 호출
       setUserInfo(data);  // 받은 데이터로 상태 업데이트
     };
-
     fetchUsers();
   }, []);
 
@@ -89,7 +88,8 @@ export default function Select() {
         <_.UserList>
           {filteredUsers.map((user, index) => (
             <Users
-              key={user.email}
+              key={user.id}
+              id ={user.id}
               img={user.img || ""}
               name={user.name}
               email={user.email}
