@@ -122,7 +122,7 @@ const Mypage = () => {
   const auth = useRecoilValue(authAtom);
   const userId = auth.uid;
   console.log({ auth });
-
+  console.log(userId);
   const [isEditing, setIsEditing] = useState(false);
   const [userData, setUserData] = useState(null);
   const [editedUid, setEditedUid] = useState("");
