@@ -42,7 +42,7 @@ export const patchDocument = async (title, content, tag, img, des, id) =>{
             thumbnail:img,
             introduction:des
         });
-        if(res.status === 200 || res.status === 201){
+        if(res.status === 200 || res.status === 201|| res.status === 204){
             return true;
         }
         return false;
@@ -59,7 +59,7 @@ export const postBroad = async (title, content, tag, img, intro) => {
             introduction: intro
         });
 
-        if(res.status === 200 || res.status === 201){
+        if(res.status === 200 || res.status === 201|| res.status === 204){
             return true;
         }
         return false;
