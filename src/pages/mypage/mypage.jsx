@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import { authAtom } from "../../recoil/authAtom.js";
 import { getUserProfile } from "../../api/mypage"; 
-import { getFavoritePosts } from "../../api/favortie.js";  
+import { getFavoritePosts } from "../../api/favortie";  
 import PostItem from "../../components/postitem"; 
 
 const Container = styled.div`
