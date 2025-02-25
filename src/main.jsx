@@ -33,7 +33,7 @@ createRoot(document.getElementById('root')).render(
             <Route path="/signup" element={<Block><Signup /></Block>} />
             <Route path='/postList' element={<PostList />} />
             <Route path='/mypage' element={<MyPage />} />
-            <Route path='/write' element={<Write />} />
+            <Route path='/write/:id' element={<Write />} />
             <Route path="/post/:id" element={<Detail />} /> 
             <Route path='/broadcast' element={<Broadcast />} />
             <Route path="/announcement/:id" element={<Detail2 />} /> 

@@ -2,7 +2,7 @@ import * as S from './style.jsx'
 import {useRef, useState} from "react";
 import ImgGray from '../../../assets/write/ImgGray.svg'
 import {uploadImg, postDocument, postBroad, patchDocument, patchBroad} from "../../../api/write.js";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {authAtom} from '../../../recoil/authAtom.js'
 import {useRecoilValue} from "recoil";
 
@@ -13,6 +13,7 @@ export default function WriteModal({title, tag, content, setIsModal}){
     const {role} = useRecoilValue(authAtom);
     const [intro, setIntro] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const {id}= useParams();
 
     const navigate = useNavigate();
     const changeFile = async (event) => {
@@ -72,7 +73,22 @@ export default function WriteModal({title, tag, content, setIsModal}){
                     <S.Btn $Success={true} onClick={async ()=>{
                         if(isLoading) return;
                         setIsLoading(true);
-                        if(isBroad){
+                        if(id !=="new"){
+                            if(isBroad){
+                                if(await patchBroad(id, title, content, tag.map(item=>item.tag), img, intro)){
+                                    setIsLoading(false);
+                                    navigate('/broadcast');
+                                }
+                                else setIsLoading(false);
+                            }
+                            else if(await patchDocument(id, title, content, tag.map((item) => item.tag), img, intro)){
+                                setIsLoading(false);
+                                navigate('/postList');
+                            }else {
+                                setIsLoading(false);
+                            }
+                        }
+                        else if(isBroad){
                             if(await postBroad(title, content, tag.map(item=>item.tag), img, intro)){
                                 setIsLoading(false);
                                 navigate('/broadcast');
