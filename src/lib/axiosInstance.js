@@ -14,7 +14,7 @@ const refreshAccessToken = async () => {
         withCredentials: true,
     });
     return response.headers.authorization;
-};
+};  
 
 // 요청 인터셉터
 axiosInstance.interceptors.request.use(

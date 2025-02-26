@@ -5,18 +5,25 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Like2 from '../../../assets/like2.svg';
 import Star from '../../../assets/star.svg';
 import { getPostDetail, deletePost } from "../../../api/postList";
-import { getComments, createComment, deleteComment } from "../../../api/comment.js";
+
+import { getComments, createComment, deleteComment, updateComment } from "../../../api/comment.js";
+
 
 export default function Detail() {
     const { id } = useParams();
     const postId = parseInt(id);
     const navigate = useNavigate();
     const [post, setPost] = useState(null);
-    const [comments, setComments] = useState([]);  
+
+    const [comments, setComments] = useState([]);
+
     const [newComment, setNewComment] = useState('');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
+    const [editCommentId, setEditCommentId] = useState(null);  // 수정 중인 댓글 ID
+    const [editCommentText, setEditCommentText] = useState(''); // 수정 중인 댓글 텍스트
+    const token = localStorage.getItem('accessToken');
+    
     useEffect(() => {
         setLoading(true);
         setError(null);
@@ -29,7 +36,6 @@ export default function Detail() {
                 setError('게시물을 불러오는 데 실패했습니다.');
                 setLoading(false);
             });
-        console.log({postId});
         getComments(postId)
             .then((data) => {
                 setComments(data);
@@ -85,15 +91,43 @@ export default function Detail() {
     };
 
     const handleCommentDelete = async (commentId) => {
-        try {
-            await deleteComment(commentId); 
-            const updatedComments = await getComments(postId);  
-            setComments(updatedComments);
-        } catch (error) {
-            console.error('댓글 삭제 실패', error);
+        if (window.confirm('정말로 삭제하시겠습니까?')){
+            try {
+                await deleteComment(commentId);
+                const updatedComments = await getComments(postId);
+                setComments(updatedComments);
+            } catch (error) {
+                console.error('댓글 삭제 실패', error);
+            }
         }
     };
 
+    const handleCommentEdit = (commentId, currentText) => {
+        setEditCommentId(commentId); 
+        setEditCommentText(currentText); 
+    };
+
+    const handleCommentUpdate = async () => {
+
+        if (!editCommentText.trim()) return;
+    
+        try { 
+            await updateComment(editCommentId, editCommentText);
+            setComments((prevComments) => 
+                prevComments.map(comment =>
+                    comment.id === editCommentId
+                        ? { ...comment, comment: editCommentText } // 수정된 댓글 내용으로 업데이트
+                        : comment
+                )
+            );
+            setEditCommentId(null);  // 수정 중인 댓글 ID 초기화
+            setEditCommentText('');  // 수정 중인 댓글 텍스트 초기화
+        } catch (error) {
+            console.error('댓글 수정 실패', error);
+        }
+    };
+    
+   
     return (
         <S.Container>
             <Header />
@@ -148,8 +182,21 @@ export default function Detail() {
                             <S.CommentItem key={comment.id}>
                                 <S.CommentProfile />
                                 <S.CommentContent>
-                                    <p><strong>{comment.username}</strong></p>
-                                    <p>{comment.commentText}</p>
+
+                                    <p><strong>{comment.userName}</strong></p>
+                                    {editCommentId === comment.id ? (
+                                        <>
+                                            <input
+                                                type="text"
+                                                value={editCommentText}
+                                                onChange={(e) => setEditCommentText(e.target.value)}
+                                            />
+                                            <button onClick={handleCommentUpdate}>수정 완료</button>
+                                        </>
+                                    ) : (
+                                        <p>{comment.comment}</p>
+                                    )}
+
                                     <S.CommentBottom>
                                         <S.Like>
                                             <img src={Like2} width="20px" />
@@ -157,7 +204,9 @@ export default function Detail() {
                                         </S.Like>
                                         <S.CommentActions>
                                             <p onClick={() => handleCommentDelete(comment.id)}>삭제</p>
-                                            <p>수정</p>
+
+                                            <p onClick={() => handleCommentEdit(comment.id, comment.comment)}>수정</p>
+
                                         </S.CommentActions>
                                     </S.CommentBottom>
                                 </S.CommentContent>
