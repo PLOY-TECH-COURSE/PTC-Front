@@ -5,14 +5,18 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Like2 from '../../../assets/like2.svg';
 import Star from '../../../assets/star.svg';
 import { getPostDetail, deletePost } from "../../../api/postList";
+
 import { getComments, createComment, deleteComment, updateComment } from "../../../api/comment.js";
+
 
 export default function Detail() {
     const { id } = useParams();
     const postId = parseInt(id);
     const navigate = useNavigate();
     const [post, setPost] = useState(null);
+
     const [comments, setComments] = useState([]);
+
     const [newComment, setNewComment] = useState('');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -32,7 +36,6 @@ export default function Detail() {
                 setError('게시물을 불러오는 데 실패했습니다.');
                 setLoading(false);
             });
-        
         getComments(postId)
             .then((data) => {
                 setComments(data);
@@ -57,6 +60,7 @@ export default function Detail() {
 
     const handleDelete = () => {
         if (window.confirm('정말로 삭제하시겠습니까?')) {
+            console.log(postId)
             deletePost(postId)
                 .then(() => {
                     alert('게시물이 삭제되었습니다.');
@@ -123,7 +127,7 @@ export default function Detail() {
         }
     };
     
-    
+   
     return (
         <S.Container>
             <Header />
@@ -132,10 +136,10 @@ export default function Detail() {
                     <S.PostDetailMain>
                         <S.Profile>
                             <S.ProfileTop>
-                                <img src={post.userInfoDTO.profile} alt={post.userInfoDTO.uid} />
+                                <img src={post.userInfoDTO.profile} alt={post.userInfoDTO.name} />
                                 <S.RightProfile>
                                     <span>{post.generation}기</span>
-                                    <p>{post.userInfoDTO.uid}</p>
+                                    <p>{post.userInfoDTO.name}</p>
                                 </S.RightProfile>
                             </S.ProfileTop>
                             <S.ProfileBottom>
@@ -178,6 +182,7 @@ export default function Detail() {
                             <S.CommentItem key={comment.id}>
                                 <S.CommentProfile />
                                 <S.CommentContent>
+
                                     <p><strong>{comment.userName}</strong></p>
                                     {editCommentId === comment.id ? (
                                         <>
@@ -191,6 +196,7 @@ export default function Detail() {
                                     ) : (
                                         <p>{comment.comment}</p>
                                     )}
+
                                     <S.CommentBottom>
                                         <S.Like>
                                             <img src={Like2} width="20px" />
@@ -198,7 +204,9 @@ export default function Detail() {
                                         </S.Like>
                                         <S.CommentActions>
                                             <p onClick={() => handleCommentDelete(comment.id)}>삭제</p>
+
                                             <p onClick={() => handleCommentEdit(comment.id, comment.comment)}>수정</p>
+
                                         </S.CommentActions>
                                     </S.CommentBottom>
                                 </S.CommentContent>

@@ -137,7 +137,7 @@ export const PostDetailDataTop = styled.div`
     }
 
     img{
-        margin-left: 450px;
+        margin-left: 400px;
         margin-top: 15px;
         width: 32px;
         cursor: pointer;
@@ -164,7 +164,7 @@ export const Edit = styled.div`
 `
 export const CommentSection = styled.div`
     margin-top: 40px;
-    width: 100%;
+    width: 1500px;
     background: #fff;
     padding: 20px;
     margin-left: 300px;

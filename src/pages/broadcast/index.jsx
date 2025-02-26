@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import { getBroadcastList } from '../../api/broadcast';
 import Loading from "../../components/loading";
+import makeDocument from '../../utils/makeDocument';
 
 export default function () {
     const navigate = useNavigate();
@@ -49,7 +50,7 @@ export default function () {
                                 <S.PostRightData>
                                     <S.PostRightTopData>
                                         <S.PostData>{row.title}</S.PostData>
-                                        <p>{row.content}</p>
+                                        <div>{makeDocument(row.content)}</div>
                                     </S.PostRightTopData>
                                     <span />
                                     <S.PostRightBottomData>
