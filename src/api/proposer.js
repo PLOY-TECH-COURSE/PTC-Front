@@ -35,3 +35,24 @@ export const deleteProposer = async (id) => {
       return null;
   }
 };
+export const approveProposer = async (id,name) => {
+  try {
+      const token = localStorage.getItem("accessToken");
+      const res = await axiosInstance.post(`/accept`, {
+          headers: {
+              Authorization: `Bearer ${token}`
+          },
+          // userId:id,
+          // generation: 1,
+          // trackId: 1
+          "userId": id,
+          "generation": 1,
+          "trackId": 1
+      });
+			alert(`${name}이 신청되었습니다.`);
+      return res.data || { success: res.status === 200 || res.status === 204 };
+  } catch (error) {
+      console.error("신청자 승인 실패", error.response?.data || error);
+      return null;
+  }
+};
