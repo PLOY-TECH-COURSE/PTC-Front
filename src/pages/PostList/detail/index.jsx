@@ -4,6 +4,9 @@ import Header from '../../../components/header';
 import { useParams, useNavigate } from 'react-router-dom';
 import Like2 from '../../../assets/like2.svg';
 import Star from '../../../assets/star.svg';
+
+import Unstar from '../../../assets/unstar.svg';
+
 import { getPostDetail, deletePost, toggleFavorite, checkFavorite } from "../../../api/postList";
 import { getComments, createComment, deleteComment, updateComment } from "../../../api/comment.js";
 
@@ -137,7 +140,13 @@ export default function Detail() {
                         <S.PostDetailData>
                             <S.PostDetailDataTop>
                                 <h1>{post.document.title}</h1>
-                                <img src={Star} alt="즐겨찾기" onClick={handleFavoriteClick} style={{ cursor: "pointer", filter: isFavorite ? "grayscale(0%)" : "grayscale(100%)" }} />
+
+                                <img 
+                                    src={isFavorite ? Star : Unstar} 
+                                    alt="즐겨찾기" 
+                                    onClick={handleFavoriteClick} 
+                                    style={{ cursor: "pointer" }} 
+                                />
                                 <S.Edit>
                                     <p onClick={handleDelete}>삭제</p>
                                     <p onClick={handleEdit}>수정</p>
