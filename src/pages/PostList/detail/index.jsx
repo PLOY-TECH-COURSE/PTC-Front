@@ -4,6 +4,10 @@ import Header from '../../../components/header';
 import { useParams, useNavigate } from 'react-router-dom';
 import Like2 from '../../../assets/like2.svg';
 import Star from '../../../assets/star.svg';
+import { getPostDetail, deletePost } from "../../../api/postList";
+
+import { getComments, createComment, deleteComment, updateComment } from "../../../api/comment.js";
+
 import { getPostDetail,toggleFavorite,checkFavorite } from "../../../api/postList";
 
 export default function Detail() {
@@ -11,14 +15,21 @@ export default function Detail() {
     const postId = parseInt(id);
     const navigate = useNavigate();
     const [post, setPost] = useState(null);
+
+    const [comments, setComments] = useState([]);
+
+    const [newComment, setNewComment] = useState('');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [editCommentId, setEditCommentId] = useState(null);  // 수정 중인 댓글 ID
+    const [editCommentText, setEditCommentText] = useState(''); // 수정 중인 댓글 텍스트
+    const token = localStorage.getItem('accessToken');
+    
     const [isFavorite, setIsFavorite] = useState(false);
 
     useEffect(() => {
         setLoading(true);
         setError(null);
-
         getPostDetail(postId)
             .then((data) => {
                 setPost(data);
@@ -27,6 +38,13 @@ export default function Detail() {
             .catch((err) => {
                 setError('게시물을 불러오는 데 실패했습니다.');
                 setLoading(false);
+            });
+        getComments(postId)
+            .then((data) => {
+                setComments(data);
+            })
+            .catch((err) => {
+                console.error('댓글을 불러오는 데 실패했습니다.', err);
             });
     }, [postId]);
 
@@ -54,22 +72,11 @@ export default function Detail() {
                 thumbnail: post.document.thumbnail,
                 introduction: post.document.introduction,
                 isPost: true,
-                hash_tag: post.document.hash_tag || [],
+                hash_tag: post.hash_tag || [],
             },
         });
     };
 
-    const handleFavoriteClick = async () => {
-        if (!post) return;
-    
-        const newFavoriteState = !isFavorite; // 변경될 상태 미리 설정
-        setIsFavorite(newFavoriteState); // 상태를 먼저 변경 (UI 즉시 반영)
-    
-        const result = await toggleFavorite(postId, isFavorite);
-        if (!result) {
-            setIsFavorite(!newFavoriteState); // 실패 시 상태 롤백
-        }
-    };
 
     return (
         <S.Container>
@@ -79,10 +86,10 @@ export default function Detail() {
                     <S.PostDetailMain>
                         <S.Profile>
                             <S.ProfileTop>
-                                <img src={post.userInfoDTO.profile} alt={post.userInfoDTO.uid} />
+                                <img src={post.userInfoDTO.profile} alt={post.userInfoDTO.name} />
                                 <S.RightProfile>
                                     <span>{post.generation}기</span>
-                                    <p>{post.userInfoDTO.uid}</p>
+                                    <p>{post.userInfoDTO.name}</p>
                                 </S.RightProfile>
                             </S.ProfileTop>
                             <S.ProfileBottom>
@@ -100,7 +107,7 @@ export default function Detail() {
                                 style={{ cursor: "pointer", filter: isFavorite ? "grayscale(0%)" : "grayscale(100%)" }} 
                             />
                             <S.Edit>
-                                <p>삭제</p>
+                                <p onClick={handleDelete}>삭제</p>
                                 <p onClick={handleEdit}>수정</p>
                             </S.Edit>
                         </S.PostDetailDataTop>
@@ -114,45 +121,55 @@ export default function Detail() {
                     </S.PostDetailMain>
                 )}
                 <S.CommentSection>
-                    <h3>2개의 댓글</h3>
+                    <h3>{comments.length}개의 댓글</h3>
                     <S.CommentInputWrapper>
-                        <input type="text" placeholder="댓글을 입력해주세요" />
-                        <button>댓글 작성</button>
+                        <input
+                            type="text"
+                            value={newComment}
+                            onChange={handleCommentChange}
+                            placeholder="댓글을 입력해주세요"
+                        />
+                        <button onClick={handleCommentSubmit}>댓글 작성</button>
                     </S.CommentInputWrapper>
 
-                    <S.CommentItem>
-                        <S.CommentProfile />
-                        <S.CommentContent>
-                            <p><strong>heodongun</strong></p>
-                            <p>허온 대머리</p>
-                            <S.CommentBottom>
-                                <S.Like>
-                                    <img src={Like2} width="20px"></img>12
-                                </S.Like>
-                                <S.CommentActions>
-                                    <p>삭제</p>
-                                    <p>수정</p>
-                                </S.CommentActions>
-                            </S.CommentBottom>
-                        </S.CommentContent>
-                    </S.CommentItem>
+                    {comments.length > 0 ? (
+                        comments.map((comment) => (
+                            <S.CommentItem key={comment.id}>
+                                <S.CommentProfile />
+                                <S.CommentContent>
 
-                    <S.CommentItem>
-                        <S.CommentProfile />
-                        <S.CommentContent>
-                            <p><strong>huhon123</strong></p>
-                            <p>허동운 대머리</p>
-                            <S.CommentBottom>
-                                <S.Like>
-                                    <img src={Like2} width="20px"></img>12
-                                </S.Like>
-                                <S.CommentActions>
-                                    <p>삭제</p>
-                                    <p>수정</p>
-                                </S.CommentActions>
-                            </S.CommentBottom>
-                        </S.CommentContent>
-                    </S.CommentItem>
+                                    <p><strong>{comment.userName}</strong></p>
+                                    {editCommentId === comment.id ? (
+                                        <>
+                                            <input
+                                                type="text"
+                                                value={editCommentText}
+                                                onChange={(e) => setEditCommentText(e.target.value)}
+                                            />
+                                            <button onClick={handleCommentUpdate}>수정 완료</button>
+                                        </>
+                                    ) : (
+                                        <p>{comment.comment}</p>
+                                    )}
+
+                                    <S.CommentBottom>
+                                        <S.Like>
+                                            <img src={Like2} width="20px" />
+                                            {comment.likeCount}
+                                        </S.Like>
+                                        <S.CommentActions>
+                                            <p onClick={() => handleCommentDelete(comment.id)}>삭제</p>
+
+                                            <p onClick={() => handleCommentEdit(comment.id, comment.comment)}>수정</p>
+
+                                        </S.CommentActions>
+                                    </S.CommentBottom>
+                                </S.CommentContent>
+                            </S.CommentItem>
+                        ))
+                    ) : (
+                        <p>댓글이 없습니다.</p>
+                    )}
                 </S.CommentSection>
             </S.Content>
         </S.Container>

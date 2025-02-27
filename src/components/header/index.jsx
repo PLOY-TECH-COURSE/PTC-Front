@@ -75,8 +75,6 @@ function Header() {
                     })
                 }
 
-
-
                 {!user.uid &&
                     <S.LoginBox>
                         <S.LoginButton onClick={()=>navigate('/login')}>로그인</S.LoginButton>

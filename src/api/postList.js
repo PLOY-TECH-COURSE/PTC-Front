@@ -32,6 +32,24 @@ export const getPostDetail = async (document_id) => {
     }
 };
 
+export const deletePost = async (document_id) =>{
+    try{
+        const res = await axiosInstance.delete("/documents", {
+            params: document_id
+        });
+        if(res.status !== 200){
+            return Promise.reject({
+                status: res.status,
+                message: res.message
+            });
+        }
+        return res;
+
+    }catch (err){
+        return Promise.reject(err);
+    }
+}
+
 export const toggleFavorite = async (documentId, isFavorite) => {
     try {
         const token = localStorage.getItem("accessToken");
