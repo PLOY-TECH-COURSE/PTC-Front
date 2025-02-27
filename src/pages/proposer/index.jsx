@@ -15,6 +15,7 @@ export default function Proposer() {
     const fetchData = async () => {
       const data = await getProposerList();
       setUserInfo(data);
+      console.log("사용자 리스트",data)
     };
     fetchData();
   }, []);
@@ -25,6 +26,8 @@ export default function Proposer() {
   const filteredUsers = userInfo.filter(user =>
     user.name.toLowerCase().includes(searchQuery.toLowerCase())  
   );
+
+
 
   return (
     <>

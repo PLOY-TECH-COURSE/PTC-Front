@@ -2,14 +2,12 @@ import axiosInstance from "../lib/axiosInstance";
 
 export const getProposerList = async () => {
   try {
-    const token = localStorage.getItem("accessToken"); // 저장된 토큰 가져오기
+    const token = localStorage.getItem("accessToken"); 
     const res = await axiosInstance.get("/applications", {
       headers: {
-        Authorization: `Bearer ${token}`, // 토큰 추가
+        Authorization: `Bearer ${token}`, 
       },
     });
-
-    // 데이터 구조 변환 (introduction → intro, resolution → promise)
     const formattedData = res.data.map(user => ({
       ...user,
       intro: user.introduction,
@@ -20,5 +18,20 @@ export const getProposerList = async () => {
   } catch (err) {
     console.error("API 요청 실패:", err);
     return [];
+  }
+};
+export const deleteProposer = async (id) => {
+  try {
+      const token = localStorage.getItem("accessToken");
+      const res = await axiosInstance.post(`/decline`, {
+          headers: {
+              Authorization: `Bearer ${token}`
+          },
+          id:id
+      });
+      return res.data || { success: res.status === 200 || res.status === 204 };
+  } catch (error) {
+      console.error("신청자 거부 실패", error.response?.data || error);
+      return null;
   }
 };

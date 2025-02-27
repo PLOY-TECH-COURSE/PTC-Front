@@ -134,13 +134,8 @@ export default function Detail() {
     };
     const handlePostLikeClick = async () => {
         try {
-            // 좋아요 상태 반영
             await togglePostLike(postId, likeOn);
-    
-            // 상태 반전
             setLikeOn(prev => !prev);
-    
-            // 좋아요 수 업데이트
             setPost(prevPost => ({
                 ...prevPost,
                 likes: likeOn ? prevPost.likes - 1 : prevPost.likes + 1,
