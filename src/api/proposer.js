@@ -42,12 +42,9 @@ export const approveProposer = async (id,name) => {
           headers: {
               Authorization: `Bearer ${token}`
           },
-          // userId:id,
-          // generation: 1,
-          // trackId: 1
-          "userId": id,
-          "generation": 1,
-          "trackId": 1
+          userId:id,
+          generation: 1,
+          trackId: 1
       });
 			alert(`${name}이 신청되었습니다.`);
       return res.data || { success: res.status === 200 || res.status === 204 };
