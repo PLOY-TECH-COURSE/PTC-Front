@@ -93,7 +93,7 @@ export const PostLike = styled.div`
 
     p{
         font-size: 15px;
-        color: #4970FB;
+        color: ${(props) => (props.isLike ? "#4970FB" : "#D1D1D1")};
     }
 `
 
