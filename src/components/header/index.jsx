@@ -26,7 +26,7 @@ function Header() {
         {id:4, path : "/authority", name : "권한관리", role: "ROLE_SUPERADMIN"},
         {id:5, path : "/proposer", name : "신청자", role: "ROLE_SUPERADMIN, ROLE_ADMIN"},
         {id:6, path : "/apply", name: "신청하기", role: "ROLE_USER"},
-        {id:7, path : "/write", name : "새글작성", role: "ROLE_SUPERADMIN, ROLE_ADMIN, ROLE_STUDENT"},
+        {id:7, path : "/write/new", name : "새글작성", role: "ROLE_SUPERADMIN, ROLE_ADMIN, ROLE_STUDENT"},
 
     ]
 
@@ -75,8 +75,6 @@ function Header() {
                     })
                 }
 
-
-
                 {!user.uid &&
                     <S.LoginBox>
                         <S.LoginButton onClick={()=>navigate('/login')}>로그인</S.LoginButton>
@@ -89,7 +87,7 @@ function Header() {
                         <S.Text>{user.uid}</S.Text>
                         <S.DownImg src={Down} $isOpen = {isOpen[0]} $isOpen2 = {isOpen[1]} alt={'down'} width={18}/>
                         <S.Dropdown $isOpen = {isOpen[0]}>
-                            <S.Text2 onClick={()=>{navigate('/mypage')}}>내 정보</S.Text2>
+                        <S.Text2 onClick={() => {navigate(`/user/${user.uid}`)}}>내 정보</S.Text2>
                             <S.Text2 onClick={()=> {
                                 if(logout()){
                                     navigate('/');

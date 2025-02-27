@@ -36,7 +36,7 @@ axiosInstance.interceptors.response.use(
     async (error) => {
         const originalRequest = error.config;
 
-        if (error.response.message === "access token expired" && !originalRequest._retry) {
+        if (error.response.data === "access token expired" && !originalRequest._retry) {
             originalRequest._retry = true;
 
             try {
@@ -47,6 +47,7 @@ axiosInstance.interceptors.response.use(
                 return axiosInstance(originalRequest);
             } catch (refreshError) {
                 console.error("Refresh token expired or invalid", refreshError);
+                localStorage.removeItem('accessToken');
                 window.location.href = '/login';
                 return Promise.reject(refreshError);
             }

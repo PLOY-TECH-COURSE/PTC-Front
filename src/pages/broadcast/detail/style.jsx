@@ -135,7 +135,7 @@ export const PostDetailDataTop = styled.div`
 export const Edit = styled.div`
     display: flex;
     gap: 20px;
-    margin-left: 400px;
+    margin-left: 450px;
 
     p{
         font-family: 'Courier New', Courier, monospace;

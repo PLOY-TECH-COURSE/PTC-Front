@@ -4,7 +4,7 @@ import Like from '../../assets/like.svg';
 const PostItem = ({ post, onClick }) => {
 
     return (
-        <S.RowData onClick={() => onClick(post.document_id)}>
+        <S.RowData onClick={() => onClick(post.documents_id)}>
             <S.PostImg><img src={post.thumbnail} alt="Thumbnail" /></S.PostImg>
             <S.PostRightData>
                 <S.PostRightTopData>

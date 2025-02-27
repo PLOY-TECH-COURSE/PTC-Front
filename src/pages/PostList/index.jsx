@@ -5,6 +5,7 @@ import Search from '../../assets/search.svg';
 import PostItem from "../../components/postItem";
 import { useNavigate } from "react-router-dom";
 import { getSearchPost } from "../../api/postList";
+import Loading from "../../components/loading";
 
 export default function () {
     const navigate = useNavigate();
@@ -34,15 +35,14 @@ export default function () {
         navigate(`/post/${numericId}`);
     };
     
-
     useEffect(() => {
         setLoading(true);
-
-        const encodedQuery = encodeURIComponent(searchQuery);
-
-        getSearchPost(encodedQuery || "", sort, start)
+    
+        const query = searchQuery.replace(/#/g, '%23');
+    
+        getSearchPost(query, sort, start)
             .then((data) => {
-                setPosts(data.documents);
+                setPosts(data || []);
                 setLoading(false);
             })
             .catch((error) => {
@@ -50,9 +50,11 @@ export default function () {
                 setLoading(false);
             });
     }, [searchQuery, sort, start]);
+    
 
     return (
         <S.Container>
+            {loading && <Loading />}
             <Header />
             <S.Content>
                 <S.PostListTop>
@@ -81,7 +83,7 @@ export default function () {
                         <h2>{searchQuery ? "검색 결과가 없습니다." : "게시물이 없습니다."}</h2>
                     ) : (
                         posts.map((post) => (
-                            <PostItem key={post.document_id} post={post} onClick={handlePostClick} />
+                            <PostItem key={post.documents_id} post={post} onClick={handlePostClick} />
                         ))
                     )}
                 </S.PostListMain>

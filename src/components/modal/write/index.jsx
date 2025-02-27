@@ -1,13 +1,19 @@
 import * as S from './style.jsx'
 import {useRef, useState} from "react";
 import ImgGray from '../../../assets/write/ImgGray.svg'
-import {uploadImg, postDocument} from "../../../api/write.js";
-import {useNavigate} from "react-router-dom";
+import {uploadImg, postDocument, postBroad, patchDocument, patchBroad} from "../../../api/write.js";
+import {useNavigate, useParams} from "react-router-dom";
+import {authAtom} from '../../../recoil/authAtom.js'
+import {useRecoilValue} from "recoil";
 
-export default function WriteModal({title, tag, content, setIsModal}){
+export default function WriteModal({data, title, tag, content, setIsModal}){
     const fileRef = useRef(null);
-    const [isOpen, setIsOpen] = useState(false);
-    const [img, setImg] = useState("");
+    const [isBroad, setIsBroad] = useState(data ? !data?.isPost : false);
+    const [img, setImg] = useState(data?.thumbnail || '');
+    const {role} = useRecoilValue(authAtom);
+    const [intro, setIntro] = useState(data?.introduction || '');
+    const [isLoading, setIsLoading] = useState(false);
+    const {id}= useParams();
 
     const navigate = useNavigate();
     const changeFile = async (event) => {
@@ -39,7 +45,16 @@ export default function WriteModal({title, tag, content, setIsModal}){
     return(
         <S.Black onClick={()=>setIsModal(false)}>
             <S.Content onClick={(e) => e.stopPropagation()}>
-                {isOpen && <S.CloseDropdown onClick={() => setIsOpen(false)}/>}
+                {role === "ROLE_ADMIN" &&
+                    <S.Broad>
+                        <input type={'checkbox'} value={isBroad}  onChange={()=>{
+                            if(!data?.isPost && data?.isBroad){
+                                alert('이글은 공지사항 수정입니다')
+                                return ;
+                            }
+                            setIsBroad(!isBroad)
+                        }}/>  공지사항
+                    </S.Broad>}
                 <S.ImgUploadBox $Img={img} onClick={()=>{if(fileRef.current) fileRef.current.click()}}>
                     {img ? <S.SelectImg src={img} alt={"img"} /> :
                         <>
@@ -52,13 +67,32 @@ export default function WriteModal({title, tag, content, setIsModal}){
                     }
                     <input ref={fileRef} type={"file"} onChange={(event)=>changeFile(event)} style={{display: "none"}} />
                 </S.ImgUploadBox>
-                <S.Textarea placeholder={"글에대한 설명을 입력해주세요"} />
+                <S.Textarea value={intro} onChange={e=>setIntro(e.target.value)} placeholder={"글에대한 설명을 입력해주세요"} />
                 <S.BtnBox>
                     <S.Btn onClick={()=>setIsModal(false)} $Success={false}>취소</S.Btn>
                     <S.Btn $Success={true} onClick={async ()=>{
-                        if(await postDocument(title, content, tag.map((item) => item.tag), img, content)){
+                        if(isLoading) return;
+                        setIsLoading(true);
+                        if(id !=="new"){
+                            if(isBroad){
+                                if(await patchBroad(title, content, tag, img, intro, id)){
+                                    navigate('/broadcast');
+                                }
+                            }
+                            else if(await patchDocument(title, content, tag.map((item) => item.tag), img, intro, id)){
+                                navigate('/postList');
+                            }
+                        }
+                        else if(isBroad){
+                            if(await postBroad(title, content, tag, img, intro)){
+                                navigate('/broadcast');
+                            }
+                        }
+                        else if(await postDocument(title, content, tag.map(item=>item.tag), img, intro)){
                             navigate('/postList');
                         }
+                        setIsLoading(false);
+                        setIsModal(false);
                     }}>등록</S.Btn>
                 </S.BtnBox>
             </S.Content>
