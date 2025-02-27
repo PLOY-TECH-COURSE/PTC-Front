@@ -28,7 +28,7 @@ export default function Detail() {
 
     useEffect(() => {
         console.log('댓글 좋아요 리스트', commendLike);
-    }, [commendLike]); // commendLike가 변경될 때마다 실행
+    }, [commendLike]);
     
     useEffect(() => {
         setLoading(true);
@@ -134,24 +134,28 @@ export default function Detail() {
     };
     const handlePostLikeClick = async () => {
         try {
+            // 좋아요 상태 반영
             await togglePostLike(postId, likeOn);
+    
+            // 상태 반전
             setLikeOn(prev => !prev);
-            setLikeOn(getPostDetail(postId));
+    
+            // 좋아요 수 업데이트
+            setPost(prevPost => ({
+                ...prevPost,
+                likes: likeOn ? prevPost.likes - 1 : prevPost.likes + 1,
+            }));
         } catch (error) {
             console.error("좋아요 변경 실패:", error);
         }
     };
+    
     const handleCommentLikeClick = async (commentId, index) => {
         try {
-            // 댓글 좋아요를 토글
             await toggleCommentLike(commentId, commendLike[index]);
-    
-            // 댓글 좋아요 상태를 로컬에서 즉시 반영
             setCommendLike(prevLikes =>
                 prevLikes.map((liked, i) => (i === index ? !liked : liked))
             );
-    
-            // 댓글 좋아요 수를 로컬에서 즉시 반영
             setComments(prevComments =>
                 prevComments.map((comment, i) =>
                     i === index
@@ -160,7 +164,7 @@ export default function Detail() {
                             liked: !comment.liked,
                             likeCount: comment.liked
                                     ? comment.likeCount - 1
-                                  : comment.likeCount + 1, // 좋아요 상태에 따라 카운트 증가/감소
+                                    : comment.likeCount + 1, 
                         }
                         : comment
                 )
