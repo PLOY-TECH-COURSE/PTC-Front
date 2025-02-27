@@ -8,7 +8,7 @@ import Star from '../../../assets/like-ing.svg';
 import Unstar from '../../../assets/star.svg';
 
 import { getPostDetail, deletePost, toggleFavorite, togglePostLike} from "../../../api/postList";
-import { getComments, createComment, deleteComment, updateComment } from "../../../api/comment.js";
+import { getComments, createComment, deleteComment, updateComment ,toggleCommentLike} from "../../../api/comment.js";
 
 export default function Detail() {
     const { id } = useParams();
@@ -22,9 +22,14 @@ export default function Detail() {
     const [editCommentId, setEditCommentId] = useState(null);
     const [editCommentText, setEditCommentText] = useState('');
     const [isFavorite, setIsFavorite] = useState(false);
-    const [likes, setLikes] = useState(0);
     const [likeOn, setLikeOn] = useState(false);
+    
+    const [commendLike, setCommendLike] = useState([]);
 
+    useEffect(() => {
+        console.log('댓글 좋아요 리스트', commendLike);
+    }, [commendLike]); // commendLike가 변경될 때마다 실행
+    
     useEffect(() => {
         setLoading(true);
         setError(null);
@@ -34,17 +39,23 @@ export default function Detail() {
                 console.log("게시글 데이터:", data);
                 setPost(data);
                 setIsFavorite(data.favorite_on);
-                setLikes(data.likes);
                 setLikeOn(data.like_on);
-                console.log("글 좋아요 했는지, 갯수 :", data.like_on,'♥️',likes);
             })
             .catch(() => setError('게시물을 불러오는 데 실패했습니다.'))
             .finally(() => setLoading(false));
     
-        getComments(postId)
-            .then(setComments)
-            .catch(err => console.error('댓글을 불러오는 데 실패했습니다.', err));
-    }, [postId]);
+        getComments(postId).then((data) => {
+            console.log("댓글 데이터:", data);
+            setComments(
+                data.map((comment) => ({
+                    ...comment,
+                    liked: comment.liked || false
+                }))
+            );
+            setCommendLike(data.map((comment) => comment.liked || false));
+        })
+        .catch(err => console.error('댓글을 불러오는 데 실패했습니다.', err));
+    }, [postId]);   
     
 
     const handleEdit = () => {
@@ -125,11 +136,42 @@ export default function Detail() {
         try {
             await togglePostLike(postId, likeOn);
             setLikeOn(prev => !prev);
+            setLikeOn(getPostDetail(postId));
         } catch (error) {
             console.error("좋아요 변경 실패:", error);
         }
     };
-
+    const handleCommentLikeClick = async (commentId, index) => {
+        try {
+            // 댓글 좋아요를 토글
+            await toggleCommentLike(commentId, commendLike[index]);
+    
+            // 댓글 좋아요 상태를 로컬에서 즉시 반영
+            setCommendLike(prevLikes =>
+                prevLikes.map((liked, i) => (i === index ? !liked : liked))
+            );
+    
+            // 댓글 좋아요 수를 로컬에서 즉시 반영
+            setComments(prevComments =>
+                prevComments.map((comment, i) =>
+                    i === index
+                        ? {
+                            ...comment,
+                            liked: !comment.liked,
+                            likeCount: comment.liked
+                                    ? comment.likeCount - 1
+                                  : comment.likeCount + 1, // 좋아요 상태에 따라 카운트 증가/감소
+                        }
+                        : comment
+                )
+            );
+        } catch (error) {
+            console.error("댓글 좋아요 변경 실패:", error);
+        }
+    };
+    
+    
+    
     return (
         <S.Container>
             <Header />
@@ -140,14 +182,13 @@ export default function Detail() {
                             <S.ProfileTop>
                                 <img onClick={()=>navigate(`/user/${post.userInfoDTO.id}`)} src={post.userInfoDTO.profile} alt={post.userInfoDTO.name} />
                                 <S.RightProfile>
-                                    <span>{post.generation}기</span>
-                                    <p>{post.userInfoDTO.name}</p>
+                                    <span>{post.generation}</span>
+                                    <p onClick={()=>navigate(`/user/${post.userInfoDTO.id}`)} >{post.userInfoDTO.name}</p>
                                 </S.RightProfile>
                             </S.ProfileTop>
                             <S.ProfileBottom>
                                 <span>생성일자 {new Date(post.document.createAt).toISOString().split('T')[0]}</span>
                                 <S.PostLike isLike={likeOn}>
-                                    {console.log('글좋아요 머시기',post.likes,likeOn,setLikes)}
                                     <img src={likeOn ? Like2 : NotLike2}
                                     alt="글 좋아요"
                                     onClick={handlePostLikeClick}
@@ -181,7 +222,7 @@ export default function Detail() {
                         <input type="text" value={newComment} onChange={(e) => setNewComment(e.target.value)} placeholder="댓글을 입력해주세요" />
                         <button onClick={handleCommentSubmit}>댓글 작성</button>
                     </S.CommentInputWrapper>
-                    {comments.length ? comments.map(comment => (
+                    {comments.length ? comments.map((comment, index) => (
                         <S.CommentItem key={comment.id}>
                             <S.CommentProfile />
                             <S.CommentContent>
@@ -195,7 +236,15 @@ export default function Detail() {
                                     <p>{comment.comment}</p>
                                 )}
                                 <S.CommentBottom>
-                                    <S.Like><img src={Like2} width="20px" />{comment.likeCount}</S.Like>
+                                    <S.Like isCommentLike={commendLike[index]}>
+                                        <img 
+                                            onClick={() => handleCommentLikeClick(comment.id, index)} 
+                                            src={commendLike[index] ? Like2 : NotLike2} 
+                                            style={{ cursor: "pointer" }} 
+                                            width="20px" 
+                                        />
+                                        <p>{comment.likeCount}</p>
+                                    </S.Like>
                                     <S.CommentActions>
                                         <p onClick={() => handleCommentDelete(comment.id)}>삭제</p>
                                         <p onClick={() => handleCommentEdit(comment.id, comment.comment)}>수정</p>

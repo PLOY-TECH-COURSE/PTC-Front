@@ -234,8 +234,10 @@ export const CommentBottom = styled.div`
 `;
 
 export const Like = styled.div`
-    color: #4970FB;
-    font-size: 14px;
+    p{
+        font-size: 14px;
+        color: ${(props) => (props.isCommentLike ? "#4970FB" : "#D1D1D1")};
+    }
     display: flex;
     gap: 5px;
     align-items: center;

@@ -53,6 +53,19 @@ export const updateComment = async (commentId, commentText) => {
         console.error("댓글 수정 오류:", error);
         throw error;
     }
-
-
 }
+export const toggleCommentLike = async (commentId, like) => {
+    try {
+        const token = localStorage.getItem("accessToken");
+        const method = like ? "delete" : "post";
+        const res = await axiosInstance[method](`/comment-likes/${commentId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        return res.data || { success: res.status === 200 || res.status === 204 };
+    } catch (error) {
+        console.error("댓글 좋아요 요청 실패:", error.response?.data || error);
+        return null;
+    }
+};
