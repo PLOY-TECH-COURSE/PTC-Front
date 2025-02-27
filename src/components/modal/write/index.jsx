@@ -8,7 +8,7 @@ import {useRecoilValue} from "recoil";
 
 export default function WriteModal({data, title, tag, content, setIsModal}){
     const fileRef = useRef(null);
-    const [isBroad, setIsBroad] = useState(!data?.isPost);
+    const [isBroad, setIsBroad] = useState(data ? !data?.isPost : false);
     const [img, setImg] = useState(data?.thumbnail || '');
     const {role} = useRecoilValue(authAtom);
     const [intro, setIntro] = useState(data?.introduction || '');
@@ -41,13 +41,14 @@ export default function WriteModal({data, title, tag, content, setIsModal}){
         }
         await upload()
     };
+
     return(
         <S.Black onClick={()=>setIsModal(false)}>
             <S.Content onClick={(e) => e.stopPropagation()}>
                 {role === "ROLE_ADMIN" &&
                     <S.Broad>
                         <input type={'checkbox'} value={isBroad}  onChange={()=>{
-                            if(!data?.isPost){
+                            if(!data?.isPost && data?.isBroad){
                                 alert('이글은 공지사항 수정입니다')
                                 return ;
                             }
@@ -75,31 +76,23 @@ export default function WriteModal({data, title, tag, content, setIsModal}){
                         if(id !=="new"){
                             if(isBroad){
                                 if(await patchBroad(title, content, tag, img, intro, id)){
-                                    setIsLoading(false);
                                     navigate('/broadcast');
                                 }
-                                else setIsLoading(false);
                             }
                             else if(await patchDocument(title, content, tag.map((item) => item.tag), img, intro, id)){
-                                setIsLoading(false);
                                 navigate('/postList');
-                            }else {
-                                setIsLoading(false);
                             }
                         }
                         else if(isBroad){
                             if(await postBroad(title, content, tag, img, intro)){
-                                setIsLoading(false);
                                 navigate('/broadcast');
                             }
-                            else setIsLoading(false);
                         }
                         else if(await postDocument(title, content, tag.map(item=>item.tag), img, intro)){
-                            setIsLoading(false);
                             navigate('/postList');
-                        }else {
-                            setIsLoading(false);
                         }
+                        setIsLoading(false);
+                        setIsModal(false);
                     }}>등록</S.Btn>
                 </S.BtnBox>
             </S.Content>
