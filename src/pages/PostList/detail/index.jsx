@@ -3,10 +3,11 @@ import * as S from './style';
 import Header from '../../../components/header';
 import { useParams, useNavigate } from 'react-router-dom';
 import Like2 from '../../../assets/like2.svg';
+import NotLike2 from '../../../assets/not_like2.svg';
 import Star from '../../../assets/like-ing.svg';
 import Unstar from '../../../assets/star.svg';
 
-import { getPostDetail, deletePost, toggleFavorite} from "../../../api/postList";
+import { getPostDetail, deletePost, toggleFavorite, togglePostLike} from "../../../api/postList";
 import { getComments, createComment, deleteComment, updateComment } from "../../../api/comment.js";
 
 export default function Detail() {
@@ -21,6 +22,8 @@ export default function Detail() {
     const [editCommentId, setEditCommentId] = useState(null);
     const [editCommentText, setEditCommentText] = useState('');
     const [isFavorite, setIsFavorite] = useState(false);
+    const [likes, setLikes] = useState(0);
+    const [likeOn, setLikeOn] = useState(false);
 
     useEffect(() => {
         setLoading(true);
@@ -30,7 +33,10 @@ export default function Detail() {
             .then((data) => {
                 console.log("게시글 데이터:", data);
                 setPost(data);
-                setIsFavorite(data.favorite_on); 
+                setIsFavorite(data.favorite_on);
+                setLikes(data.likes);
+                setLikeOn(data.like_on);
+                console.log("글 좋아요 했는지, 갯수 :", data.like_on,'♥️',likes);
             })
             .catch(() => setError('게시물을 불러오는 데 실패했습니다.'))
             .finally(() => setLoading(false));
@@ -71,7 +77,6 @@ export default function Detail() {
         try {
             await toggleFavorite(postId, isFavorite);
             setIsFavorite(prev => !prev);
-            console.log("즐겨찾기 변경 함수 호출함");
             console.log(isFavorite);
         } catch (error) {
             console.error("즐겨찾기 변경 실패:", error);
@@ -116,6 +121,14 @@ export default function Detail() {
             console.error('댓글 수정 실패', error);
         }
     };
+    const handlePostLikeClick = async () => {
+        try {
+            await togglePostLike(postId, likeOn);
+            setLikeOn(prev => !prev);
+        } catch (error) {
+            console.error("좋아요 변경 실패:", error);
+        }
+    };
 
     return (
         <S.Container>
@@ -133,7 +146,14 @@ export default function Detail() {
                             </S.ProfileTop>
                             <S.ProfileBottom>
                                 <span>생성일자 {new Date(post.document.createAt).toISOString().split('T')[0]}</span>
-                                <S.PostLike><img src={Like2} /><p>{post.likes}</p></S.PostLike>
+                                <S.PostLike isLike={likeOn}>
+                                    {console.log('글좋아요 머시기',post.likes,likeOn,setLikes)}
+                                    <img src={likeOn ? Like2 : NotLike2}
+                                    alt="글 좋아요"
+                                    onClick={handlePostLikeClick}
+                                    />
+                                    <p>{post.likes}</p>
+                                </S.PostLike>
                             </S.ProfileBottom>
                         </S.Profile>
                         <S.PostDetailData>

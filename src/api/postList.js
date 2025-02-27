@@ -68,3 +68,19 @@ export const toggleFavorite = async (documentId, isFavorite) => {
     }
 };
 
+export const togglePostLike = async (documentId, likeOn) => {
+    try {
+        const token = localStorage.getItem("accessToken");
+        const method = likeOn ? "delete" : "post";
+        const res = await axiosInstance[method](`/document-likes/${documentId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        return res.data || { success: res.status === 200 || res.status === 204 };
+    } catch (error) {
+        console.error("글 좋아요 요청 실패:", error.response?.data || error);
+        return null;
+    }
+};
+
