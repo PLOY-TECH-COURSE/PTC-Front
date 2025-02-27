@@ -32,10 +32,11 @@ export const getPostDetail = async (document_id) => {
     }
 };
 
-export const toggleFavorite = async (documentId) => {
+export const toggleFavorite = async (documentId, isFavorite) => {
     try {
         const token = localStorage.getItem("accessToken");
-        const response = await axiosInstance.post(`/favorite/${documentId}`, {}, {
+        const method = isFavorite ? "delete" : "post";
+        const response = await axiosInstance[method](`/favorite/${documentId}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -45,5 +46,21 @@ export const toggleFavorite = async (documentId) => {
     } catch (error) {
         console.error("즐겨찾기 요청 실패:", error.response?.data || error);
         return null;
+    }
+};
+
+export const checkFavorite = async (documentId) => {
+    try {
+        const token = localStorage.getItem("accessToken");
+        const response = await axiosInstance.get(`/favorite`, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
+        return response.data.isFavorite; // 서버 응답에서 isFavorite 값 가져오기
+    } catch (error) {
+        console.error("즐겨찾기 상태 확인 실패:", error.response?.data || error);
+        return false;
     }
 };

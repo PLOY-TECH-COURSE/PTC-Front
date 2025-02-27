@@ -4,7 +4,7 @@ import Header from '../../../components/header';
 import { useParams, useNavigate } from 'react-router-dom';
 import Like2 from '../../../assets/like2.svg';
 import Star from '../../../assets/star.svg';
-import { getPostDetail,toggleFavorite } from "../../../api/postList";
+import { getPostDetail,toggleFavorite,checkFavorite } from "../../../api/postList";
 
 export default function Detail() {
     const { id } = useParams();
@@ -30,6 +30,22 @@ export default function Detail() {
             });
     }, [postId]);
 
+    useEffect(() => {
+        if (!postId) return;
+    
+        getPostDetail(postId)
+            .then((data) => {
+                setPost(data);
+                return checkFavorite(postId);  // 추가: 즐겨찾기 여부 확인
+            })
+            .then((isFav) => {
+                setIsFavorite(isFav);  // 서버에서 받은 즐겨찾기 상태 적용
+            })
+            .catch((err) => {
+                console.error("데이터 불러오기 실패:", err);
+            });
+    }, [postId]);
+
     const handleEdit = () => {
         navigate(`/write/${postId}`, {
             state: {
@@ -46,9 +62,12 @@ export default function Detail() {
     const handleFavoriteClick = async () => {
         if (!post) return;
     
-        const result = await toggleFavorite(postId);
-        if (result) {
-            setIsFavorite(!isFavorite);
+        const newFavoriteState = !isFavorite; // 변경될 상태 미리 설정
+        setIsFavorite(newFavoriteState); // 상태를 먼저 변경 (UI 즉시 반영)
+    
+        const result = await toggleFavorite(postId, isFavorite);
+        if (!result) {
+            setIsFavorite(!newFavoriteState); // 실패 시 상태 롤백
         }
     };
 
@@ -90,7 +109,6 @@ export default function Detail() {
                                     ? post.hash_tag.map(tag => `#${tag}`).join(' ')
                                     : 'No tags available'}
                             </span>
-
                             <p>{post.document.content}</p>
                         </S.PostDetailData>
                     </S.PostDetailMain>
