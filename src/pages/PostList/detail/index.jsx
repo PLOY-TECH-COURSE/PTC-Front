@@ -3,11 +3,10 @@ import * as S from './style';
 import Header from '../../../components/header';
 import { useParams, useNavigate } from 'react-router-dom';
 import Like2 from '../../../assets/like2.svg';
-import Star from '../../../assets/star.svg';
+import Star from '../../../assets/like-ing.svg';
+import Unstar from '../../../assets/star.svg';
 
-import Unstar from '../../../assets/unstar.svg';
-
-import { getPostDetail, deletePost, toggleFavorite, checkFavorite } from "../../../api/postList";
+import { getPostDetail, deletePost, toggleFavorite} from "../../../api/postList";
 import { getComments, createComment, deleteComment, updateComment } from "../../../api/comment.js";
 
 export default function Detail() {
@@ -26,20 +25,21 @@ export default function Detail() {
     useEffect(() => {
         setLoading(true);
         setError(null);
-        
+    
         getPostDetail(postId)
             .then((data) => {
+                console.log("게시글 데이터:", data);
                 setPost(data);
-                return checkFavorite(postId);
+                setIsFavorite(data.favorite_on); 
             })
-            .then((isFav) => setIsFavorite(isFav))
             .catch(() => setError('게시물을 불러오는 데 실패했습니다.'))
             .finally(() => setLoading(false));
-
+    
         getComments(postId)
             .then(setComments)
             .catch(err => console.error('댓글을 불러오는 데 실패했습니다.', err));
     }, [postId]);
+    
 
     const handleEdit = () => {
         if (post) {
@@ -72,6 +72,7 @@ export default function Detail() {
             await toggleFavorite(postId, isFavorite);
             setIsFavorite(prev => !prev);
             console.log("즐겨찾기 변경 함수 호출함");
+            console.log(isFavorite);
         } catch (error) {
             console.error("즐겨찾기 변경 실패:", error);
         }
@@ -87,7 +88,6 @@ export default function Detail() {
             console.error('댓글 작성 실패', error);
         }
     };
-
     const handleCommentDelete = async (commentId) => {
         if (window.confirm('정말로 삭제하시겠습니까?')) {
             try {
@@ -98,7 +98,6 @@ export default function Detail() {
             }
         }
     };
-
     const handleCommentEdit = (commentId, currentText) => {
         setEditCommentId(commentId);
         setEditCommentText(currentText);
@@ -126,7 +125,7 @@ export default function Detail() {
                     <S.PostDetailMain>
                         <S.Profile>
                             <S.ProfileTop>
-                                <img src={post.userInfoDTO.profile} alt={post.userInfoDTO.name} />
+                                <img onClick={()=>navigate(`/user/${post.userInfoDTO.id}`)} src={post.userInfoDTO.profile} alt={post.userInfoDTO.name} />
                                 <S.RightProfile>
                                     <span>{post.generation}기</span>
                                     <p>{post.userInfoDTO.name}</p>
@@ -140,7 +139,6 @@ export default function Detail() {
                         <S.PostDetailData>
                             <S.PostDetailDataTop>
                                 <h1>{post.document.title}</h1>
-
                                 <img 
                                     src={isFavorite ? Star : Unstar} 
                                     alt="즐겨찾기" 

@@ -24,11 +24,12 @@ export const getPostDetail = async (document_id) => {
         if (res.status !== 200) {
             return Promise.reject({
                 status: res.status,
-                message: res.message
+                message: res.message,
             });
         }
         return res.data;
-    } catch (err) {
+    }
+    catch (err) {
         return Promise.reject(err);
     }
 };
@@ -60,10 +61,6 @@ export const toggleFavorite = async (documentId, isFavorite) => {
                 Authorization: `Bearer ${token}`
             }
         });
-
-        console.log("전체 응답:", response);
-        console.log("HTTP 상태 코드:", response.status);
-
         return response.data || { success: response.status === 200 || response.status === 204 };
     } catch (error) {
         console.error("즐겨찾기 요청 실패:", error.response?.data || error);
@@ -71,18 +68,3 @@ export const toggleFavorite = async (documentId, isFavorite) => {
     }
 };
 
-export const checkFavorite = async (documentId) => {
-    try {
-        const token = localStorage.getItem("accessToken");
-        const response = await axiosInstance.get(`/favorite`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        });
-        console.log(response.data);
-        return response.data.isFavorite; // 서버 응답에서 isFavorite 값 가져오기
-    } catch (error) {
-        console.error("즐겨찾기 상태 확인 실패:", error.response?.data || error);
-        return false;
-    }
-};
