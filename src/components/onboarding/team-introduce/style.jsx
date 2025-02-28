@@ -13,6 +13,7 @@ export const Wrap = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    align-content: center;
     align-items: center;
     padding: 3% 10%;
     gap: 4px;
@@ -42,7 +43,7 @@ export const Main = styled.main`
     display: flex;
     flex-flow: wrap row;
     justify-content: center;
-    gap: 30px;
+    gap: 1%;
     align-items: center;
     @media (max-width: 480px) {
         gap: 5px;
@@ -90,6 +91,7 @@ export const Box = styled.div`
         left: 0;
         width: 100%;
         height: 100%;
+        object-fit: cover;
     }
     & > img:hover{
         transform: scale(1.1);
