@@ -39,6 +39,13 @@ export const Input = styled.input`
     outline: none;
 `
 
+
+export const LoadingWrapper = styled.div`
+    position: fixed;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+`;
+
 export const Sort = styled.div`
     display: flex;
     gap: 20px;
