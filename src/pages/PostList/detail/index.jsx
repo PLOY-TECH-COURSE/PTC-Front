@@ -9,6 +9,7 @@ import Unstar from '../../../assets/star.svg';
 
 import { getPostDetail, deletePost, toggleFavorite, togglePostLike} from "../../../api/postList";
 import { getComments, createComment, deleteComment, updateComment ,toggleCommentLike} from "../../../api/comment.js";
+import makeDocument from "../../../utils/makeDocument.jsx";
 
 export default function Detail() {
     const { id } = useParams();
@@ -211,7 +212,7 @@ export default function Detail() {
                                 </S.Edit>
                             </S.PostDetailDataTop>
                             <span>{post.hash_tag?.length ? post.hash_tag.map(tag => `#${tag}`).join(' ') : 'No tags available'}</span>
-                            <p>{post.document.content}</p>
+                            <div>{makeDocument(post.document.content)}</div>
                         </S.PostDetailData>
                     </S.PostDetailMain>
                 )}

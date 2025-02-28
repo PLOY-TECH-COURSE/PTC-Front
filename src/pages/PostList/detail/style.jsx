@@ -80,7 +80,6 @@ export const ProfileBottom = styled.div`
 
 export const PostLike = styled.div`
     display: flex;
-    justify-content: centers;
     align-items: center;
     gap: 10px;
     margin-left: 23px;
@@ -109,7 +108,7 @@ export const PostDetailData = styled.div`
     flex-direction: column;
     padding: 1% 0%;
 
-    span{
+    & > span:nth-of-type(1){
         font-size: 17px;
         color: #727272;
         border: none;
@@ -117,11 +116,15 @@ export const PostDetailData = styled.div`
         margin-top: 25px;
     }
 
-    p{
+    & > div:nth-of-type(2){
+        width: 100%;
         font-size: 16px;
         color: #000;
         font-family: 'Courier New', Courier, monospace;
         margin-top: 18px;
+        & :first-child{
+            width: 100%;
+        }
     }
 `
 
@@ -134,6 +137,7 @@ export const PostDetailDataTop = styled.div`
 
     h1{
         margin-top: 15px;
+        font-size: 30px;
     }
 
     img{
