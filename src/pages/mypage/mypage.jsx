@@ -3,11 +3,14 @@ import Header from "../../components/header";
 import book from "../../assets/book.svg";
 import like from "../../assets/like.svg";
 import { useState, useEffect } from "react";
-import { useRecoilValue } from "recoil";
-import { authAtom } from "../../recoil/authAtom.js";
+import { useParams, useNavigate } from "react-router-dom"; 
+import { useRecoilValue } from "recoil"; 
+import { authAtom } from "../../recoil/authAtom"; 
 import { getUserProfile } from "../../api/mypage"; 
 import { getFavoritePosts } from "../../api/favortie";  
 import { getMyPosts } from "../../api/mywrite";  
+import { getMyPage } from "../../api/remypage"; 
+import { updateBio } from "../../api/edit";
 import PostItem from "../../components/postItem"; 
 
 const Container = styled.div`
@@ -120,16 +123,17 @@ const NoFavoriteMessage = styled.p`
 `;
 
 const Mypage = () => {
-  const auth = useRecoilValue(authAtom);
-  const userId = auth.uid;
-
-  const [isEditing, setIsEditing] = useState(false);
-  const [userData, setUserData] = useState(null);
-  const [editedUid, setEditedUid] = useState("");
-  const [editedBio, setEditedBio] = useState("");
-  const [activeTab, setActiveTab] = useState("글");
+  const { userId } = useParams(); 
+  const loggedInUserId = useRecoilValue(authAtom).uid; 
+  const navigate = useNavigate();
+  const [isEditing, setIsEditing] = useState(false); 
+  const [userData, setUserData] = useState(null); 
+  const [editedBio, setEditedBio] = useState(""); 
+  const [activeTab, setActiveTab] = useState("글"); 
   const [favoritePosts, setFavoritePosts] = useState([]);
   const [myPosts, setMyPosts] = useState([]);
+  
+  const isOwnProfile = loggedInUserId === userId;
 
   useEffect(() => {
     if (!userId) {
@@ -137,37 +141,59 @@ const Mypage = () => {
       return;
     }
 
-    getUserProfile()
-      .then((data) => {
-        setUserData(data);
-        setEditedUid(data.uid);
-        setEditedBio(data.bio);
-      })
-      .catch((error) => console.error("API 요청 실패:", error));
-
-    getFavoritePosts(userId)
-      .then((data) => {
-        setFavoritePosts(data);
-      })
-      .catch((error) => console.error("즐겨찾기 데이터 가져오기 실패:", error));
-
-    getMyPosts(userId)
-      .then((data) => {
-        setMyPosts(data);  
-      })
-      .catch((error) => console.error("내가 쓴 글 데이터 가져오기 실패:", error));
-  }, [userId]);
+    if (isNaN(userId)) {
+      const fetchData = async () => {
+        const data = await getMyPage(); 
+        getFavoritePosts(userId)
+          .then((data) => setFavoritePosts(data))
+          .catch((error) => console.error("즐겨찾기 가져오기 실패:", error));
+        getMyPosts(userId)
+          .then((data) => setMyPosts(data))
+          .catch((error) => console.error("내가 쓴 글 데이터 가져오기 실패:", error));
+        if (data) {
+          setUserData(data);
+          setEditedBio(data.bio);
+        } else {
+          console.error("마이페이지 데이터 로드 실패");
+        }
+      };
+      fetchData(); 
+    } else {
+      getUserProfile(userId)
+        .then((data) => {
+          setUserData(data);
+          setEditedBio(data.bio);
+        })
+        .catch((error) => console.error("API 요청 실패:", error));
+    }
+  }, [userId, loggedInUserId]);
 
   const handleEditClick = () => {
     if (isEditing) {
-      setUserData((prev) => ({
-        ...prev,
-        uid: editedUid,
-        bio: editedBio,
-      }));
+      setIsEditing(false);
+      updateBio(editedBio)  // 프로필 수정 시 호출되는 함수
+        .then((response) => {
+          console.log("프로필 수정 성공:", response);
+          setUserData((prev) => ({
+            ...prev,
+            bio: editedBio,  // 수정된 bio로 업데이트
+          }));
+        })
+        .catch((error) => {
+          console.error("프로필 수정 실패:", error);
+        });
+    } else {
+      setIsEditing(true);  // 수정 시작
     }
-    setIsEditing(!isEditing);
   };
+  const handlePostClick = (id) => {
+    const numericId = Number(id);
+    if (isNaN(numericId)) {
+        console.error("Invalid ID:", id);
+        return;
+    }
+    navigate(`/post/${numericId}`);
+};
 
   return (
     <>
@@ -212,16 +238,15 @@ const Mypage = () => {
         </ProfileSection>
 
         <Tabs>
-  <TabButton $active={activeTab === "글" ? "true" : "false"} onClick={() => setActiveTab("글")}>
-    글
-  </TabButton>
-  {isOwnProfile && (
-    <TabButton $active={activeTab === "즐겨찾기" ? "true" : "false"} onClick={() => setActiveTab("즐겨찾기")}>
-      즐겨찾기
-    </TabButton>
-  )}
-</Tabs>
-
+          <TabButton $active={activeTab === "글" ? "true" : "false"} onClick={() => setActiveTab("글")}>
+            글
+          </TabButton>
+          {isOwnProfile && (
+            <TabButton $active={activeTab === "즐겨찾기" ? "true" : "false"} onClick={() => setActiveTab("즐겨찾기")}>
+              즐겨찾기
+            </TabButton>
+          )}
+        </Tabs>
 
         {activeTab === "글" && (
           <div>
@@ -233,18 +258,17 @@ const Mypage = () => {
           </div>
         )}
 
-{activeTab === "즐겨찾기" && (
-  <div>
-    {favoritePosts.length > 0 ? (
-      favoritePosts.map((post) => (
-        <PostItem key={post.documents_id} post={post} onClick={handlePostClick} />
-      ))
-    ) : (
-      <NoFavoriteMessage>즐겨찾기한 글이 없습니다.</NoFavoriteMessage>
-    )}
-  </div>
-)}
-
+        {activeTab === "즐겨찾기" && (
+          <div>
+            {favoritePosts.length > 0 ? (
+              favoritePosts.map((post) => (
+<PostItem key={post.documents_id} post={post} onClick={handlePostClick} />
+              ))
+            ) : (
+              <NoFavoriteMessage>즐겨찾기한 글이 없습니다.</NoFavoriteMessage>
+            )}
+          </div>
+        )}
       </Container>
     </>
   );

@@ -81,7 +81,10 @@ export default function Detail() {
             },
         });
     };
-
+    const handleCommentChange = (e) => {
+        setNewComment(e.target.value);
+    };
+    
     const handleDelete = () => {
         if (window.confirm('정말로 삭제하시겠습니까?')) {
             console.log(postId)
