@@ -3,13 +3,14 @@ import Header from "../../components/header";
 import book from "../../assets/book.svg";
 import like from "../../assets/like.svg";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useRecoilValue } from "recoil"; // Recoil을 사용하여 로그인 정보 가져오기
-import { authAtom } from "../../recoil/authAtom"; // 로그인 정보 상태
+import { useParams, useNavigate } from "react-router-dom"; 
+import { useRecoilValue } from "recoil"; 
+import { authAtom } from "../../recoil/authAtom"; 
 import { getUserProfile } from "../../api/mypage"; 
 import { getFavoritePosts } from "../../api/favortie";  
 import { getMyPosts } from "../../api/mywrite";  
 import { getMyPage } from "../../api/remypage"; 
+import { updateBio } from "../../api/edit";
 import PostItem from "../../components/postItem"; 
 
 const Container = styled.div`
@@ -122,39 +123,41 @@ const NoFavoriteMessage = styled.p`
 `;
 
 const Mypage = () => {
-  const { userId } = useParams(); // URL에서 userId를 받아옵니다.
-  const loggedInUserId = useRecoilValue(authAtom).userId; // Recoil에서 로그인한 userId를 가져옵니다.
-
-  const [isEditing, setIsEditing] = useState(false);
-  const [userData, setUserData] = useState(null);
-  const [editedBio, setEditedBio] = useState("");
-  const [activeTab, setActiveTab] = useState("글"); // 기본 탭을 "글"로 설정
+  const { userId } = useParams(); 
+  const loggedInUserId = useRecoilValue(authAtom).uid; 
+  const navigate = useNavigate();
+  console.log(loggedInUserId);
+  const [isEditing, setIsEditing] = useState(false); 
+  const [userData, setUserData] = useState(null); 
+  const [editedBio, setEditedBio] = useState(""); 
+  const [activeTab, setActiveTab] = useState("글"); 
   const [favoritePosts, setFavoritePosts] = useState([]);
   const [myPosts, setMyPosts] = useState([]);
-
-  // useEffect: userId가 있을 때 사용자 데이터 가져오기
+  const [isUpdating, setIsUpdating] = useState(false); 
   useEffect(() => {
     if (!userId) {
       console.warn("userId가 없습니다.");
       return;
     }
-
-    // userId가 long 형태일 경우 getMyPage 사용
+  
     if (isNaN(userId)) {
-      // string 형태 (유효하지 않은 숫자라면)
       const fetchData = async () => {
-        const data = await getMyPage(); // string 형태일 때 getMyPage 호출
+        const data = await getMyPage(); 
+        getFavoritePosts(userId)
+        .then((data) => setFavoritePosts(data))
+        .catch((error) => console.error("즐겨찾기 가져오기 실패:", error));
+      getMyPosts(userId)
+        .then((data) => setMyPosts(data))
+        .catch((error) => console.error("내가 쓴 글 데이터 가져오기 실패:", error));
         if (data) {
-          setUserData(data); // 사용자 데이터가 정상적으로 로드되면 상태에 저장
+          setUserData(data);
           setEditedBio(data.bio);
         } else {
           console.error("마이페이지 데이터 로드 실패");
         }
       };
-      fetchData(); // API 호출
+      fetchData(); 
     } else {
-      // userId가 숫자(long 형태)라면
-      // 사용자 프로필 API 호출
       getUserProfile(userId)
         .then((data) => {
           console.log("User profile data:", data);
@@ -162,31 +165,43 @@ const Mypage = () => {
           setEditedBio(data.bio);
         })
         .catch((error) => console.error("API 요청 실패:", error));
-
-      // 즐겨찾기 글 가져오기
-      getFavoritePosts(userId)
-        .then((data) => setFavoritePosts(data))
-        .catch((error) => console.error("즐겨찾기 데이터 가져오기 실패:", error));
-
-      // 내가 쓴 글 가져오기
-      getMyPosts(userId)
-        .then((data) => setMyPosts(data))
-        .catch((error) => console.error("내가 쓴 글 데이터 가져오기 실패:", error));
     }
-  }, [userId, loggedInUserId]); // userId가 변경될 때마다 실행
-
+  }, [userId, loggedInUserId]);
+  
   const handleEditClick = () => {
     if (isEditing) {
-      setUserData((prev) => ({
-        ...prev,
-        bio: editedBio,
-      }));
+      // Start updating the bio
+      setIsUpdating(true);
+      updateBio(editedBio)  // Call the updateBio API
+        .then((response) => {
+          console.log("Bio updated successfully:", response);
+          setUserData((prev) => ({
+            ...prev,
+            bio: editedBio,  // Update the bio in the state
+          }));
+          setIsUpdating(false);
+        })
+        .catch((error) => {
+          console.error("Error updating bio:", error);
+          setIsUpdating(false);
+        });
     }
-    setIsEditing(!isEditing);
+    setIsEditing(!isEditing);  // Toggle the editing mode
   };
-
-  // 본인 프로필인지 확인
   const isOwnProfile = loggedInUserId === userId;
+  useEffect(() => {
+    if (userId && loggedInUserId !== userId) {
+      console.log(userId)
+    }
+  }, [userId, loggedInUserId, navigate]);
+  const handlePostClick = (id) => {
+    const numericId = Number(id);
+    if (isNaN(numericId)) {
+        console.error(id);
+        return;
+    }
+    navigate(`/post/${numericId}`);
+};
 
   return (
     <>
@@ -216,10 +231,10 @@ const Mypage = () => {
               <Inputtag
                 type="text"
                 value={editedBio}
-                onChange={(e) => setEditedBio(e.target.value)}
+                onChange={(e) => setEditedBio(e.target.value)} 
               />
             ) : (
-              <p>{userData?.bio}</p>
+              <p>{userData?.bio}</p> 
             )}
           </Info>
 
@@ -231,13 +246,16 @@ const Mypage = () => {
         </ProfileSection>
 
         <Tabs>
-          <TabButton $active={activeTab === "글" ? "true" : "false"} onClick={() => setActiveTab("글")}>
-            글
-          </TabButton>
-          <TabButton $active={activeTab === "즐겨찾기" ? "true" : "false"} onClick={() => setActiveTab("즐겨찾기")}>
-            즐겨찾기
-          </TabButton>
-        </Tabs>
+  <TabButton $active={activeTab === "글" ? "true" : "false"} onClick={() => setActiveTab("글")}>
+    글
+  </TabButton>
+  {isOwnProfile && (
+    <TabButton $active={activeTab === "즐겨찾기" ? "true" : "false"} onClick={() => setActiveTab("즐겨찾기")}>
+      즐겨찾기
+    </TabButton>
+  )}
+</Tabs>
+
 
         {activeTab === "글" && (
           <div>
@@ -249,15 +267,18 @@ const Mypage = () => {
           </div>
         )}
 
-        {activeTab === "즐겨찾기" && (
-          <div>
-            {favoritePosts.length > 0 ? (
-              favoritePosts.map((post) => <PostItem key={post.documents_id} post={post} />)
-            ) : (
-              <NoFavoriteMessage>즐겨찾기한 글이 없습니다.</NoFavoriteMessage>
-            )}
-          </div>
-        )}
+{activeTab === "즐겨찾기" && (
+  <div>
+    {favoritePosts.length > 0 ? (
+      favoritePosts.map((post) => (
+        <PostItem key={post.documents_id} post={post} onClick={handlePostClick} />
+      ))
+    ) : (
+      <NoFavoriteMessage>즐겨찾기한 글이 없습니다.</NoFavoriteMessage>
+    )}
+  </div>
+)}
+
       </Container>
     </>
   );
