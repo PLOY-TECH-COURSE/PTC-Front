@@ -1,5 +1,5 @@
 import * as S from './style.jsx';
-import {useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import Dohun from '../../../assets/onboarding/team-introduce/dohun.jpg';
 import Hyojun from '../../../assets/onboarding/team-introduce/123isi.jpg';
 import Taeyoung from '../../../assets/onboarding/team-introduce/noahmik.webp';
@@ -22,7 +22,6 @@ export default function TeamIntroduce({isAnimation}){
         {id : 6, name : '조아라', job : 'Frontend', git : 'https://github.com/whdkfk', bg : Ara, time : 1.},
         {id : 7, name : '박소은', job : 'Frontend', git : 'https://github.com/soeun823', bg : Soeun, time : 1.1},
         {id : 1, name : '허동운', job : 'Backend', git : 'https://github.com/heodongun', bg : Heodongun, time : 1.2},
-        {id : 8, name : '', job : '', git : '', bg : ''},
     ]
     const mento = [
         {id : 9, name : '오윤찬', job : 'Backend', git : 'https://github.com/YunChan-Oh', bg : Yunchan, time:0.7},
@@ -34,6 +33,27 @@ export default function TeamIntroduce({isAnimation}){
         {id : 15, name : '', job : '', git : '', bg : ''},
         {id : 16, name : '', job : '', git : '', bg : ''},
     ]
+
+    const containerRef = useRef(null);
+    const [unBox, setUnBox] = useState([]);
+    useEffect(() => {
+        if (!containerRef.current) return;
+
+        const children = Array.from(containerRef.current.children);
+        let firstOffsetTop = null;
+        let count = 0;
+
+        children.forEach((child) => {
+            if (firstOffsetTop === null) {
+                firstOffsetTop = child.offsetTop;
+            }
+            if (child.offsetTop === firstOffsetTop) {
+                count++;
+            }
+        });
+        const result = count - (7 - count);
+        setUnBox(Array(result).fill(0));
+    }, []);
     return(
         <S.TeamContainer>
             <S.Wrap>
@@ -44,10 +64,9 @@ export default function TeamIntroduce({isAnimation}){
                     <S.NavText $color = {!isGrade} onClick={()=>setTimeout(()=>setIsGrade(false), 100)}>3기</S.NavText>
                     <S.NavText $color = {isGrade} onClick={()=>setTimeout(()=>setIsGrade(true), 100)}>4기</S.NavText>
                 </S.Nav>
-                <S.Main>
+                <S.Main ref={containerRef}>
                     {isGrade ?
                         member.map((item)=>{
-                                if(item.name){
                                     return(
                                         <S.Box onClick={()=>window.open(item.git)} $time = {item.time} $isAnimation = {isAnimation} key={item.id} >
                                             <img src={item.bg} alt=""/>
@@ -60,9 +79,7 @@ export default function TeamIntroduce({isAnimation}){
                                             </S.User>
                                         </S.Box>
                                     )
-                                }
-                                else return (<S.UnBox key={item.id} />)
-                            }) :
+                                }) :
                         mento.map((item)=>{
                             if(item.name){
                                 return(
@@ -80,8 +97,13 @@ export default function TeamIntroduce({isAnimation}){
                             }
                             else return (<S.UnBox key={item.id} />)
                         })
-                    }
 
+                    }
+                    {
+                        unBox.map((item, idx)=>{
+                            return (<S.UnBox key={idx} />)
+                        })
+                    }
                 </S.Main>
             </S.Wrap>
         </S.TeamContainer>
