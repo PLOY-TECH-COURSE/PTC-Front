@@ -1,4 +1,5 @@
 import axiosInstance from "../lib/axiosInstance.js";
+import axios from "axios";
 
 export const postLogin = async ({email, password}) =>{
     console.log(email, password)
@@ -32,3 +33,10 @@ export const logout = async () =>{
         console.log(err);
     }
 }
+
+export const refreshAccessToken = async () => {
+    const response = await axios.post('/api/refresh', null, {
+        withCredentials: true,
+    });
+    return response.headers.authorization;
+};
