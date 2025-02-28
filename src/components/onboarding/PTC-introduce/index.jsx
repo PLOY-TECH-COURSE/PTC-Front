@@ -1,14 +1,12 @@
 import * as S from "./style.jsx";
 import LogoIcon from '../../../assets/onboarding/introduce/Group 8782.svg';
-import Skill1 from '../../../assets/onboarding/introduce/skill1.svg';
-import Skill2 from '../../../assets/onboarding/introduce/skill2.svg';
-import Skill3 from '../../../assets/onboarding/introduce/skill3.svg';
+
 
 export default function PTCIntroduce({isAnimation}){
     const Skills = [
-        {name : "기초 지식", des : "학교생활이나 전공과목에대한 <br/> 기초 지식을 향상시킬 수 있어요", src: Skill1, time:0.7},
-        {name : "1대1 멘토링", des : "1대1 멘토링을 통해 <br/> 더욱 집중적인 멘토링이 가능해요", src: Skill2, time:0.9},
-        {name : "발표 능력", des : "버벅이지않고 말 할 수 있도록 <br/> 발표 능력을 향상시킬 수 있어요", src: Skill3, time:1.1},
+        {name : "기초 지식", des : "학교생활이나 전공과목에대한 <br/> 기초 지식을 향상시킬 수 있어요",  time:0.7, emote : '📚' },
+        {name : "1대1 멘토링", des : "1대1 멘토링을 통해 <br/> 더욱 집중적인 멘토링이 가능해요",  time:0.9, emote: '👥'},
+        {name : "발표 능력", des : "버벅이지않고 말 할 수 있도록 <br/> 발표 능력을 향상시킬 수 있어요",  time:1.1, emote: '🗣️'},
     ]
     return(
         <S.PTCContainer>
@@ -26,7 +24,7 @@ export default function PTCIntroduce({isAnimation}){
                         {Skills.map((item, index)=>{
                             return(
                                 <S.SkillBox $isAnimation={isAnimation} $time={item.time} key={index}>
-                                    <S.SkillImg src={item.src} alt={'skillIcon'} />
+                                    <S.Emote>{item.emote}</S.Emote>
                                     <S.BlueText2>{item.name}</S.BlueText2>
                                     <S.Text dangerouslySetInnerHTML={{ __html: item.des }} />
                                 </S.SkillBox>
