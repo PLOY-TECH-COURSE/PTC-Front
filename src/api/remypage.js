@@ -6,7 +6,16 @@ export const getMyPage = async () => {
     const token = localStorage.getItem("accessToken"); // 토큰을 로컬스토리지에서 가져오기
     const userId = localStorage.getItem("userId"); // userId가 로컬스토리지에 저장되어 있으면 가져옵니다.
 
-    const response = await axiosInstance.get(`/real-mypage`);
+
+    const response = await axiosInstance.get(`/real-mypage`, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Authorization 헤더에 토큰을 담아서 보냄
+      },
+      params: {
+        userId: userId, // userId를 쿼리 파라미터로 보내는 경우
+      },
+    });
+
 
     if (response.status === 200) {
       console.log("마이페이지 데이터:", response.data);

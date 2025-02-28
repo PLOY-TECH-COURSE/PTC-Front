@@ -3,14 +3,11 @@ import Header from "../../components/header";
 import book from "../../assets/book.svg";
 import like from "../../assets/like.svg";
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom"; 
-import { useRecoilValue } from "recoil"; 
-import { authAtom } from "../../recoil/authAtom"; 
+import { useRecoilValue } from "recoil";
+import { authAtom } from "../../recoil/authAtom.js";
 import { getUserProfile } from "../../api/mypage"; 
 import { getFavoritePosts } from "../../api/favortie";  
 import { getMyPosts } from "../../api/mywrite";  
-import { getMyPage } from "../../api/remypage"; 
-import { updateBio } from "../../api/edit";
 import PostItem from "../../components/postItem"; 
 
 const Container = styled.div`
@@ -123,85 +120,54 @@ const NoFavoriteMessage = styled.p`
 `;
 
 const Mypage = () => {
-  const { userId } = useParams(); 
-  const loggedInUserId = useRecoilValue(authAtom).uid; 
-  const navigate = useNavigate();
-  console.log(loggedInUserId);
-  const [isEditing, setIsEditing] = useState(false); 
-  const [userData, setUserData] = useState(null); 
-  const [editedBio, setEditedBio] = useState(""); 
-  const [activeTab, setActiveTab] = useState("글"); 
+  const auth = useRecoilValue(authAtom);
+  const userId = auth.uid;
+
+  const [isEditing, setIsEditing] = useState(false);
+  const [userData, setUserData] = useState(null);
+  const [editedUid, setEditedUid] = useState("");
+  const [editedBio, setEditedBio] = useState("");
+  const [activeTab, setActiveTab] = useState("글");
   const [favoritePosts, setFavoritePosts] = useState([]);
   const [myPosts, setMyPosts] = useState([]);
-  const [isUpdating, setIsUpdating] = useState(false); 
+
   useEffect(() => {
     if (!userId) {
       console.warn("userId가 없습니다.");
       return;
     }
-  
-    if (isNaN(userId)) {
-      const fetchData = async () => {
-        const data = await getMyPage(); 
-        getFavoritePosts(userId)
-        .then((data) => setFavoritePosts(data))
-        .catch((error) => console.error("즐겨찾기 가져오기 실패:", error));
-      getMyPosts(userId)
-        .then((data) => setMyPosts(data))
-        .catch((error) => console.error("내가 쓴 글 데이터 가져오기 실패:", error));
-        if (data) {
-          setUserData(data);
-          setEditedBio(data.bio);
-        } else {
-          console.error("마이페이지 데이터 로드 실패");
-        }
-      };
-      fetchData(); 
-    } else {
-      getUserProfile(userId)
-        .then((data) => {
-          console.log("User profile data:", data);
-          setUserData(data);
-          setEditedBio(data.bio);
-        })
-        .catch((error) => console.error("API 요청 실패:", error));
-    }
-  }, [userId, loggedInUserId]);
-  
+
+    getUserProfile()
+      .then((data) => {
+        setUserData(data);
+        setEditedUid(data.uid);
+        setEditedBio(data.bio);
+      })
+      .catch((error) => console.error("API 요청 실패:", error));
+
+    getFavoritePosts(userId)
+      .then((data) => {
+        setFavoritePosts(data);
+      })
+      .catch((error) => console.error("즐겨찾기 데이터 가져오기 실패:", error));
+
+    getMyPosts(userId)
+      .then((data) => {
+        setMyPosts(data);  
+      })
+      .catch((error) => console.error("내가 쓴 글 데이터 가져오기 실패:", error));
+  }, [userId]);
+
   const handleEditClick = () => {
     if (isEditing) {
-      // Start updating the bio
-      setIsUpdating(true);
-      updateBio(editedBio)  // Call the updateBio API
-        .then((response) => {
-          console.log("Bio updated successfully:", response);
-          setUserData((prev) => ({
-            ...prev,
-            bio: editedBio,  // Update the bio in the state
-          }));
-          setIsUpdating(false);
-        })
-        .catch((error) => {
-          console.error("Error updating bio:", error);
-          setIsUpdating(false);
-        });
+      setUserData((prev) => ({
+        ...prev,
+        uid: editedUid,
+        bio: editedBio,
+      }));
     }
-    setIsEditing(!isEditing);  // Toggle the editing mode
+    setIsEditing(!isEditing);
   };
-  const isOwnProfile = loggedInUserId === userId;
-  useEffect(() => {
-    if (userId && loggedInUserId !== userId) {
-      console.log(userId)
-    }
-  }, [userId, loggedInUserId, navigate]);
-  const handlePostClick = (id) => {
-    const numericId = Number(id);
-    if (isNaN(numericId)) {
-        console.error(id);
-        return;
-    }
-    navigate(`/post/${numericId}`);
-};
 
   return (
     <>

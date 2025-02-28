@@ -12,6 +12,7 @@ import makeDocument from "../../../utils/makeDocument.jsx";
 import { useRecoilValue } from 'recoil';
 import { authAtom } from "../../../recoil/authAtom.js";
 
+
 export default function Detail() {
     const { id } = useParams();
     const postId = parseInt(id);
@@ -21,24 +22,28 @@ export default function Detail() {
     const [newComment, setNewComment] = useState('');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
     const [editCommentId, setEditCommentId] = useState(null);
     const [editCommentText, setEditCommentText] = useState('');
     const [isFavorite, setIsFavorite] = useState(false);
     const [likeOn, setLikeOn] = useState(false);
     const user = useRecoilValue(authAtom);
 
-    console.log('ㅑㅇㅇㅇㅇ양ㅇㅇㅇㅇㅑㅇㅇ:',user.uid)
+
     
     const [commendLike, setCommendLike] = useState([]);
 
     useEffect(() => {
         console.log('댓글 좋아요 리스트', commendLike);
     }, [commendLike]);
+
     
     useEffect(() => {
         setLoading(true);
         setError(null);
+
     
+
         getPostDetail(postId)
             .then((data) => {
                 console.log("게시글 데이터:", data);
@@ -63,31 +68,35 @@ export default function Detail() {
     }, [postId]);   
     
 
+
     const handleEdit = () => {
-        if (post) {
-            navigate(`/write/${postId}`, {
-                state: {
-                    title: post.document.title,
-                    content: post.document.content,
-                    thumbnail: post.document.thumbnail,
-                    introduction: post.document.introduction,
-                    isPost: true,
-                    hash_tag: post.hash_tag || [],
-                },
-            });
-        }
+        navigate(`/write/${postId}`, {
+            state: {
+                title: post.document.title,
+                content: post.document.content,
+                thumbnail: post.document.thumbnail,
+                introduction: post.document.introduction,
+                isPost: true,
+                hash_tag: post.hash_tag || [],
+            },
+        });
     };
 
     const handleDelete = () => {
         if (window.confirm('정말로 삭제하시겠습니까?')) {
+            console.log(postId)
             deletePost(postId)
                 .then(() => {
                     alert('게시물이 삭제되었습니다.');
                     navigate(-1);
                 })
-                .catch(() => alert('삭제에 실패했습니다.'));
+                .catch((err) => {
+                    console.error('삭제 실패', err);
+                    alert('삭제에 실패했습니다.');
+                });
         }
     };
+
 
     const handleFavoriteClick = async () => {
         try {
@@ -97,42 +106,54 @@ export default function Detail() {
         } catch (error) {
             console.error("즐겨찾기 변경 실패:", error);
         }
+
     };
 
     const handleCommentSubmit = async () => {
         if (!newComment.trim()) return;
+
         try {
-            await createComment(postId, newComment);
+            // post.userInfoDTO.id를 userId로 사용하여 댓글 작성
+            const userId = post.userInfoDTO.id; 
+            await createComment(postId, newComment, userId); 
             setNewComment('');
-            setComments(await getComments(postId));
+            const updatedComments = await getComments(postId); 
+            setComments(updatedComments);
         } catch (error) {
             console.error('댓글 작성 실패', error);
         }
     };
     const handleCommentDelete = async (commentId) => {
-        if (window.confirm('정말로 삭제하시겠습니까?')) {
+        if (window.confirm('정말로 삭제하시겠습니까?')){
             try {
                 await deleteComment(commentId);
-                setComments(await getComments(postId));
+                const updatedComments = await getComments(postId);
+                setComments(updatedComments);
             } catch (error) {
                 console.error('댓글 삭제 실패', error);
             }
         }
     };
     const handleCommentEdit = (commentId, currentText) => {
-        setEditCommentId(commentId);
-        setEditCommentText(currentText);
+        setEditCommentId(commentId); 
+        setEditCommentText(currentText); 
     };
 
     const handleCommentUpdate = async () => {
+
         if (!editCommentText.trim()) return;
-        try {
+    
+        try { 
             await updateComment(editCommentId, editCommentText);
-            setComments(prevComments => prevComments.map(comment => 
-                comment.id === editCommentId ? { ...comment, comment: editCommentText } : comment
-            ));
-            setEditCommentId(null);
-            setEditCommentText('');
+            setComments((prevComments) => 
+                prevComments.map(comment =>
+                    comment.id === editCommentId
+                        ? { ...comment, comment: editCommentText } // 수정된 댓글 내용으로 업데이트
+                        : comment
+                )
+            );
+            setEditCommentId(null);  // 수정 중인 댓글 ID 초기화
+            setEditCommentText('');  // 수정 중인 댓글 텍스트 초기화
         } catch (error) {
             console.error('댓글 수정 실패', error);
         }
@@ -219,15 +240,22 @@ export default function Detail() {
                             </S.PostDetailDataTop>
                             <span>{post.hash_tag?.length ? post.hash_tag.map(tag => `#${tag}`).join(' ') : 'No tags available'}</span>
                             <div>{makeDocument(post.document.content)}</div>
+
                         </S.PostDetailData>
                     </S.PostDetailMain>
                 )}
                 <S.CommentSection>
                     <h3>{comments.length}개의 댓글</h3>
                     <S.CommentInputWrapper>
-                        <input type="text" value={newComment} onChange={(e) => setNewComment(e.target.value)} placeholder="댓글을 입력해주세요" />
+                        <input
+                            type="text"
+                            value={newComment}
+                            onChange={handleCommentChange}
+                            placeholder="댓글을 입력해주세요"
+                        />
                         <button onClick={handleCommentSubmit}>댓글 작성</button>
                     </S.CommentInputWrapper>
+
                     {comments.length ? comments.map((comment, index) => (
                         <S.CommentItem key={comment.id}>
                             <S.CommentProfile />
