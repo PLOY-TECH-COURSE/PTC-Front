@@ -19,11 +19,13 @@ export default function () {
         const query = e.target.value;
         setSearchQuery(query);
         setStart(0);
+        setPosts([]);
     };
 
     const handleSortChange = (newSort) => {
         setSort(newSort);
         setStart(0);
+        setPosts([]);
     };
 
     const handlePostClick = (id) => {
@@ -34,23 +36,41 @@ export default function () {
         }
         navigate(`/post/${numericId}`);
     };
-    
-    useEffect(() => {
+
+    const loadMorePosts = () => {
+        if (loading) return; 
         setLoading(true);
-    
+
         const query = searchQuery.replace(/#/g, '%23');
-    
+        
         getSearchPost(query, sort, start)
             .then((data) => {
-                setPosts(data || []);
+                setPosts((prevPosts) => [...prevPosts, ...(data || [])]); 
+                setStart(prevStart => prevStart + 20);
                 setLoading(false);
             })
             .catch((error) => {
                 console.error("게시물을 불러오는 데 실패했습니다.", error);
                 setLoading(false);
             });
-    }, [searchQuery, sort, start]);
-    
+    };
+
+    // 스크롤 이벤트 처리
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight) return;
+            loadMorePosts();
+        };
+
+        window.addEventListener("scroll", handleScroll);
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
+
+    useEffect(() => {
+        loadMorePosts();
+    }, [searchQuery, sort]);
 
     return (
         <S.Container>

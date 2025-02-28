@@ -5,6 +5,9 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Like2 from '../../../assets/like2.svg';
 import Star from '../../../assets/star.svg';
 import { getPostDetail, deletePost } from "../../../api/postList";
+import { authAtom } from "../../../recoil/authAtom.js";
+import { useRecoilValue } from 'recoil';
+
 
 export default function Detail() {
     const { id } = useParams();
@@ -13,13 +16,17 @@ export default function Detail() {
     const [post, setPost] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const user = useRecoilValue(authAtom);
+
+    console.log(user.uid)
 
     useEffect(() => {
         setLoading(true);
         setError(null);
-
+    
         getPostDetail(postId)
             .then((data) => {
+                console.log("Fetched post data:", data);
                 setPost(data);
                 setLoading(false);
             })
@@ -28,6 +35,12 @@ export default function Detail() {
                 setLoading(false);
             });
     }, [postId]);
+    
+
+    const currentUserId = Number(localStorage.getItem("userId"));
+    console.log(currentUserId)
+
+
 
     const handleEdit = () => {
         navigate(`/write/${postId}`, {
@@ -67,7 +80,7 @@ export default function Detail() {
                             <S.ProfileTop>
                                 <img src={post.userInfoDTO.profile} alt={post.userInfoDTO.name} />
                                 <S.RightProfile>
-                                    <span>{post.generation}기</span>
+                                    <span>{post.generation}</span>
                                     <p>{post.userInfoDTO.name}</p>
                                 </S.RightProfile>
                             </S.ProfileTop>
@@ -80,10 +93,12 @@ export default function Detail() {
                             <S.PostDetailDataTop>
                                 <h1>{post.document.title}</h1>
                                 <img src={Star} />
-                                <S.Edit>
-                                    <p onClick={handleDelete}>삭제</p>
-                                    <p onClick={handleEdit}>수정</p>
-                                </S.Edit>
+                                {post.userInfoDTO.id === user.uid && (
+                                    <S.Edit>
+                                        <p onClick={handleDelete}>삭제</p>
+                                        <p onClick={handleEdit}>수정</p>
+                                    </S.Edit>
+                                )}
 
                             </S.PostDetailDataTop>
                             <span>

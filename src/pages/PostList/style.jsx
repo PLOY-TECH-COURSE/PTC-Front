@@ -32,6 +32,7 @@ export const Search = styled.div`
     border-radius: 13px;
 `
 
+
 export const Input = styled.input`
     width: 100%;
     border: none;

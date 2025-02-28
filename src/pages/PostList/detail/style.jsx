@@ -9,7 +9,7 @@ export const Content = styled.div`
     align-items: center;
     justify-content: centers;
     overflow-y: auto;
-    padding: 4% 5%;
+    padding: 4% 8%;
 `
 
 export const Profile = styled.div`
@@ -24,7 +24,7 @@ export const Profile = styled.div`
 export const ProfileTop = styled.div`
     display: flex;
     width: 35%;
-    gap: 30px;
+    gap: 2vw;
     padding: 8%;
     margin: 10px 25px 3px 20px;
     cursor: pointer;
@@ -63,8 +63,10 @@ export const ProfileBottom = styled.div`
     width: 100%;
     gap: 20px;
     border-top: 0.5px solid #D1D1D1;
-    padding: 10%;
+    padding: 10% 5%;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
     span{
         font-size: 15px;
@@ -77,15 +79,13 @@ export const ProfileBottom = styled.div`
 
 export const PostLike = styled.div`
     display: flex;
-    justify-content: centers;
+    justify-content: center;
     align-items: center;
     gap: 10px;
-    margin-left: 23px;
     cursor: pointer;
 
     img{
         width: 40px;
-        margin-left: 20px;
     }
 
     p{
@@ -97,14 +97,14 @@ export const PostLike = styled.div`
 export const PostDetailMain = styled.div`
     width: 85%;
     display: flex;
-    gap: 100px;
+    gap: 50px;
 `
 
 export const PostDetailData = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
-    padding: 1% 0%;
+    padding: 1% 5%;
 
     span{
         font-size: 17px;
@@ -127,23 +127,26 @@ export const PostDetailDataTop = styled.div`
     display: flex;
     width: 100%;
     align-items: center;
-    gap: 20px;
+    justify-content: space-between;
+    gap: 10px;
 
-    h1{
-        margin-top: 15px;
+    h1 {
+        color: #4970FB;
+        flex-grow: 1;
+        word-break: break-word;
+        white-space: normal;
     }
 
     img{
-        margin-left: 400px;
-        margin-top: 15px;
-        width: 32px;
         cursor: pointer;
     }
-`
+`;
 
 export const Edit = styled.div`
     display: flex;
     gap: 20px;
+    margin-top: -17px;
+    margin-left: 9px;
 
     p{
         font-family: 'Courier New', Courier, monospace;
