@@ -29,9 +29,11 @@ export const BlueBox = styled.div`
     height: 50vh;
 `
 export const LogoIcon = styled.img`
-    width: 700px;
+    width: 45%;
     position: absolute;
-    top: 30px;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     z-index: 2;
     @media (max-width: 480px) {
         width: 340px;
