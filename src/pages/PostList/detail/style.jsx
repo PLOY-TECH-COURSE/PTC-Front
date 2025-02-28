@@ -2,14 +2,17 @@ import styled from "styled-components";
 
 export const Container = styled.div`
     width: 100%;
+    overflow-x: hidden;
+
 `
 
 export const Content = styled.div`
     width: 100%;
     align-items: center;
-    justify-content: centers;
+    justify-content: center;
     overflow-y: auto;
-    padding: 4% 8%;
+    padding: 4% 5%;
+    overflow-x: hidden;
 `
 
 export const Profile = styled.div`
@@ -90,7 +93,7 @@ export const PostLike = styled.div`
 
     p{
         font-size: 15px;
-        color: #4970FB;
+        color: ${(props) => (props.isLike ? "#4970FB" : "#D1D1D1")};
     }
 `
 
@@ -106,7 +109,7 @@ export const PostDetailData = styled.div`
     flex-direction: column;
     padding: 1% 5%;
 
-    span{
+    & > span:nth-of-type(1){
         font-size: 17px;
         color: #727272;
         border: none;
@@ -114,11 +117,15 @@ export const PostDetailData = styled.div`
         margin-top: 25px;
     }
 
-    p{
+    & > div:nth-of-type(2){
+        width: 100%;
         font-size: 16px;
         color: #000;
         font-family: 'Courier New', Courier, monospace;
         margin-top: 18px;
+        & :first-child{
+            width: 100%;
+        }
     }
 `
 
@@ -164,11 +171,10 @@ export const Edit = styled.div`
 `
 export const CommentSection = styled.div`
     margin-top: 40px;
-    width: 100%;
+    width: 1500px;
     background: #fff;
     padding: 20px;
-    position:absolute;
-    left:27%;
+    margin-left: 300px;
 `;
 
 export const CommentInputWrapper = styled.div`
@@ -178,7 +184,6 @@ export const CommentInputWrapper = styled.div`
     gap: 10px;
     margin-bottom: 10px;
     width: 50%;
-    
     input {
         flex: 1;
         padding: 12px;
@@ -220,11 +225,13 @@ export const CommentProfile = styled.div`
 export const CommentContent = styled.div`
     flex: 1;
     font-family: 'Pretendard', sans-serif;
-
     p {
         margin: 3px 0;
+        word-wrap: break-word;  
+        word-break: break-word; 
     }
 `;
+
 
 export const CommentBottom = styled.div`
     display: flex;
@@ -234,8 +241,10 @@ export const CommentBottom = styled.div`
 `;
 
 export const Like = styled.div`
-    color: #4970FB;
-    font-size: 14px;
+    p{
+        font-size: 14px;
+        color: ${(props) => (props.isCommentLike ? "#4970FB" : "#D1D1D1")};
+    }
     display: flex;
     gap: 5px;
     align-items: center;
@@ -244,7 +253,6 @@ export const Like = styled.div`
 export const CommentActions = styled.div`
     display: flex;
     gap: 10px;
-    
     p {
         color: #909090;
         cursor: pointer;

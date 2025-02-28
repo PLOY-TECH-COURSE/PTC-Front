@@ -87,7 +87,7 @@ function Header() {
                         <S.Text>{user.uid}</S.Text>
                         <S.DownImg src={Down} $isOpen = {isOpen[0]} $isOpen2 = {isOpen[1]} alt={'down'} width={18}/>
                         <S.Dropdown $isOpen = {isOpen[0]}>
-                            <S.Text2 onClick={()=>{navigate('/mypage')}}>내 정보</S.Text2>
+                        <S.Text2 onClick={() => {navigate(`/user/${user.uid}`)}}>내 정보</S.Text2>
                             <S.Text2 onClick={()=> {
                                 if(logout()){
                                     navigate('/');

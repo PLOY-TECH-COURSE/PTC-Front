@@ -1,4 +1,7 @@
 import axios from 'axios';
+import {refreshAccessToken} from "../api/auth.js";
+import {useRecoilState} from "recoil";
+import {authAtom} from "../recoil/authAtom.js";
 
 
 const axiosInstance = axios.create({
@@ -9,12 +12,6 @@ const axiosInstance = axios.create({
     withCredentials: true
 });
 
-const refreshAccessToken = async () => {
-    const response = await axios.post('/api/refresh', null, {
-        withCredentials: true,
-    });
-    return response.headers.authorization;
-};
 
 // 요청 인터셉터
 axiosInstance.interceptors.request.use(
@@ -35,8 +32,9 @@ axiosInstance.interceptors.response.use(
     (response) => response,
     async (error) => {
         const originalRequest = error.config;
+        const [_, setAuth] = useRecoilState(authAtom);
 
-        if (error.response.message === "access token expired" && !originalRequest._retry) {
+        if (error.response.data === "access token expired" && !originalRequest._retry) {
             originalRequest._retry = true;
 
             try {
@@ -47,6 +45,8 @@ axiosInstance.interceptors.response.use(
                 return axiosInstance(originalRequest);
             } catch (refreshError) {
                 console.error("Refresh token expired or invalid", refreshError);
+                localStorage.removeItem('accessToken');
+                setAuth({role: '', uid: ''});
                 window.location.href = '/login';
                 return Promise.reject(refreshError);
             }

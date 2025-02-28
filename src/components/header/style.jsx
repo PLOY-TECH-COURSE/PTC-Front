@@ -31,13 +31,10 @@ export const TextBox = styled.div`
 export const Hambuger = styled.div`
     width: 50px;
     height: 50px;
-    display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    @media (max-width:1980px) {
-        display: none;
-    }
+    display: none;
     @media (max-width:480px) {
         display: flex;
     }
@@ -168,7 +165,7 @@ export const Dropdown =styled.div`
     }
 `
 export const Cancel = styled.div`
-    position: absolute;
+    position: fixed;
     width: 100vw;
     height: 100vh;
     top: 0;

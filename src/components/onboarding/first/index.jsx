@@ -88,7 +88,7 @@ export default function First(){
                            else if( auth.role === "ROLE_USER") navigate('/apply');
                            else navigate('/write/new');
                         }}>
-                            <span>{auth.role === "ROLE_STUDENT" || auth.role === "ROLE_ADMIN" || auth.role === "ROLE_SUPERADMIN" ? "글 작성하기" : "신청하기"}</span>
+                            <span>{auth.role === "ROLE_STUDENT" || auth.role === "ROLE_ADMIN" || auth.role === "ROLE_SUPERADMIN" ? "글 작성" : "신청하기"}</span>
                             <S.BtnText $isHalf = {false}>
                                 <span>s</span>
                                 <span>e</span>
