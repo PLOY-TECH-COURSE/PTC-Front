@@ -152,7 +152,6 @@ export const PostDetailDataTop = styled.div`
 export const Edit = styled.div`
     display: flex;
     gap: 20px;
-    margin-top: -17px;
     margin-left: 9px;
 
     p{

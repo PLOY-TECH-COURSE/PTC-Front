@@ -74,7 +74,11 @@ export default function () {
 
     return (
         <S.Container>
-            {loading && <Loading />}
+            {loading && (
+                <S.LoadingWrapper>
+                    <Loading />
+                </S.LoadingWrapper>
+            )}
             <Header />
             <S.Content>
                 <S.PostListTop>

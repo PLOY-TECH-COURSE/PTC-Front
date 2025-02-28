@@ -6,10 +6,11 @@ import Like2 from '../../../assets/like2.svg';
 import NotLike2 from '../../../assets/not_like2.svg';
 import Star from '../../../assets/like-ing.svg';
 import Unstar from '../../../assets/star.svg';
-
 import { getPostDetail, deletePost, toggleFavorite, togglePostLike} from "../../../api/postList";
 import { getComments, createComment, deleteComment, updateComment ,toggleCommentLike} from "../../../api/comment.js";
 import makeDocument from "../../../utils/makeDocument.jsx";
+import { useRecoilValue } from 'recoil';
+import { authAtom } from "../../../recoil/authAtom.js";
 
 export default function Detail() {
     const { id } = useParams();
@@ -24,6 +25,9 @@ export default function Detail() {
     const [editCommentText, setEditCommentText] = useState('');
     const [isFavorite, setIsFavorite] = useState(false);
     const [likeOn, setLikeOn] = useState(false);
+    const user = useRecoilValue(authAtom);
+
+    console.log('ㅑㅇㅇㅇㅇ양ㅇㅇㅇㅇㅑㅇㅇ:',user.uid)
     
     const [commendLike, setCommendLike] = useState([]);
 
@@ -206,10 +210,12 @@ export default function Detail() {
                                     onClick={handleFavoriteClick} 
                                     style={{ cursor: "pointer" }} 
                                 />
-                                <S.Edit>
-                                    <p onClick={handleDelete}>삭제</p>
-                                    <p onClick={handleEdit}>수정</p>
-                                </S.Edit>
+                                {post.userInfoDTO.id === user.uid && (
+                                    <S.Edit>
+                                        <p onClick={handleDelete}>삭제</p>
+                                        <p onClick={handleEdit}>수정</p>
+                                    </S.Edit>
+                                )}
                             </S.PostDetailDataTop>
                             <span>{post.hash_tag?.length ? post.hash_tag.map(tag => `#${tag}`).join(' ') : 'No tags available'}</span>
                             <div>{makeDocument(post.document.content)}</div>
