@@ -2,7 +2,7 @@ import Profile from "../../../assets/proposer/default.png";
 import { deleteProposer,approveProposer } from "../../../api/proposer";
 import * as _ from "./style";
 
-const Users = ({ onClick,id,img, name, email, intro, promise }) => {
+const Users = ({ onClick,id,user_id,img, name, email, intro, promise }) => {
 	const deleteProposerBTN = async (id) => {
 		try {
 			if (window.confirm(`${name}님의 테크코스 신청을 거부하시겠습니까?`)){
@@ -30,7 +30,7 @@ const Users = ({ onClick,id,img, name, email, intro, promise }) => {
 					<_.userEmail>{email}</_.userEmail>
 				</_.userInfo>
 				<_.BtnDiv>
-					<_.userBtn onClick={()=>approveProposerBTN(id)}>승인</_.userBtn>
+					<_.userBtn onClick={()=>approveProposerBTN(user_id)}>승인</_.userBtn>
 					<_.userBtn onClick={()=>deleteProposerBTN(id)}>거부</_.userBtn>
 				</_.BtnDiv>
 			</_.userDesc>
