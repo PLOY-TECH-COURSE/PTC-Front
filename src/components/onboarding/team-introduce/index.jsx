@@ -12,7 +12,6 @@ import Yunchan from '../../../assets/onboarding/team-introduce/yunchan.jpeg';
 import Huhon from '../../../assets/onboarding/team-introduce/huhon.jpeg';
 
 export default function TeamIntroduce({isAnimation}){
-    console.log(isAnimation)
     const [isGrade, setIsGrade] = useState(true);
     const member = [
         {id : 2, name : '허온', job : 'Backend', git : 'https://github.com/KDev-Huh', bg : Huhon, time : 0.6},

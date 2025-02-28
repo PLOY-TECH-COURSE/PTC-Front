@@ -101,6 +101,9 @@ export const SkillImg = styled.img`
         width: 50px;
     }
 `
+export const Emote = styled.p`
+    font-size: 48px;
+`
 export const BlueText2 = styled.h3`
     color: #4970FB;
     font-size: 26px;
