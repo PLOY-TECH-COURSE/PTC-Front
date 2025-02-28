@@ -3,12 +3,14 @@ import Header from "../../components/header";
 import book from "../../assets/book.svg";
 import like from "../../assets/like.svg";
 import { useState, useEffect } from "react";
-import { useParams } from 'react-router-dom'; // useParams import
+import { useParams } from "react-router-dom";
+import { useRecoilValue } from "recoil"; // Recoil을 사용하여 로그인 정보 가져오기
+import { authAtom } from "../../recoil/authAtom"; // 로그인 정보 상태
 import { getUserProfile } from "../../api/mypage"; 
 import { getFavoritePosts } from "../../api/favortie";  
 import { getMyPosts } from "../../api/mywrite";  
+import { getMyPage } from "../../api/remypage"; 
 import PostItem from "../../components/postItem"; 
-import { authAtom } from "../../recoil/authAtom"; 
 
 const Container = styled.div`
   max-width: 800px;
@@ -121,11 +123,10 @@ const NoFavoriteMessage = styled.p`
 
 const Mypage = () => {
   const { userId } = useParams(); // URL에서 userId를 받아옵니다.
-  console.log("UserId from URL:", userId); // userId가 제대로 받아지는지 확인하는 콘솔 로그
-  
+  const loggedInUserId = useRecoilValue(authAtom).userId; // Recoil에서 로그인한 userId를 가져옵니다.
+
   const [isEditing, setIsEditing] = useState(false);
   const [userData, setUserData] = useState(null);
-  const [editedUid, setEditedUid] = useState("");
   const [editedBio, setEditedBio] = useState("");
   const [activeTab, setActiveTab] = useState("글"); // 기본 탭을 "글"로 설정
   const [favoritePosts, setFavoritePosts] = useState([]);
@@ -134,45 +135,58 @@ const Mypage = () => {
   // useEffect: userId가 있을 때 사용자 데이터 가져오기
   useEffect(() => {
     if (!userId) {
-      console.warn("userId가 없음, API 요청 중단");
+      console.warn("userId가 없습니다.");
       return;
     }
 
-    // 사용자 프로필 API 호출
-    getUserProfile(userId)
-      .then((data) => {
-        console.log("User profile data:", data); // 유저 프로필 데이터 콘솔 로그
-        setUserData(data);
-        setEditedUid(data.uid);
-        setEditedBio(data.bio);
-      })
-      .catch((error) => console.error("API 요청 실패:", error));
+    // userId가 long 형태일 경우 getMyPage 사용
+    if (isNaN(userId)) {
+      // string 형태 (유효하지 않은 숫자라면)
+      const fetchData = async () => {
+        const data = await getMyPage(); // string 형태일 때 getMyPage 호출
+        if (data) {
+          setUserData(data); // 사용자 데이터가 정상적으로 로드되면 상태에 저장
+          setEditedBio(data.bio);
+        } else {
+          console.error("마이페이지 데이터 로드 실패");
+        }
+      };
+      fetchData(); // API 호출
+    } else {
+      // userId가 숫자(long 형태)라면
+      // 사용자 프로필 API 호출
+      getUserProfile(userId)
+        .then((data) => {
+          console.log("User profile data:", data);
+          setUserData(data);
+          setEditedBio(data.bio);
+        })
+        .catch((error) => console.error("API 요청 실패:", error));
 
-    // 즐겨찾기 글 가져오기 (일단 주석 처리)
-    // getFavoritePosts(userId)
-    //   .then((data) => {
-    //     setFavoritePosts(data);
-    //   })
-    //   .catch((error) => console.error("즐겨찾기 데이터 가져오기 실패:", error));
+      // 즐겨찾기 글 가져오기
+      getFavoritePosts(userId)
+        .then((data) => setFavoritePosts(data))
+        .catch((error) => console.error("즐겨찾기 데이터 가져오기 실패:", error));
 
-    // 내가 쓴 글 가져오기 (일단 주석 처리)
-    // getMyPosts(userId)
-    //   .then((data) => {
-    //     setMyPosts(data);
-    //   })
-    //   .catch((error) => console.error("내가 쓴 글 데이터 가져오기 실패:", error));
-  }, [userId]); // userId가 변경될 때마다 실행
+      // 내가 쓴 글 가져오기
+      getMyPosts(userId)
+        .then((data) => setMyPosts(data))
+        .catch((error) => console.error("내가 쓴 글 데이터 가져오기 실패:", error));
+    }
+  }, [userId, loggedInUserId]); // userId가 변경될 때마다 실행
 
   const handleEditClick = () => {
     if (isEditing) {
       setUserData((prev) => ({
         ...prev,
-        uid: editedUid,
         bio: editedBio,
       }));
     }
     setIsEditing(!isEditing);
   };
+
+  // 본인 프로필인지 확인
+  const isOwnProfile = loggedInUserId === userId;
 
   return (
     <>
@@ -183,15 +197,7 @@ const Mypage = () => {
           <Info>
             <Tie>
               <Batch>{userData?.generation}기</Batch>
-              {isEditing ? (
-                <Inputtag
-                  type="text"
-                  value={editedUid}
-                  onChange={(e) => setEditedUid(e.target.value)}
-                />
-              ) : (
-                <Id>{userData?.uid}</Id>
-              )}
+              <Id>{userData?.uid}</Id>
             </Tie>
             <Stats>
               <StatItem>
@@ -217,9 +223,11 @@ const Mypage = () => {
             )}
           </Info>
 
-          <Sojung onClick={handleEditClick}>
-            {isEditing ? "완료" : "프로필 편집"}
-          </Sojung>
+          {isOwnProfile && (
+            <Sojung onClick={handleEditClick}>
+              {isEditing ? "완료" : "프로필 편집"}
+            </Sojung>
+          )}
         </ProfileSection>
 
         <Tabs>
@@ -231,7 +239,6 @@ const Mypage = () => {
           </TabButton>
         </Tabs>
 
-        {/* 내가 쓴 글 (현재 주석 처리) */}
         {activeTab === "글" && (
           <div>
             {myPosts.length > 0 ? (
@@ -242,7 +249,6 @@ const Mypage = () => {
           </div>
         )}
 
-        {/* 즐겨찾기한 글 (현재 주석 처리) */}
         {activeTab === "즐겨찾기" && (
           <div>
             {favoritePosts.length > 0 ? (
