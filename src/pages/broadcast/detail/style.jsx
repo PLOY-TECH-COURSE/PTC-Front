@@ -124,18 +124,20 @@ export const PostDetailDataTop = styled.div`
     display: flex;
     width: 100%;
     align-items: center;
-    gap: 20px;
+    justify-content: space-between;
+    gap: 10px;
 
-    h1{
-        margin-top: 15px;
+    h1 {
         color: #4970FB;
+        flex-grow: 1;
+        word-break: break-word;
+        white-space: normal;
     }
-`
+`;
 
 export const Edit = styled.div`
     display: flex;
     gap: 20px;
-    margin-left: 450px;
 
     p{
         font-family: 'Courier New', Courier, monospace;
