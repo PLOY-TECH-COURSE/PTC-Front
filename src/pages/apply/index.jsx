@@ -5,20 +5,20 @@ import { useState } from "react";
 import { ApplyAPI } from "../../api/apply";
 
 export default function Apply() {
-  const [intro, setIntro] = useState("");  // 자기소개
+  const [intro, setIntro] = useState("");
   const [promise, setPromise] = useState("");  
-  const [introWarning, setIntroWarning] = useState(false);  // 자기소개 경고
-  const [promiseWarning, setPromiseWarning] = useState(false);  // 다짐 경고
-  const isFormValid = intro.trim() !== "" && promise.trim() !== "";  // 유효성 검사
+  const [introWarning, setIntroWarning] = useState(false);
+  const [promiseWarning, setPromiseWarning] = useState(false);
+  const isFormValid = intro.trim() !== "" && promise.trim() !== ""; 
 
   const handleChange = (e, setter, warningSetter) => {
     const value = e.target.value;
     setter(value);
-    warningSetter(value.length >= 500);  // 500자 초과 시 경고
+    warningSetter(value.length >= 500); 
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // 기본 제출 동작 방지
+    e.preventDefault();
     if (!intro.trim()) {
       alert("자기소개란을 작성해주세요.");
       return;
@@ -28,10 +28,7 @@ export default function Apply() {
       return;
     }
     if (window.confirm("신청하시겠습니까?")) {
-      // console.log("Form Submitted", { intro, promise });
-   
       ApplyAPI({intro,promise});
-      // <ApplyAPI intro={intro} promise={promise}/>
     }
   };
 
