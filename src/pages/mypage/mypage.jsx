@@ -3,7 +3,7 @@ import Header from "../../components/header";
 import book from "../../assets/book.svg";
 import like from "../../assets/like.svg";
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom"; 
+import { useParams, useNavigate,useLocation } from "react-router-dom"; 
 import { useRecoilValue } from "recoil"; 
 import { authAtom } from "../../recoil/authAtom"; 
 import { getUserProfile } from "../../api/mypage"; 
@@ -68,6 +68,12 @@ const StatItem = styled.div`
   align-items: center;
   gap: 4px;
 `;
+const PostList = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);  
+  gap: 16px;  
+  margin-top: 20px;
+`;
 
 const Tabs = styled.div`
   margin-top: 24px;
@@ -124,6 +130,9 @@ const NoFavoriteMessage = styled.p`
 
 const Mypage = () => {
   const { userId } = useParams(); 
+  const location = useLocation();
+  const { uid } = location.state || {};  
+
   const loggedInUserId = useRecoilValue(authAtom).uid; 
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false); 
@@ -165,13 +174,17 @@ const Mypage = () => {
           setEditedBio(data.bio);
         })
         .catch((error) => console.error("API 요청 실패:", error));
+        getMyPosts(uid)
+        .then((data) => setMyPosts(data))
+        .catch((error) => console.error("내가 쓴 글 데이터 가져오기 실패:", error));
+        console.log(myPosts);
     }
   }, [userId, loggedInUserId]);
 
   const handleEditClick = () => {
     if (isEditing) {
       setIsEditing(false);
-      updateBio(editedBio)  // 프로필 수정 시 호출되는 함수
+      updateBio(editedBio)  
         .then((response) => {
           console.log("프로필 수정 성공:", response);
           setUserData((prev) => ({
@@ -249,25 +262,27 @@ const Mypage = () => {
         </Tabs>
 
         {activeTab === "글" && (
-          <div>
+          <PostList>
             {myPosts.length > 0 ? (
-              myPosts.map((post) => <PostItem key={post.documents_id} post={post} />)
+              myPosts.map((post) => (
+                <PostItem key={myPosts.documents_id} post={post} onClick={handlePostClick} />
+              ))
             ) : (
-              <NoFavoriteMessage>내가 쓴 글이 없습니다.</NoFavoriteMessage>
+              <NoFavoriteMessage>작성한 글이 없습니다.</NoFavoriteMessage>
             )}
-          </div>
+          </PostList>
         )}
 
         {activeTab === "즐겨찾기" && (
-          <div>
+          <PostList>
             {favoritePosts.length > 0 ? (
               favoritePosts.map((post) => (
-<PostItem key={post.documents_id} post={post} onClick={handlePostClick} />
+                <PostItem key={post.documents_id} post={post} onClick={handlePostClick} />
               ))
             ) : (
               <NoFavoriteMessage>즐겨찾기한 글이 없습니다.</NoFavoriteMessage>
             )}
-          </div>
+          </PostList>
         )}
       </Container>
     </>

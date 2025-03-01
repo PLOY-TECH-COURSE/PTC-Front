@@ -208,10 +208,10 @@ export default function Detail() {
                     <S.PostDetailMain>
                         <S.Profile>
                             <S.ProfileTop>
-                                <img onClick={()=>navigate(`/user/${post.userInfoDTO.id}`)} src={post.userInfoDTO.profile} alt={post.userInfoDTO.name} />
+                                <img onClick={()=>navigate(`/user/${post.userInfoDTO.id}`,{state: { uid: post.userInfoDTO.uid }})} src={post.userInfoDTO.profile} alt={post.userInfoDTO.name} />
                                 <S.RightProfile>
                                     <span>{post.generation}</span>
-                                    <p onClick={()=>navigate(`/user/${post.userInfoDTO.id}`)} >{post.userInfoDTO.name}</p>
+                                    <p onClick={()=>navigate(`/user/${post.userInfoDTO.id}`,{state: { uid: post.userInfoDTO.uid }})} >{post.userInfoDTO.name}</p>
                                 </S.RightProfile>
                             </S.ProfileTop>
                             <S.ProfileBottom>
