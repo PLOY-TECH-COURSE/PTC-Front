@@ -12,3 +12,4 @@ export const getMyPosts = async (user_id) => {
     throw error;
   }
 };
+
