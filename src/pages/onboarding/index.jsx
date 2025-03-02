@@ -77,7 +77,7 @@ const Main = () => {
                 }
                 setTimeout(() => {
                     isScrolling.current = false;
-                }, 500);
+                }, 1000);
             },
         });
 
