@@ -37,9 +37,9 @@ export const getPostDetail = async (document_id) => {
 export const deletePost = async (document_id) =>{
     try{
         const res = await axiosInstance.delete("/documents", {
-            params: document_id
+            params: { document_id }
         });
-        if(res.status !== 200){
+        if(res.status !== 200 && res.status !== 204){
             return Promise.reject({
                 status: res.status,
                 message: res.message

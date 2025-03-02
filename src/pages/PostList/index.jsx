@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { getSearchPost } from "../../api/postList";
 import Loading from "../../components/loading";
 
-export default function () {
+export default function PostList() {
     const navigate = useNavigate();
     const [searchQuery, setSearchQuery] = useState("");
     const [sort, setSort] = useState("CREATE_AT");
@@ -26,7 +26,8 @@ export default function () {
         setSort(newSort);
         setStart(0);
         setPosts([]);
-    };
+        loadMorePosts();
+    };    
 
     const handlePostClick = (id) => {
         const numericId = Number(id);

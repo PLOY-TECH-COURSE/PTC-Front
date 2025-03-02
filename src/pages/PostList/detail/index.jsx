@@ -27,7 +27,13 @@ export default function Detail() {
     const [likeOn, setLikeOn] = useState(false);
     const user = useRecoilValue(authAtom);
 
-    console.log('ㅑㅇㅇㅇㅇ양ㅇㅇㅇㅇㅑㅇㅇ:',user.uid)
+    //console.log('ㅑㅇㅇㅇㅇ양ㅇㅇㅇㅇㅑㅇㅇ:',user.uid)
+    useEffect(() => {
+        if (post) {
+            console.log('dsfsadfa', post.userInfoDTO.uid);
+            console.log('hfdhġd',post.userInfoDTO.id)
+        }
+    }, [post]);    
     
     const [commendLike, setCommendLike] = useState([]);
 
@@ -210,7 +216,7 @@ export default function Detail() {
                                     onClick={handleFavoriteClick} 
                                     style={{ cursor: "pointer" }} 
                                 />
-                                {post.userInfoDTO.id === user.uid && (
+                                {post.userInfoDTO.uid === user.uid && (
                                     <S.Edit>
                                         <p onClick={handleDelete}>삭제</p>
                                         <p onClick={handleEdit}>수정</p>
