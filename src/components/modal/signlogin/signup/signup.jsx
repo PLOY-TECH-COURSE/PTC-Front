@@ -4,7 +4,7 @@ import icon from '../../../../assets/Logo.svg';
 import { signupData, emailcode } from "../../../../api/signlogin";
 
 const SignUpModal = ({ setIsSignupModal }) => {  
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(1);
   const [time, setTime] = useState(600);
   const [min, setMin] = useState(Math.floor(600 / 60));
   const [sec, setSec] = useState(600 % 60);
