@@ -1,0 +1,436 @@
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";  
+import icon from '../../../../assets/Logo.svg';
+import { signupData, emailcode } from "../../../../api/signlogin";
+
+const SignUpModal = ({ setIsSignupModal }) => {  
+  const [step, setStep] = useState(2);
+  const [time, setTime] = useState(600);
+  const [min, setMin] = useState(Math.floor(600 / 60));
+  const [sec, setSec] = useState(600 % 60);
+  const [intervalId, setIntervalId] = useState(null);
+
+  const [email, setEmail] = useState("");
+  const [emailValid, setEmailValid] = useState(true);
+  const [passwordError, setPasswordError] = useState("");
+  const [name, setName] = useState("");
+  const [id, setId] = useState("");
+  const [code, setCode] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmpassword] = useState("");
+
+  const [profile, setProfile] = useState("");
+  const [old, setOld] = useState(1);
+  const [ban, setBan] = useState(1);
+  const [bunho, setBunho] = useState(1);
+
+  const pwPattern = /^(?=.*[a-zA-Z])(?=.*[~!@#$%^&*+=()-])(?=.*[0-9]).+$/;
+
+  useEffect(() => {
+    if (time <= 0) {
+      clearInterval(intervalId);
+      setIntervalId(null);
+      resetForm();
+    } else {
+      setMin(Math.floor(time / 60));
+      setSec(time % 60);
+    }
+    return () => {
+      if (intervalId === null) {
+        clearInterval(intervalId);
+      }
+    };
+  }, [time]);
+
+  const start = (e) => {
+    e.preventDefault();
+    if (intervalId) {
+      setTime(600);
+      setMin(10);
+      setSec(0);
+      return;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setEmailValid(false);
+      alert("올바른 이메일 형식을 입력하세요.");
+      return;
+    }
+    setEmailValid(true);
+    setTime(600);
+    setMin(10);
+    setSec(0);
+    const id = setInterval(() => {
+      setTime((prevTime) => prevTime - 1);
+    }, 1000);
+    setIntervalId(id);
+  };
+
+  const resetForm = () => {
+    setId("");
+    setName("");
+    setEmail("");
+    setCode("");
+    setPassword("");
+    setConfirmpassword("");
+    setProfile("");
+  };
+
+  const handleInputChange = (e) => {
+    const { id, value } = e.target;
+    switch (id) {
+      case "name":
+        setName(value);
+        break;
+      case "id":
+        setId(value);
+        break;
+      case "email":
+        setEmail(value);
+        break;
+      case "code":
+        setCode(value);
+        break;
+      case "password":
+        setPassword(value);
+        break;
+      case "confirmPassword":
+        setConfirmpassword(value);
+        if (password !== value) {
+          setPasswordError("비밀번호가 일치하지 않습니다.");
+        } else {
+          setPasswordError("");
+        }
+        break;
+      case "profile":
+        setProfile(value);
+        break;
+      case "old":
+        setOld(parseInt(value, 10));
+        break;
+      case "ban":
+        setBan(parseInt(value, 10));
+        break;
+      case "bunho":
+        setBunho(parseInt(value, 10));
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleEmailCode = async (e) => {
+    const isValid = await emailcode(email);
+    if (isValid) {
+      start(e);
+    }
+  };
+
+  const closeModal = (e) => {
+    if (e.target === e.currentTarget) {
+      setIsSignupModal(false);
+    }
+  };
+
+  const goNextStep = async (e) => {
+    e.preventDefault();
+    if (!name || !id || !email || !code || !password || !confirmPassword) {
+      alert("데이터를 완성해주세요.");
+      return;
+    } else if (id.length > 15) {
+      alert("id 15자를 초과했습니다.");
+      return;
+    } else if (!pwPattern.test(password)) {
+      alert("비밀번호에 대문자와 소문자 하나 이상, 특수문자, 숫자를 포함시켜주세요");
+      return;
+    } else if (password !== confirmPassword) {
+      alert("비밀번호가 일치하지 않습니다.");
+      return;
+    }
+    setStep(2);
+  };
+
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    if (!profile) {
+      alert("프로필 소개를 입력해주세요.");
+      return;
+    }
+    const result = await signupData(
+      name,
+      id,
+      email,
+      code,
+      password,
+      confirmPassword,
+      profile,
+      old,
+      ban,
+      bunho
+    );
+    if (result) {
+      alert("회원가입 성공!");
+      setIsSignupModal(false);
+    } else {
+      alert("회원가입에 실패했습니다. 다시 시도해주세요.");
+    }
+  };
+
+  return (
+    <ModalBackground onClick={closeModal}>
+      <ModalContent onClick={(e) => e.stopPropagation()}>
+        <Container>
+          <Img src={icon} />
+          <Text1>회원가입</Text1>
+          {step === 1 && (
+            <Form>
+              <Inp1>
+                <Input id="name" placeholder="이름을 입력해주세요" value={name} onChange={handleInputChange} />
+                <Smalltext0>이름</Smalltext0>
+              </Inp1>
+              <Inp1>
+                <Input id="id" placeholder="아이디를 5자 이상 15자 이하로 입력해주세요" value={id} onChange={handleInputChange} />
+                <Smalltext0>아이디</Smalltext0>
+              </Inp1>
+              <Inp1>
+                <Inptie>
+                  <Input1
+                    id="email"
+                    type="email"
+                    value={email}
+                    placeholder="이메일을 입력해주세요"
+                    onChange={handleInputChange}
+                    style={{ borderColor: emailValid ? "" : "red" }}
+                  />
+                  <Ingk type="button" onClick={(e) => handleEmailCode(e)}>
+                    인증하기
+                  </Ingk>
+                </Inptie>
+                <Smalltext0>이메일</Smalltext0>
+              </Inp1>
+              <Inp1>
+                <Inptie>
+                  <Input
+                    id="code"
+                    type="text"
+                    placeholder={`${min}:${sec}`}
+                    value={code}
+                    onChange={handleInputChange}
+                    style={{ width: '100%' }}
+                  />
+                </Inptie>
+                <Smalltext0>이메일 인증</Smalltext0>
+              </Inp1>
+              <Inp1>
+                <Input id="password" placeholder="대문자와 소문자 하나 이상, 특수문자, 숫자를 포함시켜주세요" type="password" value={password} onChange={handleInputChange} />
+                <Smalltext0>비밀번호</Smalltext0>
+              </Inp1>
+              <Inp1>
+                <Input id="confirmPassword" placeholder="비밀번호를 다시 입력해주세요" type="password" value={confirmPassword} onChange={handleInputChange} />
+                <Smalltext0>비밀번호 확인</Smalltext0>
+                {passwordError && <ErrorText>{passwordError}</ErrorText>}
+              </Inp1>
+              <Button type="submit" onClick={goNextStep}>
+                다음
+              </Button>
+            </Form>
+          )}
+          {step === 2 && (
+            <Form>
+              <Inp1>
+                <Input id="profile" placeholder="프로필 소개를 입력해주세요" type="text" value={profile} onChange={handleInputChange} />
+                <Smalltext0>프로필 소개</Smalltext0>
+              </Inp1>
+              <Tie>
+                <Inp2 id="old" value={old} onChange={handleInputChange}>
+                  <option value="1">1학년</option>
+                  <option value="2">2학년</option>
+                  <option value="3">3학년</option>
+                </Inp2>
+                <Inp2 id="ban" value={ban} onChange={handleInputChange}>
+                  <option value="1">1반</option>
+                  <option value="2">2반</option>
+                  <option value="3">3반</option>
+                  <option value="4">4반</option>
+                </Inp2>
+                <Inp2 id="bunho" value={bunho} onChange={handleInputChange}>
+                  {Array.from({ length: 30 }, (_, i) => i + 1).map((num) => (
+                    <option key={num} value={num}>
+                      {num}번
+                    </option>
+                  ))}
+                </Inp2>
+              </Tie>
+              <Button type="submit" onClick={handleSignup}>
+                회원가입
+              </Button>
+            </Form>
+          )}
+          <Text2 onClick={() => setIsSignupModal(false)}>로그인</Text2>
+        </Container>
+      </ModalContent>
+    </ModalBackground>
+  );
+};
+
+export default SignUpModal;
+
+const ModalBackground = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+`;
+
+const ModalContent = styled.div`
+  background-color: white;
+  padding: 40px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 515px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.25);
+`;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const Img = styled.img`
+  display: block;
+  width: 200px;
+  height: 30px;
+  margin-left: 25px;
+  object-fit: contain;
+`;
+
+const Text1 = styled.div`
+  color: #000;
+  font-family: Pretendard;
+  font-size: 24px;
+  font-weight: 700;
+  margin-top: 15px;
+`;
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+`;
+
+const Smalltext0 = styled.label`
+  font-size: 14px;
+  color: #555;
+  position: absolute;
+  background-color: #FFF;
+  padding: 0 5px;
+  left: 5%;
+  top: -15%;
+`;
+
+const Input = styled.input`
+  width: 400;
+  height: 40px;
+  border-radius: 4px;
+  border: 0.5px solid #8A8A8A;
+  background: #FFF;
+  padding: 10px;
+  font-size: 14px;
+  position: relative;
+`;
+
+const Button = styled.button`
+  width: 70%;
+  height: 45px;
+  border-radius: 28px;
+  background: #000;
+  color: #FFF;
+  font-size: 16px;
+  font-weight: medium;
+  margin: 0 auto;
+  margin-top: 20px;
+  justify-content: center;
+  cursor: pointer;
+`;
+
+const Text2 = styled.div`
+  color: #000;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  width: max-content;
+  margin: 0 auto;
+  margin-top: 20px;
+  cursor: pointer;
+  &:hover {
+    text-decoration-line: underline;
+  }
+`;
+
+const Tie = styled.div`
+  height: 30px;
+  width: 320px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+`;
+
+const Inp2 = styled.select`
+  border-radius: 4px;
+  border: 1.8px solid #CCC;
+  background: #FFF;
+  width: 100px;
+  height: 30px;
+`;
+
+const Inp1 = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 450px;
+  margin: 0 auto 20px auto;
+  padding: 2px;
+`;
+
+const Inptie = styled.div`
+  display: flex;
+  width: 100%;
+  gap: 10px;
+`;
+
+const Input1 = styled.input`
+  width: calc(100% - 100px);
+  height: 40px;
+  border-radius: 4px;
+  border: 0.5px solid #8A8A8A;
+  background: #FFF;
+  padding: 10px;
+  font-size: 14px;
+  position: relative;
+`;
+
+const Ingk = styled.button`
+  border-radius: 4px;
+  height: 40px;
+  width: 90px;
+  font-size: 14px;
+  background: #4970FB;
+  border: none;
+  color: #FFF;
+  cursor: pointer;
+`;
+
+const ErrorText = styled.div`
+  color: red;
+  font-size: 12px;
+  position: absolute;
+  top: 100%;
+`;
