@@ -236,9 +236,7 @@ export default function Write(){
                     <S.Content ref={containerRef}>{makeDocument(content)}</S.Content>
                 </S.Section>
             </S.Main>
-            <input ref={fileRef} type={"file"} style={{display: "none"}} onChange={(e)=> {
-                addImgText(e.target.files[0])
-            }} />
+            
         </S.WriteContainer>
     )
 }
