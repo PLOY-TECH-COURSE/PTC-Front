@@ -82,7 +82,7 @@ export default function TeamIntroduce({isAnimation}){
                         mento.map((item)=>{
                             if(item.name){
                                 return(
-                                    <S.Box $time = {item.time} $isAnimation = {isAnimation} key={item.id}  $bg={item.bg}>
+                                    <S.Box onClick={()=>window.open(item.git)} $time = {item.time} $isAnimation = {isAnimation} key={item.id}  $bg={item.bg}>
                                         <img src={item.bg} alt=""/>
                                         <S.User>
                                             <S.Name>{item.name}</S.Name>
