@@ -3,7 +3,7 @@ import styled from "styled-components";
 import icon from '../../../../assets/Logo.svg';
 import { signupData, emailcode } from "../../../../api/signlogin";
 
-const SignUpModal = ({ setIsSignupModal }) => {  
+const SignUpModal = ({ setIsModal,setIsSignupModal }) => {  
   const [step, setStep] = useState(1);
   const [time, setTime] = useState(600);
   const [min, setMin] = useState(Math.floor(600 / 60));
@@ -189,7 +189,7 @@ const SignUpModal = ({ setIsSignupModal }) => {
                 <Smalltext0>이름</Smalltext0>
               </Inp1>
               <Inp1>
-                <Input id="id" placeholder="아이디를 5자 이상 15자 이하로 입력해주세요" value={id} onChange={handleInputChange} />
+                <Input id="id" placeholder="아이디를 5자이상 15자 이하로 입력해주세요" value={id} onChange={handleInputChange} />
                 <Smalltext0>아이디</Smalltext0>
               </Inp1>
               <Inp1>
@@ -222,7 +222,7 @@ const SignUpModal = ({ setIsSignupModal }) => {
                 <Smalltext0>이메일 인증</Smalltext0>
               </Inp1>
               <Inp1>
-                <Input id="password" placeholder="대문자와 소문자 하나 이상, 특수문자, 숫자를 포함시켜주세요" type="password" value={password} onChange={handleInputChange} />
+                <Input id="password" placeholder="대문자, 소문자, 특수문자, 숫자를 각각 하나 이상 포함해 주세요." type="password" value={password} onChange={handleInputChange} />
                 <Smalltext0>비밀번호</Smalltext0>
               </Inp1>
               <Inp1>
@@ -266,7 +266,8 @@ const SignUpModal = ({ setIsSignupModal }) => {
               </Button>
             </Form>
           )}
-          <Text2 onClick={() => setIsSignupModal(false)}>로그인</Text2>
+          <Text2 onClick={() => {setIsSignupModal(false) 
+            setIsModal(true)}}>로그인</Text2>
         </Container>
       </ModalContent>
     </ModalBackground>
