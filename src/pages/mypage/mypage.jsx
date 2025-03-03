@@ -4,15 +4,16 @@ import book from "../../assets/book.svg";
 import like from "../../assets/like.svg";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue} from "recoil";
 import { authAtom } from "../../recoil/authAtom";
-import { getUserProfile } from "../../api/mypage";
+import {getUserProfile} from "../../api/mypage";
 import { getFavoritePosts } from "../../api/favortie";
 import { getMyPosts } from "../../api/mywrite";
 import { getMyPage } from "../../api/remypage";
 import { updateBio } from "../../api/edit";
 import { uploadImg,uploadImg1 } from "../../api/profile";
 import PostItem from "../../components/postItem";
+import Confirm from "../../components/modal/confirm/index.jsx";
 
 const Container = styled.div`
   max-width: 800px;
@@ -24,7 +25,13 @@ const ProfileSection = styled.div`
   display: flex;
   align-items: center;
   gap: 24px;
+  ${({ isOwnProfile }) => 
+    isOwnProfile && `
+      justify-content: space-between;
+    `
+  }
 `;
+
 
 const Avatar = styled.img`
   width: 96px;
@@ -99,7 +106,6 @@ const TabButton = styled.button`
 `;
 
 const Sojung = styled.button`
-  margin-left: auto;
   background-color: #4970FB;
   width: 120px;
   height: 30px;
@@ -126,6 +132,22 @@ const NoFavoriteMessage = styled.p`
   font-weight: bold;
 `;
 
+const Delete = styled.div`
+  background-color: #e84848;
+  margin-top: 10px;
+  width: 120px;
+  height: 30px;
+  border: none;
+  color: white;
+  font-size: 12px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+`
+
 const Mypage = () => {
   const { userId } = useParams();
   const location = useLocation();
@@ -140,7 +162,7 @@ const Mypage = () => {
   const [favoritePosts, setFavoritePosts] = useState([]);
   const [myPosts, setMyPosts] = useState([]);
   const [profileImage, setProfileImage] = useState(userData?.profile || "");
-  console.log(profileImage);
+
   const isOwnProfile = loggedInUserId === userId;
 
   useEffect(() => {
@@ -227,7 +249,7 @@ const Mypage = () => {
       try {
 
         const imageUrl = await uploadImg(fileData);
-        
+
         if (imageUrl) {
           const profileData = { "profile" : imageUrl.url };  // profile에 URL만 담기
           const result = await uploadImg1(profileData); // profile 데이터로 처리
@@ -246,12 +268,16 @@ const Mypage = () => {
       }
     }
   };
-  
-  
+
+  const [isModal, setIsModal] = useState(false);
+  const handleDeleteClick = () =>{
+    setIsModal(true);
+  }
   
   return (
     <>
       <Header />
+      {isModal && <Confirm setIsModal={setIsModal} />}
       <Container>
         <ProfileSection>
           <Avatar
@@ -285,20 +311,31 @@ const Mypage = () => {
               </StatItem>
             </Stats>
             {isEditing ? (
-              <Inputtag
-                type="text"
-                value={editedBio}
-                onChange={(e) => setEditedBio(e.target.value)}
-              />
-            ) : (
-              <p>{userData?.bio}</p>
-            )}
+            <input
+              type="text"
+              value={editedBio}
+              onChange={(e) => setEditedBio(e.target.value)}
+              style={{
+                fontSize: "16px",
+                padding: "4px",
+                border: "1px solid #ccc",
+                borderRadius: "4px",
+              }}
+            />
+          ) : (
+            <p onClick={() => isOwnProfile && setIsEditing(true)} style={{ cursor: isOwnProfile ? "pointer" : "default" }}>
+              {userData?.bio || "자기소개를 입력해주세요"}
+            </p>
+          )}
           </Info>
 
           {isOwnProfile && (
-            <Sojung onClick={handleEditClick}>
-              {isEditing ? "완료" : "프로필 편집"}
-            </Sojung>
+              <div style={{marginLeft: "auto"}}>
+                <Sojung onClick={handleEditClick}>
+                  {isEditing ? "완료" : "프로필 편집"}
+                </Sojung>
+                <Delete onClick={()=>handleDeleteClick()}>계정 삭제</Delete>
+              </div>
           )}
         </ProfileSection>
 

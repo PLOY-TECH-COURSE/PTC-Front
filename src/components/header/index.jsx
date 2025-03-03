@@ -10,12 +10,13 @@ import { authAtom } from "../../recoil/authAtom.js";
 import { logout } from '../../api/auth.js';
 import Login from '../modal/signlogin/login/login.jsx';  
 import Signup from '../modal/signlogin/signup/signup.jsx';  
+import ChangePw from '../modal/pass/password.jsx';
 
 function Header() {
   const [isOpen, setIsOpen] = useState([false, false]);
   const [isModal, setIsModal] = useRecoilState(modalAtom);
-const [isSignupModal, setIsSignupModal] = useState(false);
-
+  const [isSignupModal, setIsSignupModal] = useState(false);
+  const [isPwChangeModal, setIsPwChangeModal] = useState(false);
   const change = () => {
     if (!isOpen[0]) setIsOpen([true, false]);
     else if (isOpen[0]) setIsOpen([false, true]);
@@ -35,18 +36,23 @@ const [isSignupModal, setIsSignupModal] = useState(false);
   const navigate = useNavigate();
 
   const closeModal = () => {
-    setIsModal(false); // 로그인 모달 닫기
+    setIsModal(false);
+  };
+  const closeModals = () => {
+    setIsModals(false);
   };
 
   const closeSignupModal = () => {
-    setIsSignupModal(false); // 회원가입 모달 닫기
+    setIsSignupModal(false); 
   };
 
   return (
     <S.Container>
-      {isModal && <Login setIsModal={setIsModal} closeModal={closeModal} />}
-      {isSignupModal && <Signup setIsSignupModal={setIsSignupModal} closeSignupModal={closeSignupModal} />}
-
+      {isModal && <Login setIsModal={setIsModal} setIsSignupModal={setIsSignupModal} closeModal={closeModal} setIsPwChangeModal={setIsPwChangeModal}  />}
+      {isSignupModal && <Signup setIsSignupModal={setIsSignupModal} setIsModal={setIsModal} closeSignupModal={closeSignupModal} />}
+      {isPwChangeModal && (
+    <ChangePw setIsPwChangeModal={setIsPwChangeModal} />
+  )}
       <S.LogoImg onClick={() => navigate('/')} src={icon} alt="Logo" />
       <S.Hambuger onClick={() => setIsModal(true)}>
         <img src={Hambuger} alt={'hambuger'} width={35} />
@@ -86,9 +92,25 @@ const [isSignupModal, setIsSignupModal] = useState(false);
 
         {!user.uid &&
           <S.LoginBox>
-            <S.LoginButton onClick={() => setIsModal(true)}>로그인</S.LoginButton> 
-            <S.SignUpButton onClick={() => setIsSignupModal(true)}>회원가입</S.SignUpButton>
-          </S.LoginBox>
+            <S.LoginButton
+  onClick={() => {
+    setIsModal(true);
+    setIsSignupModal(false);
+  }}
+>
+  로그인
+</S.LoginButton>
+
+<S.SignUpButton
+  onClick={() => {
+    setIsModal(false);
+    setIsSignupModal(true);
+  }}
+>
+  회원가입
+</S.SignUpButton>
+
+        </S.LoginBox>
         }
 
         {user.uid &&

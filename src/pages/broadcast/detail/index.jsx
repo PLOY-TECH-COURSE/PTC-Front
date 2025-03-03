@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Bullhorn from '../../../assets/bullhorn.svg';
 import { getBroadcastDetail, deleteBroadcast } from '../../../api/broadcast';
+import makeDocument from "../../../utils/makeDocument.jsx";
 
 export default function Detail() {
     const navigate = useNavigate();
@@ -83,7 +84,7 @@ export default function Detail() {
                                     <p onClick={handleEdit}>수정</p>
                                 </S.Edit>
                             </S.PostDetailDataTop>
-                            <span>{post.document.content}</span>
+                            <div>{makeDocument(post.document.content)}</div>
                         </S.PostDetailData>
                     </S.PostDetailMain>
                 )}
