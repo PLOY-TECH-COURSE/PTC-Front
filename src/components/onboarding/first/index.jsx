@@ -3,7 +3,7 @@ import Header from '../../header/index.jsx'
 import Logo from '../../../assets/Logo.svg';
 import Laptop from '../../../assets/onboarding/first/laptop.svg'
 import {useNavigate} from "react-router-dom";
-import {useRecoilValue} from "recoil";
+import {useRecoilValue, useRecoilState} from "recoil";
 import {useEffect, useState} from "react";
 import {authAtom} from "../../../recoil/authAtom.js";
 import MainImg from '../../../assets/onboarding/first/mento2.jpeg'
@@ -14,6 +14,7 @@ import ArrowLeft from '../../../assets/onboarding/first/leftArrow.svg'
 import ArrowRight from  '../../../assets/onboarding/first/rightArrow.svg'
 import {useThrottle} from "../../../hooks/useThrottle.jsx";
 import Mail from '../../../assets/onboarding/first/mail.svg'
+import {modalAtom} from "../../../recoil/modalAtom.js";
 
 export default function First(){
     const navigate = useNavigate();
@@ -71,6 +72,8 @@ export default function First(){
         return imgIdx === 1 || imgIdx === 4 ? 0 : 0.5
     }
 
+    const [_, setIsModal] = useRecoilState(modalAtom);
+
     return(
         <S.FirstContainer>
             <S.HeaderBox>
@@ -84,7 +87,7 @@ export default function First(){
                         <S.SubText>플로이 테크 코스는 IT 비영리 단체 ‘플로이’에서 운영하는</S.SubText>
                         <S.SubText>1:1 맞춤형 멘토링 스터디 프로그램입니다.</S.SubText>
                         <S.Btn onClick={()=>{
-                           if( auth.role === "") navigate('/login');
+                           if( auth.role === "" || auth.role === undefined) setIsModal(true);
                            else if( auth.role === "ROLE_USER") navigate('/apply');
                            else navigate('/write/new');
                         }}>
