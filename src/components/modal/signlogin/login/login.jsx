@@ -67,8 +67,8 @@ const Smalltext2 = styled.label`
   font-size: 16px;  // 폰트 크기 키움
   color: #555;
   position: absolute;
-  left: 6%;
-  top: -18%;
+  left: 4%;
+  top: -13%;
   background-color: #FFF;
 `;
 
