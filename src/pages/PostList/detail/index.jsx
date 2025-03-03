@@ -240,7 +240,6 @@ export default function Detail() {
 <S.CommentSection>
   <h3>{comments.length}개의 댓글</h3>
 
-  {/* 로그인된 사용자만 댓글 입력창을 렌더링 */}
   {user && user.uid !== "" && user.role !== "" ? (
     <S.CommentInputWrapper>
       <input
@@ -252,13 +251,17 @@ export default function Detail() {
       <button onClick={handleCommentSubmit}>댓글 작성</button>
     </S.CommentInputWrapper>
   ) : (
-    <p>로그인 후 댓글을 작성하실 수 있습니다.</p> // 로그인하지 않으면 메시지 표시
+    <p>로그인 후 댓글을 작성하실 수 있습니다.</p> 
   )}
 
   {comments.length ? comments.map((comment, index) => {
+    console.log(comment.userProfile);
     return (
       <S.CommentItem key={comment.id}>
-        <S.CommentProfile />
+        <S.CommentProfile 
+        src={comment.userProfile || ""} 
+        onClick={() => navigate(`/user/${comment.userId}`)}
+        />
         <S.CommentContent>
           <p><strong>{comment.userName}</strong></p>
           {editCommentId === comment.id ? (
