@@ -109,8 +109,7 @@ const Text2 = styled.div`
   }
 `;
 
-const Login = ({ setIsModal }) => {
-  const [email, setEmail] = useState('');
+const Login = ({ setIsModal, setIsSignupModal, setIsPwChangeModal }) => {  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
@@ -157,7 +156,20 @@ const Login = ({ setIsModal }) => {
               로그인
             </Button>
           </Form>
-          <Text2 onClick={() => setIsModal(false)}>회원가입</Text2>
+          <Text2
+          onClick={() => {
+            setIsModal(false);
+            setIsSignupModal(true);
+          }}
+        >
+          회원가입
+        </Text2>
+         <Text2 onClick={() => {
+           setIsModal(false);
+           setIsPwChangeModal(true);
+         }}>
+           비밀번호 변경
+         </Text2>
         </Container>
       </ModalContent>
     </ModalBackground>

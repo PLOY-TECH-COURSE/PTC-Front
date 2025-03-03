@@ -213,7 +213,7 @@ export const CommentItem = styled.div`
     margin-bottom: 10px;
 `;
 
-export const CommentProfile = styled.div`
+export const CommentProfile = styled.img`
     width: 40px;
     height: 40px;
     background: #ccc;

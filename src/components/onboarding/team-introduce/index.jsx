@@ -50,9 +50,14 @@ export default function TeamIntroduce({isAnimation}){
                 count++;
             }
         });
-        const result = count - (7 - count);
-        setUnBox(Array(result).fill(0));
-    }, []);
+        const result = count - (member.length - count);
+        if(count < 2) setUnBox(Array(1).fill(0));
+        else if(count === 2) setUnBox([0]);
+        else if(count === 3) setUnBox([0, 0]);
+        else{
+            setUnBox(Array(result).fill(0));
+        }
+    }, [window.innerWidth]);
     return(
         <S.TeamContainer>
             <S.Wrap>

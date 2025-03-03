@@ -306,14 +306,22 @@ const Mypage = () => {
               </StatItem>
             </Stats>
             {isEditing ? (
-              <Inputtag
-                type="text"
-                value={editedBio}
-                onChange={(e) => setEditedBio(e.target.value)}
-              />
-            ) : (
-              <p>{userData?.bio}</p>
-            )}
+            <input
+              type="text"
+              value={editedBio}
+              onChange={(e) => setEditedBio(e.target.value)}
+              style={{
+                fontSize: "16px",
+                padding: "4px",
+                border: "1px solid #ccc",
+                borderRadius: "4px",
+              }}
+            />
+          ) : (
+            <p onClick={() => isOwnProfile && setIsEditing(true)} style={{ cursor: isOwnProfile ? "pointer" : "default" }}>
+              {userData?.bio || "자기소개를 입력해주세요"}
+            </p>
+          )}
           </Info>
 
           {isOwnProfile && (
