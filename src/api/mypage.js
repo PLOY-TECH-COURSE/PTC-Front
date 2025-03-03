@@ -10,3 +10,13 @@ export const getUserProfile = async (userId) => {
     throw error;
   }
 };
+
+export const withdrawUser = async () => {
+  try {
+    const response = await axiosInstance.delete(`/withdrawal`);  // `userId`를 URL에 포함
+    return response.status
+  } catch (error) {
+    console.error("마이페이지 데이터 가져오기 실패:", error);
+    throw error;
+  }
+};
