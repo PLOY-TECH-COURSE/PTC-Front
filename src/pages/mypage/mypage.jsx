@@ -25,6 +25,7 @@ const ProfileSection = styled.div`
   display: flex;
   align-items: center;
   gap: 24px;
+  justify-content: space-between;
 `;
 
 const Avatar = styled.img`
@@ -100,7 +101,6 @@ const TabButton = styled.button`
 `;
 
 const Sojung = styled.button`
-  margin-left: auto;
   background-color: #4970FB;
   width: 120px;
   height: 30px;
@@ -325,7 +325,7 @@ const Mypage = () => {
           </Info>
 
           {isOwnProfile && (
-              <div>
+              <div style={{marginLeft: "auto"}}>
                 <Sojung onClick={handleEditClick}>
                   {isEditing ? "완료" : "프로필 편집"}
                 </Sojung>
