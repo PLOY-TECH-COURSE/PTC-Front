@@ -315,18 +315,13 @@ const Mypage = () => {
               <p>{userData?.bio}</p>
             )}
           </Info>
-          <div>
-            <Sojung onClick={handleEditClick}>
-              {isEditing ? "완료" : "프로필 편집"}
-            </Sojung>
-            <Delete onClick={()=>handleDeleteClick()}>계정 삭제</Delete>
-          </div>
+
           {isOwnProfile && (
               <div>
                 <Sojung onClick={handleEditClick}>
                   {isEditing ? "완료" : "프로필 편집"}
                 </Sojung>
-                <Delete>계정 삭제</Delete>
+                <Delete onClick={()=>handleDeleteClick()}>계정 삭제</Delete>
               </div>
           )}
         </ProfileSection>
