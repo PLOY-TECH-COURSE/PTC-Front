@@ -77,7 +77,7 @@ export default function makeDocument(text = "") {
     }
 
     const lines = text.split("\n").map((line, index) => (
-        <div key={index}>{parseText(line)}</div>
+        <S.div2 key={index}>{parseText(line)}</S.div2>
     ));
 
     return <S.div>{lines}</S.div>;

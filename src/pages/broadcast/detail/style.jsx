@@ -104,18 +104,16 @@ export const PostDetailData = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
-    padding: 1% 0%;
+    padding: 1% 0;
 
     img{
         margin-top: 10px;
     }
-
     span{
         font-size: 16px;
         color: #000;
         border: none;
         opacity: 0.6;
-        margin-top: 25px;
     }
 `
 
