@@ -25,8 +25,13 @@ const ProfileSection = styled.div`
   display: flex;
   align-items: center;
   gap: 24px;
-  justify-content: space-between;
+  ${({ isOwnProfile }) => 
+    isOwnProfile && `
+      justify-content: space-between;
+    `
+  }
 `;
+
 
 const Avatar = styled.img`
   width: 96px;
