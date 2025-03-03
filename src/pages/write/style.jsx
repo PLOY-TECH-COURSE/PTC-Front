@@ -217,12 +217,19 @@ export const H4 = styled.span`
 export const div = styled.div`
         flex: 1 1 100%;
         word-break: break-all;
-        width: 500px;
+        width: 100%;
         display: flex;
         flex-flow: column wrap;
         & > *{
                 margin: 5px;
         }
+`
+export const div2 = styled.div`
+        width: 100%;
+        word-break: break-all;
+        display: flex;
+        min-height: max-content;
+        flex-flow: column wrap;
 `
 export const underLine = styled.span`
         text-decoration-line: underline;
@@ -238,6 +245,7 @@ export const hr = styled.div`
 `
 export const img = styled.img`
         width: 100%;
+        object-fit: cover;
+        display: block;
         margin: 0 auto;
-        object-fit: contain;
 `
