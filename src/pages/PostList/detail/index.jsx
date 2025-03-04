@@ -28,7 +28,6 @@ export default function Detail() {
     const [likeOn, setLikeOn] = useState(false);
     const user = useRecoilValue(authAtom);
 
-    //console.log('ㅑㅇㅇㅇㅇ양ㅇㅇㅇㅇㅑㅇㅇ:',user.uid)
     useEffect(() => {
         if (post) {
             console.log('dsfsadfa', post.userInfoDTO.uid);

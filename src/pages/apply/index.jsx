@@ -1,7 +1,7 @@
 
 import Logo from '../../assets/Logo.svg';
 import * as _ from "./style";
-import { useState } from "react";  
+import { useState, useEffect } from "react";    
 import { ApplyAPI } from "../../api/apply";
 
 export default function Apply({ onClose }) {
@@ -31,7 +31,17 @@ export default function Apply({ onClose }) {
       ApplyAPI({intro,promise});
     }
   };
+  useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      event.preventDefault();
+      event.returnValue = "작성 중인 내용이 사라집니다. 새로고침하시겠습니까?";
+    };
 
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
   return (
     <_.Overlay onClick={onClose}>
       <_.ApForm onClick={(e) => e.stopPropagation()}>
