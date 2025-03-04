@@ -7,6 +7,7 @@ import Bullhorn from '../../../assets/bullhorn.svg';
 import { getBroadcastDetail, deleteBroadcast } from '../../../api/broadcast';
 import { useRecoilValue } from 'recoil';
 import { authAtom } from "../../../recoil/authAtom.js";
+import makeDocument from "../../../utils/makeDocument.jsx";
 
 export default function Detail() {
     const navigate = useNavigate();
@@ -88,7 +89,7 @@ export default function Detail() {
                                     </S.Edit>
                                 )}
                             </S.PostDetailDataTop>
-                            <span>{post.document.content}</span>
+                            <div>{makeDocument(post.document.content)}</div>
                         </S.PostDetailData>
                     </S.PostDetailMain>
                 )}

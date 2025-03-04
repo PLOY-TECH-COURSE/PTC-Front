@@ -12,7 +12,6 @@ import Yunchan from '../../../assets/onboarding/team-introduce/yunchan.jpeg';
 import Huhon from '../../../assets/onboarding/team-introduce/huhon.jpeg';
 
 export default function TeamIntroduce({isAnimation}){
-    console.log(isAnimation)
     const [isGrade, setIsGrade] = useState(true);
     const member = [
         {id : 2, name : '허온', job : 'Backend', git : 'https://github.com/KDev-Huh', bg : Huhon, time : 0.6},
@@ -51,9 +50,14 @@ export default function TeamIntroduce({isAnimation}){
                 count++;
             }
         });
-        const result = count - (7 - count);
-        setUnBox(Array(result).fill(0));
-    }, []);
+        const result = count - (member.length - count);
+        if(count < 2) setUnBox(Array(1).fill(0));
+        else if(count === 2) setUnBox([0]);
+        else if(count === 3) setUnBox([0, 0]);
+        else{
+            setUnBox(Array(result).fill(0));
+        }
+    }, [window.innerWidth]);
     return(
         <S.TeamContainer>
             <S.Wrap>
@@ -83,7 +87,7 @@ export default function TeamIntroduce({isAnimation}){
                         mento.map((item)=>{
                             if(item.name){
                                 return(
-                                    <S.Box $time = {item.time} $isAnimation = {isAnimation} key={item.id}  $bg={item.bg}>
+                                    <S.Box onClick={()=>window.open(item.git)} $time = {item.time} $isAnimation = {isAnimation} key={item.id}  $bg={item.bg}>
                                         <img src={item.bg} alt=""/>
                                         <S.User>
                                             <S.Name>{item.name}</S.Name>

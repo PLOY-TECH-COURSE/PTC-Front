@@ -27,7 +27,7 @@ const FullPageWrapper = styled.div`
 `;
 
 const Main = () => {
-    const [isScrolling, setIsScrolling] = useState(false);
+    const isScrolling = useRef(false);
     const [isAnimation, setIsAnimation] = useState(false);
     const [isAnimation2, setIsAnimation2] = useState(false);
     const [isAnimation3, setIsAnimation3] = useState(false);
@@ -51,13 +51,10 @@ const Main = () => {
             credits: false,
             anchors: ['main', 'introduce', 'track', "process", 'team', 'footer'],
             onLeave: (origin, destination) => {
-
-                if (isModalRef.current || isScrolling) {
+                if (isModalRef.current || isScrolling.current) {
                     return false;
                 }
-
-                setIsScrolling(true);
-
+                isScrolling.current = true;
                 if(destination.index === 1) {
                     setIsAnimation(true);
                 } else {
@@ -79,7 +76,7 @@ const Main = () => {
                     setIsAnimation4(false);
                 }
                 setTimeout(() => {
-                    setIsScrolling(false);
+                    isScrolling.current = false;
                 }, 1000);
             },
         });

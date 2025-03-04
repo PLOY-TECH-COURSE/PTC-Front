@@ -1,11 +1,10 @@
 import axiosInstance from '../lib/axiosInstance';
 
-export const getMyPosts = async (userId) => {
+export const getMyPosts = async (user_id) => {
   try {
-    const response = await axiosInstance.get(`/documents?start=0`);
+    const response = await axiosInstance.get(`/documents/by-user?user_id=${user_id}`);
     if (response.data) {
-      const myPosts = response.data.filter(post => post.userInfoDTO?.id === userId); // userInfoDTO가 있을 때만 id 접근
-      return myPosts;
+      return response.data;
     }
     return [];
   } catch (error) {
@@ -13,3 +12,4 @@ export const getMyPosts = async (userId) => {
     throw error;
   }
 };
+

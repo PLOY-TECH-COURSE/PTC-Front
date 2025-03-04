@@ -138,14 +138,14 @@ export const PostRightData = styled.div`
     display: flex;
     flex-direction: column;
     width: 50%;
-    justify-content: flex-start;
+    justify-content: space-between; /* 상단과 하단 요소를 분리 */
     height: 100%;
     
     span{
         border: 0.5px solid #D1D1D1;
-        margin-top: 60px;
+        //margin-top: 60px;
     }
-`
+`;
 
 // export const PostRightTopData = styled.div`
 //     display: flex;

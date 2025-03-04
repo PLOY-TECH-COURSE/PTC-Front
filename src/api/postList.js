@@ -18,6 +18,7 @@ export const getSearchPost = async (query, sort, start) => {
     }
 };
 
+
 export const getPostDetail = async (document_id) => {
     try {
         const res = await axiosInstance.get(`/documents/${document_id}`);

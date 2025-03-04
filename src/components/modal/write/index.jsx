@@ -73,22 +73,24 @@ export default function WriteModal({data, title, tag, content, setIsModal}){
                     <S.Btn $Success={true} onClick={async ()=>{
                         if(isLoading) return;
                         setIsLoading(true);
+                        let ImgSrc = img;
+                        if(ImgSrc === "") ImgSrc = null;
                         if(id !=="new"){
                             if(isBroad){
-                                if(await patchBroad(title, content, tag, img, intro, id)){
+                                if(await patchBroad(title, content, tag, ImgSrc, intro, id)){
                                     navigate('/broadcast');
                                 }
                             }
-                            else if(await patchDocument(title, content, tag.map((item) => item.tag), img, intro, id)){
+                            else if(await patchDocument(title, content, tag.map((item) => item.tag), ImgSrc, intro, id)){
                                 navigate('/postList');
                             }
                         }
                         else if(isBroad){
-                            if(await postBroad(title, content, tag, img, intro)){
+                            if(await postBroad(title, content, tag, ImgSrc, intro)){
                                 navigate('/broadcast');
                             }
                         }
-                        else if(await postDocument(title, content, tag.map(item=>item.tag), img, intro)){
+                        else if(await postDocument(title, content, tag.map(item=>item.tag), ImgSrc, intro)){
                             navigate('/postList');
                         }
                         setIsLoading(false);

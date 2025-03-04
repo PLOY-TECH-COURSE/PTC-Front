@@ -26,7 +26,7 @@ export const signupData = async (name,id,email,code,password, confirmPassword, t
 export const emailcode = async (email)=>{
     try {
       const response = await axiosInstance.post('/email',{
-          email:email
+          "email":email
       });
         if(response.status === 200){
             return true;

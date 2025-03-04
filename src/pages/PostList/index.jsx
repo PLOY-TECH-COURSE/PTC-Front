@@ -26,9 +26,12 @@ export default function PostList() {
         setSort(newSort);
         setStart(0);
         setPosts([]);
-        loadMorePosts();
     };    
 
+    useEffect(() => {
+        loadMorePosts();
+    }, [searchQuery, sort]);
+    
     const handlePostClick = (id) => {
         const numericId = Number(id);
         if (isNaN(numericId)) {
