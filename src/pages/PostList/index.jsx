@@ -96,10 +96,10 @@ export default function PostList() {
 
                 <S.Sort>
                     <S.Recent onClick={() => handleSortChange("CREATE_AT")} active={sort === "LIKE"}>
-                        <button /><p>최신순</p>
+                        <button/><p>최신순</p>
                     </S.Recent>
                     <S.Like onClick={() => handleSortChange("LIKE")} active={sort === "CREATE_AT"}>
-                        <button /><p>좋아요순</p>
+                        <button/><p>좋아요순</p>
                     </S.Like>
                 </S.Sort>
 
