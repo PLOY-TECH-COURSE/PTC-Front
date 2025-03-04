@@ -267,3 +267,53 @@ export const CommentActions = styled.div`
         margin-left: 10px;
     }
 `;
+export const EditCommentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+`;
+
+// 수정 시 입력창
+export const EditCommentInput = styled.input`
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+`;
+
+// 수정·취소 버튼 래퍼
+export const CommentButtonWrapper = styled.div`
+  display: flex;
+  gap: 8px;
+`;
+
+// 수정 완료 버튼
+export const CommentUpdateButton = styled.button`
+  background-color: #4970FB;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-size: 14px;
+
+  &:hover {
+    background-color: #365edc;
+  }
+`;
+
+// 수정 취소 버튼
+export const CommentCancelButton = styled.button`
+  background-color: #e5e7eb;
+  color: #333;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-size: 14px;
+
+  &:hover {
+    background-color: #d1d5db;
+  }
+`;

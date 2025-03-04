@@ -10,7 +10,7 @@ const ModalBackground = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5); // 반투명 배경
+  background: rgba(0, 0, 0, 0.5); 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -22,7 +22,7 @@ const ModalContent = styled.div`
   padding: 50px;
   border-radius: 12px;
   width: 90%;
-  max-width: 600px;  // 크기를 더 키움
+  max-width: 600px; 
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
 `;
 
@@ -36,14 +36,14 @@ const Img = styled.img`
   display: block;
   width: 220px;
   height: 40px;
-  margin-bottom: 30px;  // 위쪽 마진 추가
+  margin-bottom: 30px;  
   object-fit: contain;
 `;
 
 const Text1 = styled.div`
   color: #000;
   font-family: Pretendard;
-  font-size: 28px;  // 폰트 크기 키움
+  font-size: 28px;  
   font-weight: 700;
   margin-top: 10px;
   margin-bottom: 30px;
@@ -64,7 +64,7 @@ const Inp1 = styled.div`
 `;
 
 const Smalltext2 = styled.label`
-  font-size: 16px;  // 폰트 크기 키움
+  font-size: 16px;  
   color: #555;
   position: absolute;
   left: 4%;
@@ -74,12 +74,12 @@ const Smalltext2 = styled.label`
 
 const Input = styled.input`
   width: 100%;
-  height: 50px;  // 높이 키움
+  height: 50px;  
   border-radius: 6px;
   border: 1px solid #8A8A8A;
   background: #FFF;
   padding: 15px;
-  font-size: 16px;  // 폰트 크기 키움
+  font-size: 16px;  
   margin-bottom: 20px;
 `;
 
@@ -89,7 +89,7 @@ const Button = styled.button`
   border-radius: 28px;
   background: #000;
   color: #FFF;
-  font-size: 18px;  // 폰트 크기 키움
+  font-size: 18px;  
   font-weight: medium;
   margin: 0 auto;
   border: none;
@@ -99,7 +99,7 @@ const Button = styled.button`
 
 const Text2 = styled.div`
   color: #000;
-  font-size: 16px;  // 폰트 크기 키움
+  font-size: 16px;  
   margin-top: 20px;
   display: flex;
   justify-content: center;
@@ -113,7 +113,8 @@ const Login = ({ setIsModal, setIsSignupModal, setIsPwChangeModal }) => {  const
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
     const loginResponse = await postLogin({ email, password });
     if (loginResponse) {
       setIsModal(false); 
@@ -133,7 +134,7 @@ const Login = ({ setIsModal, setIsSignupModal, setIsPwChangeModal }) => {  const
         <Container>
           <Img src={icon} />
           <Text1>로그인</Text1>
-          <Form>
+          <Form onSubmit={handleLogin}>
             <Inp1>
               <Input
                 type="email"
@@ -152,7 +153,7 @@ const Login = ({ setIsModal, setIsSignupModal, setIsPwChangeModal }) => {  const
               />
               <Smalltext2>비밀번호</Smalltext2>
             </Inp1>
-            <Button type="button" onClick={handleLogin}>
+            <Button type="submit" onClick={handleLogin}>
               로그인
             </Button>
           </Form>
