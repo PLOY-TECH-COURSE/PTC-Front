@@ -1,22 +1,28 @@
 import styled from 'styled-components';
 
-export const ApMain = styled.div`
-	@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css");
-	width :100vw;
-	height : 100vh;
-`;
-export const ApHeader = styled.div`
-	margin-bottom : 32px; 
+export const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(108, 108, 108, 0.5);
+  // backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const ApForm = styled.div`
-	font-family: pretendard;
-	width :592px;
-	height : 672px;
-	margin : auto;
-	padding : 68px 80px;
-	border-radius: 10px;
-	box-shadow : 0 0 10px #ccc;
+  font-family: pretendard;
+  width: 592px;
+  height: 672px;
+  background: white;
+  padding: 68px 80px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #ccc;
+  position: relative;
 `;
 
 export const ApImg = styled.img`
