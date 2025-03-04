@@ -78,6 +78,11 @@ export const ProfileBottom = styled.div`
         opacity: 0.5;
         margin-left: 15px;
     }
+    p{
+        width:10px;
+        height:20px;
+        text-align: center;
+    }
 `
 
 export const PostLike = styled.div`

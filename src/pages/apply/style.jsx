@@ -7,7 +7,6 @@ export const Overlay = styled.div`
   width: 100%;
   height: 100%;
   background-color: rgba(108, 108, 108, 0.5);
-  // backdrop-filter: blur(4px);
   z-index: 1000;
   display: flex;
   justify-content: center;
@@ -21,7 +20,6 @@ export const ApForm = styled.div`
   background: white;
   padding: 68px 80px;
   border-radius: 10px;
-  box-shadow: 0 0 10px #ccc;
   position: relative;
 `;
 
