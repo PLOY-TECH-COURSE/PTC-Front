@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { getSearchPost } from "../../api/postList";
 import Loading from "../../components/loading";
 
-export default function () {
+export default function PostList() {
     const navigate = useNavigate();
     const [searchQuery, setSearchQuery] = useState("");
     const [sort, setSort] = useState("CREATE_AT");
@@ -26,8 +26,12 @@ export default function () {
         setSort(newSort);
         setStart(0);
         setPosts([]);
-    };
+    };    
 
+    useEffect(() => {
+        loadMorePosts();
+    }, [searchQuery, sort]);
+    
     const handlePostClick = (id) => {
         const numericId = Number(id);
         if (isNaN(numericId)) {
@@ -95,10 +99,10 @@ export default function () {
 
                 <S.Sort>
                     <S.Recent onClick={() => handleSortChange("CREATE_AT")} active={sort === "LIKE"}>
-                        <button /><p>최신순</p>
+                        <button/><p>최신순</p>
                     </S.Recent>
                     <S.Like onClick={() => handleSortChange("LIKE")} active={sort === "CREATE_AT"}>
-                        <button /><p>좋아요순</p>
+                        <button/><p>좋아요순</p>
                     </S.Like>
                 </S.Sort>
 

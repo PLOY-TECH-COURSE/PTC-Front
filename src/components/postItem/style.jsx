@@ -11,6 +11,7 @@ export const Content = styled.div`
     overflow-y: auto;
 `
 
+
 export const PostListTop = styled.div`
     width: 100%;
     height: 50%;
@@ -31,6 +32,8 @@ export const Search = styled.div`
     padding: 1%;
     border-radius: 13px;
 `
+
+
 
 export const Input = styled.input`
     width: 100%;
@@ -100,6 +103,8 @@ export const PostData = styled.div`
     font-size: 18px;
     font-weight: bold;
 `
+
+
 export const RowData = styled.div`
     display: flex;
     flex-direction: row;
@@ -111,6 +116,7 @@ export const RowData = styled.div`
     padding: 2% 1.3%;
     gap: 10px;
     cursor: pointer;
+    align-items: flex-start;
 `
 
 export const PostImg = styled.div`
@@ -127,28 +133,46 @@ export const PostImg = styled.div`
     }
 `
 
+
 export const PostRightData = styled.div`
     display: flex;
     flex-direction: column;
     width: 50%;
+    justify-content: space-between; /* 상단과 하단 요소를 분리 */
+    height: 100%;
     
     span{
         border: 0.5px solid #D1D1D1;
-        margin-top: 60px;
+        //margin-top: 60px;
     }
-`
+`;
+
+// export const PostRightTopData = styled.div`
+//     display: flex;
+//     flex-direction: column; 
+//     width: 100%;
+//     gap: 10px;
+//     flex-grow: 1;
+
+//     p{
+//         font-size: 10px;
+//         color: gray;
+//     }
+// `
 
 export const PostRightTopData = styled.div`
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
     width: 100%;
     gap: 10px;
-
-    p{
+    flex-grow: 1;
+    overflow: hidden;
+    
+    p {
         font-size: 10px;
         color: gray;
     }
-`
+`;
 
 export const PostRightBottomData = styled.div`
     display: flex;
@@ -158,8 +182,18 @@ export const PostRightBottomData = styled.div`
     width: 200px;
     margin-top: 10px;
     margin-left: 5px;
+    flex-shrink: 0;
 `
 
+// export const PostRightBottomData = styled.div`
+//     display: flex;
+//     width: 100%;
+//     gap: 10px;
+//     align-items: center;
+//     margin-top: 10px;
+//     margin-left: 5px;
+//     flex-shrink: 0; /* Prevent shrinking when content grows */
+// `;
 
 export const PostProfile = styled.div`
     img{

@@ -27,7 +27,15 @@ export default function Detail() {
     const [isFavorite, setIsFavorite] = useState(false);
     const [likeOn, setLikeOn] = useState(false);
     const user = useRecoilValue(authAtom);
-    console.log(user);
+
+    //console.log('ㅑㅇㅇㅇㅇ양ㅇㅇㅇㅇㅑㅇㅇ:',user.uid)
+    useEffect(() => {
+        if (post) {
+            console.log('dsfsadfa', post.userInfoDTO.uid);
+            console.log('hfdhġd',post.userInfoDTO.id)
+        }
+    }, [post]);    
+    
     const [commendLike, setCommendLike] = useState([]);
 
     useEffect(() => {
@@ -120,7 +128,7 @@ export default function Detail() {
     };
 
     const handleCommentSubmit = async (e) => {
-        if (e) e.preventDefault();  // 기본 동작 방지
+        if (e) e.preventDefault(); 
         if (!newComment.trim()) return;
     
         try {
@@ -239,14 +247,14 @@ export default function Detail() {
                                     onClick={handleFavoriteClick}
                                     style={{ cursor: "pointer" }}
                                 />
-                                {post.userInfoDTO.id === user.uid && (
+                                {post.userInfoDTO.uid === user.uid && (
                                     <S.Edit>
                                         <p onClick={handleDelete}>삭제</p>
                                         <p onClick={handleEdit}>수정</p>
                                     </S.Edit>
                                 )}
                             </S.PostDetailDataTop>
-                            <span>{post.hash_tag?.length ? post.hash_tag.map(tag => `#${tag}`).join(' ') : 'No tags available'}</span>
+                            <span>{post.hash_tag?.length ? post.hash_tag.map(tag => `#${tag}`).join(' ') : ''}</span>
                             <div>{makeDocument(post.document.content)}</div>
                         </S.PostDetailData>
                     </S.PostDetailMain>
