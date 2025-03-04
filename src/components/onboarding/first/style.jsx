@@ -44,6 +44,9 @@ export const Title = styled.h1`
     @media (max-width: 480px) {
         font-size: 1.5rem;
     }
+    @media (min-width: 1920px) {
+        font-size: 3rem;
+    }
 `
 export const SubText = styled.h4`
     color: #707070;
@@ -109,16 +112,16 @@ export const Btn = styled.button`
 export const BtnText = styled.div`
     display: none;
     position: absolute;
-    width: 100px; /* 텍스트의 너비 설정 */
-    text-align: center; /* 텍스트 가운데 정렬 */
-    top: 40%; /* 부모 요소의 중앙에 위치 */
-    left: 49.5%; /* 부모 요소의 중앙에 위치 */
+    width: 100px; 
+    text-align: center; 
+    top: 40%;
+    left: 49.5%; 
     transform: translate(-50%, 100%);
-    transform-origin: 50% 100%; /* 아래쪽 중앙을 회전의 기준으로 설정 */
+    transform-origin: 50% 100%; 
     animation: ${(props)=>props.$isHalf ? css`${rotateFromHalf} 5s linear infinite` : css`${rotateFromStart} 5s linear infinite`};
     & > span {
-        display: inline-block; /* inline-block으로 회전 적용 */
-        transform-origin: center; /* 회전 기준 설정 */
+        display: inline-block; 
+        transform-origin: center;
         margin-right: 2px;
     }
 
@@ -148,6 +151,9 @@ export const Slide = styled.div`
     width: 550px;
     overflow: hidden;
     border-radius: 10px;
+    @media (min-width: 1920px) {
+        width: 700px;
+    }
 `
 export const ImgBox = styled.div`
     position: relative;
