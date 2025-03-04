@@ -11,12 +11,14 @@ import { logout } from '../../api/auth.js';
 import Login from '../modal/signlogin/login/login.jsx';  
 import Signup from '../modal/signlogin/signup/signup.jsx';  
 import ChangePw from '../modal/pass/password.jsx';
+import Apply from "../../pages/apply/index.jsx";
 
 function Header() {
   const [isOpen, setIsOpen] = useState([false, false]);
   const [isModal, setIsModal] = useRecoilState(modalAtom);
   const [isSignupModal, setIsSignupModal] = useState(false);
   const [isPwChangeModal, setIsPwChangeModal] = useState(false);
+  const [isApplyModal, setIsApplyModal] = useState(false);
   const change = () => {
     if (!isOpen[0]) setIsOpen([true, false]);
     else if (isOpen[0]) setIsOpen([false, true]);
@@ -28,8 +30,8 @@ function Header() {
     { id: 3, path: "/broadcast", name: "공지사항", role: "ALL" },
     { id: 4, path: "/authority", name: "권한관리", role: "ROLE_SUPERADMIN" },
     { id: 5, path: "/proposer", name: "신청자", role: "ROLE_SUPERADMIN, ROLE_ADMIN" },
-    { id: 6, path: "/apply", name: "신청하기", role: "ROLE_USER" },
-    { id: 7, path: "/write/new", name: "새글작성", role: "ROLE_SUPERADMIN, ROLE_ADMIN, ROLE_STUDENT" },
+    // { id: 6, path: "/apply", name: "신청하기", role: "ROLE_USER" },
+    { id: 6, path: "/write/new", name: "새글작성", role: "ROLE_SUPERADMIN, ROLE_ADMIN, ROLE_STUDENT" },
   ];
 
   const user = useRecoilValue(authAtom);
@@ -45,14 +47,20 @@ function Header() {
   const closeSignupModal = () => {
     setIsSignupModal(false); 
   };
+  const openApply = (role) => {
+    if (isApplyModal === true){
+      <Apply onClose={isApplyModal}/>
+    }
+  }
 
   return (
     <S.Container>
       {isModal && <Login setIsModal={setIsModal} setIsSignupModal={setIsSignupModal} closeModal={closeModal} setIsPwChangeModal={setIsPwChangeModal}  />}
       {isSignupModal && <Signup setIsSignupModal={setIsSignupModal} setIsModal={setIsModal} closeSignupModal={closeSignupModal} />}
       {isPwChangeModal && (
-    <ChangePw setIsPwChangeModal={setIsPwChangeModal} />
-  )}
+        <ChangePw setIsPwChangeModal={setIsPwChangeModal} />
+      )}
+      {isApplyModal && <Apply setIsApplyModal={setIsApplyModal} />}
       <S.LogoImg onClick={() => navigate('/')} src={icon} alt="Logo" />
       <S.Hambuger onClick={() => setIsModal(true)}>
         <img src={Hambuger} alt={'hambuger'} width={35} />
@@ -86,6 +94,8 @@ function Header() {
                 return (
                   <S.Text key={item.id} onClick={() => navigate(item.path)}>{item.name}</S.Text>
                 )
+              } else if (user.role === "ROLE_USER"){
+                return <S.Text onClick={() => openApply(setIsApplyModal(true))}>신청하기</S.Text>
               }
             })
         }

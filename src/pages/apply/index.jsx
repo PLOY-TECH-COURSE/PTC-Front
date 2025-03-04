@@ -1,15 +1,15 @@
-import Header from "../../components/header";
+
 import Logo from '../../assets/Logo.svg';
 import * as _ from "./style";
 import { useState } from "react";  
 import { ApplyAPI } from "../../api/apply";
 
-export default function Apply() {
+export default function Apply(onClose) {
   const [intro, setIntro] = useState("");
   const [promise, setPromise] = useState("");  
   const [introWarning, setIntroWarning] = useState(false);
   const [promiseWarning, setPromiseWarning] = useState(false);
-  const isFormValid = intro.trim() !== "" && promise.trim() !== ""; 
+  const isFormValid = intro.trim() !== "" && promise.trim() !== "";
 
   const handleChange = (e, setter, warningSetter) => {
     const value = e.target.value;
@@ -33,10 +33,7 @@ export default function Apply() {
   };
 
   return (
-    <_.ApMain>
-      <_.ApHeader>
-        <Header />
-      </_.ApHeader>
+    <_.Overlay onClick={onClose}>
       <_.ApForm>
         <_.ApImg src={Logo} alt="PLOY Tech course" />
         <_.ApTitle>테크코스 신청</_.ApTitle>
@@ -62,12 +59,12 @@ export default function Apply() {
           <_.ApBtn
             type="submit"
             disabled={!isFormValid}
-            onClick={handleSubmit}
+            onClick={() => {setIsApplyModal(true),handleSubmit}}
           >
             신청하기
           </_.ApBtn>
         </_.ApMForm>
       </_.ApForm>
-    </_.ApMain>
+    </_.Overlay>
   );
 }
