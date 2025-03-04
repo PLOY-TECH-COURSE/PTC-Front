@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Bullhorn from '../../../assets/bullhorn.svg';
 import { getBroadcastDetail, deleteBroadcast } from '../../../api/broadcast';
+import { useRecoilValue } from 'recoil';
+import { authAtom } from "../../../recoil/authAtom.js";
 import makeDocument from "../../../utils/makeDocument.jsx";
 
 export default function Detail() {
@@ -14,6 +16,7 @@ export default function Detail() {
     const [post, setPost] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const user = useRecoilValue(authAtom);
 
     useEffect(() => {
         setLoading(true);
@@ -79,10 +82,12 @@ export default function Detail() {
                             <S.PostDetailDataTop>
                                 <img src={Bullhorn} />
                                 <h1>{post.document.title}</h1>
+                                {post.userInfoDTO.uid === user.uid && (
                                 <S.Edit>
-                                    <p onClick={handleDelete}>삭제</p>
-                                    <p onClick={handleEdit}>수정</p>
-                                </S.Edit>
+                                        <p onClick={handleDelete}>삭제</p>
+                                        <p onClick={handleEdit}>수정</p>
+                                    </S.Edit>
+                                )}
                             </S.PostDetailDataTop>
                             <div>{makeDocument(post.document.content)}</div>
                         </S.PostDetailData>
