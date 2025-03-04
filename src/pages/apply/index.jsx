@@ -4,7 +4,7 @@ import * as _ from "./style";
 import { useState } from "react";  
 import { ApplyAPI } from "../../api/apply";
 
-export default function Apply(onClose) {
+export default function Apply({ onClose }) {
   const [intro, setIntro] = useState("");
   const [promise, setPromise] = useState("");  
   const [introWarning, setIntroWarning] = useState(false);
@@ -34,7 +34,7 @@ export default function Apply(onClose) {
 
   return (
     <_.Overlay onClick={onClose}>
-      <_.ApForm>
+      <_.ApForm onClick={(e) => e.stopPropagation()}>
         <_.ApImg src={Logo} alt="PLOY Tech course" />
         <_.ApTitle>테크코스 신청</_.ApTitle>
         <_.ApMForm>
