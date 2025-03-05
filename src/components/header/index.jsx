@@ -11,7 +11,7 @@ import { logout } from '../../api/auth.js';
 import Login from '../modal/signlogin/login/login.jsx';  
 import Signup from '../modal/signlogin/signup/signup.jsx';  
 import ChangePw from '../modal/pass/password.jsx';
-import Apply from "../../pages/apply/index.jsx";
+import Apply from "../../pages/apply/first";
 
 function Header() {
   const [isOpen, setIsOpen] = useState([false, false]);
@@ -46,6 +46,9 @@ function Header() {
   const closeSignupModal = () => {
     setIsSignupModal(false); 
   };
+  const closeApplyModal = () => {
+    setIsApplyModal(false);  // 이 상태를 관리하는 함수를 부모에서 정의
+  };
 
   return (
     <S.Container>
@@ -54,7 +57,7 @@ function Header() {
       {isPwChangeModal && (
         <ChangePw setIsPwChangeModal={setIsPwChangeModal} />
       )}
-      {isApplyModal && <Apply onClose={() => setIsApplyModal(false)} />}
+      {isApplyModal && <Apply onClose={closeApplyModal} />}
       <S.LogoImg onClick={() => navigate('/')} src={icon} alt="Logo" />
       <S.Hambuger onClick={() => setIsModal(true)}>
         <img src={Hambuger} alt={'hambuger'} width={35} />
@@ -94,7 +97,7 @@ function Header() {
         }
         {user.role === "ROLE_USER" && (
           <S.Text onClick={() => setIsApplyModal(true)}>신청하기</S.Text>
-        )}
+        )} 
 
         {!user.uid &&
           <S.LoginBox>

@@ -14,8 +14,16 @@ export default function UserModal({ user, onClose }) {
             <p>{user.intro}</p>
           </_.From>
           <_.From>
-            <_.Title>다짐</_.Title>
-            <p>{user.promise}</p>
+            <_.Title>기술경험</_.Title>
+            <p>{user.skill}</p>
+          </_.From>
+          <_.From>
+            <_.Title>배우고 싶은 것</_.Title>
+            <p>{user.study}</p>
+          </_.From>
+          <_.From>
+            <_.Title>기대하는 점</_.Title>
+            <p>{user.expectation}</p>
           </_.From>
         </_.From>
       </_.Modal>
