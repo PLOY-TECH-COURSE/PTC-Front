@@ -8,10 +8,8 @@ import {
 
 import {RecoilRoot} from 'recoil';
 
-import Block from './components/block/index.jsx';
 import Onboarding from './pages/onboarding/index.jsx';
 import Apply from './pages/apply/index.jsx';
-import Signup from './pages/signup/signup.jsx';
 import PostList from './pages/PostList/index.jsx';
 import Write from './pages/write/index.jsx';
 import MyPage from './pages/mypage/mypage.jsx';

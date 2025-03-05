@@ -25,7 +25,7 @@ export const uploadImg1 = async (fileData) => {
     }
   
     try {
-      // profileData.profile에서 URL을 받아와서 처리
+      // fileData.profile에서 URL을 받아와서 처리
       const profileUrl = fileData.profile;  // profile에 담긴 URL 처리
       console.log("업로드된 프로필 이미지 URL:", profileUrl);
   
@@ -33,8 +33,6 @@ export const uploadImg1 = async (fileData) => {
       const res = await axiosInstance.post('/profile', { profile: profileUrl });
       if (res.status === 200) {
         return profileUrl;  // 프로필 URL을 반환
-      } else {
-        throw new Error("서버 오류");
       }
     } catch (error) {
       console.error("프로필 이미지 업로드 실패", error);

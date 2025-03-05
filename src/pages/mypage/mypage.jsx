@@ -30,6 +30,9 @@ const ProfileSection = styled.div`
       justify-content: space-between;
     `
   }
+  :hover{
+    opacity: 0.7;
+  }
 `;
 
 
