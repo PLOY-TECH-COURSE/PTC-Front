@@ -11,9 +11,10 @@ export const getProposerList = async () => {
     const formattedData = res.data.map(user => ({
       ...user,
       intro: user.introduction,
-      promise: user.resolution,
+      skill: user.skill,
+      study: user.study,
+      expectation: user.expectation,
     }));
-
     return formattedData;
   } catch (err) {
     console.error("API 요청 실패:", err);
