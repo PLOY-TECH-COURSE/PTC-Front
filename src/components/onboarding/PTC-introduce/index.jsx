@@ -5,8 +5,8 @@ import LogoIcon from '../../../assets/onboarding/introduce/Group 8782.svg';
 export default function PTCIntroduce({isAnimation}){
     const Skills = [
         {name : "IT 기초 배우기", des : "Git & GitHub, HTML, CSS, JavaScript, 네트워크 기초 등을<br/> 익힐 수 있어요.",  time:0.7, emote : '🖥️' },
-        {name : "실습과 프로젝트", des : "직접 코드를 작성해 보고,<br/> 간단한 프로젝 트를 통해 배운 내용을  실습하면서 익힐 수 있어요.",  time:0.9, emote: '🛠️'},
-        {name : "1:1 멘토링", des : "선배들의 도움을 받아<br/> IT 공부와 학교 생 활에 적응해요.",  time:1.1, emote: '🤝'},
+        {name : "실습과 프로젝트", des : "직접 코드를 작성해 보고,<br/> 간단한 프로젝트를 통해 배운 내용을  실습하면서 익힐 수 있어요.",  time:0.9, emote: '🛠️'},
+        {name : "1:1 멘토링", des : "선배들의 도움을 받아<br/> IT 공부와 학교 생활에 적응해요.",  time:1.1, emote: '🤝'},
     ]
     return(
         <S.PTCContainer>
