@@ -19,6 +19,7 @@ const Container = styled.div`
   max-width: 800px;
   margin: 0 auto;
   padding: 24px;
+  
 `;
 
 const ProfileSection = styled.div`
@@ -30,9 +31,6 @@ const ProfileSection = styled.div`
       justify-content: space-between;
     `
   }
-  :hover{
-    opacity: 0.7;
-  }
 `;
 
 
@@ -42,6 +40,10 @@ const Avatar = styled.img`
   background-color: #d1d5db;
   border-radius: 50%;
   cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
+  transition: filter 0.3s ease-in-out;
+  &:hover {
+    filter: opacity(0.7);
+  }
 `;
 
 const Info = styled.div`
@@ -216,7 +218,6 @@ const Mypage = () => {
             ...prev,
             bio: editedBio,
           }));
-          window.location.reload();
         })
         .catch((error) => {
           console.error("프로필 수정 실패:", error);
