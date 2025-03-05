@@ -78,11 +78,6 @@ export const ProfileBottom = styled.div`
         opacity: 0.5;
         margin-left: 15px;
     }
-    p{
-        width:10px;
-        height:20px;
-        text-align: center;
-    }
 `
 
 export const PostLike = styled.div`
@@ -279,21 +274,16 @@ export const EditCommentContainer = styled.div`
   margin-top: 4px;
 `;
 
-// 수정 시 입력창
 export const EditCommentInput = styled.input`
   width: 100%;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
 `;
-
-// 수정·취소 버튼 래퍼
 export const CommentButtonWrapper = styled.div`
   display: flex;
   gap: 8px;
 `;
-
-// 수정 완료 버튼
 export const CommentUpdateButton = styled.button`
   background-color: #4970FB;
   color: #fff;
@@ -307,8 +297,6 @@ export const CommentUpdateButton = styled.button`
     background-color: #365edc;
   }
 `;
-
-// 수정 취소 버튼
 export const CommentCancelButton = styled.button`
   background-color: #e5e7eb;
   color: #333;

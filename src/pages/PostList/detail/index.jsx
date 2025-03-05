@@ -145,9 +145,12 @@ export default function Detail() {
     const handleCommentKeyPress = (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
-            handleCommentSubmit();
+            setTimeout(() => {
+                handleCommentSubmit();
+            }, 1000);
         }
     };
+    
     
     const handleCommentUpdate = async () => {
         if (!editCommentText.trim()) return;
@@ -267,7 +270,7 @@ export default function Detail() {
                             type="text"
                             value={newComment}
                             onChange={handleCommentChange}
-                            onKeyDown={handleCommentKeyPress}  // 🔹 Enter 키 입력 처리 추가
+                            onKeyDown={handleCommentKeyPress}  
                             placeholder="댓글을 입력해주세요"
                         />
                         <button onClick={handleCommentSubmit}>댓글 작성</button>
