@@ -46,6 +46,9 @@ function Header() {
   const closeSignupModal = () => {
     setIsSignupModal(false); 
   };
+  const closeApplyModal = () => {
+    setIsApplyModal(false);  // 이 상태를 관리하는 함수를 부모에서 정의
+  };
 
   return (
     <S.Container>
@@ -54,7 +57,7 @@ function Header() {
       {isPwChangeModal && (
         <ChangePw setIsPwChangeModal={setIsPwChangeModal} />
       )}
-      {isApplyModal && <Apply onClose={() => setIsApplyModal(false)} />}
+      {isApplyModal && <Apply onClose={closeApplyModal} />}
       <S.LogoImg onClick={() => navigate('/')} src={icon} alt="Logo" />
       <S.Hambuger onClick={() => setIsModal(true)}>
         <img src={Hambuger} alt={'hambuger'} width={35} />

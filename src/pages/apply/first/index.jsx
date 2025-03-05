@@ -11,8 +11,10 @@ export default function Apply({ onClose }) {
   const [introWarning, setIntroWarning] = useState(false);
   const [promiseWarning, setPromiseWarning] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [ModalOpen, setModalOpen] = useState(false);
   const isFormValid = intro.trim() !== "" && tech.trim() !== "";
 
+  console.log(onClose);
   const handleChange = (e, setter, warningSetter) => {
     const value = e.target.value;
     setter(value);
@@ -30,29 +32,43 @@ export default function Apply({ onClose }) {
       return;
     }
     if (window.confirm("다음으로 넘어가시면 수정불가합니다.\n다음으로 넘어가시겠습니까?")){
-      console.log(`자기소개:${intro}, 기술경험:${tech}, 배울점:${study}, 바라는 점:${hope}`);
       setIsSubmitted(true);
     }
   };
 
   useEffect(() => {
     const handleBeforeUnload = (event) => {
-      event.preventDefault();
-      event.returnValue = "작성 중인 내용이 사라집니다. 새로고침하시겠습니까?";
+      if (intro.trim() || tech.trim()) {
+        event.preventDefault();
+        event.returnValue = "작성 중인 내용이 사라집니다. 새로고침하시겠습니까?";
+      }
     };
 
     window.addEventListener("beforeunload", handleBeforeUnload);
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
-  }, []);
+  }, [intro, tech]);
 
+  const handleOverlayClick = (e) => {
+    if (intro.trim() || tech.trim()) {
+      if (!window.confirm("작성 중인 내용이 사라집니다. 정말 닫으시겠습니까?")) {
+        return;
+      }
+    }
+    onClose();
+  };
+  const handleClose = () => {
+    console.log("모달 닫힘");
+    setModalOpen(false);
+    onClose();  
+  };
   if (isSubmitted) {
-    return <ApplyEnd intro={intro} tech={tech} study={study} hope={hope} />;
+    return <ApplyEnd intro={intro} tech={tech} study={study} hope={hope} onClose={handleClose} />
   }
 
   return (
-    <_.Overlay onClick={onClose}>
+    <_.Overlay onClick={handleOverlayClick}>
       <_.ApForm onClick={(e) => e.stopPropagation()}>
         <_.ApImg src={Logo} alt="PLOY Tech course" />
         <_.ApTitle>테크코스 신청</_.ApTitle>
