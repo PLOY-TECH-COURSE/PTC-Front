@@ -11,7 +11,7 @@ import { logout } from '../../api/auth.js';
 import Login from '../modal/signlogin/login/login.jsx';  
 import Signup from '../modal/signlogin/signup/signup.jsx';  
 import ChangePw from '../modal/pass/password.jsx';
-import Apply from "../../pages/apply/index.jsx";
+import Apply from "../../pages/apply/first";
 
 function Header() {
   const [isOpen, setIsOpen] = useState([false, false]);
@@ -94,7 +94,7 @@ function Header() {
         }
         {user.role === "ROLE_USER" && (
           <S.Text onClick={() => setIsApplyModal(true)}>신청하기</S.Text>
-        )}
+        )} 
 
         {!user.uid &&
           <S.LoginBox>

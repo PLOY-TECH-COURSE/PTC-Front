@@ -10,7 +10,7 @@ import {RecoilRoot} from 'recoil';
 
 import Block from './components/block/index.jsx';
 import Onboarding from './pages/onboarding/index.jsx';
-import Apply from './pages/apply/index.jsx';
+// import Apply from './pages/apply/index.jsx';
 import Signup from './pages/signup/signup.jsx';
 import PostList from './pages/PostList/index.jsx';
 import Write from './pages/write/index.jsx';
@@ -28,7 +28,7 @@ createRoot(document.getElementById('root')).render(
         <Routes>
         <Route element={<LoginConfirm />}>
             <Route path="/" element={<Onboarding />} />
-            <Route path="/apply" element={<Apply/>} />
+            {/* <Route path="/apply" element={<Apply/>} /> */}
             <Route path="/proposer" element={<Proposer />} />
             <Route path='/postList' element={<PostList />} />
             <Route path='/user/:userId' element={<MyPage />} />

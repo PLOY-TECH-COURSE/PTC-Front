@@ -1,20 +1,22 @@
-
-import Logo from '../../assets/Logo.svg';
+import Logo from "../../../assets/Logo.svg";
 import * as _ from "./style";
-import { useState, useEffect } from "react";    
-import { ApplyAPI } from "../../api/apply";
+import { useState, useEffect } from "react";
+import ApplyEnd from "../last";
 
 export default function Apply({ onClose }) {
   const [intro, setIntro] = useState("");
-  const [promise, setPromise] = useState("");  
+  const [tech, setTech] = useState("");
+  const [study, setStudy] = useState("");
+  const [hope, setHope] = useState("");
   const [introWarning, setIntroWarning] = useState(false);
   const [promiseWarning, setPromiseWarning] = useState(false);
-  const isFormValid = intro.trim() !== "" && promise.trim() !== "";
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const isFormValid = intro.trim() !== "" && tech.trim() !== "";
 
   const handleChange = (e, setter, warningSetter) => {
     const value = e.target.value;
     setter(value);
-    warningSetter(value.length >= 500); 
+    warningSetter(value.length >= 500);
   };
 
   const handleSubmit = (e) => {
@@ -23,14 +25,16 @@ export default function Apply({ onClose }) {
       alert("자기소개란을 작성해주세요.");
       return;
     }
-    if (!promise.trim()) {
-      alert("다짐란을 작성해주세요.");
+    if (!tech.trim()) {
+      alert("기술경험란을 작성해주세요.");
       return;
     }
-    if (window.confirm("신청하시겠습니까?")) {
-      ApplyAPI({intro,promise});
+    if (window.confirm("다음으로 넘어가시면 수정불가합니다.\n다음으로 넘어가시겠습니까?")){
+      console.log(`자기소개:${intro}, 기술경험:${tech}, 배울점:${study}, 바라는 점:${hope}`);
+      setIsSubmitted(true);
     }
   };
+
   useEffect(() => {
     const handleBeforeUnload = (event) => {
       event.preventDefault();
@@ -42,6 +46,11 @@ export default function Apply({ onClose }) {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, []);
+
+  if (isSubmitted) {
+    return <ApplyEnd intro={intro} tech={tech} study={study} hope={hope} />;
+  }
+
   return (
     <_.Overlay onClick={onClose}>
       <_.ApForm onClick={(e) => e.stopPropagation()}>
@@ -58,10 +67,10 @@ export default function Apply({ onClose }) {
             {introWarning && <div className="warning">500자가 최대입니다.</div>}
           </_.ApField>
           <_.ApField>
-            <legend>다짐</legend>
+            <legend>기술 경험</legend>
             <textarea
-              value={promise}
-              onChange={(e) => handleChange(e, setPromise, setPromiseWarning)}
+              value={tech}
+              onChange={(e) => handleChange(e, setTech, setPromiseWarning)}
               maxLength={500}
             />
             {promiseWarning && <div className="warning">500자가 최대입니다.</div>}
@@ -69,9 +78,9 @@ export default function Apply({ onClose }) {
           <_.ApBtn
             type="submit"
             disabled={!isFormValid}
-            onClick={() => {setIsApplyModal(true),handleSubmit}}
+            onClick={handleSubmit}
           >
-            신청하기
+            다음으로
           </_.ApBtn>
         </_.ApMForm>
       </_.ApForm>
