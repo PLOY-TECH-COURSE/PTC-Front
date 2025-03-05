@@ -174,7 +174,7 @@ function EmailAuthModal({ setIsPwChangeModal }) {
 
 export default EmailAuthModal;
 
-/* ----- 스타일 정의 ----- */
+
 const ModalBackground = styled.div`
   position: fixed;
   top: 0;
