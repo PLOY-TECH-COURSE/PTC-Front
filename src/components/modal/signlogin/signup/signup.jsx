@@ -123,6 +123,7 @@ const SignUpModal = ({ setIsModal,setIsSignupModal }) => {
     const isValid = await emailcode(email);
     if (isValid) {
       start(e);
+      alert("이메일에 인증번호가 전송되었습니다.")
     }
   };
 
