@@ -30,7 +30,4 @@ export default function UserModal({ user, onClose }) {
     </_.Overlay>
   );
 }
-    // "skill": "스프링 써봄ㅋ",
-    // "study": "코루틴 써보고 싶음",
-    // "expectation": "세계 정복을 꿈꾸고 있습니다."
 

@@ -76,6 +76,7 @@ export default function Apply({ onClose }) {
           <_.ApField>
             <legend>자기소개</legend>
             <textarea
+              placeholder={"간단히 본인을 소개해주세요!"}
               value={intro}
               onChange={(e) => handleChange(e, setIntro, setIntroWarning)}
               maxLength={500}
@@ -85,6 +86,7 @@ export default function Apply({ onClose }) {
           <_.ApField>
             <legend>기술 경험</legend>
             <textarea
+              placeholder={"사용해 본 기술이나 개발 경험을 알려주세요."}
               value={tech}
               onChange={(e) => handleChange(e, setTech, setPromiseWarning)}
               maxLength={500}

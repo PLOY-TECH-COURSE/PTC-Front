@@ -70,6 +70,7 @@ export default function ApplyEnd({ onClose, intro, tech, study, hope }) {
           <_.ApField>
             <legend>배우고 싶은 것</legend>
             <textarea
+              placeholder={"이 코스를 통해 배우고 싶은 내용을 자유롭게 적어주세요."}
               value={studyText}
               onChange={(e) => handleChange(e, setStudyText, setStudyWarning)}
               maxLength={500}
@@ -79,6 +80,7 @@ export default function ApplyEnd({ onClose, intro, tech, study, hope }) {
           <_.ApField>
             <legend>기대하는 점</legend>
             <textarea
+              placeholder={"테크 코스에서 기대하는 점을 간단히 작성해주세요."}
               value={hopeText}
               onChange={(e) => handleChange(e, setHopeText, setHopeWarning)}
               maxLength={500}
