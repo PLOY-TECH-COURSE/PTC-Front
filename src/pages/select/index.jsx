@@ -90,7 +90,6 @@ export default function Select() {
             <Users
               key={user.id}
               id ={user.id}
-              img={user.img || ""}
               name={user.name}
               email={user.email}
               promise={user.promise}

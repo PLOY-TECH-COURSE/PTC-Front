@@ -15,6 +15,7 @@ export const userBox = styled.div`
 export const userImg = styled.img`
 	width : 116px;
 	height : 116px;
+	border-radius: 100%;
 	margin : 0 24px;
 `;
 export const userDesc = styled.div`

@@ -4,7 +4,9 @@ export const userBox = styled.div`
 	@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css");
 	border: 2px solid #D1D1D1;
 	border-radius: 10px;
-	width : 380px;
+	width : 23.45%;
+	min-width : 232px;
+	max-width : 400px;
 	height : 160px;
 	padding : 16px 16px;
 	display:flex;
@@ -12,17 +14,13 @@ export const userBox = styled.div`
 	align-items: center;
 `;
 
-export const userImg = styled.img`
-	width : 116px;
-	height : 116px;
-	margin : 0 24px;
-`;
 export const userDesc = styled.div`
 	height : 100%;
+	width:100%;
 	padding : 8px 0;
 `;
 export const userInfo = styled.div`
-	width:164px;
+	width:100%;
 	position: relative;
 	padding-bottom:8px;
 	margin-bottom: 16px;

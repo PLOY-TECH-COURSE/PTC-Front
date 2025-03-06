@@ -1,15 +1,13 @@
 import * as _ from "./style";
 
 function Dropdown({ onAuthChange }) {
-  const handleClick = (auth) => {
-    onAuthChange(auth); 
-  };
-
+  console.log("onAuthChange : ",onAuthChange)
+  const userRole = ["USER","STUDENT","ADMIN"];
   return (
     <_.DropdownList>
-      <_.DropdownItem onClick={() => handleClick("USER")}>USER</_.DropdownItem>
-      <_.DropdownItem onClick={() => handleClick("STUDENT")}>STUDENT</_.DropdownItem>
-      <_.DropdownItem onClick={() => handleClick("ADMIN")}>ADMIN</_.DropdownItem>
+      {userRole.map((item)=>(
+        <_.DropdownItem onClick={() => onAuthChange(item)}>{item}</_.DropdownItem>
+      ))}
     </_.DropdownList>
   );
 }

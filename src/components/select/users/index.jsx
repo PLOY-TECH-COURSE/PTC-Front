@@ -1,4 +1,3 @@
-import Profile from "../../../assets/proposer/default.png";
 import Down from "../../../assets/down.svg";
 import { useState } from "react";
 import * as _ from "./style";
@@ -8,21 +7,15 @@ import { updateUserRole } from "../../../api/permission";
 const Users = ({ onClick, img, id, name, email, promise, auth, setAuth }) => {
   const [view, setView] = useState(false);
 
-  // 권한을 변경하는 함수
   const handleAuthChange = async (newAuth) => {
+    setAuth(newAuth); 
+  
     const updatedRole = await updateUserRole(id, newAuth);
-    console.log(id);  
-    if (updatedRole) {
-      setAuth(newAuth); 
-    } else {
-      console.error("권한 변경 실패");
-    }
     setView(false);  
   };
-
+  
   return (
     <_.userBox>
-      <_.userImg src={img || Profile} alt={`${name}'s profile`} />
       <_.userDesc>
         <_.userInfo>
           <_.userName>{name}</_.userName>

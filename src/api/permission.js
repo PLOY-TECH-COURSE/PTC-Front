@@ -5,7 +5,7 @@ export const getProposerList = async () => {
     const token = localStorage.getItem("accessToken"); 
     const res = await axiosInstance.get("/permissions", {
       headers: {
-        Authorization: `Bearer ${token}`, // 토큰 추가
+        Authorization: `Bearer ${token}`,
       },
     });
     const formattedData = res.data
