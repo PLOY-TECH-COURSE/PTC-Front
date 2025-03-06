@@ -76,7 +76,7 @@ export const Skill = styled.section`
     width: 100%;
     display: flex;
     flex-flow: wrap row;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     @media (max-width: 480px) {
         justify-content: flex-start;
@@ -135,7 +135,7 @@ export const SkillBox = styled.div`
     display: flex;
     flex-flow: column wrap;
     gap: 20px;
-    justify-content: start;
+    
     animation: ${(props) =>
             props.$isAnimation
                     ? css`${show} ${props.$time}s ease-in-out`
