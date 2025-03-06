@@ -81,10 +81,6 @@ export default function Detail() {
         });
     };
 
-    const handleCommentChange = (e) => {
-        setNewComment(e.target.value);
-    };
-
     const handleDelete = () => {
         if (window.confirm('정말로 삭제하시겠습니까?')) {
             console.log(postId)
@@ -151,7 +147,7 @@ export default function Detail() {
         }
     };
     
-    
+
     const handleCommentUpdate = async () => {
         if (!editCommentText.trim()) return;
     
@@ -190,7 +186,14 @@ export default function Detail() {
             console.error("좋아요 변경 실패:", error);
         }
     };
-
+    
+    const handleCommentChange = (e) => {
+        if (!user) {
+            alert('로그인이 필요합니다.');
+            return;
+        }
+        setNewComment(e.target.value);
+    };
     const handleCommentLikeClick = async (commentId, index) => {
         try {
             await toggleCommentLike(commentId, commendLike[index]);
@@ -264,20 +267,22 @@ export default function Detail() {
                     <S.CommentSection>
                     <h3>{comments.length}개의 댓글</h3>
 
-                    {user && user.uid !== "" && user.role !== "" ? (
-                        <S.CommentInputWrapper>
-                        <input
-                            type="text"
-                            value={newComment}
-                            onChange={handleCommentChange}
-                            onKeyDown={handleCommentKeyPress}  
-                            placeholder="댓글을 입력해주세요"
-                        />
-                        <button onClick={handleCommentSubmit}>댓글 작성</button>
-                        </S.CommentInputWrapper>
-                    ) : (
-                        <p>로그인 후 댓글을 작성하실 수 있습니다.</p> 
-                    )}
+                
+                    <S.CommentInputWrapper>
+    <input
+        type="text"
+        value={newComment}
+        onChange={handleCommentChange}
+        onKeyDown={handleCommentKeyPress}  
+        placeholder="댓글을 입력해주세요"
+        onClick={() => {
+            if (user.uid!="null") {
+                alert("로그인이 필요합니다.");
+            }
+        }}
+    />
+    <button onClick={handleCommentSubmit}>댓글 작성</button>
+</S.CommentInputWrapper>
 
                     {comments.length ? comments.map((comment, index) => {
                         return (
@@ -294,7 +299,7 @@ export default function Detail() {
                                     type="text"
                                     value={editCommentText}
                                     onChange={(e) => setEditCommentText(e.target.value)}
-                                    onKeyDown={handleEditCommentKeyPress}  // 🔹 수정 중 Enter 키 입력 처리 추가
+                                    onKeyDown={handleEditCommentKeyPress}  
                                     placeholder="댓글을 수정하세요."
                                 />
                                 <S.CommentButtonWrapper>
@@ -335,7 +340,7 @@ export default function Detail() {
                             </S.CommentContent>
                         </S.CommentItem>
                         );
-                    }) : <p>댓글이 없습니다.</p>}
+                    }) : <S.P>댓글이 없습니다.</S.P>}
                     </S.CommentSection>
 
 
