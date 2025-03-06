@@ -18,7 +18,7 @@ const SignUpModal = ({ setIsModal,setIsSignupModal }) => {
   const [code, setCode] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmpassword] = useState("");
-
+  const [n,setN]=useState("인증하기");
   const [profile, setProfile] = useState("");
   const [old, setOld] = useState(1);
   const [ban, setBan] = useState(1);
@@ -123,7 +123,9 @@ const SignUpModal = ({ setIsModal,setIsSignupModal }) => {
     const isValid = await emailcode(email);
     if (isValid) {
       start(e);
+      e.preventDefault();
       alert("이메일에 인증번호가 전송되었습니다.")
+      setN("다시 인증하기")
     }
   };
 
@@ -204,7 +206,7 @@ const SignUpModal = ({ setIsModal,setIsSignupModal }) => {
                     style={{ borderColor: emailValid ? "" : "red" }}
                   />
                   <Ingk type="button" onClick={(e) => handleEmailCode(e)}>
-                    인증하기
+                    {n}
                   </Ingk>
                 </Inptie>
                 <Smalltext0>이메일</Smalltext0>

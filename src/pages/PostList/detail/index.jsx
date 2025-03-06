@@ -122,21 +122,26 @@ export default function Detail() {
         setEditCommentText(currentText);
     };
 
-    const handleCommentSubmit = async (e) => {
-        if (e) e.preventDefault(); 
-        if (!newComment.trim()) return;
-    
-        try {
-            const userId = post.userInfoDTO.id;
-            await createComment(postId, newComment, userId);
-            setNewComment('');
-            const updatedComments = await getComments(postId);
-            setComments(updatedComments);
-        } catch (error) {
-            console.error('댓글 작성 실패', error);
-        }
-    };
-    
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+const handleCommentSubmit = async (e) => {
+    if (e) e.preventDefault();
+    if (!newComment.trim() || isSubmitting) return; 
+
+    setIsSubmitting(true); 
+    try {
+        const userId = post.userInfoDTO.id;
+        await createComment(postId, newComment, userId);
+        setNewComment('');
+        const updatedComments = await getComments(postId);
+        setComments(updatedComments);
+    } catch (error) {
+        console.error('댓글 작성 실패', error);
+    } finally {
+        setTimeout(() => setIsSubmitting(false), 1000); 
+    }
+};
+
 
     const handleCommentKeyPress = (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
@@ -281,7 +286,19 @@ export default function Detail() {
             }
         }}
     />
-    <button onClick={handleCommentSubmit}>댓글 작성</button>
+<S.Bu 
+  onClick={handleCommentSubmit} 
+  disabled={!user?.uid} 
+  style={{ 
+    backgroundColor: !user?.uid ? "#ccc" : "#007bff", 
+    color: !user?.uid ? "#666" : "#fff", 
+    cursor: !user?.uid ? "not-allowed" : "pointer" 
+  }}
+>
+  댓글 작성
+</S.Bu>
+
+
 </S.CommentInputWrapper>
 
                     {comments.length ? comments.map((comment, index) => {
