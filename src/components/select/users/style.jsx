@@ -12,11 +12,6 @@ export const userBox = styled.div`
 	align-items: center;
 `;
 
-export const userImg = styled.img`
-	width : 116px;
-	height : 116px;
-	margin : 0 24px;
-`;
 export const userDesc = styled.div`
 	height : 100%;
 	padding : 8px 0;
