@@ -95,7 +95,7 @@ export default function Detail() {
                 });
         }
     };
-
+    console.log(user);
     const handleFavoriteClick = async () => {
         try {
             await toggleFavorite(postId, isFavorite);
@@ -276,7 +276,7 @@ export default function Detail() {
         onKeyDown={handleCommentKeyPress}  
         placeholder="댓글을 입력해주세요"
         onClick={() => {
-            if (user.uid!="null") {
+            if (user.uid=="") {
                 alert("로그인이 필요합니다.");
             }
         }}
