@@ -286,17 +286,17 @@ const handleCommentSubmit = async (e) => {
             }
         }}
     />
-<S.Bu 
-  onClick={handleCommentSubmit} 
-  disabled={!user?.uid} 
-  style={{ 
-    backgroundColor: !user?.uid ? "#ccc" : "#007bff", 
-    color: !user?.uid ? "#666" : "#fff", 
-    cursor: !user?.uid ? "not-allowed" : "pointer" 
-  }}
->
-  댓글 작성
-</S.Bu>
+                <S.Bu 
+                onClick={handleCommentSubmit} 
+                disabled={!user?.uid} 
+                style={{ 
+                    backgroundColor: !user?.uid ? "#ccc" : "#007bff", 
+                    color: !user?.uid ? "#666" : "#fff", 
+                    cursor: !user?.uid ? "not-allowed" : "pointer" 
+                }}
+                >
+                댓글 작성
+                </S.Bu>
 
 
 </S.CommentInputWrapper>
