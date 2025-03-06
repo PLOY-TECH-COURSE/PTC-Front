@@ -8,12 +8,14 @@ export const getProposerList = async () => {
         Authorization: `Bearer ${token}`, // 토큰 추가
       },
     });
-    const formattedData = res.data.map(user => ({
+    const formattedData = res.data
+    .filter(user => user.role !== "ROLE_SUPERADMIN")
+    .map(user => ({
       ...user,
 			id:user.id,
       auth: user.role === "ROLE_USER" ? "USER" : user.role === "ROLE_STUDENT" ? "STUDENT" : user.role === "ROLE_ADMIN" ? "ADMIN":"SUPERADMIN", 
     }));
-
+    console.log("유저 데이터 :",formattedData);
     return formattedData;
   } catch (err) {
     console.error("사용자 조회 API 요청 실패:", err);
