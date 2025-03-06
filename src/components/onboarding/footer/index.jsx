@@ -65,7 +65,7 @@ export default function Footer({change}){
         <S.FooterContainer>
             <S.FAQ>
             <p>자주묻는질문</p>
-            {data.map((item, idx)=>{
+            {/* {data.map((item, idx)=>{
                         if(!skillShow[idx]){
                             return(
                                 <S.Section key={item.id} onClick={()=>changeSkill(idx)}>
@@ -84,7 +84,7 @@ export default function Footer({change}){
                                     <p>{item.content}</p>
                                 </S.Dis>
                             )}
-                    })}
+                    })} */}
             </S.FAQ>
             <S.Footer>
                 <S.SectionLeft>

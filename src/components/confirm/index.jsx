@@ -16,6 +16,7 @@ export default function Mobile(){
           content: {
             title: "이거 공유해봐!",
             description: "내 앱을 친구에게 공유해보세요.",
+            imageUrl: "https://storage.googleapis.com/ploytechcourse/125.jpg",
             link: {
               mobileWebUrl: window.location.href,
               webUrl: window.location.href,
@@ -31,7 +32,8 @@ export default function Mobile(){
                 <img src={Logo} />
                 <h1>모바일 접속 불가</h1>
                 <h2>모바일 보다 pc에서 접속해주세요</h2>
-                <h2>ploytechcourse.kro.kr 로 다시 접속해주세요</h2>
+                <h2>ploytechcourse.kro.kr</h2>
+                <h2>로 다시 접속해주세요</h2>
                 <button onClick={shareKakao}>dddd</button>
             </Container>
         )
