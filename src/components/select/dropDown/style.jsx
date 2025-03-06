@@ -2,6 +2,8 @@
 import styled from 'styled-components';
 
 export const DropdownList = styled.ul`
+  background-color:#fff;
+	border-radius: 10px;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -14,7 +16,7 @@ export const DropdownList = styled.ul`
 
 export const DropdownItem = styled.li`
   padding: 12px 16px;
-  background-color: #fff;
+  background-color:rgba(255, 255, 255, 0);
   font-size: 10px;
   color: #333;
   cursor: pointer;
