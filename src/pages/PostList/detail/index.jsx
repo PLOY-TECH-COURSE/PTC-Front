@@ -147,7 +147,7 @@ export default function Detail() {
         }
     };
     
-    
+
     const handleCommentUpdate = async () => {
         if (!editCommentText.trim()) return;
     
@@ -186,14 +186,6 @@ export default function Detail() {
             console.error("좋아요 변경 실패:", error);
         }
     };
-    const handleCommentFocus = (e) => {
-        if (!user) {
-            setTimeout(() => {
-                alert('로그인이 필요합니다.');
-                e.target.blur(); 
-            }, 0);
-        }
-    };
     
     const handleCommentChange = (e) => {
         if (!user) {
@@ -202,15 +194,6 @@ export default function Detail() {
         }
         setNewComment(e.target.value);
     };
-    
-    const handleCommentClick = (e) => {
-        if (!user) {
-            alert('로그인이 필요합니다.');
-            e.target.blur();
-        }
-    };
-    
-    
     const handleCommentLikeClick = async (commentId, index) => {
         try {
             await toggleCommentLike(commentId, commendLike[index]);
@@ -285,17 +268,22 @@ export default function Detail() {
                     <h3>{comments.length}개의 댓글</h3>
 
                 
-                        <S.CommentInputWrapper >
-                        <input
-                            type="text"
-                            value={newComment}
-                            onChange={handleCommentChange}
-                            onKeyDown={handleCommentKeyPress}  
-                            placeholder="댓글을 입력해주세요"
-                        />
+                    <S.CommentInputWrapper>
+    <input
+        type="text"
+        value={newComment}
+        onChange={handleCommentChange}
+        onKeyDown={handleCommentKeyPress}  
+        placeholder="댓글을 입력해주세요"
+        onClick={() => {
+            if (user.uid!="null") {
+                alert("로그인이 필요합니다.");
+            }
+        }}
+    />
+    <button onClick={handleCommentSubmit}>댓글 작성</button>
+</S.CommentInputWrapper>
 
-                            <button onClick={handleCommentSubmit}>댓글 작성</button>
-                        </S.CommentInputWrapper>
                     {comments.length ? comments.map((comment, index) => {
                         return (
                         <S.CommentItem key={comment.id}>
