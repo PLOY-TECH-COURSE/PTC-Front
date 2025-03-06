@@ -122,21 +122,26 @@ export default function Detail() {
         setEditCommentText(currentText);
     };
 
-    const handleCommentSubmit = async (e) => {
-        if (e) e.preventDefault(); 
-        if (!newComment.trim()) return;
-    
-        try {
-            const userId = post.userInfoDTO.id;
-            await createComment(postId, newComment, userId);
-            setNewComment('');
-            const updatedComments = await getComments(postId);
-            setComments(updatedComments);
-        } catch (error) {
-            console.error('댓글 작성 실패', error);
-        }
-    };
-    
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+const handleCommentSubmit = async (e) => {
+    if (e) e.preventDefault();
+    if (!newComment.trim() || isSubmitting) return; // 댓글이 비어있거나, 1초 제한 중이면 실행 안 함.
+
+    setIsSubmitting(true); // 1초 동안 입력 제한
+    try {
+        const userId = post.userInfoDTO.id;
+        await createComment(postId, newComment, userId);
+        setNewComment('');
+        const updatedComments = await getComments(postId);
+        setComments(updatedComments);
+    } catch (error) {
+        console.error('댓글 작성 실패', error);
+    } finally {
+        setTimeout(() => setIsSubmitting(false), 1000); // 1초 후 다시 입력 가능
+    }
+};
+
 
     const handleCommentKeyPress = (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
