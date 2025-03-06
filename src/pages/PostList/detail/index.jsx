@@ -279,37 +279,42 @@ const handleCommentSubmit = async (e) => {
                         </S.PostDetailData>
                     </S.PostDetailMain>
                 )}
+                <S.AirCommentWrapper>
+                    <S.Air />
                     <S.CommentSection>
                     <h3>{comments.length}개의 댓글</h3>
 
                 
                     <S.CommentInputWrapper>
-    <input
-        type="text"
-        value={newComment}
-        onChange={handleCommentChange}
-        onKeyDown={handleCommentKeyPress}  
-        placeholder="댓글을 입력해주세요"
-        onClick={() => {
-            if (user.uid=="") {
-                alert("로그인이 필요합니다.");
-            }
-        }}
-    />
-                <S.Bu 
-                onClick={handleCommentSubmit} 
-                disabled={!user?.uid} 
-                style={{ 
-                    backgroundColor: !user?.uid ? "#ccc" : "#007bff", 
-                    color: !user?.uid ? "#666" : "#fff", 
-                    cursor: !user?.uid ? "not-allowed" : "pointer" 
-                }}
-                >
-                댓글 작성
-                </S.Bu>
+                        <S.InputWrapper>
+                        <S.Input
+                            type="text"
+                            value={newComment}
+                            onChange={handleCommentChange}
+                            onKeyDown={handleCommentKeyPress}  
+                            placeholder="댓글을 입력해주세요"
+                            onClick={() => {
+                                if (user.uid=="") {
+                                    alert("로그인이 필요합니다.");
+                                }
+                            }}
+                        />
+                        </S.InputWrapper>
+                <S.ButtonWrapper>
+                    <S.Bu 
+                    onClick={handleCommentSubmit} 
+                    disabled={!user?.uid} 
+                    style={{ 
+                        backgroundColor: !user?.uid ? "#ccc" : "#007bff", 
+                        color: !user?.uid ? "#666" : "#fff", 
+                        cursor: !user?.uid ? "not-allowed" : "pointer" 
+                    }}
+                    >
+                    댓글 작성
+                    </S.Bu>
+                </S.ButtonWrapper>
 
-
-</S.CommentInputWrapper>
+                </S.CommentInputWrapper>
 
                     {comments.length ? comments.map((comment, index) => {
                         return (
@@ -369,7 +374,7 @@ const handleCommentSubmit = async (e) => {
                         );
                     }) : <S.P>댓글이 없습니다.</S.P>}
                     </S.CommentSection>
-
+                    </S.AirCommentWrapper >
 
             </S.Content>
         </S.Container>

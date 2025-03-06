@@ -169,11 +169,9 @@ export const Edit = styled.div`
     }
 `
 export const CommentSection = styled.div`
-    margin-top: 40px;
     width: 1500px;
     background: #fff;
     padding: 20px;
-    margin-left: 300px;
 `;
 
 export const CommentInputWrapper = styled.div`
@@ -318,19 +316,44 @@ export const P = styled.p`
   letter-spacing: 0.03em;
   text-align: justify;
 `;
-export const Bu = styled.button.attrs(({ disabled }) => ({
-    disabled: disabled, // 🔥 `disabled` 속성을 명확하게 설정
-  }))`
-    background-color: ${({ disabled }) => (disabled ? "#ccc" : "#007bff")};
-    color: ${({ disabled }) => (disabled ? "#666" : "#fff")};
-    cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
+export const Bu = styled.button`
     padding: 10px 15px;
     border: none;
     border-radius: 5px;
     font-size: 16px;
     transition: background-color 0.3s ease;
-  
     &:hover {
       background-color: ${({ disabled }) => (disabled ? "#ccc" : "#0056b3")};
     }
   `;
+export const Air = styled.div`
+    width: 300px;
+    height: 300px;
+`;
+
+  export const AirCommentWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 150%; 
+  max-width: 2000px; 
+  margin-top: 40px;
+`;
+
+export const InputWrapper = styled.div`
+  flex-grow: 1; 
+`;
+
+export const Input = styled.input`
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-family: 'Pretendard', sans-serif;
+  margin-right: 10px;
+`;
+export const ButtonWrapper = styled.div`
+    display: flex;
+    justify-content: flex-end; 
+    margin-top: 5px;
+`;
