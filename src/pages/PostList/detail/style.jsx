@@ -310,3 +310,11 @@ export const CommentCancelButton = styled.button`
     background-color: #d1d5db;
   }
 `;
+export const P = styled.p`
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #333;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  text-align: justify;
+`;
