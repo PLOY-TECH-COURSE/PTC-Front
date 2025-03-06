@@ -2,7 +2,7 @@ import Profile from "../../../assets/proposer/default.png";
 import { deleteProposer,approveProposer } from "../../../api/proposer";
 import * as _ from "./style";
 
-const Users = ({ onClick,id,user_id,img, name, email, intro, promise }) => {
+const Users = ({ onClick,id,user_id,profile,name, email, intro, promise }) => {
 	const deleteProposerBTN = async (id) => {
 		try {
 			if (window.confirm(`${name}님의 테크코스 신청을 거부하시겠습니까?`)){
@@ -23,7 +23,7 @@ const Users = ({ onClick,id,user_id,img, name, email, intro, promise }) => {
 	};
 	return(
     <_.userBox onClick={onClick} style={{ cursor: "pointer" }}>
-      <_.userImg src={img || Profile} alt={`${name}'s profile`} />
+      <_.userImg src={profile} alt={`${name}'s profile`} />
 			<_.userDesc>
 				<_.userInfo>
 					<_.userName>{name}</_.userName>
