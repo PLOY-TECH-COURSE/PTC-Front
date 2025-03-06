@@ -126,9 +126,9 @@ export default function Detail() {
 
 const handleCommentSubmit = async (e) => {
     if (e) e.preventDefault();
-    if (!newComment.trim() || isSubmitting) return; // 댓글이 비어있거나, 1초 제한 중이면 실행 안 함.
+    if (!newComment.trim() || isSubmitting) return; 
 
-    setIsSubmitting(true); // 1초 동안 입력 제한
+    setIsSubmitting(true); 
     try {
         const userId = post.userInfoDTO.id;
         await createComment(postId, newComment, userId);
@@ -138,7 +138,7 @@ const handleCommentSubmit = async (e) => {
     } catch (error) {
         console.error('댓글 작성 실패', error);
     } finally {
-        setTimeout(() => setIsSubmitting(false), 1000); // 1초 후 다시 입력 가능
+        setTimeout(() => setIsSubmitting(false), 1000); 
     }
 };
 
@@ -286,7 +286,19 @@ const handleCommentSubmit = async (e) => {
             }
         }}
     />
-    <button onClick={handleCommentSubmit}>댓글 작성</button>
+<S.Bu 
+  onClick={handleCommentSubmit} 
+  disabled={!user?.uid} 
+  style={{ 
+    backgroundColor: !user?.uid ? "#ccc" : "#007bff", 
+    color: !user?.uid ? "#666" : "#fff", 
+    cursor: !user?.uid ? "not-allowed" : "pointer" 
+  }}
+>
+  댓글 작성
+</S.Bu>
+
+
 </S.CommentInputWrapper>
 
                     {comments.length ? comments.map((comment, index) => {

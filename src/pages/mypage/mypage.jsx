@@ -298,7 +298,8 @@ const Mypage = () => {
           />
           <Info>
             <Tie>
-              <Batch>{userData?.generation}기</Batch>
+              <Batch>{userData?.generation ? `${userData.generation}기` : "멘토"}
+              </Batch>
               <Id>{userData?.uid}</Id>
             </Tie>
             <Stats>

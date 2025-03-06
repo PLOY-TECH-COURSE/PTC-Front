@@ -318,3 +318,19 @@ export const P = styled.p`
   letter-spacing: 0.03em;
   text-align: justify;
 `;
+export const Bu = styled.button.attrs(({ disabled }) => ({
+    disabled: disabled, // 🔥 `disabled` 속성을 명확하게 설정
+  }))`
+    background-color: ${({ disabled }) => (disabled ? "#ccc" : "#007bff")};
+    color: ${({ disabled }) => (disabled ? "#666" : "#fff")};
+    cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  
+    &:hover {
+      background-color: ${({ disabled }) => (disabled ? "#ccc" : "#0056b3")};
+    }
+  `;
