@@ -1,4 +1,3 @@
-import Profile from "../../../assets/proposer/default.png";
 import { deleteProposer,approveProposer } from "../../../api/proposer";
 import * as _ from "./style";
 
