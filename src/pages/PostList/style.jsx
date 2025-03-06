@@ -69,6 +69,11 @@ export const Recent = styled.div`
         height: 0.7vh;
         border: none;
     }
+
+    p{
+        font-weight: 600;
+        opacity: 0.78;
+    }
 `
 
 export const Like = styled.div`
@@ -89,7 +94,7 @@ export const Like = styled.div`
     }
 
     p{
-        font-weight: 100;
+        font-weight: 600;
         opacity: 0.78;
     }
 `

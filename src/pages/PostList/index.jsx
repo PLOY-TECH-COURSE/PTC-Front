@@ -18,20 +18,23 @@ export default function PostList() {
         setStart(0);
         setPosts([]);
     }, [searchQuery, sort]);
-    
+
     useEffect(() => {
         loadMorePosts();
     }, [start]);
-    
+
     const loadMorePosts = () => {
         if (loading) return;
         setLoading(true);
-    
-        const query = searchQuery.replace(/#/g, "%23");
-    
+
+        const query = searchQuery;
+        getSearchPost(query, sort, start);
+
+
+
         getSearchPost(query, sort, start)
             .then((data) => {
-                setPosts((prevPosts) => (start === 0 ? data || [] : [...prevPosts, ...(data || [])])); // start가 0이면 초기화
+                setPosts((prevPosts) => (start === 0 ? data || [] : [...prevPosts, ...(data || [])]));
                 setLoading(false);
             })
             .catch((error) => {
@@ -39,27 +42,27 @@ export default function PostList() {
                 setLoading(false);
             });
     };
-    
+
     const handleSortChange = (newSort) => {
-        if (sort === newSort) return; // 동일한 정렬 방식이면 실행 안 함
+        if (sort === newSort) return;
         setSort(newSort);
         setStart(0);
-        setPosts([]); // 정렬을 변경할 때 기존 데이터를 초기화
+        setPosts([]);
     };
-    
-    
+
+
     const handleScroll = () => {
         if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight) return;
         setStart((prevStart) => prevStart + 20)
     };
-    
+
     useEffect(() => {
         window.addEventListener("scroll", handleScroll);
         return () => {
             window.removeEventListener("scroll", handleScroll);
         };
     }, []);
-    
+
 
     const handleSearchChange = (e) => {
         const query = e.target.value;
@@ -71,7 +74,7 @@ export default function PostList() {
     useEffect(() => {
         loadMorePosts();
     }, [searchQuery, sort]);
-    
+
     const handlePostClick = (id) => {
         const numericId = Number(id);
         if (isNaN(numericId)) {
@@ -80,36 +83,6 @@ export default function PostList() {
         }
         navigate(`/post/${numericId}`);
     };
-
-    // const loadMorePosts = () => {
-    //     if (loading) return; 
-    //     setLoading(true);
-
-    //     const query = searchQuery.replace(/#/g, '%23');
-        
-    //     getSearchPost(query, sort, start)
-    //         .then((data) => {
-    //             setPosts((prevPosts) => [...prevPosts, ...(data || [])]); 
-    //             setStart(prevStart => prevStart + 20);
-    //             setLoading(false);
-    //         })
-    //         .catch((error) => {
-    //             console.error("게시물을 불러오는 데 실패했습니다.", error);
-    //             setLoading(false);
-    //         });
-    // };
-
-    // useEffect(() => {
-    //     const handleScroll = () => {
-    //         if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight) return;
-    //         loadMorePosts();
-    //     };
-
-    //     window.addEventListener("scroll", handleScroll);
-    //     return () => {
-    //         window.removeEventListener("scroll", handleScroll);
-    //     };
-    // }, []);
 
     useEffect(() => {
         loadMorePosts();
@@ -138,10 +111,10 @@ export default function PostList() {
 
                 <S.Sort>
                     <S.Recent onClick={() => handleSortChange("CREATE_AT")} active={sort === "LIKE"}>
-                        <button/><p>최신순</p>
+                        <button /><p>최신순</p>
                     </S.Recent>
                     <S.Like onClick={() => handleSortChange("LIKE")} active={sort === "CREATE_AT"}>
-                        <button/><p>좋아요순</p>
+                        <button /><p>좋아요순</p>
                     </S.Like>
                 </S.Sort>
 
