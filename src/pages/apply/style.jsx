@@ -18,7 +18,7 @@ export const ApForm = styled.div`
   width: 592px;
   height: 672px;
   background: white;
-  padding: 68px 80px;
+  padding: 44px 80px 68px 80px;
   border-radius: 10px;
   position: relative;
 `;
@@ -54,7 +54,7 @@ export const ApField = styled.fieldset`
 	}
 	textarea {
 		width :416px;
-		height : 136px;	
+		height : 40px;	
 		border: none;
 		resize: none;
 	}
