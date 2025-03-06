@@ -16,8 +16,8 @@ export default function Select() {
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const data = await getProposerList();  // API 호출
-      setUserInfo(data);  // 받은 데이터로 상태 업데이트
+      const data = await getProposerList();  
+      setUserInfo(data);
     };
     fetchUsers();
   }, []);

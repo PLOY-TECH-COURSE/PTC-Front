@@ -274,21 +274,16 @@ export const EditCommentContainer = styled.div`
   margin-top: 4px;
 `;
 
-// 수정 시 입력창
 export const EditCommentInput = styled.input`
   width: 100%;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
 `;
-
-// 수정·취소 버튼 래퍼
 export const CommentButtonWrapper = styled.div`
   display: flex;
   gap: 8px;
 `;
-
-// 수정 완료 버튼
 export const CommentUpdateButton = styled.button`
   background-color: #4970FB;
   color: #fff;
@@ -302,8 +297,6 @@ export const CommentUpdateButton = styled.button`
     background-color: #365edc;
   }
 `;
-
-// 수정 취소 버튼
 export const CommentCancelButton = styled.button`
   background-color: #e5e7eb;
   color: #333;
@@ -316,4 +309,12 @@ export const CommentCancelButton = styled.button`
   &:hover {
     background-color: #d1d5db;
   }
+`;
+export const P = styled.p`
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #333;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  text-align: justify;
 `;
