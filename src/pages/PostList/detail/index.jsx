@@ -97,12 +97,14 @@ export default function Detail() {
     };
     console.log(user);
     const handleFavoriteClick = async () => {
-        try {
+        if(user.uid){try {
             await toggleFavorite(postId, isFavorite);
             setIsFavorite(prev => !prev);
             console.log(isFavorite);
         } catch (error) {
             console.error("즐겨찾기 변경 실패:", error);
+        }}else{
+            alert("로그인 후 이용가능합니다.")
         }
     };
     const handleCommentDelete = async (commentId) => {
@@ -180,15 +182,19 @@ const handleCommentSubmit = async (e) => {
     };
     
     const handlePostLikeClick = async () => {
-        try {
-            await togglePostLike(postId, likeOn);
-            setLikeOn(prev => !prev);
-            setPost(prevPost => ({
-                ...prevPost,
-                likes: likeOn ? prevPost.likes - 1 : prevPost.likes + 1,
-            }));
-        } catch (error) {
-            console.error("좋아요 변경 실패:", error);
+        if(user.uid){
+            try {
+                await togglePostLike(postId, likeOn);
+                setLikeOn(prev => !prev);
+                setPost(prevPost => ({
+                    ...prevPost,
+                    likes: likeOn ? prevPost.likes - 1 : prevPost.likes + 1,
+                }));
+            } catch (error) {
+                console.error("좋아요 변경 실패:", error);
+            }
+        }else{
+            alert("로그인 후 이용가능합니다.")
         }
     };
     
@@ -200,26 +206,30 @@ const handleCommentSubmit = async (e) => {
         setNewComment(e.target.value);
     };
     const handleCommentLikeClick = async (commentId, index) => {
-        try {
-            await toggleCommentLike(commentId, commendLike[index]);
-            setCommendLike(prevLikes =>
-                prevLikes.map((liked, i) => (i === index ? !liked : liked))
-            );
-            setComments(prevComments =>
-                prevComments.map((comment, i) =>
-                    i === index
-                        ? {
-                            ...comment,
-                            liked: !comment.liked,
-                            likeCount: comment.liked
-                                ? comment.likeCount - 1
-                                : comment.likeCount + 1,
-                        }
-                        : comment
-                )
-            );
-        } catch (error) {
-            console.error("댓글 좋아요 변경 실패:", error);
+        if(user.uid){
+            try {
+                await toggleCommentLike(commentId, commendLike[index]);
+                setCommendLike(prevLikes =>
+                    prevLikes.map((liked, i) => (i === index ? !liked : liked))
+                );
+                setComments(prevComments =>
+                    prevComments.map((comment, i) =>
+                        i === index
+                            ? {
+                                ...comment,
+                                liked: !comment.liked,
+                                likeCount: comment.liked
+                                    ? comment.likeCount - 1
+                                    : comment.likeCount + 1,
+                            }
+                            : comment
+                    )
+                );
+            } catch (error) {
+                console.error("댓글 좋아요 변경 실패:", error);
+            }
+        }else{
+            alert("로그인 후 이용가능합니다.")
         }
     };
 
