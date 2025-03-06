@@ -14,6 +14,52 @@ export default function PostList() {
     const [start, setStart] = useState(0);
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
+    useEffect(() => {
+        setStart(0);
+        setPosts([]);
+    }, [searchQuery, sort]);
+    
+    useEffect(() => {
+        loadMorePosts();
+    }, [start]);
+    
+    const loadMorePosts = () => {
+        if (loading) return;
+        setLoading(true);
+    
+        const query = searchQuery.replace(/#/g, "%23");
+    
+        getSearchPost(query, sort, start)
+            .then((data) => {
+                setPosts((prevPosts) => (start === 0 ? data || [] : [...prevPosts, ...(data || [])])); // start가 0이면 초기화
+                setLoading(false);
+            })
+            .catch((error) => {
+                console.error("게시물을 불러오는 데 실패했습니다.", error);
+                setLoading(false);
+            });
+    };
+    
+    const handleSortChange = (newSort) => {
+        if (sort === newSort) return; // 동일한 정렬 방식이면 실행 안 함
+        setSort(newSort);
+        setStart(0);
+        setPosts([]); // 정렬을 변경할 때 기존 데이터를 초기화
+    };
+    
+    
+    const handleScroll = () => {
+        if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight) return;
+        setStart((prevStart) => prevStart + 20)
+    };
+    
+    useEffect(() => {
+        window.addEventListener("scroll", handleScroll);
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
+    
 
     const handleSearchChange = (e) => {
         const query = e.target.value;
@@ -21,12 +67,6 @@ export default function PostList() {
         setStart(0);
         setPosts([]);
     };
-
-    const handleSortChange = (newSort) => {
-        setSort(newSort);
-        setStart(0);
-        setPosts([]);
-    };    
 
     useEffect(() => {
         loadMorePosts();
@@ -41,36 +81,35 @@ export default function PostList() {
         navigate(`/post/${numericId}`);
     };
 
-    const loadMorePosts = () => {
-        if (loading) return; 
-        setLoading(true);
+    // const loadMorePosts = () => {
+    //     if (loading) return; 
+    //     setLoading(true);
 
-        const query = searchQuery.replace(/#/g, '%23');
+    //     const query = searchQuery.replace(/#/g, '%23');
         
-        getSearchPost(query, sort, start)
-            .then((data) => {
-                setPosts((prevPosts) => [...prevPosts, ...(data || [])]); 
-                setStart(prevStart => prevStart + 20);
-                setLoading(false);
-            })
-            .catch((error) => {
-                console.error("게시물을 불러오는 데 실패했습니다.", error);
-                setLoading(false);
-            });
-    };
+    //     getSearchPost(query, sort, start)
+    //         .then((data) => {
+    //             setPosts((prevPosts) => [...prevPosts, ...(data || [])]); 
+    //             setStart(prevStart => prevStart + 20);
+    //             setLoading(false);
+    //         })
+    //         .catch((error) => {
+    //             console.error("게시물을 불러오는 데 실패했습니다.", error);
+    //             setLoading(false);
+    //         });
+    // };
 
-    // 스크롤 이벤트 처리
-    useEffect(() => {
-        const handleScroll = () => {
-            if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight) return;
-            loadMorePosts();
-        };
+    // useEffect(() => {
+    //     const handleScroll = () => {
+    //         if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight) return;
+    //         loadMorePosts();
+    //     };
 
-        window.addEventListener("scroll", handleScroll);
-        return () => {
-            window.removeEventListener("scroll", handleScroll);
-        };
-    }, []);
+    //     window.addEventListener("scroll", handleScroll);
+    //     return () => {
+    //         window.removeEventListener("scroll", handleScroll);
+    //     };
+    // }, []);
 
     useEffect(() => {
         loadMorePosts();
