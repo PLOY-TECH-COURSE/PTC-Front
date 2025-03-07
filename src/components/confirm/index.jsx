@@ -2,6 +2,7 @@ import {Outlet} from 'react-router-dom'
 import styled from 'styled-components'
 import Logo from '../../assets/Logo.svg';
 import { useEffect } from 'react';
+import Share from '../../assets/share.svg';
 
 export default function Mobile(){
     useEffect(() => {
@@ -33,8 +34,10 @@ export default function Mobile(){
                 <h1>모바일 접속 불가</h1>
                 <h2>모바일 보다 pc에서 접속해주세요</h2>
                 <h2>ploytechcourse.kro.kr</h2>
-                <h2>로 다시 접속해주세요</h2>
-                <button onClick={shareKakao}>dddd</button>
+                <div>
+                    공유
+                    <Btn onClick={shareKakao}><img src={Share} /></Btn>
+                </div>
             </Container>
         )
     }
@@ -64,4 +67,25 @@ const Container = styled.main`
         font-size: 24px;
         margin-bottom: 10px;
     }
+    & > h2:nth-of-type(2){
+        margin-bottom: 20px;
+    }
+    & > div{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 16px;
+        gap: 10px;
+    }
+`
+const Btn = styled.button`
+    all: unset;
+    cursor: pointer;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 100px;
 `
