@@ -36,6 +36,7 @@ export const ApTitle = styled.div`
 export const ApMForm = styled.form`
 	display : flex;
 	flex-direction : column;
+	gap:20px;
 	.warning{
 		color : red;
 		position : absolute;
@@ -43,18 +44,20 @@ export const ApMForm = styled.form`
 	}
 `;
 export const ApField = styled.fieldset`
+	min-height:88px;
 	border : 1px solid #7C7C7C;
 	border-radius: 10px;
-	padding : 12px;
-	margin-bottom : 20px;
 	position : relative;
 	legend{
-		margin-left : 12px;
-		padding : 2px;
+		margin-left : 6px;
+		padding : 0 2px;
+		font-size : 12px;
 	}
 	textarea {
-		width :416px;
-		height : 40px;	
+	  background-color: rgba(0, 0, 0, 0);
+		margin : 2px 6px 6px 6px;
+		width :97.5%;
+		height : 100%;	
 		border: none;
 		resize: none;
 	}

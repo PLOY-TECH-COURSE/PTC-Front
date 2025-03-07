@@ -97,12 +97,14 @@ export default function Detail() {
     };
     console.log(user);
     const handleFavoriteClick = async () => {
-        try {
+        if(user.uid){try {
             await toggleFavorite(postId, isFavorite);
             setIsFavorite(prev => !prev);
             console.log(isFavorite);
         } catch (error) {
             console.error("즐겨찾기 변경 실패:", error);
+        }}else{
+            alert("로그인 후 이용가능합니다.")
         }
     };
     const handleCommentDelete = async (commentId) => {
@@ -122,21 +124,26 @@ export default function Detail() {
         setEditCommentText(currentText);
     };
 
-    const handleCommentSubmit = async (e) => {
-        if (e) e.preventDefault(); 
-        if (!newComment.trim()) return;
-    
-        try {
-            const userId = post.userInfoDTO.id;
-            await createComment(postId, newComment, userId);
-            setNewComment('');
-            const updatedComments = await getComments(postId);
-            setComments(updatedComments);
-        } catch (error) {
-            console.error('댓글 작성 실패', error);
-        }
-    };
-    
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+const handleCommentSubmit = async (e) => {
+    if (e) e.preventDefault();
+    if (!newComment.trim() || isSubmitting) return; 
+
+    setIsSubmitting(true); 
+    try {
+        const userId = post.userInfoDTO.id;
+        await createComment(postId, newComment, userId);
+        setNewComment('');
+        const updatedComments = await getComments(postId);
+        setComments(updatedComments);
+    } catch (error) {
+        console.error('댓글 작성 실패', error);
+    } finally {
+        setTimeout(() => setIsSubmitting(false), 1000); 
+    }
+};
+
 
     const handleCommentKeyPress = (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
@@ -175,15 +182,19 @@ export default function Detail() {
     };
     
     const handlePostLikeClick = async () => {
-        try {
-            await togglePostLike(postId, likeOn);
-            setLikeOn(prev => !prev);
-            setPost(prevPost => ({
-                ...prevPost,
-                likes: likeOn ? prevPost.likes - 1 : prevPost.likes + 1,
-            }));
-        } catch (error) {
-            console.error("좋아요 변경 실패:", error);
+        if(user.uid){
+            try {
+                await togglePostLike(postId, likeOn);
+                setLikeOn(prev => !prev);
+                setPost(prevPost => ({
+                    ...prevPost,
+                    likes: likeOn ? prevPost.likes - 1 : prevPost.likes + 1,
+                }));
+            } catch (error) {
+                console.error("좋아요 변경 실패:", error);
+            }
+        }else{
+            alert("로그인 후 이용가능합니다.")
         }
     };
     
@@ -195,26 +206,30 @@ export default function Detail() {
         setNewComment(e.target.value);
     };
     const handleCommentLikeClick = async (commentId, index) => {
-        try {
-            await toggleCommentLike(commentId, commendLike[index]);
-            setCommendLike(prevLikes =>
-                prevLikes.map((liked, i) => (i === index ? !liked : liked))
-            );
-            setComments(prevComments =>
-                prevComments.map((comment, i) =>
-                    i === index
-                        ? {
-                            ...comment,
-                            liked: !comment.liked,
-                            likeCount: comment.liked
-                                ? comment.likeCount - 1
-                                : comment.likeCount + 1,
-                        }
-                        : comment
-                )
-            );
-        } catch (error) {
-            console.error("댓글 좋아요 변경 실패:", error);
+        if(user.uid){
+            try {
+                await toggleCommentLike(commentId, commendLike[index]);
+                setCommendLike(prevLikes =>
+                    prevLikes.map((liked, i) => (i === index ? !liked : liked))
+                );
+                setComments(prevComments =>
+                    prevComments.map((comment, i) =>
+                        i === index
+                            ? {
+                                ...comment,
+                                liked: !comment.liked,
+                                likeCount: comment.liked
+                                    ? comment.likeCount - 1
+                                    : comment.likeCount + 1,
+                            }
+                            : comment
+                    )
+                );
+            } catch (error) {
+                console.error("댓글 좋아요 변경 실패:", error);
+            }
+        }else{
+            alert("로그인 후 이용가능합니다.")
         }
     };
 
@@ -264,25 +279,42 @@ export default function Detail() {
                         </S.PostDetailData>
                     </S.PostDetailMain>
                 )}
+                <S.AirCommentWrapper>
+                    <S.Air />
                     <S.CommentSection>
                     <h3>{comments.length}개의 댓글</h3>
 
                 
                     <S.CommentInputWrapper>
-    <input
-        type="text"
-        value={newComment}
-        onChange={handleCommentChange}
-        onKeyDown={handleCommentKeyPress}  
-        placeholder="댓글을 입력해주세요"
-        onClick={() => {
-            if (user.uid=="") {
-                alert("로그인이 필요합니다.");
-            }
-        }}
-    />
-    <button onClick={handleCommentSubmit}>댓글 작성</button>
-</S.CommentInputWrapper>
+                        <S.InputWrapper>
+                        <S.Input
+                            type="text"
+                            value={newComment}
+                            onChange={handleCommentChange}
+                            onKeyDown={handleCommentKeyPress}  
+                            placeholder="댓글을 입력해주세요"
+                            onClick={() => {
+                                if (user.uid=="") {
+                                    alert("로그인이 필요합니다.");
+                                }
+                            }}
+                        />
+                        </S.InputWrapper>
+                <S.ButtonWrapper>
+                    <S.Bu 
+                    onClick={handleCommentSubmit} 
+                    disabled={!user?.uid} 
+                    style={{ 
+                        backgroundColor: !user?.uid ? "#ccc" : "#007bff", 
+                        color: !user?.uid ? "#666" : "#fff", 
+                        cursor: !user?.uid ? "not-allowed" : "pointer" 
+                    }}
+                    >
+                    댓글 작성
+                    </S.Bu>
+                </S.ButtonWrapper>
+
+                </S.CommentInputWrapper>
 
                     {comments.length ? comments.map((comment, index) => {
                         return (
@@ -342,7 +374,7 @@ export default function Detail() {
                         );
                     }) : <S.P>댓글이 없습니다.</S.P>}
                     </S.CommentSection>
-
+                    </S.AirCommentWrapper >
 
             </S.Content>
         </S.Container>
