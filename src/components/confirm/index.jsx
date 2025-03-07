@@ -14,9 +14,9 @@ export default function Mobile(){
         window.Kakao.Share.sendDefault({
           objectType: "feed",
           content: {
-            title: "이거 공유해봐!",
-            description: "내 앱을 친구에게 공유해보세요.",
-            imageUrl: "https://storage.googleapis.com/ploytechcourse/125.jpg",
+            title: "PLOY TECH COURSE",
+            description: "플로이테크코스 공유하기",
+            imageUrl: "https://storage.googleapis.com/ploytechcourse/126.png",
             link: {
               mobileWebUrl: window.location.href,
               webUrl: window.location.href,
