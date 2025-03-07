@@ -15,7 +15,6 @@ export default function Proposer() {
     const fetchData = async () => {
       const data = await getProposerList();
       setUserInfo(data);
-      console.log("사용자 리스트",data)
     };
     fetchData();
   }, []);
@@ -43,8 +42,9 @@ export default function Proposer() {
           />
         </_.SInput>
         <_.UserList>
+          {console.log("신청자 페이지의:",selectedUser)}
           {filteredUsers.map((user) => (
-            <Users onClick={() => openModal(user)} key={user.id} {...user} />
+            <Users onClick={() => openModal(user)} key={user.id} {...user}/>
           ))}
         </_.UserList>
       </_.ProMain>
