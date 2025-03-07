@@ -11,11 +11,12 @@ export default function Proposer() {
   const [selectedUser, setSelectedUser] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
 
+  const fetchData = async () => {
+    const data = await getProposerList();
+    setUserInfo(data);
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await getProposerList();
-      setUserInfo(data);
-    };
     fetchData();
   }, []);
 
@@ -25,8 +26,6 @@ export default function Proposer() {
   const filteredUsers = userInfo.filter(user =>
     user.name.toLowerCase().includes(searchQuery.toLowerCase())  
   );
-
-
 
   return (
     <>
@@ -42,9 +41,13 @@ export default function Proposer() {
           />
         </_.SInput>
         <_.UserList>
-          {console.log("신청자 페이지의:",selectedUser)}
           {filteredUsers.map((user) => (
-            <Users onClick={() => openModal(user)} key={user.id} {...user}/>
+            <Users 
+              onClick={() => openModal(user)} 
+              key={user.id} 
+              {...user} 
+              refreshUsers={fetchData} // 추가
+            />
           ))}
         </_.UserList>
       </_.ProMain>
