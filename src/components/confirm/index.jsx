@@ -18,7 +18,7 @@ export default function Mobile(){
           content: {
             title: "PLOY TECH COURSE",
             description: "플로이테크코스 공유하기",
-            imageUrl: "https://storage.googleapis.com/ploytechcourse/126.png",
+            imageUrl: "https://storage.googleapis.com/ploytechcourse/128.png",
             link: {
               mobileWebUrl: window.location.href,
               webUrl: window.location.href,
