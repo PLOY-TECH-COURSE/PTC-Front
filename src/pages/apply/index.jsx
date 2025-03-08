@@ -34,7 +34,7 @@ export default function Apply({ onClose }) {
       return;
     }
   
-    if (!window.confirm("다음으로 넘어가시면 수정불가합니다.\n다음으로 넘어가시겠습니까?")) {
+    if (!window.confirm("신청하시겠습니까?")) {
       return;
     }
   
