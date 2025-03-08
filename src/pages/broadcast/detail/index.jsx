@@ -28,7 +28,7 @@ export default function Detail() {
                 setLoading(false);
             })
             .catch((err) => {
-                setError('게시물을 불러오는 데 실패했습니다.');
+                setError('게시물을 불러오는데 실패했습니다.');
                 setLoading(false);
             });
     }, [postId]);
@@ -41,7 +41,6 @@ export default function Detail() {
                     navigate(-1);
                 })
                 .catch((err) => {
-                    console.error('삭제 실패', err);
                     alert('삭제에 실패했습니다.');
                 });
         }

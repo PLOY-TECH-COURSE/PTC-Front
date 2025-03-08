@@ -131,18 +131,6 @@ export const PostData = styled.div`
     font-size: 18px;
     font-weight: bold;
 `
-// export const RowData = styled.div`
-//     display: flex;
-//     flex-direction: row;
-//     border: 1px solid #cccccc;
-//     width: 27.5vw;
-//     height: 25vh;
-//     border-radius: 10px;
-//     min-width: 27vw;
-//     padding: 2% 1.3%;
-//     gap: 10px;
-//     cursor: pointer;
-// `
 
 export const PostImg = styled.div`
     width: 40%;
