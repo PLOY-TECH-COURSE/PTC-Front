@@ -3,7 +3,7 @@ import Users from "../../components/select/users/index.jsx";
 import SearchImg from "../../assets/proposer/search.svg";
 import * as _ from "./style";
 import { useState, useEffect } from "react";
-import { getProposerList } from "../../api/permission";  
+import { getProposerList } from "../../api/permission";
 
 export default function Select() {
   const [userInfo, setUserInfo] = useState([]);
@@ -16,16 +16,22 @@ export default function Select() {
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const data = await getProposerList();  
-      setUserInfo(data);
+      try {
+        const data = await getProposerList();
+        setUserInfo(data);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
     };
     fetchUsers();
   }, []);
 
-  const updateAuth = (index, newAuth) => {
-    const updatedUsers = [...userInfo];
-    updatedUsers[index].auth = newAuth;
-    setUserInfo(updatedUsers);
+  const updateAuth = (id, newAuth) => {
+    setUserInfo((prevUsers) =>
+      prevUsers.map((user) =>
+        user.id === id ? { ...user, auth: newAuth } : user
+      )
+    );
   };
 
   const handleAuthChange = (e) => {
@@ -35,11 +41,13 @@ export default function Select() {
     }));
   };
 
-  const filteredUsers = userInfo.filter(
-    (user) =>
-      (user.name.toLowerCase().includes(searchQuery.toLowerCase()) || searchQuery === "") && 
-      (selectedAuth[user.auth] || Object.values(selectedAuth).includes(true) === false)
-  );
+  const isAnyAuthSelected = Object.values(selectedAuth).some(Boolean);
+
+  const filteredUsers = userInfo.filter((user) => {
+    const matchesSearch = user.name.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesAuth = selectedAuth[user.auth] || !isAnyAuthSelected;
+    return matchesSearch && matchesAuth;
+  });
 
   return (
     <>
@@ -56,45 +64,30 @@ export default function Select() {
             />
           </_.SInput>
           <_.Check>
-            <_.CDiv>
-              <input
-                type="checkbox"
-                name="USER"
-                checked={selectedAuth.USER}
-                onChange={handleAuthChange}
-              />
-              <label htmlFor="USER">USER</label>
-            </_.CDiv>
-            <_.CDiv>
-              <input
-                type="checkbox"
-                name="STUDENT"
-                checked={selectedAuth.STUDENT}
-                onChange={handleAuthChange}
-              />
-              <label htmlFor="STUDENT">STUDENT</label>
-            </_.CDiv>
-            <_.CDiv>
-              <input
-                type="checkbox"
-                name="ADMIN"
-                checked={selectedAuth.ADMIN}
-                onChange={handleAuthChange}
-              />
-              <label htmlFor="ADMIN">ADMIN</label>
-            </_.CDiv>
+            {["USER", "STUDENT", "ADMIN"].map((role) => (
+              <_.CDiv key={role}>
+                <input
+                  type="checkbox"
+                  id={role}
+                  name={role}
+                  checked={selectedAuth[role]}
+                  onChange={handleAuthChange}
+                />
+                <label htmlFor={role}>{role}</label>
+              </_.CDiv>
+            ))}
           </_.Check>
         </_.Input>
         <_.UserList>
-          {filteredUsers.map((user, index) => (
+          {filteredUsers.map((user) => (
             <Users
               key={user.id}
-              id ={user.id}
+              id={user.id}
               name={user.name}
               email={user.email}
               promise={user.promise}
               auth={user.auth}
-              setAuth={(newAuth) => updateAuth(index, newAuth)}
+              setAuth={(newAuth) => updateAuth(user.id, newAuth)}
             />
           ))}
         </_.UserList>
