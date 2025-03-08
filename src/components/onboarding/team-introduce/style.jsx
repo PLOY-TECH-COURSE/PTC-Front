@@ -2,13 +2,14 @@ import styled, {css, keyframes} from "styled-components";
 
 export const TeamContainer = styled.div`
     display: flex;
+    width: 100vw;
     justify-content: center;
     align-items: center;
     height: 100vh;
     position: relative;
 `;
 export const Wrap = styled.div`
-    width: 100%;
+    min-width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -38,7 +39,7 @@ export const Nav = styled.nav`
     gap: 30px;
 `
 export const Main = styled.main`
-    width: 100%;
+    min-width: 100%;
     height: 80%;
     display: flex;
     flex-flow: wrap row;
