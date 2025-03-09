@@ -69,8 +69,8 @@ const show = keyframes`
     }
 `
 export const Box = styled.div`
-    width: 250px;
-    height: 270px;
+    width: 220px;
+    height: 240px;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -137,8 +137,8 @@ export const Git = styled.a`
     }
 `
 export const UnBox = styled.div`
-    width: 250px;
-    height: 270px;
+    width: 220px;
+    height: 240px;
     @media (max-width: 480px) {
         width: 120px;
         height: 140px;
