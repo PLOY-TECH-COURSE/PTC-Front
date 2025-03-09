@@ -43,28 +43,39 @@ const SignUpModal = ({ setIsModal,setIsSignupModal }) => {
   }, [time]);
 
   const start = (e) => {
-    e.preventDefault();
-    if (intervalId) {
-      setTime(600);
-      setMin(10);
-      setSec(0);
-      return;
-    }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setEmailValid(false);
-      alert("올바른 이메일 형식을 입력하세요.");
-      return;
-    }
-    setEmailValid(true);
+  e.preventDefault();
+  if (intervalId) {
     setTime(600);
     setMin(10);
     setSec(0);
-    const id = setInterval(() => {
-      setTime((prevTime) => prevTime - 1);
-    }, 1000);
-    setIntervalId(id);
-  };
+    return;
+  }
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    setEmailValid(false);
+    alert("올바른 이메일 형식을 입력하세요.");
+    return;
+  }
+  setEmailValid(true);
+  setTime(600);
+  setMin(10);
+  setSec(0);
+  
+  const id = setInterval(() => {
+    setTime((prevTime) => {
+      if (prevTime <= 1) {
+        clearInterval(id);
+        alert("시간이 종료되었습니다.");
+        window.location.reload();
+        return 0;
+      }
+      return prevTime - 1;
+    });
+  }, 1000);
+  
+  setIntervalId(id);
+};
+
 
   const resetForm = () => {
     setId("");
@@ -317,7 +328,7 @@ const Img = styled.img`
 
 const Text1 = styled.div`
   color: #000;
-  font-family: Pretendard;
+  font-family: "Pretendard","Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", Arial, sans-serif;
   font-size: 24px;
   font-weight: 700;
   margin-top: 15px;
