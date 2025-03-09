@@ -20,6 +20,11 @@ export const SectionLeft = styled.section`
         align-items: center;
         gap: 4px;
     }
+    & > div{
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
 `
 export const SectionRight = styled.section`
     color: #A2A2A2;

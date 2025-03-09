@@ -53,7 +53,9 @@ export default function PostList() {
 
 
     const handleScroll = () => {
-        if (window.innerHeight + document.documentElement.scrollTop+0.5 !== document.documentElement.offsetHeight) return;
+        if (window.innerHeight + document.documentElement.scrollTop+0.5 !== document.documentElement.offsetHeight &&
+            window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight
+        ) return;
         setStart((prevStart) => prevStart + 21)
     };
 
