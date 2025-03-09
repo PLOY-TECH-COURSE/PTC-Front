@@ -131,10 +131,12 @@ export const BtnText = styled.div`
     & > span:nth-child(4) { transform: rotate(10deg); }
 `
 export const HeaderBox = styled.div`
-    position: absolute;
+    position: fixed;
     top: 0;
+    z-index: 100;
     width: 100%;
     left: 0;
+    transition: top 0.8s;
 `
 export const Img = styled.img`
     transition: 0.5s;

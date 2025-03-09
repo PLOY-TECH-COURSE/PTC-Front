@@ -5,7 +5,7 @@ export const ProcessContainer = styled.div`
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 100vh;
+    height: 90vh;
     position: relative;
     width: 100vw;
 `;

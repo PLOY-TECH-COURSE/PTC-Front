@@ -5,7 +5,7 @@ export const TeamContainer = styled.div`
     width: 100vw;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 90vh;
     position: relative;
 `;
 export const Wrap = styled.div`

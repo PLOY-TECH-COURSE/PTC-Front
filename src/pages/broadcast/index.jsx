@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { getBroadcastList } from '../../api/broadcast';
 import Loading from "../../components/loading";
 import makeDocument from '../../utils/makeDocument';
+import Footer from "../../components/footer/index.jsx";
 
 export default function () {
     const navigate = useNavigate();
@@ -65,6 +66,7 @@ export default function () {
                     )}
                 </S.PostListMain>
             </S.Content>
+            <Footer />
         </S.Container>
     );
 }
