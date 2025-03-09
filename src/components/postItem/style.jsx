@@ -122,16 +122,19 @@ export const RowData = styled.div`
 export const PostImg = styled.div`
     width: 100%;
     height: 100px;
-    margin-right: 10px;
+    display: flex;
     align-items: center;
     justify-content: center;
     padding: 0 20px 0 0;
 
-    img{
+    img {
         max-width: 70%;
-        object-fit: cover;
+        height: auto;
+        display: block;
+        margin: auto;
     }
-`
+`;
+
 
 
 export const PostRightData = styled.div`
