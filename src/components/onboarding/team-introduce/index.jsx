@@ -47,7 +47,6 @@ export default function TeamIntroduce({isAnimation}){
                     count++;
                 }
             });
-            console.log(count)
             const result = count - (member.length - count);
 
             if(count < 2) setUnBox(Array(1).fill(0));
