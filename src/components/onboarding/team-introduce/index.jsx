@@ -26,22 +26,16 @@ export default function TeamIntroduce({isAnimation}){
         {id : 9, name : '오윤찬', job : 'Backend', git : 'https://github.com/YunChan-Oh', bg : Yunchan, time:0.7},
         {id : 10, name : '한태영', job : 'Backend', git : 'https://github.com/noahmik', bg : Taeyoung, time:0.9},
         {id : 11, name : '강시우', job : 'Frontend', git : 'https://github.com/kangsiwoo', bg : Siwoo, time:1.1},
-        {id : 12, name : '', job : '', git : '', bg : ''},
-        {id : 13, name : '', job : '', git : '', bg : ''},
-        {id : 14, name : '', job : '', git : '', bg : ''},
-        {id : 15, name : '', job : '', git : '', bg : ''},
-        {id : 16, name : '', job : '', git : '', bg : ''},
     ]
 
     const containerRef = useRef(null);
     const [unBox, setUnBox] = useState([]);
     useEffect(() => {
         if (!containerRef.current) return;
-
         const children = Array.from(containerRef.current.children);
         let firstOffsetTop = null;
         let count = 0;
-
+        
         children.forEach((child) => {
             if (firstOffsetTop === null) {
                 firstOffsetTop = child.offsetTop;
@@ -50,14 +44,20 @@ export default function TeamIntroduce({isAnimation}){
                 count++;
             }
         });
+        if(unBox.length){
+            count = count - unBox.length
+        }
         const result = count - (member.length - count);
+        
         if(count < 2) setUnBox(Array(1).fill(0));
         else if(count === 2) setUnBox([0]);
         else if(count === 3) setUnBox([0, 0]);
         else{
             setUnBox(Array(result).fill(0));
         }
-    }, [window.innerWidth]);
+        
+    }, [window.innerWidth, isGrade]);
+    
     return(
         <S.TeamContainer>
             <S.Wrap>

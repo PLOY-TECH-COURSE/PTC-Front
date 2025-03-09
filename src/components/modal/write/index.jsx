@@ -45,7 +45,7 @@ export default function WriteModal({data, title, tag, content, setIsModal}){
     return(
         <S.Black onClick={()=>setIsModal(false)}>
             <S.Content onClick={(e) => e.stopPropagation()}>
-                {role === "ROLE_ADMIN" &&
+                {role === "ROLE_ADMIN" || role === "ROLE_SUPERADMIN" &&
                     <S.Broad>
                         <input type={'checkbox'} value={isBroad}  onChange={()=>{
                             if(!data?.isPost && data?.isBroad){
