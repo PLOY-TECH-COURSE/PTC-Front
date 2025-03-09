@@ -50,19 +50,21 @@ export const RowData = styled.div`
     cursor: pointer;
 `
 
+
 export const PostImg = styled.div`
-    width: 40%;
-    height: 100px;
-    margin-right: 10px;
+    width: 100%;
+    height: 100%;
+
+    display: flex;
     align-items: center;
     justify-content: center;
-
+    padding: auto;
+    
     img{
-        width: 100%;
+        max-width: 70%;
         object-fit: cover;
     }
 `
-
 export const PostRightData = styled.div`
     display: flex;
     flex-direction: column;
