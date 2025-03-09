@@ -53,13 +53,13 @@ export default function PostList() {
 
     const handleScroll = () => {
         if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight) return;
-        setStart((prevStart) => prevStart + 20)
+        setStart((prevStart) => prevStart + 21)
     };
 
     useEffect(() => {
         window.addEventListener("scroll", handleScroll);
         return () => {
-            window.removeEventListener("scroll", handleScroll);
+            window.removeEventListener("scr₩₩oll", handleScroll);
         };
     }, []);
 
