@@ -10,7 +10,10 @@ export default function Footer({change}){
                 <img src={Logo} alt='logo' />
                 <p>주소 : 부산광역시 강서구 가락대로 1393 봉림동 15 (46708)</p>
                 <p>이메일 : ploytechcourse@gmail.com</p>
-                <p><img width={20} src={Instargram} />문의 : bssm_ploy</p>
+                <div>
+                    <img width={20} src={Instargram} />
+                    <p>문의 : bssm_ploy</p>
+                </div>
             </S.SectionLeft>
             <S.SectionRight>
                 {change &&
