@@ -12,12 +12,11 @@ export const ProcessContainer = styled.div`
 export const Wrap = styled.div`
     position: relative;
     width: 100%;
-    height: 100vh;
+    height: 90vh;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-color: white;
     padding: 0 10%;
     gap: 50px;
 `;
