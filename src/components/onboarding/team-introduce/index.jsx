@@ -35,26 +35,28 @@ export default function TeamIntroduce({isAnimation}){
         const children = Array.from(containerRef.current.children);
         let firstOffsetTop = null;
         let count = 0;
-        
-        children.forEach((child) => {
-            if (firstOffsetTop === null) {
-                firstOffsetTop = child.offsetTop;
-            }
-            if (child.offsetTop === firstOffsetTop) {
-                count++;
-            }
-        });
         if(unBox.length){
-            count = count - unBox.length
+            setUnBox([]);
         }
-        const result = count - (member.length - count);
-        
-        if(count < 2) setUnBox(Array(1).fill(0));
-        else if(count === 2) setUnBox([0]);
-        else if(count === 3) setUnBox([0, 0]);
-        else{
-            setUnBox(Array(result).fill(0));
-        }
+        setTimeout(()=>{
+            children.forEach((child) => {
+                if (firstOffsetTop === null) {
+                    firstOffsetTop = child.offsetTop;
+                }
+                if (child.offsetTop === firstOffsetTop) {
+                    count++;
+                }
+            });
+            console.log(count)
+            const result = count - (member.length - count);
+
+            if(count < 2) setUnBox(Array(1).fill(0));
+            else if(count === 2) setUnBox([0, 0]);
+            else if(count === 3) setUnBox([0, 0, 0, 0]);
+            else{
+                setUnBox(Array(result).fill(0));
+            }
+        }, 0)
         
     }, [window.innerWidth, isGrade]);
     

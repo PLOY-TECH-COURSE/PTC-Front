@@ -6,6 +6,8 @@ export const Container = styled.div`
 
 export const Content = styled.div`
     width: 100%;
+    min-height: 62vh;
+    height: max-content;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -21,6 +23,7 @@ export const PostListTop = styled.div`
 
 export const PostListMain = styled.div`
     padding: 3% 5%;
+    min-height: max-content;
     width: 83%;
     display: flex;
     flex-wrap: wrap;

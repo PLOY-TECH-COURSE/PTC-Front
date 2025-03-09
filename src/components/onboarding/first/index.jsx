@@ -1,5 +1,4 @@
 import * as S from "./style.jsx";
-import Header from '../../header/index.jsx'
 import Logo from '../../../assets/Logo.svg';
 import Laptop from '../../../assets/onboarding/first/laptop.svg'
 import {useNavigate} from "react-router-dom";
@@ -15,6 +14,7 @@ import ArrowRight from  '../../../assets/onboarding/first/rightArrow.svg'
 import {useThrottle} from "../../../hooks/useThrottle.jsx";
 import Mail from '../../../assets/onboarding/first/mail.svg'
 import {modalAtom} from "../../../recoil/modalAtom.js";
+import {isApplyAtom} from "../../../recoil/isApply.js";
 
 export default function First(){
     const navigate = useNavigate();
@@ -73,12 +73,9 @@ export default function First(){
     }
 
     const [_, setIsModal] = useRecoilState(modalAtom);
-
+    const [_2, setIsApply] = useRecoilState(isApplyAtom);
     return(
         <S.FirstContainer>
-            <S.HeaderBox>
-                <Header/>
-            </S.HeaderBox>
             <S.Wrap>
                 <S.Section>
                     <S.Description>
@@ -88,7 +85,7 @@ export default function First(){
                         <S.SubText>1:1 맞춤형 멘토링 스터디 프로그램입니다.</S.SubText>
                         <S.Btn onClick={()=>{
                            if( auth.role === "" || auth.role === undefined) setIsModal(true);
-                           else if( auth.role === "ROLE_USER") navigate('/apply');
+                           else if( auth.role === "ROLE_USER") setIsApply(true);
                            else navigate('/write/new');
                         }}>
                             <span>{auth.role === "ROLE_STUDENT" || auth.role === "ROLE_ADMIN" || auth.role === "ROLE_SUPERADMIN" ? "글 작성" : "신청하기"}</span>

@@ -6,6 +6,7 @@ import PostItem from "../../components/postItem";
 import { useNavigate } from "react-router-dom";
 import { getSearchPost } from "../../api/postList";
 import Loading from "../../components/loading";
+import Footer from "../../components/footer/index.jsx";
 
 export default function PostList() {
     const navigate = useNavigate();
@@ -52,7 +53,7 @@ export default function PostList() {
 
 
     const handleScroll = () => {
-        if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight) return;
+        if (window.innerHeight + document.documentElement.scrollTop+0.5 !== document.documentElement.offsetHeight) return;
         setStart((prevStart) => prevStart + 21)
     };
 
@@ -120,7 +121,7 @@ export default function PostList() {
 
                 <S.PostListMain>
                     {posts.length === 0 ? (
-                        <h2>{searchQuery ? "검색 결과가 없습니다." : "게시물이 없습니다."}</h2>
+                            <h2>{searchQuery ? "검색 결과가 없습니다." : "게시물이 없습니다."}</h2>
                     ) : (
                         posts.map((post) => (
                             <PostItem key={post.documents_id} post={post} onClick={handlePostClick} />
@@ -128,6 +129,7 @@ export default function PostList() {
                     )}
                 </S.PostListMain>
             </S.Content>
+            <Footer />
         </S.Container>
     );
 }
