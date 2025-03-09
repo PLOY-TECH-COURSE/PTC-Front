@@ -23,21 +23,27 @@ export const signupData = async (name,id,email,code,password, confirmPassword, t
       return false;
   }
 };
-export const emailcode = async (email)=>{
+const emailRegex = /^[^\s@]+@[^\s@]+\.(com)$/;
+
+export const emailcode = async (email) => {
     try {
-      const response = await axiosInstance.post('/email',{
-          "email":email
-      });
-        if(response.status === 200){
-            return true;
-        }
-        else if(response.status === 400){
-            alert("이미 있는 이메일이거나 이메일 형식이 이상합니다.");
+        if (!emailRegex.test(email)) {
+            alert("이메일 형식이 올바르지 않습니다.");
             return false;
         }
+
+        const response = await axiosInstance.post('/email', { email });
+
+        if (response.status === 200) {
+            return true;
+        }
     } catch (error) {
-        console.log(error);
-        alert("이미 있는 이메일이거나 이메일 형식이 이상합니다.");
-      return false;
+        if (error.response && error.response.status === 400) {
+            alert("이미 사용중인 이메일입니다.");
+        } else {
+            console.log(error);
+            alert("네트워크 오류가 발생했습니다.");
+        }
     }
-}
+    return false;
+};
