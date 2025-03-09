@@ -5,33 +5,31 @@ import FooterComponent from '../../../components/footer'
 
 export default function Footer({change}){
     const data = [
-        {
-            id:1,
-            title:"자습감독 자동배정",
-            content:'AI를 활용하여 선생님들의 일정과 학교 일정을 반영한 자습 감독 자동 배정 기능입니다. 필요한 경우, 자습 감독 관리 선생님께서 수동으로 수정할 수도 있습니다.',
-            blueText:'자습감독 자동 배정하러 가기'
-        },
+
         {
             id:2,
-            title:"자습 관리",
-            content:'기존 구글 시트의 낮은 가독성을 보완하기 위해 학교 도면을 활용하여 한눈에 보기 쉽게 구성되어 있습니다. 이를 통해 학생들의 이석 상태도 직관적으로 확인할 수 있습니다.',
-            blueText:'자습감독 하러가기'
+            title:"제가 아는게 아무것도 없는데 신청을해도될까요?",
+            content:'네, 당연하죠 기술적인 부분을 모르겠다면 자신에대한 내용을 더욱 많이 써주세요',
+        },
+        {
+            id:1,
+            title:"선발기준이 어떻게 되나요?",
+            content:'본인의 장단점을 잘 파악하고있는 학생,발표를 할때 청중을 봐라보고 하는학생을 우선시합니다',
         },
         {
             id:3,
-            title:"자습감독 알림",
-            content:'선생님들께서는 매일 바쁜 일정을 소화하시느라 가끔 자습 감독을 잊으실 때가 있습니다. 이를 방지하기 위해 홈페이지에서 자습 감독까지의 남은 날짜와, 전날 에는 메시지로 알림을 보냅니다.',
-            blueText:'자습감독 일정'
+            title:"테크코스에 들어가면 무엇을 하게 되나요?",
+            content:'총 16주에 거쳐 선배들이 제공하는 과제로 수업을 하게 되고 2주마다 공식적인 오프라인 미팅을 갖게 됩니다. 이 떄는 2주간 배운 내용 중 한 부분을 선택해 프레젠테이션을 진행하게 됩니다. 상세 일정은 합격 후 공지해드리도록 하겠습니다',
         },
         {
             id:4,
-            title:"학생이석 관리",
-            content:'기존 구글 시트에서는 이석 관리와 학생 관리 페이지가 분리되어 있어 확인 및 기록에 불편함이 있었습니다. 이를 개선하여, 학생 이석 관리 페이지에서 수정 하면 학생 관리 페이지에도 자동 반영되도록 구현하였습니다.',
+            title:"플테코 떨어져도 과제내용 공유해주시면 안되나요😣",
+            content:'떨어지면 과제공유는 따로 해주지 않습니다.',
         },
         {
             id:5,
-            title:"학생이석 관리",
-            content:'기존 구글 시트에서는 이석 관리와 학생 관리 페이지가 분리되어 있어 확인 및 기록에 불편함이 있었습니다. 이를 개선하여, 학생 이석 관리 페이지에서 수정 하면 학생 관리 페이지에도 자동 반영되도록 구현하였습니다.',
+            title:"서비스 사용에 문제가 생겼어요 어떻게 해야 해요?",
+            content:'저희에게 연락을 주시면 도움을 드릴 수 있고 떄에 따라 소정의 상품도 드립니다. ',
         },
         
     ]
@@ -61,9 +59,10 @@ export default function Footer({change}){
     }
     return (
         <S.FooterContainer>
+            <S.UnBox />
             <S.FAQ>
             <p>자주묻는질문</p>
-            {/* {data.map((item, idx)=>{
+            {data.map((item, idx)=>{
                         if(!skillShow[idx]){
                             return(
                                 <S.Section key={item.id} onClick={()=>changeSkill(idx)}>
@@ -82,7 +81,7 @@ export default function Footer({change}){
                                     <p>{item.content}</p>
                                 </S.Dis>
                             )}
-                    })} */}
+                    })}
             </S.FAQ>
             <FooterComponent change={change} />
         </S.FooterContainer>
