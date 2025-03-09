@@ -31,10 +31,10 @@ export default function Detail() {
     useEffect(() => {
         if (post) {
             console.log('dsfsadfa', post.userInfoDTO.uid);
-            console.log('hfdhġd',post.userInfoDTO.id)
+            console.log('hfdhġd', post.userInfoDTO.id)
         }
-    }, [post]);    
-    
+    }, [post]);
+
     const [commendLike, setCommendLike] = useState([]);
 
     useEffect(() => {
@@ -97,13 +97,15 @@ export default function Detail() {
     };
     console.log(user);
     const handleFavoriteClick = async () => {
-        if(user.uid){try {
-            await toggleFavorite(postId, isFavorite);
-            setIsFavorite(prev => !prev);
-            console.log(isFavorite);
-        } catch (error) {
-            console.error("즐겨찾기 변경 실패:", error);
-        }}else{
+        if (user.uid) {
+            try {
+                await toggleFavorite(postId, isFavorite);
+                setIsFavorite(prev => !prev);
+                console.log(isFavorite);
+            } catch (error) {
+                console.error("즐겨찾기 변경 실패:", error);
+            }
+        } else {
             alert("로그인 후 이용가능합니다.")
         }
     };
@@ -126,23 +128,23 @@ export default function Detail() {
 
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-const handleCommentSubmit = async (e) => {
-    if (e) e.preventDefault();
-    if (!newComment.trim() || isSubmitting) return; 
+    const handleCommentSubmit = async (e) => {
+        if (e) e.preventDefault();
+        if (!newComment.trim() || isSubmitting) return;
 
-    setIsSubmitting(true); 
-    try {
-        const userId = post.userInfoDTO.id;
-        await createComment(postId, newComment, userId);
-        setNewComment('');
-        const updatedComments = await getComments(postId);
-        setComments(updatedComments);
-    } catch (error) {
-        console.error('댓글 작성 실패', error);
-    } finally {
-        setTimeout(() => setIsSubmitting(false), 1000); 
-    }
-};
+        setIsSubmitting(true);
+        try {
+            const userId = post.userInfoDTO.id;
+            await createComment(postId, newComment, userId);
+            setNewComment('');
+            const updatedComments = await getComments(postId);
+            setComments(updatedComments);
+        } catch (error) {
+            console.error('댓글 작성 실패', error);
+        } finally {
+            setTimeout(() => setIsSubmitting(false), 1000);
+        }
+    };
 
 
     const handleCommentKeyPress = (e) => {
@@ -153,11 +155,11 @@ const handleCommentSubmit = async (e) => {
             }, 1000);
         }
     };
-    
+
 
     const handleCommentUpdate = async () => {
         if (!editCommentText.trim()) return;
-    
+
         try {
             await updateComment(editCommentId, editCommentText);
             setComments((prevComments) =>
@@ -173,16 +175,16 @@ const handleCommentSubmit = async (e) => {
             console.error('댓글 수정 실패', error);
         }
     };
-    
+
     const handleEditCommentKeyPress = (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
             handleCommentUpdate();
         }
     };
-    
+
     const handlePostLikeClick = async () => {
-        if(user.uid){
+        if (user.uid) {
             try {
                 await togglePostLike(postId, likeOn);
                 setLikeOn(prev => !prev);
@@ -193,11 +195,11 @@ const handleCommentSubmit = async (e) => {
             } catch (error) {
                 console.error("좋아요 변경 실패:", error);
             }
-        }else{
+        } else {
             alert("로그인 후 이용가능합니다.")
         }
     };
-    
+
     const handleCommentChange = (e) => {
         if (!user) {
             alert('로그인이 필요합니다.');
@@ -206,7 +208,7 @@ const handleCommentSubmit = async (e) => {
         setNewComment(e.target.value);
     };
     const handleCommentLikeClick = async (commentId, index) => {
-        if(user.uid){
+        if (user.uid) {
             try {
                 await toggleCommentLike(commentId, commendLike[index]);
                 setCommendLike(prevLikes =>
@@ -228,7 +230,7 @@ const handleCommentSubmit = async (e) => {
             } catch (error) {
                 console.error("댓글 좋아요 변경 실패:", error);
             }
-        }else{
+        } else {
             alert("로그인 후 이용가능합니다.")
         }
     };
@@ -243,7 +245,10 @@ const handleCommentSubmit = async (e) => {
                             <S.ProfileTop>
                                 <img onClick={() => navigate(`/user/${post.userInfoDTO.id}`, { state: { uid: post.userInfoDTO.uid } })} src={post.userInfoDTO.profile} alt={post.userInfoDTO.name} />
                                 <S.RightProfile>
-                                    <span>{post.generation}</span>
+                                    <span>
+                                        {isNaN(post.generation) ? post.generation : `${post.generation}기`}
+                                    </span>
+
                                     <p onClick={() => navigate(`/user/${post.userInfoDTO.id}`, { state: { uid: post.userInfoDTO.uid } })} >{post.userInfoDTO.name}</p>
                                 </S.RightProfile>
                             </S.ProfileTop>
@@ -282,99 +287,99 @@ const handleCommentSubmit = async (e) => {
                 <S.AirCommentWrapper>
                     <S.Air />
                     <S.CommentSection>
-                    <h3>{comments.length}개의 댓글</h3>
+                        <h3>{comments.length}개의 댓글</h3>
 
-                
-                    <S.CommentInputWrapper>
-                        <S.InputWrapper>
-                        <S.Input
-                            type="text"
-                            value={newComment}
-                            onChange={handleCommentChange}
-                            onKeyDown={handleCommentKeyPress}  
-                            placeholder="댓글을 입력해주세요"
-                            onClick={() => {
-                                if (user.uid=="") {
-                                    alert("로그인이 필요합니다.");
-                                }
-                            }}
-                        />
-                        </S.InputWrapper>
-                <S.ButtonWrapper>
-                    <S.Bu 
-                    onClick={handleCommentSubmit} 
-                    disabled={!user?.uid} 
-                    style={{ 
-                        backgroundColor: !user?.uid ? "#ccc" : "#007bff", 
-                        color: !user?.uid ? "#666" : "#fff", 
-                        cursor: !user?.uid ? "not-allowed" : "pointer" 
-                    }}
-                    >
-                    댓글 작성
-                    </S.Bu>
-                </S.ButtonWrapper>
 
-                </S.CommentInputWrapper>
-
-                    {comments.length ? comments.map((comment, index) => {
-                        return (
-                        <S.CommentItem key={comment.id}>
-                            <S.CommentProfile 
-                            src={comment.userProfile || ""} 
-                            onClick={() => navigate(`/user/${comment.userId}`)}
-                            />
-                            <S.CommentContent>
-                            <p><strong>{comment.userName}</strong></p>
-                            {editCommentId === comment.id ? (
-                                <S.EditCommentContainer>
-                                <S.EditCommentInput
+                        <S.CommentInputWrapper>
+                            <S.InputWrapper>
+                                <S.Input
                                     type="text"
-                                    value={editCommentText}
-                                    onChange={(e) => setEditCommentText(e.target.value)}
-                                    onKeyDown={handleEditCommentKeyPress}  
-                                    placeholder="댓글을 수정하세요."
+                                    value={newComment}
+                                    onChange={handleCommentChange}
+                                    onKeyDown={handleCommentKeyPress}
+                                    placeholder="댓글을 입력해주세요"
+                                    onClick={() => {
+                                        if (user.uid == "") {
+                                            alert("로그인이 필요합니다.");
+                                        }
+                                    }}
                                 />
-                                <S.CommentButtonWrapper>
-                                    <S.CommentUpdateButton onClick={handleCommentUpdate}>
-                                    수정 완료
-                                    </S.CommentUpdateButton>
-                                    <S.CommentCancelButton onClick={() => {
-                                    setEditCommentId(null);
-                                    setEditCommentText("");
-                                    }}>
-                                    취소
-                                    </S.CommentCancelButton>
-                                </S.CommentButtonWrapper>
-                                </S.EditCommentContainer>
-                            ) : (
-                                <p>{comment.comment}</p>
-                            )}
+                            </S.InputWrapper>
+                            <S.ButtonWrapper>
+                                <S.Bu
+                                    onClick={handleCommentSubmit}
+                                    disabled={!user?.uid}
+                                    style={{
+                                        backgroundColor: !user?.uid ? "#ccc" : "#007bff",
+                                        color: !user?.uid ? "#666" : "#fff",
+                                        cursor: !user?.uid ? "not-allowed" : "pointer"
+                                    }}
+                                >
+                                    댓글 작성
+                                </S.Bu>
+                            </S.ButtonWrapper>
 
-                            <S.CommentBottom>
-                                <S.Like isCommentLike={commendLike[index]}>
-                                <img 
-                                    onClick={() => handleCommentLikeClick(comment.id, index)} 
-                                    src={commendLike[index] ? Like2 : NotLike2} 
-                                    style={{ cursor: "pointer" }} 
-                                    width="20px" 
-                                />
-                                <p>{comment.likeCount}</p>
-                                </S.Like>
-                                <S.CommentActions>
-                                {comment.uid === user.uid && (
-                                    <>
-                                    <p onClick={() => handleCommentDelete(comment.id)}>삭제</p>
-                                    <p onClick={() => handleCommentEdit(comment.id, comment.comment)}>수정</p>
-                                    </>
-                                )}
-                                </S.CommentActions>
-                            </S.CommentBottom>
-                            </S.CommentContent>
-                        </S.CommentItem>
-                        );
-                    }) : <S.P>댓글이 없습니다.</S.P>}
+                        </S.CommentInputWrapper>
+
+                        {comments.length ? comments.map((comment, index) => {
+                            return (
+                                <S.CommentItem key={comment.id}>
+                                    <S.CommentProfile
+                                        src={comment.userProfile || ""}
+                                        onClick={() => navigate(`/user/${comment.userId}`)}
+                                    />
+                                    <S.CommentContent>
+                                        <p><strong>{comment.userName}</strong></p>
+                                        {editCommentId === comment.id ? (
+                                            <S.EditCommentContainer>
+                                                <S.EditCommentInput
+                                                    type="text"
+                                                    value={editCommentText}
+                                                    onChange={(e) => setEditCommentText(e.target.value)}
+                                                    onKeyDown={handleEditCommentKeyPress}
+                                                    placeholder="댓글을 수정하세요."
+                                                />
+                                                <S.CommentButtonWrapper>
+                                                    <S.CommentUpdateButton onClick={handleCommentUpdate}>
+                                                        수정 완료
+                                                    </S.CommentUpdateButton>
+                                                    <S.CommentCancelButton onClick={() => {
+                                                        setEditCommentId(null);
+                                                        setEditCommentText("");
+                                                    }}>
+                                                        취소
+                                                    </S.CommentCancelButton>
+                                                </S.CommentButtonWrapper>
+                                            </S.EditCommentContainer>
+                                        ) : (
+                                            <p>{comment.comment}</p>
+                                        )}
+
+                                        <S.CommentBottom>
+                                            <S.Like isCommentLike={commendLike[index]}>
+                                                <img
+                                                    onClick={() => handleCommentLikeClick(comment.id, index)}
+                                                    src={commendLike[index] ? Like2 : NotLike2}
+                                                    style={{ cursor: "pointer" }}
+                                                    width="20px"
+                                                />
+                                                <p>{comment.likeCount}</p>
+                                            </S.Like>
+                                            <S.CommentActions>
+                                                {comment.uid === user.uid && (
+                                                    <>
+                                                        <p onClick={() => handleCommentDelete(comment.id)}>삭제</p>
+                                                        <p onClick={() => handleCommentEdit(comment.id, comment.comment)}>수정</p>
+                                                    </>
+                                                )}
+                                            </S.CommentActions>
+                                        </S.CommentBottom>
+                                    </S.CommentContent>
+                                </S.CommentItem>
+                            );
+                        }) : <S.P>댓글이 없습니다.</S.P>}
                     </S.CommentSection>
-                    </S.AirCommentWrapper >
+                </S.AirCommentWrapper >
 
             </S.Content>
         </S.Container>

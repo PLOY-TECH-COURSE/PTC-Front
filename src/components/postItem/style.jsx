@@ -132,9 +132,12 @@ export const PostImg = styled.div`
     
     img{
         max-width: 70%;
-        object-fit: cover;
+        height: auto;
+        display: block;
+        margin: auto;
     }
-`
+`;
+
 
 
 export const PostRightData = styled.div`
