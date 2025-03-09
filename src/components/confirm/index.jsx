@@ -5,10 +5,9 @@ import { useEffect } from 'react';
 import Share from '../../assets/share.svg';
 
 export default function Mobile(){
-    const env = import.meta.env.VITE_CACAO_KEY
     useEffect(() => {
         if (!window.Kakao.isInitialized()) {
-          window.Kakao.init(env); // 카카오 앱 키 넣기
+          window.Kakao.init("f1331ab24e0c2a467741a08ca8699b45"); // 카카오 앱 키 넣기
         }
       }, []);
     
