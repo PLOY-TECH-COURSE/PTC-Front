@@ -5,7 +5,7 @@ export const TrackIntroduce = styled.div`
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 100vh;
+    height: 90vh;
     position: relative;
 `;
 export const Wrap = styled.div`

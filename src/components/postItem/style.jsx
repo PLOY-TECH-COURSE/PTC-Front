@@ -2,12 +2,14 @@ import styled from "styled-components";
 
 export const Container = styled.div`
     width: 100%;
+    
+
 `
 
 export const Content = styled.div`
     width: 100%;
     align-items: center;
-    justify-content: centers;
+    justify-content: center;
     overflow-y: auto;
 `
 
@@ -121,13 +123,14 @@ export const RowData = styled.div`
 
 export const PostImg = styled.div`
     width: 100%;
-    height: 100px;
+    height: 100%;
+    margin-right: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 20px 0 0;
-
-    img {
+    padding: auto;
+    
+    img{
         max-width: 70%;
         height: auto;
         display: block;

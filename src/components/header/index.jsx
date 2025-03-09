@@ -12,13 +12,14 @@ import Login from '../modal/signlogin/login/login.jsx';
 import Signup from '../modal/signlogin/signup/signup.jsx';  
 import ChangePw from '../modal/pass/password.jsx';
 import Apply from "../../pages/apply";
+import {isApplyAtom} from "../../recoil/isApply.js";
 
 function Header() {
   const [isOpen, setIsOpen] = useState([false, false]);
   const [isModal, setIsModal] = useRecoilState(modalAtom);
   const [isSignupModal, setIsSignupModal] = useState(false);
   const [isPwChangeModal, setIsPwChangeModal] = useState(false);
-  const [isApplyModal, setIsApplyModal] = useState(false);
+  const [isApply, setIsApply] = useRecoilState(isApplyAtom);
   const change = () => {
     if (!isOpen[0]) setIsOpen([true, false]);
     else if (isOpen[0]) setIsOpen([false, true]);
@@ -39,15 +40,12 @@ function Header() {
   const closeModal = () => {
     setIsModal(false);
   };
-  const closeModals = () => {
-    setIsModals(false);
-  };
 
   const closeSignupModal = () => {
     setIsSignupModal(false); 
   };
   const closeApplyModal = () => {
-    setIsApplyModal(false);  
+    setIsApply(false);
   };
 
   return (
@@ -57,7 +55,7 @@ function Header() {
       {isPwChangeModal && (
         <ChangePw setIsPwChangeModal={setIsPwChangeModal} />
       )}
-      {isApplyModal && <Apply onClose={closeApplyModal} />}
+      {isApply && <Apply onClose={closeApplyModal} />}
       <S.LogoImg onClick={() => navigate('/')} src={icon} alt="Logo" />
       <S.Hambuger onClick={() => setIsModal(true)}>
         <img src={Hambuger} alt={'hambuger'} width={35} />
@@ -92,12 +90,12 @@ function Header() {
                 return (
                   <S.Text key={item.id} onClick={() => navigate(item.path)}>{item.name}</S.Text>
                 )
-              } 
+              }
             })
         }
         {user.role === "ROLE_USER" && (
-          <S.Text onClick={() => setIsApplyModal(true)}>신청하기</S.Text>
-        )} 
+          <S.Text onClick={() => setIsApply(true)}>신청하기</S.Text>
+        )}
 
         {!user.uid &&
           <S.LoginBox>

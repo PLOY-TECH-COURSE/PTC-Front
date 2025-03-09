@@ -9,6 +9,8 @@ import Footer from "../../components/onboarding/footer/index.jsx";
 import { useEffect, useState, useRef } from "react";
 import { useRecoilState } from "recoil";
 import { modalAtom } from "../../recoil/modalAtom.js";
+import * as S from "../../components/onboarding/first/style.jsx";
+import Header from "../../components/header/index.jsx";
 
 const FullPageWrapper = styled.div`
     #fullpage {
@@ -93,16 +95,22 @@ const Main = () => {
         }
     };
     return (
-        <FullPageWrapper>
-            <div id={'fullpage'}>
-                <div className={'section'}><First /></div>
-                <div className={'section'}><PTCIntroduce isAnimation={isAnimation} /></div>
-                <div className={'section'}><TrackIntroduce isAnimation={isAnimation2} /></div>
-                <div className={'section'}><Process change = {scrollToSection} isAnimation={isAnimation3} /></div>
-                <div className={'section'}><TeamIntroduce isAnimation={isAnimation4} /></div>
-                <div className={'section'}><Footer change = {scrollToSection} /></div>
-            </div>
-        </FullPageWrapper>
+        <div>
+            <S.HeaderBox>
+                <Header/>
+            </S.HeaderBox>
+            <FullPageWrapper>
+                <div id={'fullpage'}>
+                    <div className={'section'}><First/></div>
+                    <div className={'section'}><PTCIntroduce isAnimation={isAnimation} /></div>
+                    <div className={'section'}><TrackIntroduce isAnimation={isAnimation2} /></div>
+                    <div className={'section'}><Process change = {scrollToSection} isAnimation={isAnimation3} /></div>
+                    <div className={'section'}><TeamIntroduce isAnimation={isAnimation4} /></div>
+                    <div className={'section'}><Footer change = {scrollToSection} /></div>
+                </div>
+            </FullPageWrapper>
+        </div>
+
     );
 };
 
