@@ -48,22 +48,3 @@ export const ImgBox = styled.div`
     align-items: center;
     gap: 30px;
 `
-
-export const Section = styled.section`
-    width: 60%;
-    background: #F8FAFB;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 15px 20px;
-    border: 2px solid #EAEEEF;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: 0.1s;
-    &:hover {
-        background: #f0f5f6;
-    }
-    & > img{
-        transform: rotate(45deg);
-    }
-`

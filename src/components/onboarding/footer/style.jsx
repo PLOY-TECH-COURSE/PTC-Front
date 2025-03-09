@@ -8,10 +8,13 @@ export const FooterContainer = styled.div`
     width: 100vw;
     height: 100vh;
 `;
+export const UnBox = styled.div`
+    width: 100%;
+    height: 10vh;
+`
 export const FAQ = styled.div`
     width: 100%;
     height: 60vh;
-    margin-top: 50px;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -19,6 +22,24 @@ export const FAQ = styled.div`
     & > p{
         width: 60%;
         font-size: 24px;
+    }
+`
+export const Section = styled.section`
+    width: 60%;
+    background: #F8FAFB;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 15px 20px;
+    border: 2px solid #EAEEEF;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.1s;
+    &:hover {
+        background: #f0f5f6;
+    }
+    & > img{
+        transform: rotate(45deg);
     }
 `
 const show = keyframes`
