@@ -42,7 +42,7 @@ const Img = styled.img`
 
 const Text1 = styled.div`
   color: #000;
-  font-family: Pretendard;
+  font-family: "Pretendard","Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", Arial, sans-serif;
   font-size: 28px;  
   font-weight: 700;
   margin-top: 10px;

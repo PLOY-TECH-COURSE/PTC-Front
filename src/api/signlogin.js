@@ -32,12 +32,12 @@ export const emailcode = async (email)=>{
             return true;
         }
         else if(response.status === 400){
-            alert("이미 등록된 이메일입니다.");
+            alert("이미 있는 이메일이거나 이메일 형식이 이상합니다.");
             return false;
         }
     } catch (error) {
         console.log(error);
-        alert(error);
+        alert("이미 있는 이메일이거나 이메일 형식이 이상합니다.");
       return false;
     }
 }
