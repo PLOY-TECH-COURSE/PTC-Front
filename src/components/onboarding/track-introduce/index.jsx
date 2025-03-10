@@ -8,8 +8,6 @@ import Server from '../../../assets/onboarding/track-introduce/server.svg';
 import {useEffect, useState} from "react";
 import ModalOnboarding from "../../modal/onboarding/index.jsx";
 import PropTypes from 'prop-types';
-import {useRecoilState} from "recoil";
-import {modalAtom} from "../../../recoil/modalAtom.js";
 import Arrive from '../../../assets/onboarding/track-introduce/arrive.svg'
 
 TrackIntroduce.propTypes = {
@@ -17,7 +15,7 @@ TrackIntroduce.propTypes = {
 };
 
 export default function TrackIntroduce({isAnimation}){
-    const [isModal, setIsModal] = useRecoilState(modalAtom);
+    const [isModal, setIsModal] = useState(false)
     const [num, setNum] = useState(null);
     const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 480);
 
