@@ -49,17 +49,17 @@ const show = keyframes`
     }
     100%{
         opacity: 1;
-        height: 90px;
+        height: 70px;
     }
 `
 const hide = keyframes`
     0%{
         opacity: 1;
-        height: 90px;
+        height: 70px;
     }
     100%{
         opacity: 0;
-        height: 60px;
+        height: 50px;
     }
 `
 export const Dis = styled.div`
