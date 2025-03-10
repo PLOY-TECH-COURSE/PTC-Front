@@ -7,10 +7,11 @@ import TrackIntroduce from "../../components/onboarding/track-introduce/index.js
 import TeamIntroduce from "../../components/onboarding/team-introduce/index.jsx";
 import Footer from "../../components/onboarding/footer/index.jsx";
 import { useEffect, useState, useRef } from "react";
-import { useRecoilState } from "recoil";
+import {useRecoilState, useRecoilValue} from "recoil";
 import { modalAtom } from "../../recoil/modalAtom.js";
 import * as S from "../../components/onboarding/first/style.jsx";
 import Header from "../../components/header/index.jsx";
+import {isApplyAtom} from "../../recoil/isApply.js";
 
 const FullPageWrapper = styled.div`
     #fullpage {
@@ -35,7 +36,9 @@ const Main = () => {
     const [isAnimation3, setIsAnimation3] = useState(false);
     const [isAnimation4, setIsAnimation4] = useState(false);
     const [isModal, setIsModal] = useRecoilState(modalAtom);
+    const isApply = useRecoilValue(isApplyAtom)
     const isModalRef = useRef(isModal);
+    const isApplyRef = useRef(isApply);
     const fullpageRef = useRef(null);
 
     useEffect(() => {
@@ -53,7 +56,7 @@ const Main = () => {
             credits: false,
             anchors: ['main', 'introduce', 'track', "process", 'team', 'footer'],
             onLeave: (origin, destination) => {
-                if (isModalRef.current || isScrolling.current) {
+                if (isModalRef.current || isScrolling.current || isApplyRef.current) {
                     return false;
                 }
                 isScrolling.current = true;
