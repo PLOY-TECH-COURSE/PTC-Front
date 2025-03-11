@@ -169,6 +169,7 @@ const Mypage = () => {
   const role = useRecoilValue(authAtom).role;
   const user = useRecoilValue(authAtom);
   const isOwnProfile = loggedInUserId === userId;
+  console.log(role);
 
   useEffect(() => {
     if (!userId) {
