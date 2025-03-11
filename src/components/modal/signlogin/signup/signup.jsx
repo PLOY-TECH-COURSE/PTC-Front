@@ -157,7 +157,11 @@ const SignUpModal = ({ setIsModal,setIsSignupModal }) => {
     } else if (!pwPattern.test(password)) {
       alert("비밀번호에 대문자와 소문자 하나 이상, 특수문자, 숫자를 포함시켜주세요");
       return;
-    } else if (password !== confirmPassword) {
+    }else if (password.length < 10) {
+    alert("비밀번호는 10자 이상이어야 합니다.");
+    return;
+      }
+     else if (password !== confirmPassword) {
       alert("비밀번호가 일치하지 않습니다.");
       return;
     }
