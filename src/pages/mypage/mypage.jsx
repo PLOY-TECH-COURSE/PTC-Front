@@ -13,6 +13,7 @@ import { updateBio } from "../../api/edit";
 import { uploadImg,uploadImg1 } from "../../api/profile";
 import PostItem from "../../components/postItem";
 import Confirm from "../../components/modal/confirm/index.jsx";
+import { authAtom } from "../../recoil/authAtom.js";
 
 const Container = styled.div`
   max-width: 800px;
