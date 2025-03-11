@@ -17,6 +17,10 @@ export const signupData = async (name,id,email,code,password, confirmPassword, t
     if(response.status === 200){
         return true;
     }
+    else if (password.length < 10) {
+        alert("비밀번호는 10자 이상이어야 합니다.");
+        return false;
+    }
     return false;
   } catch (error) {
       console.error('회원가입 오류:', error);
@@ -31,6 +35,8 @@ export const emailcode = async (email) => {
             alert("이메일 형식이 올바르지 않습니다.");
             return false;
         }
+
+
 
         const response = await axiosInstance.post('/email', { email });
 
