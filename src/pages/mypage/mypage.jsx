@@ -5,7 +5,6 @@ import like from "../../assets/like.svg";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useRecoilValue} from "recoil";
-import { authAtom } from "../../recoil/authAtom";
 import {getUserProfile} from "../../api/mypage";
 import { getFavoritePosts } from "../../api/favortie";
 import { getMyPosts } from "../../api/mywrite";
@@ -14,7 +13,7 @@ import { updateBio } from "../../api/edit";
 import { uploadImg,uploadImg1 } from "../../api/profile";
 import PostItem from "../../components/postItem";
 import Confirm from "../../components/modal/confirm/index.jsx";
-import { authAtom } from "../../recoil/authAtom.js";
+
 const Container = styled.div`
   max-width: 800px;
   margin: 0 auto;
