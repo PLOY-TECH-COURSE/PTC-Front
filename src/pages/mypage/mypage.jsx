@@ -166,7 +166,7 @@ const Mypage = () => {
   const [favoritePosts, setFavoritePosts] = useState([]);
   const [myPosts, setMyPosts] = useState([]);
   const [profileImage, setProfileImage] = useState(userData?.profile || "");
-
+  const role = useRecoilValue(authAtom).role;
   const user = useRecoilValue(authAtom);
   const isOwnProfile = loggedInUserId === userId;
 
@@ -298,7 +298,7 @@ const Mypage = () => {
           />
           <Info>
             <Tie>
-              <Batch>      {loggedInUserId === "ROLE_ADMIN"
+              <Batch>      {role === "ROLE_ADMIN"
         ? "멘토"
         : userData?.generation 
           ? `${userData.generation}기` 
