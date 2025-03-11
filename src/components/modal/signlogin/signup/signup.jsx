@@ -391,7 +391,7 @@ const Text2 = styled.div`
 
 const Tie = styled.div`
   height: 30px;
-  width: 320px;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
