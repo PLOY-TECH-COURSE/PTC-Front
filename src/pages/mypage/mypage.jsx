@@ -14,7 +14,7 @@ import { updateBio } from "../../api/edit";
 import { uploadImg,uploadImg1 } from "../../api/profile";
 import PostItem from "../../components/postItem";
 import Confirm from "../../components/modal/confirm/index.jsx";
-
+import { authAtom } from "../../recoil/authAtom.js";
 const Container = styled.div`
   max-width: 800px;
   margin: 0 auto;
@@ -157,8 +157,7 @@ const Mypage = () => {
   const { userId } = useParams();
   const location = useLocation();
   const { uid } = location.state || {};
-
-  const role = useRecoilValue(authAtom).role;
+  const loggedInUserId = useRecoilValue(authAtom).role;
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
   const [userData, setUserData] = useState(null);
@@ -167,7 +166,7 @@ const Mypage = () => {
   const [favoritePosts, setFavoritePosts] = useState([]);
   const [myPosts, setMyPosts] = useState([]);
   const [profileImage, setProfileImage] = useState(userData?.profile || "");
-  console.log(role);
+
   const user = useRecoilValue(authAtom);
   const isOwnProfile = loggedInUserId === userId;
 
@@ -299,14 +298,13 @@ const Mypage = () => {
           />
           <Info>
             <Tie>
-              <Batch>
-                {userData?.role === "ROLE_ADMIN"
-                  ? "멘토"
-                  : userData?.generation 
-                    ? `${userData.generation}기` 
-                    : "유저"
-                }
-              </Batch>
+              <Batch>      {loggedInUserId === "ROLE_ADMIN"
+        ? "멘토"
+        : userData?.generation 
+          ? `${userData.generation}기` 
+          : "유저"
+      }
+    </Batch>
 
               <Id>{userData?.uid}</Id>
             </Tie>
