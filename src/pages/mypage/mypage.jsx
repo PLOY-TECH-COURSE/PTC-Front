@@ -158,7 +158,7 @@ const Mypage = () => {
   const location = useLocation();
   const { uid } = location.state || {};
 
-  const loggedInUserId = useRecoilValue(authAtom).uid;
+  const role = useRecoilValue(authAtom).role;
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
   const [userData, setUserData] = useState(null);
@@ -167,7 +167,8 @@ const Mypage = () => {
   const [favoritePosts, setFavoritePosts] = useState([]);
   const [myPosts, setMyPosts] = useState([]);
   const [profileImage, setProfileImage] = useState(userData?.profile || "");
-
+  console.log(role);
+  const user = useRecoilValue(authAtom);
   const isOwnProfile = loggedInUserId === userId;
 
   useEffect(() => {
@@ -298,8 +299,15 @@ const Mypage = () => {
           />
           <Info>
             <Tie>
-              <Batch>{userData?.generation ? `${userData.generation}기` : "멘토"}
+              <Batch>
+                {userData?.role === "ROLE_ADMIN"
+                  ? "멘토"
+                  : userData?.generation 
+                    ? `${userData.generation}기` 
+                    : "유저"
+                }
               </Batch>
+
               <Id>{userData?.uid}</Id>
             </Tie>
             <Stats>
