@@ -170,7 +170,6 @@ const Mypage = () => {
   const user = useRecoilValue(authAtom);
   const isOwnProfile = loggedInUserId === userId;
   console.log(role);
-
   useEffect(() => {
     if (!userId) {
       console.warn("userId가 없습니다.");
@@ -299,7 +298,7 @@ const Mypage = () => {
           />
           <Info>
             <Tie>
-              <Batch>      {role === "ROLE_ADMIN"
+              <Batch>      {userData?.role === "ROLE_ADMIN"
         ? "멘토"
         : userData?.generation 
           ? `${userData.generation}기` 
