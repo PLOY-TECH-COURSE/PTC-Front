@@ -7,9 +7,9 @@ import DownWhite from '../../../assets/onboarding/process/downBlack.svg';
 export default function Process({change, isAnimation}) {
     const content = [
         {id : 1, title : "참가 신청", subText : "03.10(월) ~ 03.21(금)<br /> 23:59:59 마감", status : true},
-        {id : 2, title : "1차 합격 발표", subText : "03.24(월) <br /> 22시", status : false},
-        {id : 3, title : "오프라인 면접", subText : "03.25(화)<br />상세일정 이메일로 안내", status : true},
-        {id : 4, title : "최종 합격 발표", subText : "03.30(일)<br />22시", status : false},
+        {id : 2, title : "1차 합격 발표", subText : "03.22(토) <br /> 22시", status : false},
+        {id : 3, title : "오프라인 면접", subText : "03.23(일)<br />상세일정 이메일로 안내", status : true},
+        {id : 4, title : "최종 합격 발표", subText : "03.24(월)<br />22시", status : false},
     ]
     return (
         <S.ProcessContainer>
