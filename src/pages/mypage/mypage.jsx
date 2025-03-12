@@ -157,7 +157,7 @@ const Mypage = () => {
   const { userId } = useParams();
   const location = useLocation();
   const { uid } = location.state || {};
-  const loggedInUserId = useRecoilValue(authAtom).role;
+  const loggedInUserId = useRecoilValue(authAtom).uid;
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
   const [userData, setUserData] = useState(null);
