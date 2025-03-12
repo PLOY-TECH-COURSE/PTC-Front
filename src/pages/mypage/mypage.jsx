@@ -299,13 +299,16 @@ const Mypage = () => {
           />
           <Info>
             <Tie>
-              <Batch>      {userData?.role === "ROLE_ADMIN"
-        ? "멘토"
-        : userData?.generation 
-          ? `${userData.generation}기` 
-          : "유저"
-      }
-    </Batch>
+            <Batch>
+              {userData?.role === "ROLE_SUPERADMIN"
+                ? "관리자" 
+                : userData?.role === "ROLE_ADMIN"
+                ? "멘토"
+                : userData?.generation
+                ? `${userData.generation}기`
+                : "유저"}
+            </Batch>
+
 
               <Id>{userData?.uid}</Id>
             </Tie>
