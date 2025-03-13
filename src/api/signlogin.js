@@ -23,7 +23,7 @@ export const signupData = async (name,id,email,code,password, confirmPassword, t
       return false;
   }
 };
-const emailRegex = /^[^\s@]+@[^\s@]+\.(com)$/;
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export const emailcode = async (email) => {
     try {
@@ -31,6 +31,8 @@ export const emailcode = async (email) => {
             alert("이메일 형식이 올바르지 않습니다.");
             return false;
         }
+
+
 
         const response = await axiosInstance.post('/email', { email });
 

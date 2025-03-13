@@ -5,7 +5,6 @@ import like from "../../assets/like.svg";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useRecoilValue} from "recoil";
-import { authAtom } from "../../recoil/authAtom";
 import {getUserProfile} from "../../api/mypage";
 import { getFavoritePosts } from "../../api/favortie";
 import { getMyPosts } from "../../api/mywrite";
@@ -14,6 +13,7 @@ import { updateBio } from "../../api/edit";
 import { uploadImg,uploadImg1 } from "../../api/profile";
 import PostItem from "../../components/postItem";
 import Confirm from "../../components/modal/confirm/index.jsx";
+import { authAtom } from "../../recoil/authAtom.js";
 
 const Container = styled.div`
   max-width: 800px;
@@ -157,7 +157,7 @@ const Mypage = () => {
   const { userId } = useParams();
   const location = useLocation();
   const { uid } = location.state || {};
-
+  const loggedInrole= useRecoilValue(authAtom).role;
   const loggedInUserId = useRecoilValue(authAtom).uid;
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
@@ -167,9 +167,10 @@ const Mypage = () => {
   const [favoritePosts, setFavoritePosts] = useState([]);
   const [myPosts, setMyPosts] = useState([]);
   const [profileImage, setProfileImage] = useState(userData?.profile || "");
-
+  const role = useRecoilValue(authAtom).role;
+  const user = useRecoilValue(authAtom);
   const isOwnProfile = loggedInUserId === userId;
-
+  console.log(role);
   useEffect(() => {
     if (!userId) {
       console.warn("userId가 없습니다.");
@@ -298,8 +299,17 @@ const Mypage = () => {
           />
           <Info>
             <Tie>
-              <Batch>{userData?.generation ? `${userData.generation}기` : "멘토"}
-              </Batch>
+            <Batch>
+              {userData?.role === "ROLE_SUPERADMIN"
+                ? "관리자" 
+                : userData?.role === "ROLE_ADMIN"
+                ? "멘토"
+                : userData?.generation
+                ? `${userData.generation}기`
+                : "유저"}
+            </Batch>
+
+
               <Id>{userData?.uid}</Id>
             </Tie>
             <Stats>
