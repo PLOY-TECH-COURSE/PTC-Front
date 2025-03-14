@@ -12,7 +12,7 @@ export default function AuthConfirm({role}){
         if(auth.role === ''){
             setIsCheck(true);
         }
-        else if(role !== auth.role){
+        else if(role.includes(auth.role)){
             setIsCheck(true);
         }
     }, [])

@@ -36,10 +36,10 @@ createRoot(document.getElementById('root')).render(
                     <Route path="/announcement/:id" element={<Detail2 />} /> 
                     
 
-                    <Route element={<Confirm role='ROLE_STUDENT' />}>
+                    <Route element={<Confirm role='ROLE_STUDENT, ROLE_ADMIN, ROLE_SUPERADMIN' />}>
                         <Route path='/write/:id' element={<Write />} />
                     </Route>
-                    <Route element={<Confirm role='ROLE_ADMIN' />}>
+                    <Route element={<Confirm role='ROLE_ADMIN, ROLE_SUPERADMIN' />}>
                         <Route path="/proposer" element={<Proposer />} />
                     </Route>
                     <Route element={<Confirm role='ROLE_SUPERADMIN' />}>
