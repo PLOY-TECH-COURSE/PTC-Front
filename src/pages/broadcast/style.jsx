@@ -29,11 +29,7 @@ export const PostListMain = styled.div`
     flex-wrap: wrap;
     height: 70vh;
     justify-content: space-between;
-    row-gap: 40px;
-
-    h2{
-        margin-left: 6px;
-    }
+    /* row-gap: 40px; */
 `
 
 export const PostData = styled.div`

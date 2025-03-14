@@ -41,6 +41,7 @@ export default function Detail() {
                     navigate(-1);
                 })
                 .catch((err) => {
+                    console.error('삭제 실패', err);
                     alert('삭제에 실패했습니다.');
                 });
         }
@@ -82,7 +83,7 @@ export default function Detail() {
                                 <img src={Bullhorn} />
                                 <h1>{post.document.title}</h1>
                                 {post.userInfoDTO.uid === user.uid && (
-                                <S.Edit>
+                                    <S.Edit>
                                         <p onClick={handleDelete}>삭제</p>
                                         <p onClick={handleEdit}>수정</p>
                                     </S.Edit>

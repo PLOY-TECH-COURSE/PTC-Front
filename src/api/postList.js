@@ -84,4 +84,3 @@ export const togglePostLike = async (documentId, likeOn) => {
         return null;
     }
 };
-
