@@ -199,7 +199,7 @@ export const Content =styled.div`
 `
 
 export const H1 = styled.span`
-        font-size: 30px;
+        font-size: 27px;
         font-weight: 700;
 `
 export const H2 = styled.span`
