@@ -105,15 +105,8 @@ export const PostDetailData = styled.div`
     display: flex;
     flex-direction: column;
     padding: 1% 0;
-
     img{
         margin-top: 10px;
-    }
-    span{
-        font-size: 16px;
-        color: #000;
-        border: none;
-        opacity: 0.6;
     }
 `
 
