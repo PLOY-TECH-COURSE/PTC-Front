@@ -32,7 +32,8 @@ export default function Write(){
     const [under, setUnder] = useState(true);
     const [cancel, setCancel] = useState(true);
     const [img, setImg] = useState(true);
-    console.log(data);
+    const [fake_content, setFakeContent] = useState('');
+
     const addText = (num)=>{
         contentRef.current.focus();
         if(content.length > 0) setContent((prevText) =>prevText + "\n" + num);
@@ -41,8 +42,9 @@ export default function Write(){
 
     // 미리보기 아래로 이동하기
     useEffect(() => {
-        if (containerRef.current) {
+        if (containerRef.current && fake_content !== content) {
             containerRef.current.scrollTop = containerRef.current.scrollHeight;
+            setFakeContent(content);
         }
     }, [content]);
 
@@ -134,6 +136,7 @@ export default function Write(){
             setTag("");
         }
     }
+
     return(
         <S.WriteContainer>
             {isModal && <WriteModal data = {data} title = {title} content = {content} tag = {showTag} setIsModal={()=>setIsModal()} />}
