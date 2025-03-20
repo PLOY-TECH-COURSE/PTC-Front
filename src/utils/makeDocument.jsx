@@ -86,5 +86,13 @@ export default function makeDocument(text = "") {
             </>
         );
     }
+    // cleanText = text.replace(/(<코드>)([\s\S]*?)(<\/코드>)/g, (_, start, content, end) => {
+    //     return start + content.replace(/\n/g, '<<br>>') + end;
+    // });
+    // const lines = text.split("\n").map((line, index) => (
+    //     <S.div2 key={index}>
+    //         {parseText(line)}
+    //     </S.div2>
+    // ));
     return <S.div>{parseText(text)}</S.div>;
 }
