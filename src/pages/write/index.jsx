@@ -17,6 +17,8 @@ import {modalAtom} from "../../recoil/modalAtom.js";
 import WriteModal from "../../components/modal/write/index.jsx";
 import makeDocument from "../../utils/makeDocument.jsx";
 import {uploadImg} from "../../api/write.js";
+import CodeBlack from '../../assets/write/codeBlack.svg';
+import CodeGray from '../../assets/write/codeGray.svg';
 
 export default function Write(){
     const navigate = useNavigate()
@@ -31,20 +33,55 @@ export default function Write(){
     const [italic, setItalic] = useState(true);
     const [under, setUnder] = useState(true);
     const [cancel, setCancel] = useState(true);
+    const [code, setCode] = useState(true);
     const [img, setImg] = useState(true);
-    const [fake_content, setFakeContent] = useState('');
 
-    const addText = (num)=>{
-        contentRef.current.focus();
+    const addText = (num, position)=>{
         if(content.length > 0) setContent((prevText) =>prevText + "\n" + num);
         else setContent((prevText) =>prevText + num);
+        setTimeout(()=>{
+            if(content.length){
+                contentRef.current.focus();
+                contentRef.current.setSelectionRange(position, position);
+            }
+            else{
+                contentRef.current.focus();
+                contentRef.current.setSelectionRange(position-1, position-1);
+            }
+        }, 0)
     }
+    const [height, setHeight] = useState(0);
+    const handleInput = () => {
+        if (!contentRef.current) return;
 
+        const textarea = contentRef.current;
+        const text = textarea.value.substring(0, textarea.selectionStart); // 커서 이전까지의 텍스트 가져오기
+        const dummyDiv = document.createElement("div"); // 가상의 div 생성하여 높이 측정
+        const style = window.getComputedStyle(textarea);
+
+        // textarea의 스타일을 그대로 적용
+        Object.assign(dummyDiv.style, {
+            position: "absolute",
+            visibility: "hidden",
+            width: style.width,
+            fontSize: style.fontSize,
+            fontFamily: style.fontFamily,
+            lineHeight: style.lineHeight,
+            whiteSpace: "pre-wrap",
+            wordWrap: "break-word",
+            padding: style.padding,
+        });
+
+        dummyDiv.textContent = text + "\u200B";
+        document.body.appendChild(dummyDiv);
+        setHeight(dummyDiv.offsetHeight);
+        document.body.removeChild(dummyDiv);
+    };
     // 미리보기 아래로 이동하기
     useEffect(() => {
-        if (containerRef.current && fake_content !== content) {
-            containerRef.current.scrollTop = containerRef.current.scrollHeight;
-            setFakeContent(content);
+        console.log(height)
+        if (containerRef.current && height > 0) {
+            containerRef.current.scrollTop = height;
         }
     }, [content]);
 
@@ -137,6 +174,21 @@ export default function Write(){
         }
     }
 
+    const handleDown = (e)=>{
+        if(e.key === 'Tab'){
+            e.preventDefault();
+            const textarea = contentRef.current;
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+
+            // 현재 커서 위치에 Tab(4칸 공백) 삽입
+            const value = textarea.value;
+            textarea.value = value.substring(0, start) + "    " + value.substring(end);
+
+            // 커서를 Tab이 삽입된 위치 뒤로 이동
+            textarea.setSelectionRange(start + 4, start + 4);
+        }
+    }
     return(
         <S.WriteContainer>
             {isModal && <WriteModal data = {data} title = {title} content = {content} tag = {showTag} setIsModal={()=>setIsModal()} />}
@@ -175,36 +227,36 @@ export default function Write(){
                     </S.TagBox>
                     <S.ToolBar>
                         <S.ToolBox>
-                            <S.Function onClick={()=>addText("<제목1></제목1>")}>h1</S.Function>
-                            <S.Function onClick={()=>addText("<제목2></제목2>")}>h2</S.Function>
-                            <S.Function onClick={()=>addText("<제목3></제목3>")}>h3</S.Function>
-                            <S.Function onClick={()=>addText("<제목4></제목4>")}>h4</S.Function>
+                            <S.Function onClick={()=>addText("<제목1></제목1>", content.length + 6)}>h1</S.Function>
+                            <S.Function onClick={()=>addText("<제목2></제목2>", content.length + 6)}>h2</S.Function>
+                            <S.Function onClick={()=>addText("<제목3></제목3>", content.length + 6)}>h3</S.Function>
+                            <S.Function onClick={()=>addText("<제목4></제목4>", content.length + 6)}>h4</S.Function>
                         </S.ToolBox>
                         <S.Function $not = {true}>|</S.Function>
                         <S.ToolBox>
                             <S.Function
-                                onClick={()=>addText("<강조></강조>")}
+                                onClick={()=>addText("<강조></강조>", content.length + 5)}
                                 onMouseEnter={()=>setBold(false)}
                                 onMouseLeave={()=>setBold(true)}
                             >
                                 <img src={bold ? BoldGray : Bold} alt={'Bold'} width={"100%"} />
                             </S.Function>
                             <S.Function
-                                onClick={()=>addText("<기울임></기울임>")}
+                                onClick={()=>addText("<기울임></기울임>", content.length + 6)}
                                 onMouseEnter={()=>setItalic(false)}
                                 onMouseLeave={()=>setItalic(true)}
                             >
                                 <img src={italic ? ItalicGray : Italic} alt={'Italic'} width={"100%"} />
                             </S.Function>
                             <S.Function
-                                onClick={()=>addText("<취소선></취소선>")}
+                                onClick={()=>addText("<취소선></취소선>", content.length + 6)}
                                 onMouseEnter={()=>setCancel(false)}
                                 onMouseLeave={()=>setCancel(true)}
                             >
                                 <img src={cancel ? CancelLineGray : CancelLine} alt={'Cancel'} width={"100%"} />
                             </S.Function>
                             <S.Function
-                                onClick={()=>addText("<밑줄></밑줄>")}
+                                onClick={()=>addText("<밑줄></밑줄>", content.length + 5)}
                                 onMouseEnter={()=>setUnder(false)}
                                 onMouseLeave={()=>setUnder(true)}
                             >
@@ -220,10 +272,21 @@ export default function Write(){
                             >
                                 <img src={img ? ImgGray : Img} alt={'img'} width={"100%"} />
                             </S.Function>
-                            <S.Function onClick={()=>addText("<줄></줄>")}>hr</S.Function>
+                            <S.Function onClick={()=>addText("<줄></줄>", content.length + 8)}>hr</S.Function>
+                            <S.Function
+                                onClick={()=>addText("<코드></코드>", content.length + 5)}
+                                onMouseEnter={()=>setCode(false)}
+                                onMouseLeave={()=>setCode(true)}
+                            >
+                                <img src={code ? CodeGray : CodeBlack} alt={'Code'} width={"90%"} />
+                            </S.Function>
                         </S.ToolBox>
                     </S.ToolBar>
                     <S.ContentInput
+                        onKeyDown={(e)=>handleDown(e)}
+                        onInput={handleInput}
+                        onKeyUp={handleInput}
+                        onClick={handleInput}
                         placeholder={"내용을 입력해주세요"}
                         value={content}
                         ref={contentRef}
