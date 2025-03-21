@@ -42,6 +42,12 @@ export default function makeDocument(text = "") {
             component : (src) => {
                 return <S.img src={src} alt={"추가된이미지"} />
             }
+        },
+        {
+            pattern:/<코드>\n?([\s\S]*?)\n?<\/코드>/,
+            component : (src) => {
+                return <S.Code><code>{src}</code></S.Code>
+            }
         }
     ];
 
@@ -60,8 +66,13 @@ export default function makeDocument(text = "") {
             }
         });
 
+
         // 매칭된 태그가 없으면 단순 텍스트 반환
-        if (!earliestMatch) return inputText;
+        if (!earliestMatch){
+            return inputText.split("\n").map((line, index) => (
+                <S.div2>{line}</S.div2>
+            ));
+        }
 
         const [fullMatch, innerText] = earliestMatch;
         const prefixText = inputText.slice(0, earliestMatch.index);
@@ -75,10 +86,13 @@ export default function makeDocument(text = "") {
             </>
         );
     }
-
-    const lines = text.split("\n").map((line, index) => (
-        <S.div2 key={index}>{parseText(line)}</S.div2>
-    ));
-
-    return <S.div>{lines}</S.div>;
+    // cleanText = text.replace(/(<코드>)([\s\S]*?)(<\/코드>)/g, (_, start, content, end) => {
+    //     return start + content.replace(/\n/g, '<<br>>') + end;
+    // });
+    // const lines = text.split("\n").map((line, index) => (
+    //     <S.div2 key={index}>
+    //         {parseText(line)}
+    //     </S.div2>
+    // ));
+    return <S.div>{parseText(text)}</S.div>;
 }

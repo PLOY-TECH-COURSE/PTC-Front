@@ -33,8 +33,7 @@ createRoot(document.getElementById('root')).render(
                     <Route path='/user/:userId' element={<MyPage />} />
                     <Route path="/post/:id" element={<Detail />} /> 
                     <Route path='/broadcast' element={<Broadcast />} />
-                    <Route path="/announcement/:id" element={<Detail2 />} /> 
-                    
+                    <Route path="/announcement/:id" element={<Detail2 />} />
 
                     <Route element={<Confirm role='ROLE_STUDENT, ROLE_ADMIN, ROLE_SUPERADMIN' />}>
                         <Route path='/write/:id' element={<Write />} />

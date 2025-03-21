@@ -224,12 +224,13 @@ export const div = styled.div`
                 margin: 5px;
         }
 `
-export const div2 = styled.div`
+export const div2 = styled.span`
         width: 100%;
         word-break: break-all;
         display: flex;
         min-height: max-content;
-        flex-flow: column wrap;
+        align-content: center;
+        flex-flow: row wrap;
 `
 export const underLine = styled.span`
         text-decoration-line: underline;
@@ -249,3 +250,18 @@ export const img = styled.img`
         display: block;
         margin: 0 auto;
 `
+export const Code = styled.pre`
+        width: 98%;
+        background: #efefef;
+        padding: 10px 14px;
+        border-radius: 8px;
+        margin: 0 auto;
+
+        & > code {
+                max-width: 100%;
+                word-break: break-word; /* 줄바꿈 처리 */
+                overflow-wrap: break-word; /* 긴 단어가 있을 때 줄바꿈 */
+                white-space: pre-wrap; /* 코드 줄바꿈 유지 */
+                overflow: auto; /* 내용이 길면 스크롤 */
+        }
+`;
