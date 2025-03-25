@@ -14,7 +14,6 @@ export default function WriteModal({data, title, tag, content, setIsModal}){
     const [intro, setIntro] = useState(data?.introduction || '');
     const [isLoading, setIsLoading] = useState(false);
     const {id}= useParams();
-    console.log(data);
     const navigate = useNavigate();
     const changeFile = async (event) => {
         const allowedImageTypes = ["image/jpeg", "image/png", "image/jpg"];
