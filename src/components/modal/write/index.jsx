@@ -77,11 +77,11 @@ export default function WriteModal({data, title, tag, content, setIsModal}){
                         if(ImgSrc === "") ImgSrc = null;
                         if(id !=="new"){
                             if(isBroad){
-                                if(await patchBroad(title, content, tag, ImgSrc, intro, id)){
+                                if(await patchBroad(title, content, tag, ImgSrc, intro, Number(id))){
                                     navigate('/broadcast');
                                 }
                             }
-                            else if(await patchDocument(title, content, tag.map((item) => item.tag), ImgSrc, intro, id)){
+                            else if(await patchDocument(title, content, tag.map((item) => item.tag), ImgSrc, intro, Number(id))){
                                 navigate('/postList');
                             }
                         }
