@@ -8,7 +8,7 @@ import {useRecoilValue} from "recoil";
 
 export default function WriteModal({data, title, tag, content, setIsModal}){
     const fileRef = useRef(null);
-    const [isBroad, setIsBroad] = useState(data ? !data?.isPost : false);
+    const [isBroad, setIsBroad] = useState(data ? data?.isAnnouncements : false);
     const [img, setImg] = useState(data?.thumbnail || '');
     const {role} = useRecoilValue(authAtom);
     const [intro, setIntro] = useState(data?.introduction || '');
@@ -48,8 +48,8 @@ export default function WriteModal({data, title, tag, content, setIsModal}){
                 {role === "ROLE_ADMIN" || role === "ROLE_SUPERADMIN" &&
                     <S.Broad>
                         <input type={'checkbox'} value={isBroad}  onChange={()=>{
-                            if(!data?.isPost && data?.isBroad){
-                                alert('이글은 공지사항 수정입니다')
+                            if(data?.isPost || data?.isAnnouncements){
+                                alert('수정중에는 변경하실 수 없습니다.');
                                 return ;
                             }
                             setIsBroad(!isBroad)
