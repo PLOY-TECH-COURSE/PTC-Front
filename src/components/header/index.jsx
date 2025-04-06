@@ -127,8 +127,12 @@ function Header() {
             <S.Dropdown $isOpen={isOpen[0]}>
               <S.Text2 onClick={() => { navigate(`/user/${user.uid}`) }}>내 정보</S.Text2>
               <S.Text2 onClick={() => {
-                if (logout()) {
-                  navigate('/');
+                if(localStorage.getItem('temporary')){
+                  if(confirm('현재 임시저장 되어있는 글이 있습니다. \n로그아웃을 한다면 글은 사라집니다. 로그아웃 하시겠습니까?')){
+                    if (logout()) {
+                      navigate('/');
+                    }
+                  }
                 }
               }}>로그아웃</S.Text2>
             </S.Dropdown>

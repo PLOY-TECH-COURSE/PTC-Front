@@ -2,23 +2,23 @@ import * as S from "../pages/write/style.jsx"
 export default function makeDocument(text = "") {
     const tagPatterns = [
         {
-            pattern: /<제목1>(.*?)<\/제목1>/,
+            pattern:  /<제목1>\n?([\s\S]*?)\n?<\/제목1>/,
             component: (text) => <S.H1>{text}</S.H1>
         },
         {
-            pattern: /<제목2>(.*?)<\/제목2>/,
+            pattern:  /<제목2>\n?([\s\S]*?)\n?<\/제목2>/,
             component: (text) => <S.H2>{text}</S.H2>
         },
         {
-            pattern: /<제목3>(.*?)<\/제목3>/,
+            pattern:  /<제목3>\n?([\s\S]*?)\n?<\/제목3>/,
             component: (text) => <S.H3>{text}</S.H3>
         },
         {
-            pattern: /<제목4>(.*?)<\/제목4>/,
+            pattern:  /<제목4>\n?([\s\S]*?)\n?<\/제목4>/,
             component: (text) => <S.H4>{text}</S.H4>
         },
         {
-            pattern: /<강조>(.*?)<\/강조>/,
+            pattern: /<강조>\n?([\s\S]*?)\n?<\/강조>/,
             component: (text) => <strong>{text}</strong>
         },
         {
@@ -26,11 +26,11 @@ export default function makeDocument(text = "") {
             component: (text) => <S.underLine>{text}</S.underLine>
         },
         {
-            pattern: /<기울임>(.*?)<\/기울임>/,
+            pattern:  /<기울임>\n?([\s\S]*?)\n?<\/기울임>/,
             component: (text) => <i>{text}</i>,
         },
         {
-            pattern: /<취소선>(.*?)<\/취소선>/,
+            pattern:  /<취소선>\n?([\s\S]*?)\n?<\/취소선>/,
             component: (text) => <S.cancelLine>{text}</S.cancelLine>,
         },
         {

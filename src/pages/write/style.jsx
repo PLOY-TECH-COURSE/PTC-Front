@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes, css } from "styled-components";
 
 export const DragBox = styled.div`
         position: fixed;
@@ -265,3 +265,38 @@ export const Code = styled.pre`
                 overflow: auto; /* 내용이 길면 스크롤 */
         }
 `;
+
+const showTemp = keyframes`
+        0%{
+                transform: translateY(-50px);
+                opacity: 0;
+        }
+        30%{
+                transform: translateY(0);
+                opacity: 1;
+        }
+        80%{
+                transform: translateY(0);
+                opacity: 1;
+        }
+        100%{
+                transform: translateY(50px);
+                opacity: 0;
+        }
+`
+export const ShowTemp = styled.div`
+        position: fixed;
+        top: 5%;
+        right: 5%;
+        width: max-content;
+        padding: 10px 20px;
+        border-radius: 8px;
+        background-color: #4970FB;
+        color: white;
+        box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.25);
+        ${(props) =>
+    props.$status &&
+    css`
+      animation: ${showTemp} ease-in-out 3s;
+    `}
+`
