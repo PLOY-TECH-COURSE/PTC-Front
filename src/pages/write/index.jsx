@@ -135,6 +135,20 @@ export default function Write(){
         const [tag, setTag] = useState([""]);
         const [showTag, setShowTag] = useState([]);
         useEffect(() => {
+            const temp = JSON.parse(localStorage.getItem('temporary'));
+            if(temp){
+                if(confirm('현재 임시저장되어있는 데이터가 있습니다. 불러오시겠습니까? 취소시 데이터는 사라집니다.')){
+                    setTitle(temp.title)
+                    setContent(temp.content)
+                    if(temp.tag){
+                        setShowTag(temp.tag);
+                    }
+                }
+                else{
+                    localStorage.removeItem('temporary');
+                }
+               
+            }
             if(data?.hash_tag.length > 0){
                 const newTag = data.hash_tag.map((item, idx)=>{
                     return {tag : item, id : idx}
@@ -164,8 +178,35 @@ export default function Write(){
                 textarea.setSelectionRange(start + 4, start + 4);
             }
         }
+        const titleRef = useRef(title);
+        const contentValueRef = useRef(content);
+        const tagRef = useRef(showTag);
+
+        // 매번 최신 값 유지
+        useEffect(() => { titleRef.current = title }, [title]);
+        useEffect(() => { contentValueRef.current = content }, [content]);
+        useEffect(() => { tagRef.current = showTag }, [showTag]);
+        const [showTemp, setShowTemp] = useState(false);
+        useEffect(() => {
+            const interval = setInterval(() => {
+            if (contentValueRef.current.trim()) {
+                localStorage.setItem('temporary', JSON.stringify({
+                title: titleRef.current,
+                content: contentValueRef.current,
+                tag: tagRef.current,
+                }));
+                setShowTemp(true);
+                setTimeout(()=>{
+                    setShowTemp(false);
+                }, 2900);
+            }
+            }, 15000);
+
+            return () => clearInterval(interval);
+        }, []); 
         return(
             <S.WriteContainer>
+                {showTemp && <S.ShowTemp $status = {showTemp} >임시저장완료</S.ShowTemp>}
                 {isModal && <WriteModal data = {data} title = {title} content = {content} tag = {showTag} setIsModal={()=>setIsModal()} />}
                 {isOver && <S.DragBox/>}
                 <S.Header>
