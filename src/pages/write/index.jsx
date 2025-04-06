@@ -200,7 +200,7 @@ export default function Write(){
                     setShowTemp(false);
                 }, 2900);
             }
-            }, 15000);
+            }, 30000);
 
             return () => clearInterval(interval);
         }, []); 
