@@ -132,6 +132,11 @@ function Header() {
                     if (logout()) {
                       navigate('/');
                     }
+                    localStorage.removeItem('temporary')
+                  }
+                }else{
+                  if (logout()) {
+                    navigate('/');
                   }
                 }
               }}>로그아웃</S.Text2>
