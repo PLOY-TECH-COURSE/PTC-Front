@@ -217,6 +217,8 @@ export default function Write(){
                             if(title.length === 0 || content.length === 0){
                                 alert('제목와 내용을 입력해주세요.');
                                 return;
+                            }else if(title.length > 15){
+                                alert('제목은 15글자 이내로 가능합니다.');
                             }
                             setIsModal(true)
                         }}  $Success = {true} >등록하기</S.Btn>
