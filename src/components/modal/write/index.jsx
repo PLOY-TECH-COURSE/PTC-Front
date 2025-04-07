@@ -78,19 +78,23 @@ export default function WriteModal({data, title, tag, content, setIsModal}){
                             if(isBroad){
                                 if(await patchBroad(title, content, tag, ImgSrc, intro, Number(id))){
                                     navigate('/broadcast');
+                                    localStorage.removeItem('temporary')
                                 }
                             }
                             else if(await patchDocument(title, content, tag.map((item) => item.tag), ImgSrc, intro, Number(id))){
                                 navigate('/postList');
+                                localStorage.removeItem('temporary')
                             }
                         }
                         else if(isBroad){
                             if(await postBroad(title, content, tag, ImgSrc, intro)){
                                 navigate('/broadcast');
+                                localStorage.removeItem('temporary')
                             }
                         }
                         else if(await postDocument(title, content, tag.map(item=>item.tag), ImgSrc, intro)){
                             navigate('/postList');
+                            localStorage.removeItem('temporary')
                         }
                         setIsLoading(false);
                         setIsModal(false);
