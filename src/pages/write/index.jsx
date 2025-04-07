@@ -137,7 +137,7 @@ export default function Write(){
         useEffect(() => {
             const temp = JSON.parse(localStorage.getItem('temporary'));
             if(temp){
-                if(confirm('현재 임시저장되어있는 데이터가 있습니다. 불러오시겠습니까? 취소시 데이터는 사라집니다.')){
+                if(confirm('현재 임시저장되어있는 데이터가 있습니다. 불러오시겠습니까?\n 취소 시 데이터는 사라집니다.')){
                     setTitle(temp.title)
                     setContent(temp.content)
                     if(temp.tag){
@@ -200,7 +200,7 @@ export default function Write(){
                     setShowTemp(false);
                 }, 2900);
             }
-            }, 30000);
+            }, 60000);
 
             return () => clearInterval(interval);
         }, []); 
