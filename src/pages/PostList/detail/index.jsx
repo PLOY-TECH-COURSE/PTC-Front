@@ -246,7 +246,7 @@ export default function Detail() {
                                 <img onClick={() => navigate(`/user/${post.userInfoDTO.id}`, { state: { uid: post.userInfoDTO.uid } })} src={post.userInfoDTO.profile} alt={post.userInfoDTO.name} />
                                 <S.RightProfile>
                                     <span>
-                                        {isNaN(post.generation) ? post.generation : `${post.generation}기`}
+                                        {isNaN(post.generation) ? post.generation : `${post.generation}기 멘티`}
                                     </span>
 
                                     <p onClick={() => navigate(`/user/${post.userInfoDTO.id}`, { state: { uid: post.userInfoDTO.uid } })} >{post.userInfoDTO.name}</p>
