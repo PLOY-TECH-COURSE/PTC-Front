@@ -19,6 +19,8 @@ import Proposer from './pages/proposer/index.jsx';
 import Select from './pages/select/index.jsx';
 import {LoginConfirm} from "./components/loginConfirm/index.jsx";
 import Mobile from './components/confirm/index.jsx';
+import Confirm from './components/authConfirm/index.jsx';
+import Error from './components/error/index.jsx';
 
 createRoot(document.getElementById('root')).render(
    <RecoilRoot>
@@ -31,14 +33,19 @@ createRoot(document.getElementById('root')).render(
                     <Route path='/user/:userId' element={<MyPage />} />
                     <Route path="/post/:id" element={<Detail />} /> 
                     <Route path='/broadcast' element={<Broadcast />} />
-                    <Route path="/announcement/:id" element={<Detail2 />} /> 
-                    
+                    <Route path="/announcement/:id" element={<Detail2 />} />
 
+                    <Route element={<Confirm role='ROLE_STUDENT, ROLE_ADMIN, ROLE_SUPERADMIN' />}>
+                        <Route path='/write/:id' element={<Write />} />
+                    </Route>
+                    <Route element={<Confirm role='ROLE_ADMIN, ROLE_SUPERADMIN' />}>
+                        <Route path="/proposer" element={<Proposer />} />
+                    </Route>
+                    <Route element={<Confirm role='ROLE_SUPERADMIN' />}>
+                        <Route path="/authority" element={<Select/>} />
+                    </Route>
                     
-                    <Route path='/write/:id' element={<Write />} />
-
-                    <Route path="/authority" element={<Select/>} />
-                    <Route path="/proposer" element={<Proposer />} />
+                    <Route path='*' element={<Error />} />
                 </Route>
             </Route>
         </Routes>

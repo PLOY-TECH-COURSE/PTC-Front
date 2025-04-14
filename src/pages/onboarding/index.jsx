@@ -12,6 +12,7 @@ import { modalAtom } from "../../recoil/modalAtom.js";
 import * as S from "../../components/onboarding/first/style.jsx";
 import Header from "../../components/header/index.jsx";
 import {isApplyAtom} from "../../recoil/isApply.js";
+import Congratulation from "../../components/Congratulation/index.jsx";
 
 const FullPageWrapper = styled.div`
     #fullpage {
@@ -97,11 +98,14 @@ const Main = () => {
             fullpageRef.current.moveTo(anchor);
         }
     };
+    const ok = localStorage.getItem('ok');
+    const [isPost, setIsPost] = useState(true);
     return (
         <div>
             <S.HeaderBox>
                 <Header/>
             </S.HeaderBox>
+            {ok === null && isPost && <Congratulation onClose={() => setIsPost(false)} />}
             <FullPageWrapper>
                 <div id={'fullpage'}>
                     <div className={'section'}><First/></div>

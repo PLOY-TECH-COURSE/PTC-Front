@@ -2,23 +2,23 @@ import * as S from "../pages/write/style.jsx"
 export default function makeDocument(text = "") {
     const tagPatterns = [
         {
-            pattern: /<제목1>(.*?)<\/제목1>/,
+            pattern:  /<제목1>\n?([\s\S]*?)\n?<\/제목1>/,
             component: (text) => <S.H1>{text}</S.H1>
         },
         {
-            pattern: /<제목2>(.*?)<\/제목2>/,
+            pattern:  /<제목2>\n?([\s\S]*?)\n?<\/제목2>/,
             component: (text) => <S.H2>{text}</S.H2>
         },
         {
-            pattern: /<제목3>(.*?)<\/제목3>/,
+            pattern:  /<제목3>\n?([\s\S]*?)\n?<\/제목3>/,
             component: (text) => <S.H3>{text}</S.H3>
         },
         {
-            pattern: /<제목4>(.*?)<\/제목4>/,
+            pattern:  /<제목4>\n?([\s\S]*?)\n?<\/제목4>/,
             component: (text) => <S.H4>{text}</S.H4>
         },
         {
-            pattern: /<강조>(.*?)<\/강조>/,
+            pattern: /<강조>\n?([\s\S]*?)\n?<\/강조>/,
             component: (text) => <strong>{text}</strong>
         },
         {
@@ -26,11 +26,11 @@ export default function makeDocument(text = "") {
             component: (text) => <S.underLine>{text}</S.underLine>
         },
         {
-            pattern: /<기울임>(.*?)<\/기울임>/,
+            pattern:  /<기울임>\n?([\s\S]*?)\n?<\/기울임>/,
             component: (text) => <i>{text}</i>,
         },
         {
-            pattern: /<취소선>(.*?)<\/취소선>/,
+            pattern:  /<취소선>\n?([\s\S]*?)\n?<\/취소선>/,
             component: (text) => <S.cancelLine>{text}</S.cancelLine>,
         },
         {
@@ -40,7 +40,14 @@ export default function makeDocument(text = "") {
         {
             pattern:/<이미지 src="(.*?)"><\/이미지>/,
             component : (src) => {
-                return <S.img src={src} alt={"추가된이미지"} />
+                if(!src) return null
+                return <S.img src={src[0].props.children} alt={"추가된이미지"} />
+            }
+        },
+        {
+            pattern:/<코드>\n?([\s\S]*?)\n?<\/코드>/,
+            component : (src) => {
+                return <S.Code><code>{src}</code></S.Code>
             }
         }
     ];
@@ -60,8 +67,13 @@ export default function makeDocument(text = "") {
             }
         });
 
+
         // 매칭된 태그가 없으면 단순 텍스트 반환
-        if (!earliestMatch) return inputText;
+        if (!earliestMatch){
+            return inputText.split("\n").map((line, index) => (
+                <S.div2>{line}</S.div2>
+            ));
+        }
 
         const [fullMatch, innerText] = earliestMatch;
         const prefixText = inputText.slice(0, earliestMatch.index);
@@ -75,10 +87,13 @@ export default function makeDocument(text = "") {
             </>
         );
     }
-
-    const lines = text.split("\n").map((line, index) => (
-        <S.div2 key={index}>{parseText(line)}</S.div2>
-    ));
-
-    return <S.div>{lines}</S.div>;
+    // cleanText = text.replace(/(<코드>)([\s\S]*?)(<\/코드>)/g, (_, start, content, end) => {
+    //     return start + content.replace(/\n/g, '<<br>>') + end;
+    // });
+    // const lines = text.split("\n").map((line, index) => (
+    //     <S.div2 key={index}>
+    //         {parseText(line)}
+    //     </S.div2>
+    // ));
+    return <S.div>{parseText(text)}</S.div>;
 }

@@ -8,13 +8,12 @@ import {useRecoilValue} from "recoil";
 
 export default function WriteModal({data, title, tag, content, setIsModal}){
     const fileRef = useRef(null);
-    const [isBroad, setIsBroad] = useState(data ? !data?.isPost : false);
+    const [isBroad, setIsBroad] = useState(data ? data?.isAnnouncements : false);
     const [img, setImg] = useState(data?.thumbnail || '');
     const {role} = useRecoilValue(authAtom);
     const [intro, setIntro] = useState(data?.introduction || '');
     const [isLoading, setIsLoading] = useState(false);
     const {id}= useParams();
-
     const navigate = useNavigate();
     const changeFile = async (event) => {
         const allowedImageTypes = ["image/jpeg", "image/png", "image/jpg"];
@@ -48,8 +47,8 @@ export default function WriteModal({data, title, tag, content, setIsModal}){
                 {role === "ROLE_ADMIN" || role === "ROLE_SUPERADMIN" &&
                     <S.Broad>
                         <input type={'checkbox'} value={isBroad}  onChange={()=>{
-                            if(!data?.isPost && data?.isBroad){
-                                alert('이글은 공지사항 수정입니다')
+                            if(data?.isPost || data?.isAnnouncements){
+                                alert('수정중에는 변경하실 수 없습니다.');
                                 return ;
                             }
                             setIsBroad(!isBroad)
@@ -77,21 +76,25 @@ export default function WriteModal({data, title, tag, content, setIsModal}){
                         if(ImgSrc === "") ImgSrc = null;
                         if(id !=="new"){
                             if(isBroad){
-                                if(await patchBroad(title, content, tag, ImgSrc, intro, id)){
+                                if(await patchBroad(title, content, tag, ImgSrc, intro, Number(id))){
                                     navigate('/broadcast');
+                                    localStorage.removeItem('temporary')
                                 }
                             }
-                            else if(await patchDocument(title, content, tag.map((item) => item.tag), ImgSrc, intro, id)){
+                            else if(await patchDocument(title, content, tag.map((item) => item.tag), ImgSrc, intro, Number(id))){
                                 navigate('/postList');
+                                localStorage.removeItem('temporary')
                             }
                         }
                         else if(isBroad){
                             if(await postBroad(title, content, tag, ImgSrc, intro)){
                                 navigate('/broadcast');
+                                localStorage.removeItem('temporary')
                             }
                         }
                         else if(await postDocument(title, content, tag.map(item=>item.tag), ImgSrc, intro)){
                             navigate('/postList');
+                            localStorage.removeItem('temporary')
                         }
                         setIsLoading(false);
                         setIsModal(false);

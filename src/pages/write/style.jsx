@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes, css } from "styled-components";
 
 export const DragBox = styled.div`
         position: fixed;
@@ -199,7 +199,7 @@ export const Content =styled.div`
 `
 
 export const H1 = styled.span`
-        font-size: 30px;
+        font-size: 27px;
         font-weight: 700;
 `
 export const H2 = styled.span`
@@ -224,12 +224,13 @@ export const div = styled.div`
                 margin: 5px;
         }
 `
-export const div2 = styled.div`
+export const div2 = styled.span`
         width: 100%;
         word-break: break-all;
         display: flex;
         min-height: max-content;
-        flex-flow: column wrap;
+        align-content: center;
+        flex-flow: row wrap;
 `
 export const underLine = styled.span`
         text-decoration-line: underline;
@@ -248,4 +249,54 @@ export const img = styled.img`
         object-fit: cover;
         display: block;
         margin: 0 auto;
+`
+export const Code = styled.pre`
+        width: 98%;
+        background: #efefef;
+        padding: 10px 14px;
+        border-radius: 8px;
+        margin: 0 auto;
+
+        & > code {
+                max-width: 100%;
+                word-break: break-word; /* 줄바꿈 처리 */
+                overflow-wrap: break-word; /* 긴 단어가 있을 때 줄바꿈 */
+                white-space: pre-wrap; /* 코드 줄바꿈 유지 */
+                overflow: auto; /* 내용이 길면 스크롤 */
+        }
+`;
+
+const showTemp = keyframes`
+        0%{
+                transform: translateY(-50px);
+                opacity: 0;
+        }
+        30%{
+                transform: translateY(0);
+                opacity: 1;
+        }
+        80%{
+                transform: translateY(0);
+                opacity: 1;
+        }
+        100%{
+                transform: translateY(50px);
+                opacity: 0;
+        }
+`
+export const ShowTemp = styled.div`
+        position: fixed;
+        top: 5%;
+        right: 5%;
+        width: max-content;
+        padding: 10px 20px;
+        border-radius: 8px;
+        background-color: #4970FB;
+        color: white;
+        box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.25);
+        ${(props) =>
+    props.$status &&
+    css`
+      animation: ${showTemp} ease-in-out 3s;
+    `}
 `

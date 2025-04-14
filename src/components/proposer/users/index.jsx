@@ -18,7 +18,7 @@ const Users = ({ onClick, id, user_id, profile, name, email, refreshUsers }) => 
     e.stopPropagation(); 
     try {
       if (window.confirm(`${name}님의 테크코스 신청을 승인하시겠습니까?`)) {
-        await approveProposer( user_id, name);
+        await approveProposer(user_id, name);
         refreshUsers(); 
       }
     } catch (error) {
