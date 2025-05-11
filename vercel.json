@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "http://218.53.99.61:8081/:path*"
+      "destination": "kangsiwoo.com/:path*"
     },
     {
       "source": "/(.*)",
