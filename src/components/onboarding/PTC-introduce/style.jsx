@@ -8,6 +8,7 @@ export const PTCContainer = styled.div`
     height: 100vh;
     position: relative;
     width: 100vw;
+  overflow: hidden;
 `;
 export const Wrap = styled.div`
     width: 100%;
@@ -20,36 +21,27 @@ export const Wrap = styled.div`
 `;
 
 export const BlueBox = styled.div`
-    background-color: #CAD5FF;
+    background-color: #4970FB;
     position: absolute;
     display: flex;
     justify-content: center;
-    top: 0;
+    top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
     width: 100%;
-    height: 50vh;
-`
-export const LogoIcon = styled.img`
-    width: 45%;
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 2;
-    @media (max-width: 480px) {
-        width: 340px;
-        top: 300px;
-    }
+    height: 5vh;
 `
 export const Main = styled.main`
     width: 100%;
-    background-color: white;
     z-index: 3;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+
+  align-items: flex-start;
+  height: 80vh;
     border-radius: 20px;
     padding: 6%;
     gap:50px;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25);
     @media (max-width: 480px) {
         gap: 20px;
         padding: 10%;
@@ -65,77 +57,29 @@ const show = keyframes`
         transform: translateY(0);
     }
 `
-export const Section = styled.section`
-    width: 100%;
-    display: flex;
-    flex-flow: wrap column;
-    gap: 6px;
-    
+export const NoteBook = styled.div`
+  position: absolute;
+  top: ${props => props.$top};
+  ${(props) => props.$left && `left: ${props.$left};`}
+  ${(props) => props.$right && `right: ${props.$right};`}
+  & > img{
+    width: ${props => props.$width};
+  }
+  animation: ${(props) =>
+    props.$isAnimation
+      ? css`${show} ${props.$time}s ease-in-out`
+      : 'none'};
+  @media (max-width: 480px) {
+    width: 90%;
+  }
 `
-export const Skill = styled.section`
-    width: 100%;
-    display: flex;
-    flex-flow: wrap row;
-    align-items: flex-start;
-    justify-content: space-between;
-    @media (max-width: 480px) {
-        justify-content: flex-start;
-        gap: 20px;
-    }
-    
-`
-export const BlueText = styled.h3`
-    color: #4970FB;
-    font-size: 20px;
-    animation: ${(props) =>
-            props.$isAnimation
-                    ? css`${show} 0.6s ease-in-out`
-                    : 'none'};
-    @media (max-width: 480px) {
-        font-size: 16px;
-    }
-`
-export const SkillImg = styled.img`
-    width: 70px;
-    @media (max-width: 480px) {
-        width: 50px;
-    }
-`
-export const Emote = styled.p`
-    font-size: 48px;
-`
-export const BlueText2 = styled.h3`
-    color: #4970FB;
-    font-size: 26px;
-    @media (max-width: 480px) {
-        font-size: 18px;
-    }
-`
-export const Text = styled.p`
-    color: #707070;
-    font-size: 22px;
-    font-weight: 550;
-    @media (max-width: 480px) {
-        font-size: 14px;
-    }
-`
-export const Title = styled.h2`
-    font-size: 32px;
-    animation: ${(props) =>
-            props.$isAnimation
-                    ? css`${show} 0.65s ease-in-out`
-                    : 'none'};
-    @media (max-width: 480px) {
-        font-size: 18px;
-    }
-`
-
 export const SkillBox = styled.div`
-    width: 30%;
+    width: 100%;
+  height: 100%;
     display: flex;
     flex-flow: column wrap;
-    gap: 20px;
-    
+    gap: 10px;
+  align-items: ${props=>props.$isLeft ? "flex-start" : "flex-end"};
     animation: ${(props) =>
             props.$isAnimation
                     ? css`${show} ${props.$time}s ease-in-out`
@@ -144,4 +88,29 @@ export const SkillBox = styled.div`
         width: 90%;
         gap: 10px;
     }
+`
+export const Title = styled.h3`
+    color: #4970FB;
+    font-size: 28px;
+    width: max-content;
+    animation: ${(props) =>
+            props.$isAnimation
+                    ? css`${show} ${props.$time}s ease-in-out`
+                    : 'none'};
+    @media (max-width: 480px) {
+        font-size: 20px;
+    }
+`
+export const Sub = styled.p`
+  color: #8c8c8c;
+  font-size: 16px;
+  animation: ${(props) =>
+    props.$isAnimation
+      ? css`${show} ${props.$time}s ease-in-out`
+      : 'none'};
+  @media (max-width: 480px) {
+    font-size: 12px;
+  }
+  text-align: ${props=>props.$isLeft ? "left" : "right"};
+  width: max-content;
 `
