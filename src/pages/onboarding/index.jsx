@@ -35,7 +35,6 @@ const Main = () => {
     const [isAnimation, setIsAnimation] = useState(false);
     const [isAnimation2, setIsAnimation2] = useState(false);
     const [isAnimation3, setIsAnimation3] = useState(false);
-    const [isAnimation4, setIsAnimation4] = useState(false);
     const [isModal, setIsModal] = useRecoilState(modalAtom);
     const isApply = useRecoilValue(isApplyAtom)
     const isModalRef = useRef(isModal);
@@ -76,11 +75,6 @@ const Main = () => {
                 } else {
                     setIsAnimation3(false);
                 }
-                if(destination.index === 4) {
-                    setIsAnimation4(true);
-                } else {
-                    setIsAnimation4(false);
-                }
                 setTimeout(() => {
                     isScrolling.current = false;
                 }, 1000);
@@ -111,8 +105,8 @@ const Main = () => {
                     <div className={'section'}><First/></div>
                     <div className={'section'}><PTCIntroduce isAnimation={isAnimation} /></div>
                     <div className={'section'}><TrackIntroduce isAnimation={isAnimation2} /></div>
-                    <div className={'section'}><Process change = {scrollToSection} isAnimation={isAnimation3} /></div>
-                    <div className={'section'}><TeamIntroduce isAnimation={isAnimation4} /></div>
+                    {/*<div className={'section'}><Process change = {scrollToSection} isAnimation={isAnimation3} /></div>*/}
+                    <div className={'section'}><TeamIntroduce isAnimation={isAnimation3} /></div>
                     <div className={'section'}><Footer change = {scrollToSection} /></div>
                 </div>
             </FullPageWrapper>
