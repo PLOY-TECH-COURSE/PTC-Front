@@ -47,7 +47,7 @@ export default function First(){
       return (prevIndex - 1 + imgList.length) % imgList.length;
     });
   }, 700);
-  
+
   const animation = () => {
     if (isAnimation) {
       setTimeout(() => {
