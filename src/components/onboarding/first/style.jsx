@@ -2,21 +2,39 @@ import styled, {keyframes, css} from "styled-components";
 
 export const FirstContainer = styled.div`
     display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
     width: 100vw;
     height: 100vh;
 `;
-export const Wrap = styled.div`
-    width: 100%;
+export const Slide = styled.div`
+    width: 100vw;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #CAD5FF;
 `;
+export const Slide2 = styled.div`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.8);
 
+  & > h1 {
+    color: white;
+    font-size: 40px;
+    margin-bottom: 20px;
+  }
+`
+export const Slide3 = styled.div`
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  background: linear-gradient(180deg, #C6D3FE 0%, #E4EAFF 100%);
+`;
 export const Section = styled.section`
     padding: 0 10%;
     width: 100%;
@@ -71,52 +89,29 @@ export const HeaderBox = styled.div`
 `
 export const Img = styled.img`
     transition: 0.5s;
-    
+    width: 100%;
     @media (max-width: 480px) {
         width: 100%;
     }
 `
-export const SlideBox = styled.div`
+export const Wrap = styled.div`
     position: relative;
-`
-export const Slide = styled.div`
-    position: relative;
-    width: 550px;
+    width: 100%;
     overflow: hidden;
-    border-radius: 10px;
-    @media (min-width: 1920px) {
-        width: 700px;
-    }
 `
-export const ImgBox = styled.div`
-    position: relative;
+export const SlideBox = styled.div`
+    width: max-content;
     display: flex;
-    transition: transform ${(props)=>props.$time}s ease;
-    transform: translateX(-${(props) => props.$ImgIndex * 100}%);
-`
-export const BtnBox = styled.div`
-    position: absolute;
-    top: 110%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    gap: 20px;
-    align-items: center;
-    justify-content: space-between;
+  transition: transform ${(props)=>props.$time}s ease;
+  transform: translateX(-${(props) => props.$index * 100}vw);
 `
 export const ArrowBtn = styled.button`
-    all: unset;
+  all: unset;
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+  ${(props) => props.$isLeft ? 'left: 3%; right: auto;' : 'left: auto; right: 3%;'} 
     cursor: pointer;
-    color: #4970FB;
-    border-radius: 100px;
-    border: 2px solid #4970FB;
-    transition: 0.1s;
-    width: 24px;
-    height: 24px;
-    background-color: #ffffff;
-    &:hover{
-        background-color: #fafafa;
-    }
 `
 export const BroadCastContainer = styled.div`
     position: absolute;
