@@ -13,6 +13,7 @@ import * as S from "../../components/onboarding/first/style.jsx";
 import Header from "../../components/header/index.jsx";
 import {isApplyAtom} from "../../recoil/isApply.js";
 import Congratulation from "../../components/Congratulation/index.jsx";
+import Bg from "../../assets/onboarding/track-introduce/bgimg.svg";
 
 const FullPageWrapper = styled.div`
     #fullpage {
@@ -104,7 +105,10 @@ const Main = () => {
                 <div id={'fullpage'}>
                     <div className={'section'}><First/></div>
                     <div className={'section'}><PTCIntroduce isAnimation={isAnimation} /></div>
-                    <div className={'section'}><TrackIntroduce isAnimation={isAnimation2} /></div>
+                    <div className={'section'} style={{position: 'relative'}}>
+                      <BgImg src={Bg} alt={'bg'}/>
+                      <TrackIntroduce isAnimation={isAnimation2} />
+                    </div>
                     {/*<div className={'section'}><Process change = {scrollToSection} isAnimation={isAnimation3} /></div>*/}
                     <div className={'section'}><TeamIntroduce isAnimation={isAnimation3} /></div>
                     <div className={'section'}><Footer change = {scrollToSection} /></div>
@@ -116,3 +120,16 @@ const Main = () => {
 };
 
 export default Main;
+export const BgImg = styled.img`
+    position: absolute;
+    top: 50%;
+  z-index: -1;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width :100%;
+    @media (max-width: 480px) {
+        margin-top: 10px;
+        width :300px;
+        content: url(${(props)=>props.$bg2});
+    }
+`

@@ -18,23 +18,24 @@ export const Wrap = styled.div`
     position: relative;
     padding: 3% 10%;
 `;
-export const Bg = styled.img`
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width :90%;
+export const TrackBox = styled.div`
+    width: 85%;
+    height: 100%;
+    display: flex;
+    align-content: center;
+    align-items: center;
+  justify-content: space-between;
+    padding: 3% 10%;
+    gap: 4px;
     @media (max-width: 480px) {
-        margin-top: 10px;
-        width :300px;
-        content: url(${(props)=>props.$bg2});
+        padding: 6% 10%;
     }
 `
 export const Title = styled.div`
     width: 100%;
     position: absolute;
-    top: 8%;
-    left: 8%;
+    top: 6%;
+    left: 6%;
     animation: ${(props) => props.$isAnimation && css`${show} 0.5s ease-in-out`};
     @media (max-width: 480px) {
         margin-bottom: 80px;
@@ -122,33 +123,23 @@ export const Box = styled.div`
     }
     
 `
-export const Half = styled.div`
-    position: absolute;
-    top: 15%;
-    right: 0;
-    width: 30%;
-    height: 70%;
-    border: 40px solid #96ADFD;
-    border-radius: 50%; /* Make a circle */
-    clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%);
-`
 export const Bar = styled.div`
     position: absolute;
-    top: ${(props)=>props.$top}%;
-    bottom: ${(props)=>props.$bottom}%;
-    left: 5%;
-    width: 80%;
+  top: 50%;
+    transform: translateY(-50%);
+    left: 6%;
+    width: 90%;
     height: 40px;
-    background-color: #96ADFD;
+    background-color: #4970FB;
 `
 export const Circle = styled.div`
     position: absolute;
-    top: ${(props)=>props.$top}%;
-    bottom: ${(props)=>props.$bottom}%;
-    left: 2%;
-    width: 90px;
-    height: 90px;
-    background-color: #96ADFD;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 5%;
+    width: 70px;
+    height: 70px;
+    background-color: #4970FB;
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -158,9 +149,17 @@ export const Circle = styled.div`
 `
 
 
-export const BoxChild = styled.div`
-    position: absolute;
-    top: ${(props)=>props.$top}%;
-    left: ${(props)=>props.$left}%;
-    bottom: ${(props)=>props.$bottom}%;
+export const Circle2 = styled.div`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 0;
+  width: 140px;
+  height:140px;
+  background-color: #4970FB;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
 `
