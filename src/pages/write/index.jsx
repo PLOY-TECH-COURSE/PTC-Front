@@ -23,6 +23,17 @@ import PDFGray from '../../assets/write/pdf.svg';
 import PDFBlack from '../../assets/write/pdfBlack.svg';
 import {sendPDFImagesToBackend} from "../../utils/pdfToImg.jsx";
 
+const codeList = [
+  'javascript',
+  'python',
+  'java',
+  'typescript',
+  'c',
+  'cpp',
+  'css',
+  'markup', // HTML
+  'sql'
+];
 export default function Write(){
     const navigate = useNavigate()
     const location = useLocation();
@@ -39,6 +50,7 @@ export default function Write(){
     const [code, setCode] = useState(true);
     const [img, setImg] = useState(true);
     const [pdf, setPdf] = useState(true);
+    const [codeSelect, setCodeSelect] = useState(false);
 
     const addText = (num, position)=>{
         if(content.length > 0) setContent((prevText) =>prevText + "\n" + num);
@@ -306,10 +318,22 @@ export default function Write(){
                                 </S.Function>
                                 <S.Function onClick={()=>addText("<줄></줄>", content.length + 8)}>hr</S.Function>
                                 <S.Function
-                                    onClick={()=>addText("<코드></코드>", content.length + 5)}
                                     onMouseEnter={()=>setCode(false)}
+                                    onClick={()=>{
+                                      setCodeSelect(true)
+                                    }}
                                     onMouseLeave={()=>setCode(true)}
                                 >
+                                  {codeSelect &&
+                                    <S.CodeBox onClick={(e)=>e.stopPropagation()}>
+                                      {codeList.map((item) => (
+                                        <p onClick={()=>{
+                                          addText(`<코드 언어="${item}"></코드>`, content.length + item.length + 11)
+                                          setCodeSelect(false)
+                                        }}>{item}</p>
+                                      ))}
+                                    </S.CodeBox>
+                                  }
                                     <img src={code ? CodeGray : CodeBlack} alt={'Code'} width={"80%"} />
                                 </S.Function>
                               <S.Function
