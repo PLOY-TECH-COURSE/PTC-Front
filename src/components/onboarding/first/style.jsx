@@ -88,8 +88,8 @@ export const HeaderBox = styled.div`
     transition: top 0.8s;
 `
 export const Img = styled.img`
-    transition: 0.5s;
     width: 100%;
+    border-radius: 20px;
     @media (max-width: 480px) {
         width: 100%;
     }

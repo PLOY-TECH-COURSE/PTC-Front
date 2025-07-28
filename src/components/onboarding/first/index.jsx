@@ -6,6 +6,7 @@ import {useEffect, useState} from "react";
 import MainImg from '../../../assets/onboarding/first/mento2.jpeg'
 import {useThrottle} from "../../../hooks/useThrottle.jsx";
 import Bg from '../../../assets/onboarding/first/bg.svg'
+import {getBroadcastList} from "../../../api/broadcast";
 
 export default function First(){
     const navigate = useNavigate();
@@ -20,7 +21,7 @@ export default function First(){
         setIsAnimation(true);
       }
       setImgIdx((prevIndex) => (prevIndex + 1) % imgList.length);
-    }, 2000);
+    }, 5000);
     return () => clearInterval(interval);
   }, [imgIdx]);
 
@@ -57,20 +58,22 @@ export default function First(){
     }
     return imgIdx === 1 || imgIdx === 3 ? 0 : 0.5;
   };
-
-    const [broadcast, setBroadcast] = useState([
-      {id : 1, title : "2023년 1", date : "2023-01-01", content : "1학기 과제 공지사항 입니다 아니근데진짜 이쁘다니까"},
-      {id : 2, title : "2023년 2학기 과제 공지사항", date : "2023-01-02", content : "2학기 과제 공지사항"},
-      {id : 3, title : "2023년 3학기 과제 공지사항", date : "2023-01-03", content : "3학기 과제 공지사항"},
-    ]);
+  useEffect(async () => {
+    const data = await getBroadcastList();
+    setBroadcast(data);
+  }, []);
+    const [broadcast, setBroadcast] = useState([]);
     return(
         <S.FirstContainer>
 
           <S.Wrap>
             <S.SlideBox $time={animation} $index={imgIdx}>
+              {/** 무한 슬라이드를 위한 슬라이드**/}
               <S.Slide3>
                 <img src={Bg} alt={'bg'} width={'100%'}/>
               </S.Slide3>
+
+              {/** 찐 슬라이드**/}
               <S.Slide>
                 <S.Section>
                   <S.Description>
@@ -88,6 +91,8 @@ export default function First(){
               <S.Slide3>
                 <img src={Bg} alt={'bg'} width={'100%'}/>
               </S.Slide3>
+
+              {/** 무한 슬라이드를 위한 슬라이드**/}
               <S.Slide>
                 <S.Section>
                   <S.Description>
@@ -114,26 +119,25 @@ export default function First(){
             <img style={{transform : 'rotate(180deg)'}} src={LeftArrow} alt={'arrow'} />
           </S.ArrowBtn>
           <S.BroadCastContainer>
-            {broadcast && broadcast.map((item) => (
-              <S.BroadCast key={item.id} onClick={() => {
-                navigate(`/broadcast/detail/${item.id}`)
-              }}>
-                {item.date === "2023-01-01" && <S.New>New</S.New>}
-                <div>
-                  <h3>
-                    {item.title.length > 16
-                      ? `${item.title.slice(0, 16)}...`
-                      : item.title}
-                  </h3>
-                </div>
-                <p>
-                  {item.content.length > 18
-                    ? `${item.content.slice(0, 18)}...`
-                    : item.content}
-                </p>
-                <p>{item.date}</p>
-              </S.BroadCast>
-            ))}
+            {broadcast && broadcast.map((item) => {
+              const today = new Date();
+              const formatted = today.toISOString().split('T')[0];
+              return(
+                  <S.BroadCast key={item.id} onClick={() => {
+                    navigate(`/announcement/${item.id}`)
+                  }}>
+                    {item.date === formatted && <S.New>New</S.New>}
+                    <div>
+                      <h3>
+                        {item.title.length > 16
+                          ? `${item.title.slice(0, 16)}...`
+                          : item.title}
+                      </h3>
+                    </div>
+                    <p>{item.date}</p>
+                  </S.BroadCast>
+                );
+            })}
           </S.BroadCastContainer>
         </S.FirstContainer>
     )
