@@ -19,6 +19,9 @@ import makeDocument from "../../utils/makeDocument.jsx";
 import {uploadImg} from "../../api/write.js";
 import CodeBlack from '../../assets/write/codeBlack.svg';
 import CodeGray from '../../assets/write/codeGray.svg';
+import PDFGray from '../../assets/write/pdf.svg';
+import PDFBlack from '../../assets/write/pdfBlack.svg';
+import {sendPDFImagesToBackend} from "../../utils/pdfToImg.jsx";
 
 export default function Write(){
     const navigate = useNavigate()
@@ -35,6 +38,7 @@ export default function Write(){
     const [cancel, setCancel] = useState(true);
     const [code, setCode] = useState(true);
     const [img, setImg] = useState(true);
+    const [pdf, setPdf] = useState(true);
 
     const addText = (num, position)=>{
         if(content.length > 0) setContent((prevText) =>prevText + "\n" + num);
@@ -203,7 +207,17 @@ export default function Write(){
             }, 60000);
 
             return () => clearInterval(interval);
-        }, []); 
+        }, []);
+
+        const pdfRef = useRef(null);
+        const addPdf = async (file) => {
+          pdfRef.current.value = "";
+          console.log(file);
+          const images = await sendPDFImagesToBackend(file);
+          images.forEach((image) => {
+            addText(`<이미지 src="${image}"></이미지>`);
+          });
+        }
         return(
             <S.WriteContainer>
                 {showTemp && <S.ShowTemp $status = {showTemp} >임시저장완료</S.ShowTemp>}
@@ -296,8 +310,15 @@ export default function Write(){
                                     onMouseEnter={()=>setCode(false)}
                                     onMouseLeave={()=>setCode(true)}
                                 >
-                                    <img src={code ? CodeGray : CodeBlack} alt={'Code'} width={"90%"} />
+                                    <img src={code ? CodeGray : CodeBlack} alt={'Code'} width={"80%"} />
                                 </S.Function>
+                              <S.Function
+                                onMouseEnter={()=>setPdf(false)}
+                                onMouseLeave={()=>setPdf(true)}
+                                onClick={()=>pdfRef.current.click()}
+                              >
+                                <img src={pdf ? PDFGray : PDFBlack} alt={'PDF'} width={"80%"} />
+                              </S.Function>
                             </S.ToolBox>
                         </S.ToolBar>
                         <S.ContentInput
@@ -319,6 +340,7 @@ export default function Write(){
                 <input ref={fileRef} type={"file"} style={{display: "none"}} onChange={(e)=> {
                     addImgText(e.target.files[0])
                 }} />
+              <input ref={pdfRef} type={"file"} style={{display: "none"}} onChange={(e)=>{addPdf(e.target.files[0])}} />
             </S.WriteContainer>
         )
 }

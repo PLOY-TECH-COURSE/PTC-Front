@@ -107,7 +107,6 @@ export const ToolBar = styled.article`
 `
 export const ToolBox = styled.div`
     display: flex;
-    gap: 8px;
 `
 export const Function = styled.div`
     padding: 8px;
