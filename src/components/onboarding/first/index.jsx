@@ -7,8 +7,9 @@ import MainImg from '../../../assets/onboarding/first/mento2.jpeg'
 import {useThrottle} from "../../../hooks/useThrottle.jsx";
 import Bg from '../../../assets/onboarding/first/bg.svg'
 import {getBroadcastList} from "../../../api/broadcast";
+import YouTubePlayer from "./video/index.jsx";
 
-export default function First(){
+export default function First({youtubeRef}){
     const navigate = useNavigate();
   const imgList = [3, 1, 2, 3, 1];
   const [imgIdx, setImgIdx] = useState(1); // 시작은 1번 인덱스 (실제 첫 번째 이미지)
@@ -86,6 +87,8 @@ export default function First(){
                 </S.Section>
               </S.Slide>
               <S.Slide2>
+                <S.Black/>
+                <YouTubePlayer ref={youtubeRef}/>
                 <h1>발표를 통한 깊은 이해도</h1>
               </S.Slide2>
               <S.Slide3>
@@ -96,7 +99,7 @@ export default function First(){
               <S.Slide>
                 <S.Section>
                   <S.Description>
-                    <img src={Logo} alt={"logo"} />
+                    <img src={Logo} alt={"logo"}/>
                     <S.Title>새롭게 달라진 플로이테크코스</S.Title>
                     <S.SubText>플로이 테크 코스는 IT 비영리 단체 ‘플로이’에서 운영하는</S.SubText>
                     <S.SubText>1:1 맞춤형 멘토링 스터디 프로그램입니다.</S.SubText>

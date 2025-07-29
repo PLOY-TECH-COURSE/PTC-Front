@@ -62,6 +62,9 @@ const Main = () => {
                     return false;
                 }
                 isScrolling.current = true;
+                if(destination.index === 0) {
+                  handlePlay();
+                }
                 if(destination.index === 1) {
                     setIsAnimation(true);
                 } else {
@@ -101,6 +104,12 @@ const Main = () => {
     };
     const ok = localStorage.getItem('ok');
     const [isPost, setIsPost] = useState(true);
+
+  const youtubeRef = useRef(null);
+
+  const handlePlay = () => {
+    youtubeRef.current?.play();
+  };
     return (
         <div>
             <S.HeaderBox>
@@ -109,7 +118,7 @@ const Main = () => {
             {ok === null && isPost && <Congratulation onClose={() => setIsPost(false)} />}
             <FullPageWrapper>
                 <div id={'fullpage'}>
-                    <div className={'section'}><First/></div>
+                    <div className={'section'}><First youtubeRef={youtubeRef}/></div>
                     <div className={'section'}><PTCIntroduce isAnimation={isAnimation} /></div>
                     <div className={'section'} style={{position: 'relative'}}>
                       <BgImg src={Bg} alt={'bg'}/>

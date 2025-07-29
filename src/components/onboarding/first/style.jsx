@@ -17,15 +17,26 @@ export const Slide2 = styled.div`
   width: 100vw;
   height: 100vh;
   display: flex;
+  overflow: hidden;
   justify-content: center;
   align-items: center;
-  background: rgba(0, 0, 0, 0.8);
+  position: relative;
 
   & > h1 {
     color: white;
     font-size: 40px;
     margin-bottom: 20px;
+    z-index: 2;
   }
+`
+export const Black = styled.div`
+  background: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%
 `
 export const Slide3 = styled.div`
     width: 100vw;
