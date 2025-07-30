@@ -2,27 +2,57 @@ import styled, {keyframes, css} from "styled-components";
 
 export const FirstContainer = styled.div`
     display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
     width: 100vw;
     height: 100vh;
 `;
-export const Wrap = styled.div`
-    width: 100%;
+export const Slide = styled.div`
+    width: 100vw;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #CAD5FF;
 `;
+export const Slide2 = styled.div`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  overflow: hidden;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 
+  & > h1 {
+    color: white;
+    font-size: 40px;
+    margin-bottom: 20px;
+    z-index: 2;
+  }
+`
+export const Black = styled.div`
+  background: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%
+`
+export const Slide3 = styled.div`
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  background: linear-gradient(180deg, #C6D3FE 0%, #E4EAFF 100%);
+`;
 export const Section = styled.section`
     padding: 0 10%;
     width: 100%;
-    display: flex;
-    flex-flow: wrap row;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  margin-bottom: 4rem;
     align-items: center;
     @media (max-width: 480px) {
         gap: 30px;
@@ -31,8 +61,12 @@ export const Section = styled.section`
 export const Description = styled.div`
     display: flex;
     justify-content: flex-start;
+    width: 100%;
     & > * {
         margin-bottom: 20px;
+    }
+    img {
+      width: 50%;
     }
     flex-flow: column nowrap;
     @media (max-width: 480px) {
@@ -40,7 +74,7 @@ export const Description = styled.div`
     }
 `
 export const Title = styled.h1`
-    font-size: 2.75rem;
+    font-size: 2rem;
     @media (max-width: 480px) {
         font-size: 1.5rem;
     }
@@ -50,85 +84,11 @@ export const Title = styled.h1`
 `
 export const SubText = styled.h4`
     color: #707070;
-    font-size: 22px;
+    font-weight: 500;
+    font-size: 1.5rem;
     @media (max-width: 480px) {
         font-size: 14px;
     }
-`
-const rotateFromStart = keyframes`
-    0% {
-        transform: translate(-50%, -50%) rotate(0deg) translateY(-30px);
-    }
-    100% {
-        transform: translate(-50%, -50%) rotate(360deg) translateY(-30px);
-    }
-`;
-
-const rotateFromHalf = keyframes`
-    0% {
-        transform: translate(-50%, -50%) rotate(180deg) translateY(-30px); /* 50% 위치에서 시작 */
-    }
-    100% {
-        transform: translate(-50%, -50%) rotate(540deg) translateY(-30px);
-    }
-`;
-export const Btn = styled.button`
-    background-color: #4970FB;
-    padding: 7px 20px;
-    border: 2px solid #4970FB;
-    font-size: 1.2rem;
-    cursor: pointer;
-    color: white;
-    font-weight: 600;
-    border-radius: 30px;
-    transition: 0.1s;
-    width: 120px;
-    position: relative;
-    &:hover{
-        width: 120px;
-        background-color: transparent;
-        padding: 20px;
-        border: none;
-        font-size: 14px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        & > img{
-            width: 36px;
-            display: block;
-        }
-        & > span{
-            display: none;
-        }
-        & > div{
-            color: #4970FB;
-            display: block;
-        }
-    }
-    & > img{
-        display: none;
-    }
-`
-export const BtnText = styled.div`
-    display: none;
-    position: absolute;
-    width: 100px; 
-    text-align: center; 
-    top: 40%;
-    left: 49.5%; 
-    transform: translate(-50%, 100%);
-    transform-origin: 50% 100%; 
-    animation: ${(props)=>props.$isHalf ? css`${rotateFromHalf} 5s linear infinite` : css`${rotateFromStart} 5s linear infinite`};
-    & > span {
-        display: inline-block; 
-        transform-origin: center;
-        margin-right: 2px;
-    }
-
-    & > span:nth-child(1) { transform: rotate(-10deg); }
-    & > span:nth-child(2) {  transform: rotate(-5deg); }
-    & > span:nth-child(3) {transform: rotate(5deg); }
-    & > span:nth-child(4) { transform: rotate(10deg); }
 `
 export const HeaderBox = styled.div`
     position: fixed;
@@ -139,66 +99,77 @@ export const HeaderBox = styled.div`
     transition: top 0.8s;
 `
 export const Img = styled.img`
-    transition: 0.5s;
-    
+    width: 100%;
+    border-radius: 20px;
     @media (max-width: 480px) {
         width: 100%;
     }
 `
-export const SlideBox = styled.div`
+export const Wrap = styled.div`
     position: relative;
-`
-export const Slide = styled.div`
-    position: relative;
-    width: 550px;
+    width: 100%;
     overflow: hidden;
-    border-radius: 10px;
-    @media (min-width: 1920px) {
-        width: 700px;
-    }
 `
-export const ImgBox = styled.div`
-    position: relative;
+export const SlideBox = styled.div`
+    width: max-content;
     display: flex;
-    transition: transform ${(props)=>props.$time}s ease;
-    transform: translateX(-${(props) => props.$ImgIndex * 100}%);
-`
-export const LapTop = styled.img`
-    position: absolute;
-    right: -100px;
-    bottom: -20px;
-    width: 240px;
-    @media (max-width: 480px) {
-        display: none;
-    }
-`
-export const BtnBox = styled.div`
-    position: absolute;
-    top: 110%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    gap: 20px;
-    align-items: center;
-    justify-content: space-between;
-`
-export const Circle =styled.div`
-    border-radius: 100px;
-    width: ${(props)=>props.$index === props.$ImgIndex || props.$index2 === props.$ImgIndex ? "16px" : "12px"};
-    height: ${(props)=>props.$index === props.$ImgIndex || props.$index2 === props.$ImgIndex ? "16px" : "12px"};
-    background-color: ${(props)=>props.$index === props.$ImgIndex || props.$index2 === props.$ImgIndex ? "#4970FB" : "#ffffff"};
+  transition: transform ${(props)=>props.$time}s ease;
+  transform: translateX(-${(props) => props.$index * 100}vw);
 `
 export const ArrowBtn = styled.button`
-    all: unset;
+  all: unset;
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+  ${(props) => props.$isLeft ? 'left: 3%; right: auto;' : 'left: auto; right: 3%;'} 
     cursor: pointer;
-    color: #4970FB;
-    border-radius: 100px;
-    border: 2px solid #4970FB;
-    transition: 0.1s;
-    width: 24px;
-    height: 24px;
-    background-color: #ffffff;
-    &:hover{
-        background-color: #fafafa;
+`
+export const BroadCastContainer = styled.div`
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 70%;
+  background: white;
+    display: grid;
+  gap: 2rem;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 3rem 4rem;
+    border-radius: 60px 60px 0 0;
+    align-items: center;
+    font-size: 20px;
+    font-weight: 600;
+`
+export const BroadCast = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  cursor: pointer;
+    & > p{
+      font-size: 16px;
+      font-weight: 600;
+      color: #8C8C8C;
     }
+  & > p:nth-of-type(2){
+    color: #D3D3D3;
+    font-weight: 500;
+  }
+`
+export const New = styled.div`
+  position: absolute;
+  top: -28%;
+  left:-8%;
+  width:35px;
+  height: 35px;
+  border-radius: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #4970FB;
+  color: white;
+  font-size: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  z-index: 100;
 `

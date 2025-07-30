@@ -10,9 +10,16 @@ import Soeun from '../../../assets/onboarding/team-introduce/soeun823.jpeg'
 import Ara from '../../../assets/onboarding/team-introduce/Ara.jpeg';
 import Yunchan from '../../../assets/onboarding/team-introduce/yunchan.jpeg';
 import Huhon from '../../../assets/onboarding/team-introduce/huhon.jpeg';
+import Woorin from '../../../assets/onboarding/team-introduce/woo-rin.webp';
+import Joon069 from '../../../assets/onboarding/team-introduce/joon069.jpeg';
+import Wjddn0719 from '../../../assets/onboarding/team-introduce/wjddn0719.jpeg';
+import Shusbox from '../../../assets/onboarding/team-introduce/shusbox.jpeg';
+import Sharkspin from '../../../assets/onboarding/team-introduce/sharkspin.png';
+import Ityeri from '../../../assets/onboarding/team-introduce/ityeri.jpeg';
+import Hyun731 from '../../../assets/onboarding/team-introduce/Hyun731.jpeg';
 
 export default function TeamIntroduce({isAnimation}){
-    const [isGrade, setIsGrade] = useState(true);
+    const [isGrade, setIsGrade] = useState(4);
     const member = [
         {id : 2, name : '허온', job : 'Backend', git : 'https://github.com/KDev-Huh', bg : Huhon, time : 0.6},
         {id : 3, name : '조재민', job : 'Backend', git : 'https://github.com/jmj732', bg : Jemin, time : 0.7},
@@ -27,6 +34,15 @@ export default function TeamIntroduce({isAnimation}){
         {id : 10, name : '한태영', job : 'Backend', git : 'https://github.com/noahmik', bg : Taeyoung, time:0.9},
         {id : 11, name : '강시우', job : 'Frontend', git : 'https://github.com/kangsiwoo', bg : Siwoo, time:1.1},
     ]
+  const menty = [
+    {id : 12, name : '권길현', git : 'https://github.com/Hyun731', bg : Hyun731, time : 0.6},
+    {id : 13, name : '강준영', git : 'https://github.com/joon069', bg : Joon069, time : 0.7},
+    {id : 14, name : '이정우', git : 'https://github.com/wjddn0719', bg : Wjddn0719, time : 0.8},
+    {id : 15, name : '이우린', git : 'https://github.com/woo-rin', bg : Woorin, time : 0.9},
+    {id : 16, name : '진수화', git : 'https://github.com/shusbox', bg : Shusbox, time : 1.},
+    {id : 17, name : '조현우', git : 'https://github.com/sharkspin', bg : Sharkspin, time : 1.1},
+    {id : 18, name : '곽영빈', git : 'https://github.com/ityeri', bg : Ityeri, time : 1.2},
+  ]
 
     const containerRef = useRef(null);
     const [unBox, setUnBox] = useState([]);
@@ -66,49 +82,48 @@ export default function TeamIntroduce({isAnimation}){
                     <S.BlueText>Team</S.BlueText>
                 </S.Title>
                 <S.Nav>
-                    <S.NavText $color = {!isGrade} onClick={()=>setTimeout(()=>setIsGrade(false), 100)}>3기</S.NavText>
-                    <S.NavText $color = {isGrade} onClick={()=>setTimeout(()=>setIsGrade(true), 100)}>4기</S.NavText>
+                    <S.NavText $color = {isGrade === 3} onClick={()=>setTimeout(()=>setIsGrade(3), 100)}>3기</S.NavText>
+                    <S.NavText $color = {isGrade === 4} onClick={()=>setTimeout(()=>setIsGrade(4), 100)}>4기</S.NavText>
+                  <S.NavText $color = {isGrade === 5} onClick={()=>setTimeout(()=>setIsGrade(5), 100)}>5기</S.NavText>
                 </S.Nav>
                 <S.Main ref={containerRef}>
-                    {isGrade ?
-                        member.map((item)=>{
-                                    return(
-                                        <S.Box onClick={()=>window.open(item.git)} $time = {item.time} $isAnimation = {isAnimation} key={item.id} >
-                                            <img src={item.bg} alt=""/>
-                                            <S.User>
-                                                <S.Name>{item.name}</S.Name>
-                                                <S.JobBox>
-                                                    <S.Job>{item.job}</S.Job>
-                                                    <S.Git href={item.git} target="_blank" rel="noopener noreferrer">Github</S.Git>
-                                                </S.JobBox>
-                                            </S.User>
-                                        </S.Box>
-                                    )
-                                }) :
-                        mento.map((item)=>{
-                            if(item.name){
-                                return(
-                                    <S.Box onClick={()=>window.open(item.git)} $time = {item.time} $isAnimation = {isAnimation} key={item.id}  $bg={item.bg}>
-                                        <img src={item.bg} alt=""/>
-                                        <S.User>
-                                            <S.Name>{item.name}</S.Name>
-                                            <S.JobBox>
-                                                <S.Job>{item.job}</S.Job>
-                                                <S.Git href={item.git} target="_blank" rel="noopener noreferrer">Github</S.Git>
-                                            </S.JobBox>
-                                        </S.User>
-                                    </S.Box>
-                                )
-                            }
-                            else return (<S.UnBox key={item.id} />)
-                        })
+                  {
+                    (isGrade === 3 || isGrade === 4 || isGrade === 5) &&
+                    (() => {
+                      const data = isGrade === 3 ? mento : isGrade === 4 ? member : menty;
 
-                    }
-                    {
-                        unBox.map((item, idx)=>{
-                            return (<S.UnBox key={idx} />)
-                        })
-                    }
+                      return data.map((item) => {
+                        if (!item.name) return <S.UnBox key={item.id} />;
+
+                        return (
+                          <S.Box
+                            key={item.id}
+                            onClick={() => window.open(item.git)}
+                            $time={item.time}
+                            $isAnimation={isAnimation}
+                            $bg={item.bg}
+                          >
+                            <img src={item.bg} alt="" />
+                            <S.User>
+                              <S.Name>{item.name}</S.Name>
+                              <S.JobBox>
+                                {item.job && <S.Job>{item.job}</S.Job>}
+                                <S.Git href={item.git} target="_blank" rel="noopener noreferrer">
+                                  Github
+                                </S.Git>
+                              </S.JobBox>
+                            </S.User>
+                          </S.Box>
+                        );
+                      });
+                    })()
+                  }
+
+                  {
+                    unBox.map((item, idx) => {
+                      return <S.UnBox key={idx} />;
+                    })
+                  }
                 </S.Main>
             </S.Wrap>
         </S.TeamContainer>

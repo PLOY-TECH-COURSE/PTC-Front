@@ -1,5 +1,6 @@
 import * as S from "./style.jsx";
-import LogoIcon from '../../../assets/onboarding/introduce/Group 8782.svg';
+import NoteBook from "../../../assets/onboarding/introduce/notebook.svg"
+import NoteBook2 from "../../../assets/onboarding/introduce/notebook2.svg"
 
 
 export default function PTCIntroduce({isAnimation}){
@@ -8,29 +9,56 @@ export default function PTCIntroduce({isAnimation}){
         {name : "실습과 프로젝트", des : "직접 코드를 작성해 보고,<br/> 간단한 프로젝트를 통해 배운 내용을  실습하면서 익힐 수 있어요.",  time:0.9, emote: '🛠️'},
         {name : "1:1 멘토링", des : "선배들의 도움을 받아<br/> IT 공부와 학교 생활에 적응해요.",  time:1.1, emote: '🤝'},
     ]
+  console.log(isAnimation)
     return(
         <S.PTCContainer>
-            <S.BlueBox >
-                <S.LogoIcon src={LogoIcon} alt={'logoIcon'} />
-            </S.BlueBox>
+            <S.BlueBox />
             <S.Wrap>
                 <S.Main>
-                    <S.Section >
-                        <S.BlueText $isAnimation={isAnimation}>플로이테크코스란?</S.BlueText>
-                        <S.Title $isAnimation={isAnimation}>선배들이 멘토가 되어</S.Title>
-                        <S.Title $isAnimation={isAnimation}>여러분에게 다음과 같은 도움을 줄 수 있어요</S.Title>
-                    </S.Section>
-                    <S.Skill>
-                        {Skills.map((item, index)=>{
-                            return(
-                                <S.SkillBox $isAnimation={isAnimation} $time={item.time} key={index}>
-                                    <S.Emote>{item.emote}</S.Emote>
-                                    <S.BlueText2>{item.name}</S.BlueText2>
-                                    <S.Text dangerouslySetInnerHTML={{ __html: item.des }} />
-                                </S.SkillBox>
-                            )
-                        })}
-                    </S.Skill>
+                  <S.SkillBox
+                    $isAnimation = {isAnimation}
+                    $isLeft = {true}
+                    $time={0.9}
+                  >
+                    <S.Title>🖥️ 기초 지식</S.Title>
+                    <h4>#베이스</h4>
+                    <S.Sub $isLeft={true}>학교생활이나 전공과목에대한<br/>
+                      기초 지식을 향상시킬 수 있어요</S.Sub>
+                  </S.SkillBox>
+                  <S.SkillBox />
+                  <S.SkillBox />
+                  <S.SkillBox />
+                  <S.SkillBox />
+                  <S.SkillBox />
+                  <S.SkillBox />
+                  <S.SkillBox
+                    $isLeft = {false}
+                    $isAnimation = {isAnimation}
+                    $time={1}
+                  >
+                    <S.Title>🤝 1대1 멘토링</S.Title>
+                    <h4>#베이스</h4>
+                    <S.Sub $isLeft={false}>1대1 멘토링을 통해<br/>
+                      더욱 집중적인 멘토링이 가능해요</S.Sub>
+                  </S.SkillBox>
+                  <S.NoteBook
+                    $width="50vw"
+                    $top="5%"
+                    $right="15%"
+                    $isAnimation={isAnimation}
+                    $time={1.1}
+                  >
+                    <img src={NoteBook} alt="notebook" />
+                  </S.NoteBook>
+                  <S.NoteBook
+                    $width="50vw"
+                    $top="25%"
+                    $left="15%"
+                    $isAnimation={isAnimation}
+                    $time={1.3}
+                  >
+                    <img src={NoteBook2} alt="notebook" />
+                  </S.NoteBook>
                 </S.Main>
             </S.Wrap>
         </S.PTCContainer>
