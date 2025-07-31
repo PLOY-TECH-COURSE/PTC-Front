@@ -16,10 +16,10 @@ pdfjs.GlobalWorkerOptions.workerSrc = workerSrc;
 
 export default function PdfSwiper({url}) {
 	const [numPages, setNumPages] = useState(0);
-
+  if(!url) return null; // url이 없을 경우 렌더링하지 않음
 	return (
 		<div
-			style={{ width: '100%', margin: "auto", position: "relative" }}
+			style={{ width: '600px', margin: "auto", position: "relative" }}
 			className="swiper-container"
 		>
 			<Document
