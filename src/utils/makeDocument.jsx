@@ -58,6 +58,8 @@ export default function makeDocument(text = "") {
             pattern:/<Pdf src="(.*?)"><\/Pdf>/,
             component : (src) => {
               if(!src) return null
+              console.log("PDF URL:", src[0].props.children); // 디버깅용 로그
+              console.log("PDF URL:", src); // 디버깅용 로그
               return <PdfSwiper url={src[0].props.children} />
             }
         }

@@ -16,6 +16,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = workerSrc;
 
 export default function PdfSwiper({url}) {
 	const [numPages, setNumPages] = useState(0);
+  console.log("PDF URL:", url); // 디버깅용 로그
   if(!url) return null; // url이 없을 경우 렌더링하지 않음
 	return (
 		<div
@@ -55,44 +56,6 @@ export default function PdfSwiper({url}) {
 				<S.CustomButton direction="prev" className="custom-prev" />
 				<S.CustomButton direction="next" className="custom-next" />
 			</Document>
-			<style>{`
-        .custom-prev,
-        .custom-next {
-          position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
-          background: rgba(0, 0, 0, 0.5);
-          border: none;
-          color: white;
-          font-size: 24px;
-          padding: 8px 12px;
-          cursor: pointer;
-          opacity: 0;
-          transition: opacity 0.3s ease;
-          z-index: 10;
-          user-select: none;
-        }
-        .custom-prev {
-          left: 10px;
-        }
-        .custom-next {
-          right: 10px;
-        }
-        .swiper-container:hover .custom-prev,
-        .swiper-container:hover .custom-next {
-          opacity: 1;
-        }
-
-        /* pagination 커스텀 */
-        .swiper-pagination-bullet {
-          background: gray;
-          opacity: 0.7;
-        }
-        .swiper-pagination-bullet-active {
-          background: black;
-          opacity: 1;
-        }
-      `}</style>
 		</div>
 	);
 }
