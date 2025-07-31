@@ -1,4 +1,6 @@
 import * as S from "../pages/write/style.jsx"
+import CodeHighlighter from "../components/codeColor/index.jsx";
+import PdfSwiper from "../components/pdfSlider/index.jsx";
 export default function makeDocument(text = "") {
     const tagPatterns = [
         {
@@ -45,9 +47,18 @@ export default function makeDocument(text = "") {
             }
         },
         {
-            pattern:/<코드>\n?([\s\S]*?)\n?<\/코드>/,
+            pattern:/<코드\s+언어="(.*?)">\n?([\s\S]*?)\n?<\/코드>/,
+            component: (language, text) => {
+              return (
+                <CodeHighlighter language={language} code={text} />
+              );
+            }
+        },
+        {
+            pattern:/<Pdf src="(.*?)"><\/Pdf>/,
             component : (src) => {
-                return <S.Code><code>{src}</code></S.Code>
+              if(!src) return null
+              return <PdfSwiper url={src[0].props.children} />
             }
         }
     ];
@@ -61,6 +72,7 @@ export default function makeDocument(text = "") {
 
         tagPatterns.forEach(({ pattern, component }) => {
             const match = inputText.match(pattern);
+
             if (match && (!earliestMatch || match.index < earliestMatch.index)) {
                 earliestMatch = match;
                 matchComponent = component;
@@ -75,17 +87,24 @@ export default function makeDocument(text = "") {
             ));
         }
 
-        const [fullMatch, innerText] = earliestMatch;
-        const prefixText = inputText.slice(0, earliestMatch.index);
-        const suffixText = inputText.slice(earliestMatch.index + fullMatch.length);
+      const [fullMatch, ...groups] = earliestMatch;
+      const prefixText = inputText.slice(0, earliestMatch.index);
+      const suffixText = inputText.slice(earliestMatch.index + fullMatch.length);
 
-        return (
-            <>
-                {prefixText && parseText(prefixText)}
-                {matchComponent(parseText(innerText))}
-                {suffixText && parseText(suffixText)}
-            </>
-        );
+      let componentResult = null;
+      if (groups.length === 2) {
+        componentResult = matchComponent(groups[0], parseText(groups[1]));
+      } else {
+        componentResult = matchComponent(parseText(groups[0]));
+      }
+
+      return (
+        <>
+          {prefixText && parseText(prefixText)}
+          {componentResult}
+          {suffixText && parseText(suffixText)}
+        </>
+      );
     }
     // cleanText = text.replace(/(<코드>)([\s\S]*?)(<\/코드>)/g, (_, start, content, end) => {
     //     return start + content.replace(/\n/g, '<<br>>') + end;

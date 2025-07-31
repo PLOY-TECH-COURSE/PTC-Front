@@ -4,6 +4,9 @@ import react from '@vitejs/plugin-react';
 export default defineConfig(({ mode }) =>{
   const env = loadEnv(mode, process.cwd(), 'VITE_');
   return {
+    worker: {
+      format: 'es',
+    },
     plugins: [react()],
     base: '/',
     server: {

@@ -107,7 +107,6 @@ export const ToolBar = styled.article`
 `
 export const ToolBox = styled.div`
     display: flex;
-    gap: 8px;
 `
 export const Function = styled.div`
     padding: 8px;
@@ -115,6 +114,7 @@ export const Function = styled.div`
     color: #838383;
     display: flex;
     justify-content: center;
+    position: relative;
     align-items: center;
     transition: 0.2s;
     cursor: default;
@@ -299,4 +299,33 @@ export const ShowTemp = styled.div`
     css`
       animation: ${showTemp} ease-in-out 3s;
     `}
+`
+export const CodeBox = styled.div`
+  position: absolute;
+  top: 100%;
+  color: black;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8rem;
+  height: 8rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  border-radius: 8px;
+  align-items: flex-start;
+  background: white;
+  box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.25);
+
+  & > p {
+    font-size: 16px;
+    border-bottom: 1px solid #e6e6e6;
+    width: 100%;
+    padding: 0.6rem 1rem;
+    transition: 0.2s;
+  }
+  & > p:hover{
+    background-color: #f3f3f3;
+    cursor: pointer;
+  }
 `

@@ -19,7 +19,20 @@ import makeDocument from "../../utils/makeDocument.jsx";
 import {uploadImg} from "../../api/write.js";
 import CodeBlack from '../../assets/write/codeBlack.svg';
 import CodeGray from '../../assets/write/codeGray.svg';
+import PDFGray from '../../assets/write/pdf.svg';
+import PDFBlack from '../../assets/write/pdfBlack.svg';
 
+const codeList = [
+  'javascript',
+  'python',
+  'java',
+  'typescript',
+  'c',
+  'cpp',
+  'css',
+  'markup', // HTML
+  'sql'
+];
 export default function Write(){
     const navigate = useNavigate()
     const location = useLocation();
@@ -35,6 +48,8 @@ export default function Write(){
     const [cancel, setCancel] = useState(true);
     const [code, setCode] = useState(true);
     const [img, setImg] = useState(true);
+    const [pdf, setPdf] = useState(true);
+    const [codeSelect, setCodeSelect] = useState(false);
 
     const addText = (num, position)=>{
         if(content.length > 0) setContent((prevText) =>prevText + "\n" + num);
@@ -203,7 +218,15 @@ export default function Write(){
             }, 60000);
 
             return () => clearInterval(interval);
-        }, []); 
+        }, []);
+
+        const pdfRef = useRef(null);
+        const addPdf = async (file) => {
+          pdfRef.current.value = "";
+          console.log(file);
+          const url = await uploadImg(file);
+          addText(`<Pdf src="${url}"></Pdf>`);
+        }
         return(
             <S.WriteContainer>
                 {showTemp && <S.ShowTemp $status = {showTemp} >임시저장완료</S.ShowTemp>}
@@ -292,12 +315,31 @@ export default function Write(){
                                 </S.Function>
                                 <S.Function onClick={()=>addText("<줄></줄>", content.length + 8)}>hr</S.Function>
                                 <S.Function
-                                    onClick={()=>addText("<코드></코드>", content.length + 5)}
                                     onMouseEnter={()=>setCode(false)}
+                                    onClick={()=>{
+                                      setCodeSelect(true)
+                                    }}
                                     onMouseLeave={()=>setCode(true)}
                                 >
-                                    <img src={code ? CodeGray : CodeBlack} alt={'Code'} width={"90%"} />
+                                  {codeSelect &&
+                                    <S.CodeBox onClick={(e)=>e.stopPropagation()}>
+                                      {codeList.map((item) => (
+                                        <p onClick={()=>{
+                                          addText(`<코드 언어="${item}"></코드>`, content.length + item.length + 11)
+                                          setCodeSelect(false)
+                                        }}>{item}</p>
+                                      ))}
+                                    </S.CodeBox>
+                                  }
+                                    <img src={code ? CodeGray : CodeBlack} alt={'Code'} width={"80%"} />
                                 </S.Function>
+                              <S.Function
+                                onMouseEnter={()=>setPdf(false)}
+                                onMouseLeave={()=>setPdf(true)}
+                                onClick={()=>pdfRef.current.click()}
+                              >
+                                <img src={pdf ? PDFGray : PDFBlack} alt={'PDF'} width={"80%"} />
+                              </S.Function>
                             </S.ToolBox>
                         </S.ToolBar>
                         <S.ContentInput
@@ -319,6 +361,7 @@ export default function Write(){
                 <input ref={fileRef} type={"file"} style={{display: "none"}} onChange={(e)=> {
                     addImgText(e.target.files[0])
                 }} />
+              <input ref={pdfRef} type={"file"} style={{display: "none"}} onChange={(e)=>{addPdf(e.target.files[0])}} />
             </S.WriteContainer>
         )
 }
