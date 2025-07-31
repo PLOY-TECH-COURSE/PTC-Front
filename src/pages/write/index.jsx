@@ -225,10 +225,8 @@ export default function Write(){
         const addPdf = async (file) => {
           pdfRef.current.value = "";
           console.log(file);
-          const images = await sendPDFImagesToBackend(file);
-          images.forEach((image) => {
-            addText(`<이미지 src="${image}"></이미지>`);
-          });
+          const url = await uploadImg(file);
+          addText(`<Pdf src="${url}"></Pdf>`);
         }
         return(
             <S.WriteContainer>

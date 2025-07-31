@@ -52,6 +52,13 @@ export default function makeDocument(text = "") {
                 <CodeHighlighter language={language} code={text} />
               );
             }
+        },
+        {
+            pattern:/<Pdf src="(.*?)"><\/Pdf>/,
+            component : (src) => {
+              if(!src) return null
+              return <S.img src={src[0].props.children} alt={"추가된이미지"} />
+            }
         }
     ];
 
