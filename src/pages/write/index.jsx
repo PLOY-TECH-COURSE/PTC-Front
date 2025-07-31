@@ -21,7 +21,6 @@ import CodeBlack from '../../assets/write/codeBlack.svg';
 import CodeGray from '../../assets/write/codeGray.svg';
 import PDFGray from '../../assets/write/pdf.svg';
 import PDFBlack from '../../assets/write/pdfBlack.svg';
-import {sendPDFImagesToBackend} from "../../utils/pdfToImg.jsx";
 
 const codeList = [
   'javascript',

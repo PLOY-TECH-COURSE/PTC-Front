@@ -1,5 +1,6 @@
 import * as S from "../pages/write/style.jsx"
 import CodeHighlighter from "../components/codeColor/index.jsx";
+import PdfSwiper from "../components/pdfSlider/index.jsx";
 export default function makeDocument(text = "") {
     const tagPatterns = [
         {
@@ -57,7 +58,7 @@ export default function makeDocument(text = "") {
             pattern:/<Pdf src="(.*?)"><\/Pdf>/,
             component : (src) => {
               if(!src) return null
-              return <S.img src={src[0].props.children} alt={"추가된이미지"} />
+              return <PdfSwiper url={src[0].props.children} />
             }
         }
     ];
