@@ -24,7 +24,7 @@ export default function PdfSwiper({url}) {
 			className="swiper-container"
 		>
 			<Document
-				file={url}
+				file={"https://storage.googleapis.com/ploytechcourse-version3/ca5f82d8-2bd8-449f-9552-78704b956b5e"}
 				onLoadSuccess={({ numPages }) => setNumPages(numPages)}
 				loading=""
 			>
