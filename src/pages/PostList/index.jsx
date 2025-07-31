@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { getSearchPost } from "../../api/postList";
 import Loading from "../../components/loading";
 import Footer from "../../components/footer/index.jsx";
+import PdfSwiperCustom from "../../components/pdf";
 
 export default function PostList() {
     const navigate = useNavigate();
@@ -111,7 +112,7 @@ export default function PostList() {
                         />
                     </S.Search>
                 </S.PostListTop>
-
+                <PdfSwiperCustom />
                 <S.Sort>
                     <S.Recent onClick={() => handleSortChange("CREATE_AT")} active={sort === "LIKE"}>
                         <button /><p>최신순</p>
