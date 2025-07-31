@@ -56,6 +56,6 @@ export default function PdfSwiper({url}) {
 				<S.CustomButton direction="next" className="custom-next" />
 			</Document>
 
-		</div>
+		</S.SwiperContainer>
 	);
 }
