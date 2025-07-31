@@ -227,7 +227,7 @@ export default function Write(){
             data.append('file', file);
             const url = await uploadImg(data);
         
-          addText(`<Pdf src="${url}"></Pdf>`);
+          addText(`<Pdf src="${url.url}"></Pdf>`);
         }
         return(
             <S.WriteContainer>
