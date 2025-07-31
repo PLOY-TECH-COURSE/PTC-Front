@@ -222,9 +222,11 @@ export default function Write(){
 
         const pdfRef = useRef(null);
         const addPdf = async (file) => {
-          pdfRef.current.value = "";
-          console.log(file);
-          const url = await uploadImg(file);
+            pdfRef.current.value = "";
+            const data = new FormData();
+            data.append('file', file);
+            const url = await uploadImg(data);
+        
           addText(`<Pdf src="${url}"></Pdf>`);
         }
         return(
