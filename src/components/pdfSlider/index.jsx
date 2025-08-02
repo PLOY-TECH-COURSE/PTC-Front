@@ -13,7 +13,7 @@ import "react-pdf/dist/Page/AnnotationLayer.css";
 
 pdfjs.GlobalWorkerOptions.workerSrc = workerSrc;
 
-export default function PdfSwiperCustom() {
+export default function PdfSwiper({url}) {
   const [numPages, setNumPages] = useState(0);
 
   return (
@@ -22,7 +22,7 @@ export default function PdfSwiperCustom() {
       className="swiper-container"
     >
       <Document
-        file={"https://storage.googleapis.com/ploytechcourse-version3/ca5f82d8-2bd8-449f-9552-78704b956b5e"}
+        file={url}
         onLoadSuccess={({ numPages }) => setNumPages(numPages)}
         loading=""
       >
