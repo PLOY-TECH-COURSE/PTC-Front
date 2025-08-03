@@ -118,7 +118,8 @@ export const Name = styled.h3`
 export const JobBox = styled.div`
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 2rem;
     align-items: center;
 `
 export const Job = styled.h3`

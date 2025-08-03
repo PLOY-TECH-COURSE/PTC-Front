@@ -1,9 +1,7 @@
 import * as S from "./style.jsx";
-import { useState } from "react";
-import Xmark from '../../../assets/header/xmark.svg'
 import FooterComponent from '../../../components/footer'
 
-export default function Footer({change}){
+export default function Footer({isAnimation, change}){
     const data = [
 
         {
@@ -19,69 +17,31 @@ export default function Footer({change}){
         {
             id:3,
             title:"테크코스에 들어가면 무엇을 하게 되나요?",
-            content:'총 16주에 걸쳐 선배들이 제공하는 과제로 수업하게 되고 2주마다 공식적인 오프라인 미팅을 갖게 됩니다. 이때는 2주간 배운 내용 중 한 부분을 선택해 프레젠테이션을 진행하게 됩니다. 상세 일정은 합격 후 공지해드리도록 하겠습니다.',
+            content:'선배들이 제공하는 과제로 수업하게 되고 주마다 오프라인 미팅을 갖게 됩니다. 이 때는 배운 내용에 대한 프레젠테이션을 진행하게 됩니다. 상세 일정은 합격 후 공지해드리도록 하겠습니다.',
         },
         {
             id:4,
-            title:"테크코스에서 불합격해도 과제 내용 공유해주시면 안 되나요?",
+            title:"불합격해도 과제 내용 공유해주시면 안 되나요?",
             content:'불합격하신 경우, 과제 내용은 별도로 제공되지 않습니다. 하지만 학습한 내용을 정리하여 수강생들이 플테코 블로그에 공유할 예정이니 참고하시면 좋을 것 같습니다.',
-        },
-        {
-            id:5,
-            title:"서비스 사용에 문제가 생겼어요 어떻게 해야 하나요?",
-            content:'서비스 이용 중 문제가 발생하면 이메일 또는 인스타그램 bssm_ploy를 통해 문의해 주시면 됩니다.',
         },
         
     ]
-    const [skillShow, setSkillShow] = useState(Array(data.length).fill(false));
-    const [skillHide, setSkillHide] = useState(Array(data.length).fill(false))
-
-    // 클릭으로 활성화되어야할 요소가 바뀜 idx를 이용하여 활성화시킬 요소를 만듦
-    const changeSkill = (idx) =>{
-        const newSkill = Array(data.length).fill(false);
-
-        if(idx > 4){
-            const hide = Array(data.length).fill(false);
-            hide[idx-data.length] = true;
-            setSkillHide(hide);
-
-            setTimeout(() => {
-                const newSkill = [...skillShow];
-                newSkill[idx - data.length] = false;
-                setSkillShow(newSkill);
-                setSkillHide(Array(data.length).fill(false));
-            }, 300);
-        }
-        else {
-            newSkill[idx] = true;
-            setSkillShow(newSkill);
-        }
-    }
     return (
         <S.FooterContainer>
             <S.UnBox />
             <S.FAQ>
-            <p>자주묻는질문</p>
-            {data.map((item, idx)=>{
-                        if(!skillShow[idx]){
-                            return(
-                                <S.Section key={item.id} onClick={()=>changeSkill(idx)}>
-                                    <p>{item.title}</p>
-                                    <img src={Xmark} alt={'downIcon'} />
-                                </S.Section>
-                            )
-                        }
-                        else {
-                            return(
-                                <S.Dis key={item.id} $skill = {skillShow[idx]} $hide = {skillHide[idx]} onClick={()=>changeSkill(idx+5)}>
-                                    <S.Name>
-                                        <p>{item.title}</p>
-                                        <img src={Xmark} alt={'upIcon'} />
-                                    </S.Name>
-                                    <p>{item.content}</p>
-                                </S.Dis>
-                            )}
-                    })}
+              <h3>FAQ</h3>
+              <S.FAQBox>
+                {data.map((item)=>{
+                  const time = item.id * 0.1
+                  return(
+                    <S.Q key={item.id} $isAnimation={isAnimation} $time={0.5 + time}>
+                      <span><h1>Q. </h1>{item.title}</span>
+                      <p>{item.content}</p>
+                    </S.Q>
+                  )
+                })}
+              </S.FAQBox>
             </S.FAQ>
             <FooterComponent change={change} />
         </S.FooterContainer>
