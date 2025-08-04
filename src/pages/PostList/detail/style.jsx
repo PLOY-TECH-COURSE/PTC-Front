@@ -123,9 +123,6 @@ export const PostDetailData = styled.div`
         color: #000;
         font-family: 'Courier New', Courier, monospace;
         margin-top: 18px;
-        & :first-child{
-            width: 100%;
-        }
     }
 `
 
