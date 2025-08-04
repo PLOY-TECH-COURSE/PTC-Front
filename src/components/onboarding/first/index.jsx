@@ -1,7 +1,7 @@
 import * as S from "./style.jsx";
 import Logo from '../../../assets/Logo.svg';
 import {useNavigate} from "react-router-dom";
-import LeftArrow from '../../../assets/onboarding/first/LeftArrow.svg';
+import LeftArrow from '../../../assets/onboarding/first/leftArrow.svg';
 import {useEffect, useState} from "react";
 import MainImg from '../../../assets/onboarding/first/mento2.jpeg'
 import {useThrottle} from "../../../hooks/useThrottle.jsx";
