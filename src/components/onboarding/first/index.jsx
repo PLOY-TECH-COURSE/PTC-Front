@@ -126,8 +126,8 @@ export default function First({youtubeRef}){
               const today = new Date();
               const formatted = today.toISOString().split('T')[0];
               return(
-                  <S.BroadCast key={item.id} onClick={() => {
-                    navigate(`/announcement/${item.id}`)
+                  <S.BroadCast key={item.announcements_id} onClick={() => {
+                    navigate(`/announcement/${item.announcements_id}`)
                   }}>
                     {item.date === formatted && <S.New>New</S.New>}
                     <div>
