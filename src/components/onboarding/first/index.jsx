@@ -60,7 +60,7 @@ export default function First({youtubeRef}){
     return imgIdx === 1 || imgIdx === 3 ? 0 : 0.5;
   };
   useEffect(async () => {
-    const data = await getBroadcastList();
+    const data = await getBroadcastList({start: 0});
     setBroadcast(data);
   }, []);
     const [broadcast, setBroadcast] = useState([]);
