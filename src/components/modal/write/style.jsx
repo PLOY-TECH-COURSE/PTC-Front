@@ -30,6 +30,7 @@ export const Content = styled.main`
     position: relative;
     gap: 20px;
     animation: ${show} 0.2s ease-in-out;
+  z-index: 1000;
 `
 export const Broad = styled.div`
     width: 100%;
