@@ -3,7 +3,7 @@ import {useEffect, useRef, useState} from "react";
 import Dohun from '../../../assets/onboarding/team-introduce/dohun.jpg';
 import Hyojun from '../../../assets/onboarding/team-introduce/123isi.jpg';
 import Taeyoung from '../../../assets/onboarding/team-introduce/noahmik.webp';
-import Jemin from '../../../assets/onboarding/team-introduce/jmj732.png';
+import Jemin from '../../../assets/onboarding/team-introduce/jmj732.jpeg';
 import Heodongun from '../../../assets/onboarding/team-introduce/heodongun.svg';
 import Siwoo from '../../../assets/onboarding/team-introduce/kangsiwoo.png';
 import Soeun from '../../../assets/onboarding/team-introduce/soeun823.jpeg'

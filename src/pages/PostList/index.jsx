@@ -20,18 +20,11 @@ export default function PostList() {
         setPosts([]);
     }, [searchQuery, sort]);
 
-    useEffect(() => {
-        loadMorePosts();
-    }, [start]);
-
     const loadMorePosts = () => {
         if (loading) return;
         setLoading(true);
 
         const query = searchQuery;
-        getSearchPost(query, sort, start);
-
-
 
         getSearchPost(query, sort, start)
             .then((data) => {
@@ -76,7 +69,7 @@ export default function PostList() {
 
     useEffect(() => {
         loadMorePosts();
-    }, [searchQuery, sort]);
+    }, [searchQuery, sort, start]);
 
     const handlePostClick = (id) => {
         const numericId = Number(id);
@@ -86,10 +79,6 @@ export default function PostList() {
         }
         navigate(`/post/${numericId}`);
     };
-
-    useEffect(() => {
-        loadMorePosts();
-    }, [searchQuery, sort]);
 
     return (
         <S.Container>
