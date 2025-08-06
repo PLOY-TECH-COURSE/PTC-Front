@@ -59,9 +59,15 @@ export default function First({youtubeRef}){
     }
     return imgIdx === 1 || imgIdx === 3 ? 0 : 0.5;
   };
-  useEffect(async () => {
+
+  const [isLoading, setIsLoading] = useState(true);
+  const getBroadcast = async () => {
     const data = await getBroadcastList({start: 0});
     setBroadcast(data);
+    setIsLoading(false);
+  }
+  useEffect(() => {
+    getBroadcast();
   }, []);
     const [broadcast, setBroadcast] = useState([]);
     return(
@@ -122,7 +128,7 @@ export default function First({youtubeRef}){
             <img style={{transform : 'rotate(180deg)'}} src={LeftArrow} alt={'arrow'} />
           </S.ArrowBtn>
           <S.BroadCastContainer>
-            {broadcast && broadcast.map((item) => {
+            {broadcast.length > 0 ? broadcast.map((item) => {
               const today = new Date();
               const formatted = today.toISOString().split('T')[0];
               return(
@@ -133,14 +139,21 @@ export default function First({youtubeRef}){
                     <div>
                       <h3>
                         {item.title.length > 16
-                          ? `${item.title.slice(0, 16)}...`
+                          ? `${item.title.slice(0, 13)}...`
                           : item.title}
                       </h3>
                     </div>
                     <p>{item.date}</p>
                   </S.BroadCast>
                 );
-            })}
+            }) :<S.UnBroadCast>
+              <div>
+                <h3>
+                  Test
+                </h3>
+              </div>
+              <p>2023-01-01</p>
+            </S.UnBroadCast>}
           </S.BroadCastContainer>
         </S.FirstContainer>
     )

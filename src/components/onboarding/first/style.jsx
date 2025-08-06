@@ -156,6 +156,18 @@ export const BroadCast = styled.div`
     font-weight: 500;
   }
 `
+export const UnBroadCast = styled(BroadCast)`
+  color: white;
+  & > p{
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+  }
+  & > p:nth-of-type(2){
+    color: white;
+    font-weight: 500;
+  }
+`
 export const New = styled.div`
   position: absolute;
   top: -28%;
