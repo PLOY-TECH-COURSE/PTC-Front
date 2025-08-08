@@ -12,6 +12,8 @@ export default function Result({ranking}) {
   const [isShow, setIsShow] = useState([false, false, false]);
   const [isCongratulation, setIsCongratulation] = useState(false);
   const [isEnd, setIsEnd] = useState(false);
+
+  // 들어온 ranking 문자열을 객체로 파싱
   function parseRanking(str) {
     const regex = /(\d+)등\s*:\s*(\S+)\s+(https?:\/\/\S+?)(?=\d+등|$)/g;
     const result = [];
@@ -33,24 +35,8 @@ export default function Result({ranking}) {
   useEffect(() => {
     setRank(parseRanking(ranking));
   }, [ranking]);
-  const imgSize = {
-    1 : 120,
-    2 : 110,
-    3 : 100
-  }
-  const fontSize = {
-    1 : 20,
-    2 : 18,
-    3 : 16
-  }
-  const animation={
-    1 : 0.8,
-    2 : 0.9,
-    3 : 1
-  }
-
-
-
+  const imgSize = {1 : 120, 2 : 110, 3 : 100}
+  const fontSize = {1 : 20, 2 : 18,}
 
   const audioRef = useRef(null);
   const secondThirdSoundRef = useRef(null);
@@ -73,37 +59,46 @@ export default function Result({ranking}) {
       }
     };
 
-    tryPlay(0);
+    const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-    setTimeout(() => {
-      setIsShow([true, false, false]);
-      secondThirdSoundRef.current.play();
-      setTimeout(() => {
-        tryPlay(1);
+    async function playSequence() {
+      try {
+        await tryPlay(0);
+
+        await delay(5000);
+        setIsShow([true, false, false]);
+        secondThirdSoundRef.current.play();
+
+        await delay(3000);
+        await tryPlay(1);
         setIsShow([false, false, false]);
-        setTimeout(() => {
-          setIsShow([false, true, false]);
-          secondThirdSoundRef.current.play();
-          setTimeout(() => {
-            tryPlay(2);
-            setIsShow([false, false, false]);
-            setTimeout(()=>{
-              playFirstSound();
-              setIsShow([false, false, true])
-              setIsCongratulation(true);
-              setTimeout(() => {
-                setIsEnd(true);
-              }, 5000);
-            }, 5000);
-          }, 3000);
-        }, 5000);
-      }, 3000);
-    }, 5000);
+
+        await delay(5000);
+        setIsShow([false, true, false]);
+        secondThirdSoundRef.current.play();
+
+        await delay(3000);
+        await tryPlay(2);
+        setIsShow([false, false, false]);
+
+        await delay(5000);
+        playFirstSound();
+        setIsShow([false, false, true]);
+        setIsCongratulation(true);
+
+        await delay(5000);
+        setIsEnd(true);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    playSequence()
   }, []);
 
   return (
-    <S.Container>{
-      rank.map((item, index) => {
+    <S.Container>
+      {/*글자 구역*/}
+      {rank.map((item, index) => {
         return (
           <S.Rank $isEnd={isEnd} key={index}>
             <S.ImgBox $rank={imgSize[item.rank]}>
@@ -115,10 +110,11 @@ export default function Result({ranking}) {
             </S.Info>
           </S.Rank>
         )
-      })
-    }
+      })}
 
+    {/*에니메이션 구역*/}
       <S.Black $isEnd={isEnd}>
+        {/*따단 오디오, 텍스트 에니메이션*/}
         <audio ref={audioRef} src={DuguDugu}/>
         <audio ref={secondThirdSoundRef} src={SecondThirdSound}/>
         <audio ref={FirstSoundRef} src={FirstSound}/>
@@ -126,33 +122,19 @@ export default function Result({ranking}) {
         <S.CoolSlidingText $isEnd={isText[1]}>그럼 2등은~?</S.CoolSlidingText>
         <S.CoolSlidingText $isEnd={isText[2]}>과연 1등은~?</S.CoolSlidingText>
 
-        <S.RankAnimation $animation={animation[1]} $rank={isShow[0]}>
-          <S.RankImg>
-            <img src={Third}/>
-          </S.RankImg>
-          <S.ImgBoxAnimation>
-            <img src={"https://storage.googleapis.com/ploytechcourse-version3/391b0b82-c522-4fd5-9a75-5a1488c21b7e"}/>
-          </S.ImgBoxAnimation>
-          <S.Name $rank={fontSize[1]}>곽영빈</S.Name>
-        </S.RankAnimation>
-        <S.RankAnimation $animation={animation[1]} $rank={isShow[1]}>
-          <S.RankImg>
-            <img src={Second}/>
-          </S.RankImg>
-          <S.ImgBoxAnimation>
-            <img src={"https://storage.googleapis.com/ploytechcourse-version3/391b0b82-c522-4fd5-9a75-5a1488c21b7e"}/>
-          </S.ImgBoxAnimation>
-          <S.Name $rank={fontSize[1]}>곽영빈</S.Name>
-        </S.RankAnimation>
-        <S.RankAnimationFirst $animation={animation[1]} $rank={isShow[2]}>
-          <S.RankImg>
-            <img src={First}/>
-          </S.RankImg>
-          <S.ImgBoxAnimation>
-            <img src={"https://storage.googleapis.com/ploytechcourse-version3/391b0b82-c522-4fd5-9a75-5a1488c21b7e"}/>
-          </S.ImgBoxAnimation>
-          <S.Name $rank={fontSize[1]}>곽영빈</S.Name>
-        </S.RankAnimationFirst>
+        {rank && rank.map((item, idx)=>{
+          return(
+            <S.RankAnimation $ranking={idx} $rank={isShow[idx]}>
+              <S.RankImg>
+                <img src={ idx === 0 ? Third : idx === 1 ? Second : First}/>
+              </S.RankImg>
+              <S.ImgBoxAnimation>
+                <img src={item.img}/>
+              </S.ImgBoxAnimation>
+              <S.Name $rank={fontSize[1]}>{item.name}</S.Name>
+            </S.RankAnimation>
+          )
+        })}
         {isCongratulation && <Congratulation/>}
       </S.Black>
     </S.Container>

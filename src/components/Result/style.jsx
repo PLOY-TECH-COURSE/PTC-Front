@@ -150,38 +150,12 @@ export const RankAnimation = styled.div`
     props.$rank
       ? css`
         display: flex;
-          animation: ${stampInOut} 3s ease-out forwards;
-        `
+        animation: ${props.$ranking === 2 ? stampIn : stampInOut} ${props.$ranking === 2 ? '1.5s' : '3s'} ease-out forwards;
+      `
       : css`
-          display: none;
-        `}
+        display: none;
+      `}
   position: relative;
-  width: 300px;
-  height: 300px;
-  border-radius: 100%;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-  gap: 10px;
-  & > span{
-    color: white;
-    font-weight: 600;
-    font-size: 32px;
-  }
-`
-export const RankAnimationFirst = styled.div`
-  ${(props) =>
-  props.$rank
-    ? css`
-          display: flex;
-          animation: ${stampIn} 1.5s ease-out forwards;
-        `
-    : css`
-          display: none;
-        `}
-  position: relative;
-  width: 300px;
-  height: 300px;
   border-radius: 100%;
   align-items: center;
   flex-direction: column;
@@ -212,8 +186,8 @@ export const ImgBoxAnimation = styled.div`
   border-radius: 100%;
   overflow: hidden;
   img {
-    width: 100%;
-    height: 100%;
+    width: 250px;
+    height: 250px;
     object-fit: cover;
   }
 `
