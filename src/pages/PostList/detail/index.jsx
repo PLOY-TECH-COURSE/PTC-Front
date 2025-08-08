@@ -17,29 +17,7 @@ export default function Detail() {
     const { id } = useParams();
     const postId = parseInt(id);
     const navigate = useNavigate();
-    const [post, setPost] = useState({
-      "document": {
-        "id": 24,
-        "title": "\uD83E\uDDE0 Git과 GitHub는 무엇일까?",
-        "content": "<결과 src=\"2등:곽영빈 https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcckdnY%2FbtqDogEdAS4%2F7kJZCk4ZhTYhNQMl6RkIU1%2Fimg.png1등:곽영빈 https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcckdnY%2FbtqDogEdAS4%2F7kJZCk4ZhTYhNQMl6RkIU1%2Fimg.png3등:곽영빈 https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcckdnY%2FbtqDogEdAS4%2F7kJZCk4ZhTYhNQMl6RkIU1%2Fimg.png\"></결과>\n" +
-          "\n" +
-          "결과를 떠나, 여러분 각자의 열정과 노력이 큰 의미를 만들어주었습니다. 모두 수고 많으셨습니다.",
-        "createAt": "2025-04-08",
-        "thumbnail": "https://storage.googleapis.com/ploytechcourse-version3/391b0b82-c522-4fd5-9a75-5a1488c21b7e",
-        "introduction": "놀라운 이야기"
-      },
-      "userInfoDTO": {
-        "id": 39,
-        "uid": "joon0",
-        "name": "강준영",
-        "profile": "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcckdnY%2FbtqDogEdAS4%2F7kJZCk4ZhTYhNQMl6RkIU1%2Fimg.png"
-      },
-      "likes": 1,
-      "like_on": true,
-      "favorite_on": false,
-      "generation": "1",
-      "hash_tag": []
-    });
+    const [post, setPost] = useState(null);
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState('');
     const [loading, setLoading] = useState(true);
