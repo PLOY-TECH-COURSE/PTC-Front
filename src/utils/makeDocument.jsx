@@ -1,6 +1,7 @@
 import * as S from "../pages/write/style.jsx"
 import CodeHighlighter from "../components/codeColor/index.jsx";
 import PdfSwiper from "../components/pdfSlider/index.jsx";
+import Result from "../components/Result/index.jsx";
 export default function makeDocument(text = "") {
     const tagPatterns = [
         {
@@ -62,7 +63,16 @@ export default function makeDocument(text = "") {
 
               return <PdfSwiper swiperId={randomId} url={src[0].props.children} />;
             }
+        },
+      {
+        pattern: /<결과 src="(.*?)"><\/결과>/,
+        component: (src) => {
+          if (!src) return null;
+          return (
+            <Result ranking={src[0].props.children} />
+          );
         }
+      }
     ];
 
     function parseText(inputText) {
