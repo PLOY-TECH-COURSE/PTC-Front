@@ -21,7 +21,7 @@ import {LoginConfirm} from "./components/loginConfirm/index.jsx";
 import Mobile from './components/confirm/index.jsx';
 import Confirm from './components/authConfirm/index.jsx';
 import Error from './components/error/index.jsx';
-
+import Survey from './pages/survey/index.jsx';
 createRoot(document.getElementById('root')).render(
    <RecoilRoot>
     <BrowserRouter>
@@ -44,7 +44,9 @@ createRoot(document.getElementById('root')).render(
                     <Route element={<Confirm role='ROLE_SUPERADMIN' />}>
                         <Route path="/authority" element={<Select/>} />
                     </Route>
-                    
+                    <Route element={<Confirm role='ROLE_ADMIN' />}>
+                        <Route path="/survey" element={<Survey/>} />
+                    </Route>
                     <Route path='*' element={<Error />} />
                 </Route>
             </Route>
