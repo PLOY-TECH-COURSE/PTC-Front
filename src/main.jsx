@@ -40,7 +40,7 @@ createRoot(document.getElementById('root')).render(
                     </Route>
                     <Route element={<Confirm role='ROLE_ADMIN, ROLE_SUPERADMIN' />}>
                         <Route path="/proposer" element={<Proposer />} />
-                        <LoginConfirmRoute path="/survey/add" element={<Survey/>} />
+                        <Route path="/survey/add" element={<Survey/>} />
                     </Route>
                     <Route element={<Confirm role='ROLE_SUPERADMIN' />}>
                         <Route path="/authority" element={<Select/>} />
