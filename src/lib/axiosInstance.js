@@ -2,7 +2,7 @@ import axios from 'axios';
 
 
 const axiosInstance = axios.create({
-    baseURL: '/api',
+    baseURL: 'https://ploytechcourse.kro.kr/api',
     headers:{
         'Content-Type': 'application/json'
     },

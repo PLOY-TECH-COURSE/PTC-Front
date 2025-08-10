@@ -1,11 +1,25 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  background-image: url('/backgroundptc.svg');
-  background-size: cover;
-  background-position: center;
-  min-height: 100vh;
+  position: relative;      
+  min-height: 100vh;      
+  isolation: isolate;      
+
+  &::before {
+    content: "";                    
+    position: fixed;                 
+    top: 0;                          
+    right: 0;                        
+    bottom: 0;                       
+    left: 0;                         
+    z-index: -1;                     
+    background-image: url('/backgroundptc.svg'); 
+    background-position: center;     
+    background-repeat: no-repeat;   
+    background-size: cover;          
+  }
 `;
+
 
 export const Wrap = styled.div`
   padding: 24px 24px 80px;

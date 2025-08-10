@@ -2,13 +2,32 @@ import React, { useEffect, useState } from 'react';
 import Header from '../../components/header';
 import * as S from './style';
 
+function clampNumber(n, { min = -Infinity, max = Infinity, fallback = 0 } = {}) {
+  const v = Number.parseInt(String(n), 10);
+  if (Number.isNaN(v)) return fallback;
+  return Math.max(min, Math.min(max, v));
+}
+
 function ScoreBlock({ index, data, onChange }) {
   const { label, min, max, count } = data;
   const [ticks, setTicks] = useState([]);
+  const handleLabel = (e) => onChange(index, { ...data, label: e.target.value });
 
-  const num = (v, def = 0) => {
-    const n = parseInt(String(v), 10);
-    return Number.isNaN(n) ? def : n;
+  const handleMin = (e) => {
+    const nextMin = clampNumber(e.target.value, { min: 0, fallback: 0 });
+    const fixedMax = Math.max(nextMin, Number.isFinite(max) ? max : nextMin);
+    onChange(index, { ...data, min: nextMin, max: fixedMax });
+  };
+
+  const handleMax = (e) => {
+    const raw = clampNumber(e.target.value, { fallback: min });
+    const nextMax = Math.max(raw, min);
+    onChange(index, { ...data, max: nextMax });
+  };
+
+  const handleCount = (e) => {
+    const next = clampNumber(e.target.value, { min: 2, max: 10, fallback: 2 });
+    onChange(index, { ...data, count: next });
   };
 
   useEffect(() => {
@@ -32,20 +51,22 @@ function ScoreBlock({ index, data, onChange }) {
       <S.SectionTitleInput
         placeholder="채점 항목 제목을 입력해주세요"
         value={label}
-        onChange={(e) => onChange(index, { ...data, label: e.target.value })}
+        onChange={handleLabel}
       />
       <S.RangeRow>
         <S.RangeBox>
           <S.NumInput
             type="number"
+            min={0}
             value={min}
-            onChange={(e) => onChange(index, { ...data, min: num(e.target.value) })}
+            onChange={handleMin}
           />
           <S.Tilde>~</S.Tilde>
           <S.NumInput
             type="number"
+            min={min}
             value={max}
-            onChange={(e) => onChange(index, { ...data, max: num(e.target.value) })}
+            onChange={handleMax}
           />
         </S.RangeBox>
         <S.Meta>
@@ -56,7 +77,7 @@ function ScoreBlock({ index, data, onChange }) {
               min={2}
               max={10}
               value={count}
-              onChange={(e) => onChange(index, { ...data, count: num(e.target.value, 2) })}
+              onChange={handleCount}
             />
           </strong>
           개
@@ -85,6 +106,7 @@ export default function Survey() {
 
   const addItem = () =>
     setItems((prev) => [...prev, { label: '', min: 0, max: 30, count: 5, scores: [] }]);
+  const totalScore = items.reduce((sum, it) => sum + (Number(it.max) || 0), 0);
 
   return (
     <S.Container>
@@ -108,6 +130,7 @@ export default function Survey() {
               <S.NumInputSm
                 type="number"
                 placeholder="0"
+                min={0}
                 value={graderCount}
                 onChange={(e) => setGraderCount(e.target.value)}
               />
@@ -126,9 +149,7 @@ export default function Survey() {
           <S.ScoreCard>
             <S.ScoreRow>
               <S.ScoreLabel>총 점수 :</S.ScoreLabel>
-              <S.ScoreValue>
-                {items.length ? Math.max(...items.map((i) => i.max || 0)) : 0}
-              </S.ScoreValue>
+              <S.ScoreValue>{totalScore}</S.ScoreValue>
             </S.ScoreRow>
             <S.SubmitButton>채점 제출</S.SubmitButton>
           </S.ScoreCard>
