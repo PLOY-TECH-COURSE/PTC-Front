@@ -72,7 +72,6 @@ export default function First({youtubeRef}){
     const [broadcast, setBroadcast] = useState([]);
     return(
         <S.FirstContainer>
-
           <S.Wrap>
             <S.SlideBox $time={animation} $index={imgIdx}>
               {/** 무한 슬라이드를 위한 슬라이드**/}
