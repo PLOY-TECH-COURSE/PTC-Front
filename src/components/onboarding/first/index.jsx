@@ -22,7 +22,7 @@ export default function First({youtubeRef}){
         setIsAnimation(true);
       }
       setImgIdx((prevIndex) => (prevIndex + 1) % imgList.length);
-    }, 5000);
+    }, isLoading ? 10 : 20000);
     return () => clearInterval(interval);
   }, [imgIdx]);
 
@@ -64,9 +64,9 @@ export default function First({youtubeRef}){
   const getBroadcast = async () => {
     const data = await getBroadcastList({start: 0});
     setBroadcast(data);
-    setIsLoading(false);
   }
   useEffect(() => {
+    setIsLoading(false)
     getBroadcast();
   }, []);
     const [broadcast, setBroadcast] = useState([]);
