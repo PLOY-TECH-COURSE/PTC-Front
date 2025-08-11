@@ -7,6 +7,7 @@ import SecondThirdSound from "../../assets/document/second_third.m4a"
 import DuguDugu from "../../assets/document/dugudugu.m4a"
 import * as S from "./style.jsx"
 import Congratulation from "./RottieCongraturation";
+import {useNavigate} from "react-router-dom";
 
 export default function Result({ranking}) {
   const [isShow, setIsShow] = useState([false, false, false]);
@@ -46,9 +47,34 @@ export default function Result({ranking}) {
     FirstSoundRef.current.play();
   };
   const [isText, setIsText] = useState([true, false, false]);
-  const text = ["3등은~?", "그럼 2등은~?", "과연 1등은~?"]
+  const [sorted, setSorted] = useState([...rank].sort((a, b) => b.rank - a.rank));
+
+  const navigate = useNavigate();
   useEffect(() => {
+    setSorted([...rank].sort((a, b) => b.rank - a.rank));
+    
+    const handleBeforeUnload = (e) => {
+      e.preventDefault();
+      e.returnValue = '';
+      setTimeout(() => {
+        alert('브라우저 정책으로 인해 다시 접속해주시기 바랍니다.');
+        navigate(-1);
+      }, 100);
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [rank]);
+
+  useEffect(() => {
+    let isMounted = true;
+    let timeoutIds = [];
+
     const tryPlay = async (number) => {
+      if (!isMounted) return;
       try {
         await audioRef.current.play();
         const newText = [false, false, false];
@@ -59,40 +85,72 @@ export default function Result({ranking}) {
       }
     };
 
-    const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+    const delay = (ms) => new Promise((resolve) => {
+      if (!isMounted) return;
+      const id = setTimeout(() => isMounted && resolve(), ms);
+      timeoutIds.push(id);
+    });
 
     async function playSequence() {
       try {
+        if (!isMounted) return;
         await tryPlay(0);
 
         await delay(5000);
+        if (!isMounted) return;
         setIsShow([true, false, false]);
         secondThirdSoundRef.current.play();
 
         await delay(3000);
+        if (!isMounted) return;
         await tryPlay(1);
         setIsShow([false, false, false]);
 
         await delay(5000);
+        if (!isMounted) return;
         setIsShow([false, true, false]);
         secondThirdSoundRef.current.play();
 
         await delay(3000);
+        if (!isMounted) return;
         await tryPlay(2);
         setIsShow([false, false, false]);
 
         await delay(5000);
+        if (!isMounted) return;
         playFirstSound();
         setIsShow([false, false, true]);
         setIsCongratulation(true);
 
         await delay(5000);
-        setIsEnd(true);
+        if (isMounted) {
+          setIsEnd(true);
+        }
       } catch (error) {
-        console.error(error);
+        if (isMounted) {
+          console.error(error);
+        }
       }
     }
-    playSequence()
+    
+    playSequence();
+
+    return () => {
+      isMounted = false;
+      timeoutIds.forEach(clearTimeout);
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+      }
+      if (secondThirdSoundRef.current) {
+        secondThirdSoundRef.current.pause();
+        secondThirdSoundRef.current.currentTime = 0;
+      }
+      if (FirstSoundRef.current) {
+        FirstSoundRef.current.pause();
+        FirstSoundRef.current.currentTime = 0;
+      }
+    };
   }, []);
 
   return (
@@ -122,7 +180,7 @@ export default function Result({ranking}) {
         <S.CoolSlidingText $isEnd={isText[1]}>그럼 2등은~?</S.CoolSlidingText>
         <S.CoolSlidingText $isEnd={isText[2]}>과연 1등은~?</S.CoolSlidingText>
 
-        {rank && rank.map((item, idx)=>{
+        {sorted && sorted.map((item, idx)=>{
           return(
             <S.RankAnimation $ranking={idx} $rank={isShow[idx]}>
               <S.RankImg>

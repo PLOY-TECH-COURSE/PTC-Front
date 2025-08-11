@@ -105,9 +105,6 @@ export const PostDetailData = styled.div`
     display: flex;
     flex-direction: column;
     padding: 1% 0;
-    img{
-        margin-top: 10px;
-    }
 `
 
 
