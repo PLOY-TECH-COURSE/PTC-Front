@@ -140,6 +140,7 @@ export const  CoolSlidingText = styled.div`
 export const Container = styled.div`
   display: flex;
   align-items: flex-end;
+  width: 100%;
   justify-content: center;
   gap: 30px;
   z-index: 1000;
