@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../../components/header';
 import * as S from './style';
+import { createSurvey } from '../../api/survey';
 
 function clampNumber(n, { min = -Infinity, max = Infinity, fallback = 0 } = {}) {
   const v = Number.parseInt(String(n), 10);
@@ -11,6 +12,7 @@ function clampNumber(n, { min = -Infinity, max = Infinity, fallback = 0 } = {}) 
 function ScoreBlock({ index, data, onChange }) {
   const { label, min, max, count } = data;
   const [ticks, setTicks] = useState([]);
+
   const handleLabel = (e) => onChange(index, { ...data, label: e.target.value });
 
   const handleMin = (e) => {
@@ -44,7 +46,7 @@ function ScoreBlock({ index, data, onChange }) {
     const uniq = arr.filter((v, i, a) => a.indexOf(v) === i);
     setTicks(uniq);
     onChange(index, { ...data, scores: uniq });
-  }, [min, max, count]);
+  }, [min, max, count]); 
 
   return (
     <S.Card>
@@ -55,30 +57,14 @@ function ScoreBlock({ index, data, onChange }) {
       />
       <S.RangeRow>
         <S.RangeBox>
-          <S.NumInput
-            type="number"
-            min={0}
-            value={min}
-            onChange={handleMin}
-          />
+          <S.NumInput type="number" min={0} value={min} onChange={handleMin} />
           <S.Tilde>~</S.Tilde>
-          <S.NumInput
-            type="number"
-            min={min}
-            value={max}
-            onChange={handleMax}
-          />
+          <S.NumInput type="number" min={min} value={max} onChange={handleMax} />
         </S.RangeBox>
         <S.Meta>
           선택 수
           <strong>
-            <S.NumInputSm
-              type="number"
-              min={2}
-              max={10}
-              value={count}
-              onChange={handleCount}
-            />
+            <S.NumInputSm type="number" min={2} max={10} value={count} onChange={handleCount} />
           </strong>
           개
         </S.Meta>
@@ -106,7 +92,32 @@ export default function Survey() {
 
   const addItem = () =>
     setItems((prev) => [...prev, { label: '', min: 0, max: 30, count: 5, scores: [] }]);
+
   const totalScore = items.reduce((sum, it) => sum + (Number(it.max) || 0), 0);
+
+  const handleSubmit = async () => {
+    const questions = items
+      .map((it) => ({
+        question: String(it.label ?? '').trim(),
+        scores: Array.isArray(it.scores) ? it.scores : [],
+      }))
+      .filter((q) => q.question.length > 0);
+
+    const g = Number(graderCount);
+    if (!title.trim()) return alert('제목을 입력하세요.');
+    if (!Number.isFinite(g) || g < 0) return alert('채점자 수를 올바르게 입력하세요.');
+    if (questions.length === 0) return alert('최소 1개 이상의 문항이 필요합니다.');
+    for (let i = 0; i < questions.length; i++) {
+      const s = questions[i].scores;
+      if (!Array.isArray(s) || s.length < 2 || s.length > 10) {
+        return alert(`${i + 1}번 문항의 점수 개수는 2~10개여야 합니다.`);
+      }
+    }
+
+    const ok = await createSurvey(title, g, desc, questions);
+    if (ok) alert('채점표가 생성되었습니다.');
+    else alert('생성에 실패했습니다.');
+  };
 
   return (
     <S.Container>
@@ -151,7 +162,7 @@ export default function Survey() {
               <S.ScoreLabel>총 점수 :</S.ScoreLabel>
               <S.ScoreValue>{totalScore}</S.ScoreValue>
             </S.ScoreRow>
-            <S.SubmitButton>채점 제출</S.SubmitButton>
+            <S.SubmitButton onClick={handleSubmit}>설문 제출</S.SubmitButton>
           </S.ScoreCard>
         </S.Aside>
       </S.Wrap>
