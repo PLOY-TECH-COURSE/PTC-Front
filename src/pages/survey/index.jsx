@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Header from '../../components/header';
 import * as S from './style';
 import { createSurvey } from '../../api/survey';
+import { useNavigate } from 'react-router-dom';
 
 function clampNumber(n, { min = -Infinity, max = Infinity, fallback = 0 } = {}) {
   const v = Number.parseInt(String(n), 10);
@@ -12,7 +13,7 @@ function clampNumber(n, { min = -Infinity, max = Infinity, fallback = 0 } = {}) 
 function ScoreBlock({ index, data, onChange }) {
   const { label, min, max, count } = data;
   const [ticks, setTicks] = useState([]);
-
+  
   const handleLabel = (e) => onChange(index, { ...data, label: e.target.value });
 
   const handleMin = (e) => {
@@ -86,7 +87,7 @@ export default function Survey() {
   const [desc, setDesc] = useState('');
   const [graderCount, setGraderCount] = useState('');
   const [items, setItems] = useState([{ label: '', min: 0, max: 30, count: 5, scores: [] }]);
-
+  const nav=useNavigate();
   const updateItem = (i, next) =>
     setItems((prev) => prev.map((it, idx) => (idx === i ? next : it)));
 
@@ -115,7 +116,10 @@ export default function Survey() {
     }
 
     const ok = await createSurvey(title, g, desc, questions);
-    if (ok) alert('채점표가 생성되었습니다.');
+    if (ok) {
+      alert('채점표가 생성되었습니다.');
+      nav("/survey")
+    }
     else alert('생성에 실패했습니다.');
   };
 
