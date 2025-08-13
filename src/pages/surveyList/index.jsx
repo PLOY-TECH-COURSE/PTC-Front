@@ -1,8 +1,101 @@
+import {useEffect, useRef, useState} from "react";
+import * as S from "../PostList/style.jsx";
+import Loading from "../../components/loading.jsx";
+import Header from "../../components/header/index.jsx";
+import Search from "../../assets/search.svg";
+import Footer from "../../components/footer/index.jsx";
+import SurveyItem from "../../components/surveyItem/index.jsx";
+
 const SurveyList = () => {
+    // const navigate = useNavigate();
+    const [searchQuery, setSearchQuery] = useState("");
+    const [start, setStart] = useState(0);
+    const [posts, setPosts] = useState([
+        {
+            id: 1,
+            title:"플테코 1학기 중간발표 채점",
+            introduction:"채ㅐ채점",
+            date:"2013-09-04"
+        },
+        {
+            id: 2,
+            title:"플테코 1학기 chlwhd발표 채점",
+            introduction:"으아이ㅏ아아",
+            date:"2013-09-04"
+        }
+    ]);
+    console.log(posts.length)
+    useEffect(() => {
+        console.log("posts changed:", posts);
+    }, [posts]);
+    const [loading, setLoading] = useState(false);
+    useEffect(() => {
+        setStart(0);
+    }, [searchQuery]);
+    const handleNScroll = () => {
+        if (window.innerHeight + window.scrollY >= document.documentElement.offsetHeight - 2) {
+            setStart(prev => prev + 21);
+        }
+    };
+
+    useEffect(() => {
+        window.addEventListener("scroll", handleNScroll);
+        return () => {
+            window.removeEventListener("scroll", handleNScroll);
+        };
+    }, []);
+
+    const handleSearchChange = (e) => {
+        const query = e.target.value;
+        setSearchQuery(query);
+        setStart(0);
+        // setPosts([]);
+    };
+
+    // useEffect(() => {
+    //     loadMorePosts();
+    // }, [searchQuery, start]);
+
+    // const handlePostClick = (id) => {
+    //     const numericId = Number(id);
+    //     if (isNaN(numericId)) {
+    //         return;
+    //     }
+    //     navigate(`/post/${numericId}`);
+    // };
+
     return (
-        <div>
-            <div>채점 목록</div>
-        </div>
+        <S.Container>
+            {loading && (
+                <S.LoadingWrapper>
+                    <Loading />
+                </S.LoadingWrapper>
+            )}
+            <Header />
+            <S.Content>
+                <S.PostListTop>
+                    <S.Search>
+                        <img src={Search} width={20} alt="Search" />
+                        <S.Input
+                            type="text"
+                            placeholder="검색어를 입력하세요"
+                            value={searchQuery}
+                            onChange={handleSearchChange}
+                        />
+                    </S.Search>
+                </S.PostListTop>
+                <S.PostListMain>
+                    {posts.length == 0 ? (
+                        <h2>{searchQuery ? "검색 결과가 없습니다." : "게시물이 없습니다."}</h2>
+                    ) : (
+                        posts.map((post) => (
+                            <SurveyItem key={post.id} post={post} />
+                        ))
+                    )}
+                </S.PostListMain>
+            </S.Content>
+            <Footer />
+        </S.Container>
     );
 }
 export default SurveyList
