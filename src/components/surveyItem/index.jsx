@@ -5,6 +5,7 @@ import Complete from "../../assets/survey/complete.svg"
 import InComplete from "../../assets/survey/incomplete.svg"
 import {useRecoilValue} from "recoil";
 import {authAtom} from "../../recoil/authAtom.js";
+import OrderList from "../orderList/index.jsx";
 
 const SurveyItem = ({ post, onClick }) => {
     const auth = useRecoilValue(authAtom)
@@ -30,7 +31,8 @@ const SurveyItem = ({ post, onClick }) => {
                             </>
                         ) : (
                             <>
-                                {console.log("어드민민")}
+                                <div onClick={handleClick}>순서</div>
+                                {isClick && <OrderList/>}
                             </>
                         )}
                     </S.OrderSelector>
