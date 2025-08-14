@@ -40,7 +40,7 @@ const SurveyItem = ({ post, onClick,form_id }) => {
                                     <div>순서</div>
                                     <img src={isClick?Toggle:ReverseToggle} alt={"토글"}/>
                                 </S.OrderToggle>
-                                {isClick && <OrderList/>}
+                                {isClick && <OrderList form_id={form_id}/>}
                             </>
                         )}
                     </S.OrderSelector>
