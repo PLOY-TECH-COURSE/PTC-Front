@@ -1,17 +1,19 @@
 import styled from "styled-components";
 export const Container = styled.div`
     width: 100%;
+    height: 100vh;
 `
 export const Content = styled.div`
     width: 100%;
+    height: 100%;
     min-height: 62vh;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
     overflow-y: auto;
 `
 export const PostListTop = styled.div`
     width: 100%;
-    height: 50%;
     display: flex;
     margin-top: 50px;
     flex-direction: column;

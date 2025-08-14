@@ -19,10 +19,10 @@ const SurveyItem = ({ post, onClick }) => {
                 </S.PostRightTopData>
                 <S.CompleteImage src={!complete ? Complete : InComplete} alt="채점" />
                 <S.PostRightBottomData>
-                    <div>
+                    <S.OrderSelector>
                         <div onClick={handleClick}>순서 정하기</div>
                         {isClick && <Order />}
-                    </div>
+                    </S.OrderSelector>
                     <S.PostbottomData>
                         <span>{post.date}</span>
                     </S.PostbottomData>

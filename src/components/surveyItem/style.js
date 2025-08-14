@@ -11,7 +11,7 @@ export const RowData = styled.div`
     height: 25vh;
     border-radius: 10px;
     min-width: 27vw;
-    padding: 2% 1.3%;
+    padding: 1.5% 1.3%;
     gap: 10px;
     cursor: pointer;
     align-items: flex-start;
@@ -50,8 +50,8 @@ export const PostRightBottomData = styled.div`
 `
 export const PostbottomData = styled.div`
     span{
-        font-size: 10px;
-        color: #D1D1D1;
+        font-size: 12px;
+        color: #4970FB;
         border: none;
     }
 `
@@ -61,4 +61,7 @@ export const CompleteImage = styled.img`
     top: 0;
     right: 0;
     padding-top: 6%;
+`
+export const OrderSelector = styled.div`
+    position: relative;
 `

@@ -1,75 +1,72 @@
-import {useState} from "react";
+import * as _ from "./style.js";
+import { useState } from "react";
 
 const Order = () => {
-    const [isClick, setIsClick] = useState(false);
+    const [openIndex, setOpenIndex] = useState(null); // ✅ 어떤 아이템이 열렸는지
     const [list, setList] = useState([
-        {
-            selected : ""
-        },
-        {
-            selected : ""
-        },
-        {
-            selected : ""
-        },
-        {
-            selected : ""
-        },
-        {
-            selected : ""
-        },
-        {
-            selected : ""
-        },
-        {
-            selected : ""
-        }
+        { selected: "" },
+        { selected: "" },
+        { selected: "" },
+        { selected: "" },
+        { selected: "" },
+        { selected: "" },
+        { selected: "" },
     ]);
-    const handleClick = () => {
-        setIsClick(!isClick);
-    }
+
+    const handleClick = (index) => {
+        // 같은 걸 누르면 닫히고, 다른 걸 누르면 그걸 열기
+        setOpenIndex((prev) => (prev === index ? null : index));
+    };
+
     return (
-        <div>
+        <_.UserOrderselecter>
             {list.map((item, index) => (
-                <div key={index} onClick={handleClick}>{item.selected == "" ? "멘티" : item.selected}</div>
+                <_.UserOrderselectItem key={index}>
+                    <div>{index + 1}</div>
+                    <_.UserOrderselectItemName onClick={() => handleClick(index)}>
+                        {item.selected === "" ? "멘티" : item.selected}
+                    </_.UserOrderselectItemName>
+                    {openIndex === index && (
+                        <Member
+                            setList={setList}
+                            idx={index}
+                            onClose={() => setOpenIndex(null)}
+                        />
+                    )}
+                </_.UserOrderselectItem>
             ))}
-            {isClick && <Member/>}
-        </div>
-    )
-}
-const Member = () => {
+            <_.SubmitButton>저장</_.SubmitButton>
+        </_.UserOrderselecter>
+    );
+};
+
+const Member = ({ setList, idx, onClose }) => {
     const member = [
-        {
-            name : "강준영"
-        },
-        {
-            name : "권길현"
-        },
-        {
-            name : "곽영빈"
-        },
-        {
-            name : "이우린"
-        },
-        {
-            name : "이정우"
-        },
-        {
-            name : "조현우"
-        },
-        {
-            name : "진수화"
-        },
-    ]
-    const handleSelect = (member) => {
-        setIsSelect(member)
-    }
+        { name: "강준영" },
+        { name: "권길현" },
+        { name: "곽영빈" },
+        { name: "이우린" },
+        { name: "이정우" },
+        { name: "조현우" },
+        { name: "진수화" },
+    ];
+
+    const handleSelect = (name) => {
+        setList((prev) =>
+            prev.map((item, i) => (i === idx ? { ...item, selected: name } : item))
+        );
+        onClose?.();
+    };
+
     return (
-        <div>
-            {member.map((item, index) => (
-                <div key={index} onClick={()=>handleSelect(item.name)}>{item.name}</div>
+        <_.UserSet>
+            {member.map((m, i) => (
+                <div key={i} onClick={() => handleSelect(m.name)}>
+                    {m.name}
+                </div>
             ))}
-        </div>
-    )
-}
+        </_.UserSet>
+    );
+};
+
 export default Order;

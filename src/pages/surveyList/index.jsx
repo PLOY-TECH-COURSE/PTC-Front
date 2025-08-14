@@ -100,7 +100,7 @@ const SurveyList = () => {
                     )}
                 </S.PostListMain>
             </S.Content>
-            <Footer />
+            {/*<Footer />*/}
         </S.Container>
     );
 }
