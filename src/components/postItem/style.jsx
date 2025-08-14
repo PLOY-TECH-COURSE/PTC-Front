@@ -2,18 +2,13 @@ import styled from "styled-components";
 
 export const Container = styled.div`
     width: 100%;
-    
-
 `
-
 export const Content = styled.div`
     width: 100%;
     align-items: center;
     justify-content: center;
     overflow-y: auto;
 `
-
-
 export const PostListTop = styled.div`
     width: 100%;
     height: 50%;

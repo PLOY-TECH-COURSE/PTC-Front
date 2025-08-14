@@ -32,7 +32,7 @@ function Header() {
     { id: 4, path: "/authority", name: "권한관리", role: "ROLE_SUPERADMIN" },
     { id: 5, path: "/proposer", name: "신청자", role: "ROLE_SUPERADMIN, ROLE_ADMIN" },
     { id: 6, path: "/write/new", name: "새글작성", role: "ROLE_SUPERADMIN, ROLE_ADMIN, ROLE_STUDENT" },
-    { id: 7, path: "/survey", name: "설문조사", role: "ROLE_SUPERADMIN, ROLE_ADMIN" },
+    { id: 7, path: "/survey/list", name: "설문조사", role: "ROLE_SUPERADMIN, ROLE_ADMIN" },
   ];
 
   const user = useRecoilValue(authAtom);
