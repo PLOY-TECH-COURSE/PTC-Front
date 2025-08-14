@@ -9,7 +9,7 @@ import OrderList from "../orderList/index.jsx";
 import Toggle from "../../assets/survey/toggle.svg"
 import ReverseToggle from "../../assets/survey/reverseToggle.svg"
 
-const SurveyItem = ({ post, onClick }) => {
+const SurveyItem = ({ post, onClick,form_id }) => {
     const auth = useRecoilValue(authAtom)
     const [complete, setComplete] = useState(false);
     const [isClick, setIsClick] = useState(false);
@@ -32,7 +32,7 @@ const SurveyItem = ({ post, onClick }) => {
                                     <div>순서 정하기</div>
                                     <img src={isClick?Toggle:ReverseToggle} alt={"토글"}/>
                                 </S.OrderToggle>
-                                {isClick && <Order />}
+                                {isClick && <Order form_id={form_id}/>}
                             </>
                         ) : (
                             <>

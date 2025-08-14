@@ -7,7 +7,6 @@ import SurveyItem from "../../components/surveyItem/index.jsx";
 import {useRecoilValue} from "recoil";
 import {authAtom} from "../../recoil/authAtom.js";
 import AddSurvey from "../../assets/survey/surveyAdd.svg"
-import {getComments} from "../../api/comment.js";
 import {getSurvey} from "../../api/surveyList.js";
 const PAGE_SIZE = 21;
 const SurveyList = () => {
@@ -89,7 +88,7 @@ const SurveyList = () => {
                     ) : (
                         <>
                             {visiblePosts.map((post) => (
-                                <SurveyItem key={post.id} post={post} />
+                                <SurveyItem key={post.id} post={post} form_id={post.id}/>
                             ))}
                             {auth.role === "ROLE_SUPERADMIN" && (
                                 <S.ImageDiv onClick={handleAddSurvey}>

@@ -3,8 +3,9 @@ import {useEffect, useState} from "react";
 import Toggle from "../../assets/survey/toggle.svg";
 import ReverseToggle from "../../assets/survey/reverseToggle.svg";
 import {getStudentList} from "../../api/studentsList.js";
+import {decideOrder} from "../../api/surveyOrder.js";
 
-const Order = () => {
+const Order = ({form_id}) => {
     const [user, setUser] = useState([]);
     useEffect(() => {
         getStudentList().then((data) => {
@@ -25,6 +26,11 @@ const Order = () => {
             prev.map((v,i) => (i === index ? !v : false))
         );
     };
+    const handleSubmit = () => {
+        decideOrder(form_id,list).then(r =>
+            console.log("순서저장 잘 됨")
+        )
+    }
     return (
         <_.UserOrderselecter>
             {memberList.map((item, index) => (
@@ -46,20 +52,23 @@ const Order = () => {
                     )}
                 </_.UserOrderselectItem>
             ))}
-            <_.SubmitButton>저장</_.SubmitButton>
+            <_.SubmitButton onClick={handleSubmit}>저장</_.SubmitButton>
         </_.UserOrderselecter>
     );
 };
 
 const Member = ({ list,setList, onClose, user ,idx, setMemberList}) => {
     const handleSelect = (name,student_id) => {
-        setList(prev => [
-            ...prev,
-            {
-                student_id: student_id,
-                order: idx + 1
-            }
-        ]);
+        setList(prev => {
+            const updated = prev.filter(item => item.order !== idx + 1);
+            return [
+                ...updated,
+                {
+                    student_id: student_id,
+                    order: idx + 1
+                }
+            ];
+        });
         setMemberList((prev) =>
             prev.map((item, i) => (i === idx ? {name: name} : item))
         );
