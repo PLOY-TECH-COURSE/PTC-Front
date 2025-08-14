@@ -9,21 +9,20 @@ import OrderList from "../orderList/index.jsx";
 import Toggle from "../../assets/survey/toggle.svg"
 import ReverseToggle from "../../assets/survey/reverseToggle.svg"
 
-const SurveyItem = ({ post, onClick }) => {
+const SurveyItem = ({ post, onClick,form_id }) => {
     const auth = useRecoilValue(authAtom)
-    const [complete, setComplete] = useState(false);
     const [isClick, setIsClick] = useState(false);
     const handleClick = () => {
         setIsClick(!isClick);
     }
     return (
-        <S.RowData onClick={() => onClick(post.documents_id)}>
+        <S.RowData onClick={() => onClick(post.id)}>
             <S.PostMainData>
                 <S.PostRightTopData>
                     <S.PostData>{post.title}</S.PostData>
-                    <p>{post.introduction}</p>
+                    <p>{post.description}</p>
                 </S.PostRightTopData>
-                <S.CompleteImage src={!complete ? Complete : InComplete} alt="채점" />
+                <S.CompleteImage src={!post.completed ? Complete : InComplete} alt="채점" />
                 <S.PostRightBottomData>
                     <S.OrderSelector>
                         {auth.role === "ROLE_SUPERADMIN" ? (
@@ -32,7 +31,7 @@ const SurveyItem = ({ post, onClick }) => {
                                     <div>순서 정하기</div>
                                     <img src={isClick?Toggle:ReverseToggle} alt={"토글"}/>
                                 </S.OrderToggle>
-                                {isClick && <Order />}
+                                {isClick && <Order form_id={form_id}/>}
                             </>
                         ) : (
                             <>
@@ -40,12 +39,12 @@ const SurveyItem = ({ post, onClick }) => {
                                     <div>순서</div>
                                     <img src={isClick?Toggle:ReverseToggle} alt={"토글"}/>
                                 </S.OrderToggle>
-                                {isClick && <OrderList/>}
+                                {isClick && <OrderList form_id={form_id}/>}
                             </>
                         )}
                     </S.OrderSelector>
                     <S.PostbottomData>
-                        <span>{post.date}</span>
+                        <span>{post.createdAt}</span>
                     </S.PostbottomData>
                 </S.PostRightBottomData>
             </S.PostMainData>

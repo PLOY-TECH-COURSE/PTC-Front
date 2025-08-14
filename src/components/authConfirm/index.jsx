@@ -8,7 +8,6 @@ import Logo from '../../assets/Logo.svg'
 export default function AuthConfirm({role}){
     const [isCheck, setIsCheck] = useState(false);
     const auth = useRecoilValue(authAtom)
-    console.log("auth", auth)
     useEffect(()=>{
         if(auth.role === ''){
             setIsCheck(true);
