@@ -62,6 +62,7 @@ const SignUpModal = ({ setIsModal, setIsSignupModal }) => {
     setMin(10);
     setSec(0);
 
+    // 타이머 시작
     const id = setInterval(() => {
       setTime((prevTime) => {
         if (prevTime <= 1) {
@@ -315,7 +316,6 @@ const SignUpModal = ({ setIsModal, setIsSignupModal }) => {
                 />
               </FormField>
               <SubmitButton onClick={handleSignup}>회원가입</SubmitButton>
-              <BackButton type="button" onClick={() => setStep(1)}>뒤로가기</BackButton>
             </Form>
           )}
 
@@ -481,15 +481,4 @@ const ErrorText = styled.div`
   color: red;
   font-size: 12px;
   margin-top: 3px;
-`;
-
-
-const BackButton = styled.button`
-  background: transparent;
-  border: none;
-  font-size: 13px;
-  margin-top: 8px;
-  cursor: pointer;
-  text-decoration: underline;
-  transition: color 0.2s ease;
 `;
