@@ -21,8 +21,8 @@ export const DecorationCircle1 = styled.div`
   position: absolute;
   top: 13vh;
   left: 0;
-  width: 45vw;
-  height: 81vh;
+  width: 35vw;
+  height: 60vh;
   background: linear-gradient(180deg, rgba(150, 173, 253, 1) 0%, rgba(97, 132, 255, 1) 100%);
   border-radius: 50%;
   z-index: 0;
