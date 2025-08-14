@@ -1,20 +1,24 @@
 import * as _ from "./style.js";
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import Toggle from "../../assets/survey/toggle.svg";
 import ReverseToggle from "../../assets/survey/reverseToggle.svg";
+import {getStudentList} from "../../api/studentsList.js";
 
 const Order = () => {
+    const [user, setUser] = useState([]);
+    useEffect(() => {
+        getStudentList().then((data) => {
+            console.log("수강  데이터:", data);
+            setUser(data);
+        })
+    },[])
     const [openIndex, setOpenIndex] = useState(null);
     const [isClick, setIsClick] = useState(Array(7).fill(false));
-    const [list, setList] = useState([
-        { selected: "" },
-        { selected: "" },
-        { selected: "" },
-        { selected: "" },
-        { selected: "" },
-        { selected: "" },
-        { selected: "" },
-    ]);
+    const [memberList, setMemberList] = useState(Array(7).fill({name:null}));
+    const [list, setList] = useState([]);
+    useEffect(() => {
+        console.log(list)
+    },[list])
     const handleClick = (index) => {
         setOpenIndex((prev) => (prev === index ? null : index));
         setIsClick((prev) =>
@@ -23,18 +27,21 @@ const Order = () => {
     };
     return (
         <_.UserOrderselecter>
-            {list.map((item, index) => (
+            {memberList.map((item, index) => (
                 <_.UserOrderselectItem key={index}>
                     <div>{index + 1}</div>
                     <_.UserOrderselectItemName onClick={() => handleClick(index)}>
-                        <div>{item.selected === "" ? "멘티" : item.selected}</div>
+                        <div>{item.name === null ? "멘티" : item.name}</div>
                         <img width={"12px"} src={isClick[index]?Toggle:ReverseToggle} alt={"토글"}/>
                     </_.UserOrderselectItemName>
                     {openIndex === index && (
                         <Member
+                            list={list}
                             setList={setList}
-                            idx={index}
                             onClose={() => setOpenIndex(null)}
+                            user={user}
+                            idx={index}
+                            setMemberList={setMemberList}
                         />
                     )}
                 </_.UserOrderselectItem>
@@ -44,28 +51,24 @@ const Order = () => {
     );
 };
 
-const Member = ({ setList, idx, onClose }) => {
-    const member = [
-        { name: "강준영" },
-        { name: "권길현" },
-        { name: "곽영빈" },
-        { name: "이우린" },
-        { name: "이정우" },
-        { name: "조현우" },
-        { name: "진수화" },
-    ];
-
-    const handleSelect = (name) => {
-        setList((prev) =>
-            prev.map((item, i) => (i === idx ? { ...item, selected: name } : item))
+const Member = ({ list,setList, onClose, user ,idx, setMemberList}) => {
+    const handleSelect = (name,student_id) => {
+        setList(prev => [
+            ...prev,
+            {
+                student_id: student_id,
+                order: idx + 1
+            }
+        ]);
+        setMemberList((prev) =>
+            prev.map((item, i) => (i === idx ? {name: name} : item))
         );
         onClose?.();
     };
-
     return (
         <_.UserSet>
-            {member.map((m, i) => (
-                <div key={i} onClick={() => handleSelect(m.name)}>
+            {user.map((m, i) => (
+                <div key={i} onClick={() => handleSelect(m.name,m.student_id)}>
                     {m.name}
                 </div>
             ))}
