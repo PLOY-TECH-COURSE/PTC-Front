@@ -3,8 +3,11 @@ import Order from "../order/index.jsx";
 import {useState} from "react";
 import Complete from "../../assets/survey/complete.svg"
 import InComplete from "../../assets/survey/incomplete.svg"
+import {useRecoilValue} from "recoil";
+import {authAtom} from "../../recoil/authAtom.js";
 
 const SurveyItem = ({ post, onClick }) => {
+    const auth = useRecoilValue(authAtom)
     const [complete, setComplete] = useState(false);
     const [isClick, setIsClick] = useState(false);
     const handleClick = () => {
@@ -20,8 +23,16 @@ const SurveyItem = ({ post, onClick }) => {
                 <S.CompleteImage src={!complete ? Complete : InComplete} alt="채점" />
                 <S.PostRightBottomData>
                     <S.OrderSelector>
-                        <div onClick={handleClick}>순서 정하기</div>
-                        {isClick && <Order />}
+                        {auth.role === "ROLE_SUPERADMIN" ? (
+                            <>
+                                <div onClick={handleClick}>순서 정하기</div>
+                                {isClick && <Order />}
+                            </>
+                        ) : (
+                            <>
+                                {console.log("어드민민")}
+                            </>
+                        )}
                     </S.OrderSelector>
                     <S.PostbottomData>
                         <span>{post.date}</span>

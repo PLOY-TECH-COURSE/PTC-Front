@@ -2,7 +2,7 @@ import * as _ from "./style.js";
 import { useState } from "react";
 
 const Order = () => {
-    const [openIndex, setOpenIndex] = useState(null); // ✅ 어떤 아이템이 열렸는지
+    const [openIndex, setOpenIndex] = useState(null);
     const [list, setList] = useState([
         { selected: "" },
         { selected: "" },
@@ -12,12 +12,9 @@ const Order = () => {
         { selected: "" },
         { selected: "" },
     ]);
-
     const handleClick = (index) => {
-        // 같은 걸 누르면 닫히고, 다른 걸 누르면 그걸 열기
         setOpenIndex((prev) => (prev === index ? null : index));
     };
-
     return (
         <_.UserOrderselecter>
             {list.map((item, index) => (
