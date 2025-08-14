@@ -36,7 +36,10 @@ const SurveyItem = ({ post, onClick }) => {
                             </>
                         ) : (
                             <>
-                                <div onClick={handleClick}>순서</div>
+                                <S.OrderToggle onClick={handleClick}>
+                                    <div>순서</div>
+                                    <img src={isClick?Toggle:ReverseToggle} alt={"토글"}/>
+                                </S.OrderToggle>
                                 {isClick && <OrderList/>}
                             </>
                         )}
