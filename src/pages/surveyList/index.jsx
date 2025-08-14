@@ -18,7 +18,7 @@ const SurveyList = () => {
     const [loading, setLoading] = useState(false);
     useEffect(() => {
         getSurvey().then((data) => {
-            console.log("설문 조사  데이터:", data);
+            // console.log("설문 조사  데이터:", data);
             setPosts(data);
         })
     },[])
@@ -50,10 +50,6 @@ const SurveyList = () => {
     const handleAddSurvey = () => {
     // 여기에 채점등록 페이지 불러오면 됨
     }
-    // useEffect(() => {
-    //     loadMorePosts();
-    // }, [searchQuery, start]);
-
     // const handlePostClick = (id) => {
     //     const numericId = Number(id);
     //     if (isNaN(numericId)) {
@@ -61,7 +57,6 @@ const SurveyList = () => {
     //     }
     //     navigate(`/post/${numericId}`);
     // };
-
     return (
         <S.Container>
             {loading && (

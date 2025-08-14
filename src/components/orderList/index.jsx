@@ -1,13 +1,12 @@
 import * as _ from "./style.js";
 import {useEffect, useState} from "react";
-import {getSurvey} from "../../api/surveyList.js";
 import {getStudentOrder} from "../../api/surveyOrder.js";
 
 const OrderList = ({form_id}) => {
     const [list, setList] = useState(null);
     useEffect(() => {
         getStudentOrder(form_id).then((data) => {
-            console.log("수강자 순서 조회 :", data);
+            // console.log("수강자 순서 조회 :", data);
             setList(data);
         })
     },[])
