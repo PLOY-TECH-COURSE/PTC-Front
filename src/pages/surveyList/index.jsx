@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import * as S from "../PostList/style.jsx";
+import * as S from "./style.js";
 import Loading from "../../components/loading.jsx";
 import Header from "../../components/header/index.jsx";
 import Search from "../../assets/search.svg";
@@ -21,6 +21,12 @@ const SurveyList = () => {
             id: 2,
             title:"플테코 1학기 chlwhd발표 채점",
             introduction:"으아이ㅏ아아",
+            date:"2013-09-04"
+        },
+        {
+            id: 3,
+            title:"플테코 2학기발표 채점",
+            introduction:"ㅏ아아",
             date:"2013-09-04"
         }
     ]);
