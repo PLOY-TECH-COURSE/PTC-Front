@@ -7,37 +7,22 @@ import SurveyItem from "../../components/surveyItem/index.jsx";
 import {useRecoilValue} from "recoil";
 import {authAtom} from "../../recoil/authAtom.js";
 import AddSurvey from "../../assets/survey/surveyAdd.svg"
+import {getComments} from "../../api/comment.js";
+import {getSurvey} from "../../api/surveyList.js";
 const PAGE_SIZE = 21;
 const SurveyList = () => {
     // const navigate = useNavigate();
     const auth = useRecoilValue(authAtom)
     const [searchQuery, setSearchQuery] = useState("");
     const [start, setStart] = useState(0);
-    const [posts, setPosts] = useState([
-        {
-            id: 1,
-            title:"플테코 1학기 중간발표 채점",
-            introduction:"채ㅐ채점",
-            date:"2013-09-04"
-        },
-        {
-            id: 2,
-            title:"플테코 1학기 chlwhd발표 채점",
-            introduction:"으아이ㅏ아아",
-            date:"2013-09-04"
-        },
-        {
-            id: 3,
-            title:"플테코 2학기발표 채점",
-            introduction:"ㅏ아아",
-            date:"2013-09-04"
-        }
-    ]);
-    console.log(posts.length)
-    useEffect(() => {
-        console.log("posts changed:", posts);
-    }, [posts]);
+    const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
+    useEffect(() => {
+        getSurvey().then((data) => {
+            console.log("설문 조사  데이터:", data);
+            setPosts(data);
+        })
+    },[])
     useEffect(() => {
         setStart(0);
     }, [searchQuery]);
@@ -46,7 +31,6 @@ const SurveyList = () => {
             setStart(prev => prev + PAGE_SIZE);
         }
     };
-
     useEffect(() => {
         window.addEventListener("scroll", handleNScroll);
         return () => {
@@ -60,8 +44,8 @@ const SurveyList = () => {
         setStart(0);
         // setPosts([]);
     };
-    const filteredPosts = posts.filter(post =>
-        post.title.toLowerCase().includes(searchQuery.trim().toLowerCase())
+    const filteredPosts = posts.filter(item =>
+        item.title.includes(searchQuery.trim().toLowerCase())
     );
     const visiblePosts = filteredPosts.slice(0, start + PAGE_SIZE);
     const handleAddSurvey = () => {

@@ -17,13 +17,13 @@ const SurveyItem = ({ post, onClick }) => {
         setIsClick(!isClick);
     }
     return (
-        <S.RowData onClick={() => onClick(post.documents_id)}>
+        <S.RowData onClick={() => onClick(post.id)}>
             <S.PostMainData>
                 <S.PostRightTopData>
                     <S.PostData>{post.title}</S.PostData>
-                    <p>{post.introduction}</p>
+                    <p>{post.description}</p>
                 </S.PostRightTopData>
-                <S.CompleteImage src={!complete ? Complete : InComplete} alt="채점" />
+                <S.CompleteImage src={!post.completed ? Complete : InComplete} alt="채점" />
                 <S.PostRightBottomData>
                     <S.OrderSelector>
                         {auth.role === "ROLE_SUPERADMIN" ? (
@@ -45,7 +45,7 @@ const SurveyItem = ({ post, onClick }) => {
                         )}
                     </S.OrderSelector>
                     <S.PostbottomData>
-                        <span>{post.date}</span>
+                        <span>{post.createdAt}</span>
                     </S.PostbottomData>
                 </S.PostRightBottomData>
             </S.PostMainData>
