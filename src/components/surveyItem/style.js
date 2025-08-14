@@ -16,6 +16,7 @@ export const RowData = styled.div`
     cursor: pointer;
     align-items: flex-start;
     position: relative;
+    z-index: 10;
 `
 export const PostMainData = styled.div`
     display: flex;
@@ -68,4 +69,5 @@ export const OrderSelector = styled.div`
 export const OrderToggle = styled.div`
     display: flex;
     gap: 0.025rem;
+    z-index: 2;
 `

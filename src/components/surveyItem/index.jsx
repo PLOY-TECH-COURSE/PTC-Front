@@ -11,7 +11,6 @@ import ReverseToggle from "../../assets/survey/reverseToggle.svg"
 
 const SurveyItem = ({ post, onClick,form_id }) => {
     const auth = useRecoilValue(authAtom)
-    const [complete, setComplete] = useState(false);
     const [isClick, setIsClick] = useState(false);
     const handleClick = () => {
         setIsClick(!isClick);

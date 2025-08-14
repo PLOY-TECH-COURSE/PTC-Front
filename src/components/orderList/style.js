@@ -7,6 +7,7 @@ export const UserOrderselecter = styled.div`
     border: 1px solid #cccccc;
     padding: 15% 20%;
     background: #ffffff;
+    z-index: 1;
 `
 export const UserOrderselectItem = styled.div`
     display: flex;
