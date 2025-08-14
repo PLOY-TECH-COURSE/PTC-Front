@@ -1,8 +1,11 @@
 import * as _ from "./style.js";
 import { useState } from "react";
+import Toggle from "../../assets/survey/toggle.svg";
+import ReverseToggle from "../../assets/survey/reverseToggle.svg";
 
 const Order = () => {
     const [openIndex, setOpenIndex] = useState(null);
+    const [isClick, setIsClick] = useState(Array(7).fill(false));
     const [list, setList] = useState([
         { selected: "" },
         { selected: "" },
@@ -14,6 +17,9 @@ const Order = () => {
     ]);
     const handleClick = (index) => {
         setOpenIndex((prev) => (prev === index ? null : index));
+        setIsClick((prev) =>
+            prev.map((v,i) => (i === index ? true : false))
+        );
     };
     return (
         <_.UserOrderselecter>
@@ -21,7 +27,8 @@ const Order = () => {
                 <_.UserOrderselectItem key={index}>
                     <div>{index + 1}</div>
                     <_.UserOrderselectItemName onClick={() => handleClick(index)}>
-                        {item.selected === "" ? "멘티" : item.selected}
+                        <div>{item.selected === "" ? "멘티" : item.selected}</div>
+                        <img width={"12px"} src={isClick[index]?Toggle:ReverseToggle} alt={"토글"}/>
                     </_.UserOrderselectItemName>
                     {openIndex === index && (
                         <Member

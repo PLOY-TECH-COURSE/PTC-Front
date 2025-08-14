@@ -6,6 +6,8 @@ import InComplete from "../../assets/survey/incomplete.svg"
 import {useRecoilValue} from "recoil";
 import {authAtom} from "../../recoil/authAtom.js";
 import OrderList from "../orderList/index.jsx";
+import Toggle from "../../assets/survey/toggle.svg"
+import ReverseToggle from "../../assets/survey/reverseToggle.svg"
 
 const SurveyItem = ({ post, onClick }) => {
     const auth = useRecoilValue(authAtom)
@@ -26,7 +28,10 @@ const SurveyItem = ({ post, onClick }) => {
                     <S.OrderSelector>
                         {auth.role === "ROLE_SUPERADMIN" ? (
                             <>
-                                <div onClick={handleClick}>순서 정하기</div>
+                                <S.OrderToggle onClick={handleClick}>
+                                    <div>순서 정하기</div>
+                                    <img src={isClick?Toggle:ReverseToggle} alt={"토글"}/>
+                                </S.OrderToggle>
                                 {isClick && <Order />}
                             </>
                         ) : (

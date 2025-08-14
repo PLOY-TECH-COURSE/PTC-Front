@@ -65,3 +65,7 @@ export const CompleteImage = styled.img`
 export const OrderSelector = styled.div`
     position: relative;
 `
+export const OrderToggle = styled.div`
+    display: flex;
+    gap: 0.025rem;
+`

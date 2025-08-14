@@ -3,6 +3,9 @@ import {Button} from "../../pages/signup/signup.jsx";
 
 export const UserOrderselecter = styled.div`
     position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
     width: 160%;
     margin-top: 10%;
     border-radius: 10px;
@@ -18,9 +21,12 @@ export const UserOrderselectItem = styled.div`
     gap : 5%;
 `
 export const UserOrderselectItemName = styled.div`
+    display: flex;
     justify-content: space-between;
-    width: 80%;
-    padding: 5% 10%;
+    width: 85%;
+    padding: 4% 8%;
+    border-radius: 10px;
+    border: 1px solid #cccccc;
 `
 export const UserSet = styled.div`
     position: absolute;
