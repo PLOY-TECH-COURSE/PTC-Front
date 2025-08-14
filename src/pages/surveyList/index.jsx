@@ -3,11 +3,14 @@ import * as S from "./style.js";
 import Loading from "../../components/loading.jsx";
 import Header from "../../components/header/index.jsx";
 import Search from "../../assets/search.svg";
-// import Footer from "../../components/footer/index.jsx";
 import SurveyItem from "../../components/surveyItem/index.jsx";
+import {useRecoilValue} from "recoil";
+import {authAtom} from "../../recoil/authAtom.js";
+import AddSurvey from "../../assets/survey/surveyAdd.svg"
 const PAGE_SIZE = 21;
 const SurveyList = () => {
     // const navigate = useNavigate();
+    const auth = useRecoilValue(authAtom)
     const [searchQuery, setSearchQuery] = useState("");
     const [start, setStart] = useState(0);
     const [posts, setPosts] = useState([
@@ -61,6 +64,9 @@ const SurveyList = () => {
         post.title.toLowerCase().includes(searchQuery.trim().toLowerCase())
     );
     const visiblePosts = filteredPosts.slice(0, start + PAGE_SIZE);
+    const handleAddSurvey = () => {
+    // 여기에 채점등록 페이지 불러오면 됨
+    }
     // useEffect(() => {
     //     loadMorePosts();
     // }, [searchQuery, start]);
@@ -97,13 +103,19 @@ const SurveyList = () => {
                     {filteredPosts.length === 0 ? (
                         <h2>{searchQuery ? "검색 결과가 없습니다." : "게시물이 없습니다."}</h2>
                     ) : (
-                        visiblePosts.map((post) => (
-                            <SurveyItem key={post.id} post={post} />
-                        ))
+                        <>
+                            {visiblePosts.map((post) => (
+                                <SurveyItem key={post.id} post={post} />
+                            ))}
+                            {auth.role === "ROLE_SUPERADMIN" && (
+                                <S.ImageDiv onClick={handleAddSurvey}>
+                                    <S.AddImage src={AddSurvey} alt="채점 등록" />
+                                </S.ImageDiv>
+                            )}
+                        </>
                     )}
                 </S.PostListMain>
             </S.Content>
-            {/*<Footer />*/}
         </S.Container>
     );
 }

@@ -52,3 +52,17 @@ export const PostListMain = styled.div`
         margin-left: 310px;
     }
 `;
+export const ImageDiv = styled.div`
+    display: flex;
+    border: 1px solid #cccccc;
+    width: 27.5vw;
+    height: 25vh;
+    border-radius: 10px;
+    min-width: 27vw;
+    cursor: pointer;
+    justify-content: center;
+    position: relative;
+`
+export const AddImage = styled.img`
+    width: 25%;
+`
