@@ -18,7 +18,7 @@ const Order = () => {
     const handleClick = (index) => {
         setOpenIndex((prev) => (prev === index ? null : index));
         setIsClick((prev) =>
-            prev.map((v,i) => (i === index ? true : false))
+            prev.map((v,i) => (i === index ? !v : false))
         );
     };
     return (
