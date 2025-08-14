@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useState} from "react";
 import * as S from "../PostList/style.jsx";
 import Loading from "../../components/loading.jsx";
 import Header from "../../components/header/index.jsx";
