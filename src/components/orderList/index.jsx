@@ -23,7 +23,7 @@ const OrderList = ({form_id}) => {
                 {list.map((item, index) => (
                     <_.UserOrderselectItem key={index}>
                         <div>{index + 1}</div>
-                        <_.UserOrderselectItemName>
+                        <_.UserOrderselectItemName completed={item.completed}>
                             {item.name}
                         </_.UserOrderselectItemName>
                     </_.UserOrderselectItem>

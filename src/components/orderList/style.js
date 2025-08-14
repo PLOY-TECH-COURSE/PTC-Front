@@ -17,19 +17,9 @@ export const UserOrderselectItem = styled.div`
     gap : 5%;
 `
 export const UserOrderselectItemName = styled.div`
+    color: ${({ completed }) => (!completed ? "#000":"#fff")};
+    background-color: ${({ completed }) => (!completed ? "#fff":"#4970FB")};
     justify-content: space-between;
     width: 80%;
     padding: 5% 10%;
-`
-export const UserSet = styled.div`
-    position: absolute;
-    margin-left: 25%;
-    width: 100%;
-    left : 100%;
-    top: 0;
-    border-radius: 10px;
-    border: 1px solid #cccccc;
-    padding: 15% 20%;
-    background-color: #ffffff;
-    z-index: 1;
 `
