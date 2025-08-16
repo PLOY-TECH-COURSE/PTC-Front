@@ -7,79 +7,17 @@ export const GradesPage = styled.div`
   overflow: hidden;
 `;
 
-export const BackgroundDecoration = styled.div`
+export const BackgroundImage = styled.div`
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  background-image: url('/backgroundptc.svg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   pointer-events: none;
-  z-index: 0;
-`;
-
-export const DecorationCircle1 = styled.div`
-  position: absolute;
-  top: 13vh;
-  left: 0;
-  width: 35vw;
-  height: 60vh;
-  background: linear-gradient(180deg, rgba(150, 173, 253, 1) 0%, rgba(97, 132, 255, 1) 100%);
-  border-radius: 50%;
-  z-index: 0;
-`;
-
-export const DecorationCircle2 = styled.div`
-  position: absolute;
-  top: 13vh;
-  left: 33vw;
-  width: 14vw;
-  height: 25vh;
-  background: rgba(30, 80, 255, 0.2);
-  border-radius: 50%;
-  z-index: 0;
-`;
-
-export const DecorationCircle3 = styled.div`
-  position: absolute;
-  top: 40vh;
-  left: 82vw;
-  width: 17vw;
-  height: 31vh;
-  background: rgba(150, 173, 253, 0.2);
-  border-radius: 50%;
-  z-index: 0;
-`;
-
-export const DecorationCircle4 = styled.div`
-  position: absolute;
-  top: 52vh;
-  left: 96vw;
-  width: 4vw;
-  height: 8vh;
-  background: rgba(150, 173, 253, 0.4);
-  border-radius: 50%;
-  z-index: 0;
-`;
-
-export const DecorationCircle5 = styled.div`
-  position: absolute;
-  top: 44vh;
-  left: 117vw;
-  width: 6vw;
-  height: 10vh;
-  background: rgba(119, 149, 255, 0.4);
-  border-radius: 50%;
-  z-index: 0;
-`;
-
-export const DecorationRectangle = styled.div`
-  position: absolute;
-  top: 0;
-  left: 101vw;
-  width: 27vw;
-  height: 52vh;
-  background: linear-gradient(90deg, rgba(227, 233, 255, 1) 0%, rgba(158, 179, 253, 1) 100%);
-  border-radius: 0px 100px 100px 0px;
   z-index: 0;
 `;
 
@@ -231,7 +169,7 @@ export const ScoreOption = styled.div`
   justify-content: center;
 `;
 
-export const ScoreCircle = styled.div`
+export const ScoreCircle = styled.div<{ selected?: boolean }>`
   width: 3.125rem;
   height: 3.125rem;
   border: 0.1875rem solid #4970FB;
