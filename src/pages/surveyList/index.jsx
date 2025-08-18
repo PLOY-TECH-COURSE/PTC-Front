@@ -50,7 +50,7 @@ const SurveyList = () => {
     );
     const visiblePosts = filteredPosts.slice(0, start + PAGE_SIZE);
     const handleAddSurvey = () => {
-    // 여기에 채점등록 페이지 불러오면 됨
+    navigate(`/survey/add`);
     }
     const handleClick = (id) => {
         const numericId = Number(id);
