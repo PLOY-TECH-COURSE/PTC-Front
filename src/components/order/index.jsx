@@ -53,6 +53,7 @@ const Order = ({form_id}) => {
                             user={user}
                             idx={index}
                             setMemberList={setMemberList}
+                            handleClick={handleClick}
                         />
                     )}
                 </_.UserOrderselectItem>
@@ -62,8 +63,8 @@ const Order = ({form_id}) => {
     );
 };
 
-const Member = ({ list,setList, onClose, user ,idx, setMemberList}) => {
-    const handleSelect = (name,student_id) => {
+const Member = ({ setList, onClose, user ,idx, setMemberList,handleClick}) => {
+    const handleSelect = (e,name,student_id) => {
         setList(prev => {
             const updated = prev.filter(item => item.order !== idx + 1);
             return [
@@ -77,12 +78,13 @@ const Member = ({ list,setList, onClose, user ,idx, setMemberList}) => {
         setMemberList((prev) =>
             prev.map((item, i) => (i === idx ? {name: name} : item))
         );
+        handleClick(e,idx)
         onClose?.();
     };
     return (
         <_.UserSet>
             {user.map((m, i) => (
-                <div key={i} onClick={() => handleSelect(m.name,m.student_id)}>
+                <div key={i} onClick={(e) => handleSelect(e,m.name,m.student_id)}>
                     {m.name}
                 </div>
             ))}
