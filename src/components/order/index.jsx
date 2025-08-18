@@ -20,7 +20,11 @@ const Order = ({form_id}) => {
     useEffect(() => {
         console.log(list)
     },[list])
-    const handleClick = (index) => {
+    const handleNon = (e) => {
+        e.stopPropagation()
+    }
+    const handleClick = (e,index) => {
+        e.stopPropagation()
         setOpenIndex((prev) => (prev === index ? null : index));
         setIsClick((prev) =>
             prev.map((v,i) => (i === index ? !v : false))
@@ -28,15 +32,16 @@ const Order = ({form_id}) => {
     };
     const handleSubmit = () => {
         decideOrder(form_id,list).then(r =>
-            console.log("순서저장 잘 됨")
+
+            console.log("순서저장 잘 됨",r)
         )
     }
     return (
-        <_.UserOrderselecter>
+        <_.UserOrderselecter onClick={handleNon}>
             {memberList.map((item, index) => (
                 <_.UserOrderselectItem key={index}>
                     <div>{index + 1}</div>
-                    <_.UserOrderselectItemName onClick={() => handleClick(index)}>
+                    <_.UserOrderselectItemName onClick={(e) => handleClick(e,index)}>
                         <div>{item.name === null ? "멘티" : item.name}</div>
                         <img width={"12px"} src={isClick[index]?Toggle:ReverseToggle} alt={"토글"}/>
                     </_.UserOrderselectItemName>

@@ -12,7 +12,8 @@ import ReverseToggle from "../../assets/survey/rToggle.svg"
 const SurveyItem = ({ post,form_id , onClick}) => {
     const auth = useRecoilValue(authAtom)
     const [isClick, setIsClick] = useState(false);
-    const handleClick = () => {
+    const handleClick = (e) => {
+        e.stopPropagation()
         setIsClick(!isClick);
     }
     return (
