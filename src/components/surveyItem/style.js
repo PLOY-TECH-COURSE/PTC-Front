@@ -16,7 +16,6 @@ export const RowData = styled.div`
     cursor: pointer;
     align-items: flex-start;
     position: relative;
-    z-index: 10;
 `
 export const PostMainData = styled.div`
     display: flex;

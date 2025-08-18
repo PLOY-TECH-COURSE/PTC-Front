@@ -1,7 +1,7 @@
 import * as _ from "./style.js";
 import {useEffect, useState} from "react";
 import Toggle from "../../assets/survey/toggle.svg";
-import ReverseToggle from "../../assets/survey/reverseToggle.svg";
+import ReverseToggle from "../../assets/survey/rToggle.svg";
 import {getStudentList} from "../../api/studentsList.js";
 import {decideOrder} from "../../api/surveyOrder.js";
 

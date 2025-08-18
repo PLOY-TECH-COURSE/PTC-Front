@@ -7,7 +7,7 @@ import {useRecoilValue} from "recoil";
 import {authAtom} from "../../recoil/authAtom.js";
 import OrderList from "../orderList/index.jsx";
 import Toggle from "../../assets/survey/toggle.svg"
-import ReverseToggle from "../../assets/survey/reverseToggle.svg"
+import ReverseToggle from "../../assets/survey/rToggle.svg"
 
 const SurveyItem = ({ post, onClick,form_id }) => {
     const auth = useRecoilValue(authAtom)
