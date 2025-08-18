@@ -20,7 +20,6 @@ const SurveyList = () => {
     const [loading, setLoading] = useState(false);
     useEffect(() => {
         getSurvey().then((data) => {
-            // console.log("설문 조사  데이터:", data);
             setPosts(data);
         })
     },[])
