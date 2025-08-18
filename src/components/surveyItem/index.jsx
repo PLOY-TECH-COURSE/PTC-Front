@@ -16,6 +16,7 @@ const SurveyItem = ({ post,form_id , onClick}) => {
         e.stopPropagation()
         setIsClick(!isClick);
     }
+    console.log(post)
     return (
         <S.RowData onClick={() => onClick(post.id)}>
             <S.PostMainData>
@@ -23,7 +24,7 @@ const SurveyItem = ({ post,form_id , onClick}) => {
                     <S.PostData>{post.title}</S.PostData>
                     <p>{post.description}</p>
                 </S.PostRightTopData>
-                <S.CompleteImage src={!post.completed ? Complete : InComplete} alt="채점" />
+                <S.CompleteImage src={!post.completed ? InComplete : Complete} alt="채점" />
                 <S.PostRightBottomData>
                     <S.OrderSelector>
                         {auth.role === "ROLE_SUPERADMIN" ? (
