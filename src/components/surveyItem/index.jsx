@@ -9,7 +9,7 @@ import OrderList from "../orderList/index.jsx";
 import Toggle from "../../assets/survey/toggle.svg"
 import ReverseToggle from "../../assets/survey/rToggle.svg"
 
-const SurveyItem = ({ post, onClick,form_id }) => {
+const SurveyItem = ({ post,form_id , onClick}) => {
     const auth = useRecoilValue(authAtom)
     const [isClick, setIsClick] = useState(false);
     const handleClick = () => {

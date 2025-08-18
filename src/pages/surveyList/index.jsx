@@ -8,9 +8,11 @@ import {useRecoilValue} from "recoil";
 import {authAtom} from "../../recoil/authAtom.js";
 import AddSurvey from "../../assets/survey/surveyAdd.svg"
 import {getSurvey} from "../../api/surveyList.js";
+import {useNavigate} from "react-router-dom";
+
 const PAGE_SIZE = 21;
 const SurveyList = () => {
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     const auth = useRecoilValue(authAtom)
     const [searchQuery, setSearchQuery] = useState("");
     const [start, setStart] = useState(0);
@@ -50,13 +52,13 @@ const SurveyList = () => {
     const handleAddSurvey = () => {
     // 여기에 채점등록 페이지 불러오면 됨
     }
-    // const handlePostClick = (id) => {
-    //     const numericId = Number(id);
-    //     if (isNaN(numericId)) {
-    //         return;
-    //     }
-    //     navigate(`/post/${numericId}`);
-    // };
+    const handleClick = (id) => {
+        const numericId = Number(id);
+        if (isNaN(numericId)) {
+            return;
+        }
+        navigate(`/survey/${numericId}`);
+    };
     return (
         <S.Container>
             {loading && (
@@ -83,7 +85,7 @@ const SurveyList = () => {
                     ) : (
                         <>
                             {visiblePosts.map((post) => (
-                                <SurveyItem key={post.id} post={post} form_id={post.id}/>
+                                <SurveyItem key={post.id} post={post} form_id={post.id} onClick={handleClick} />
                             ))}
                             {auth.role === "ROLE_SUPERADMIN" && (
                                 <S.ImageDiv onClick={handleAddSurvey}>
