@@ -60,7 +60,7 @@ const Order = ({form_id}) => {
                     <div>{index + 1}</div>
                     <_.UserOrderselectItemName completed={item.completed} onClick={(e) => handleClick(e,index)}>
                         <div>{item.name === null ? "멘티" : item.name}</div>
-                        <img width={"12px"} src={isClick[index]?Toggle:ReverseToggle} alt={"토글"}/>
+                        {!item.completed && <img width={"12px"} src={isClick[index]?Toggle:ReverseToggle} alt={"토글"}/>}
                     </_.UserOrderselectItemName>
                     {openIndex === index && !item.completed && (
                         <Member
