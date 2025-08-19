@@ -68,4 +68,5 @@ export const OrderSelector = styled.div`
 export const OrderToggle = styled.div`
     display: flex;
     gap: 0.025rem;
+    z-index: 2;
 `
