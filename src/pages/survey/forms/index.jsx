@@ -11,50 +11,50 @@ const GradingPage = () => {
     return <Navigate to="/error" replace />;
   }
 
-  const gradingData = {
-    form_id: parseInt(formId),
-    title: "최종 발표 채점표(이우린)",
-    student_id: 17,
-    grader_counts: 7,
-    description: "dddd",
-    questions: [
-      {
-        questionId: 1,
-        question: "개발을 완성도 있게 하였는가?",
-        scores: [0, 8, 15, 23, 30]
-      },
-      {
-        questionId: 2,
-        question: "발표를 적절하게 하였는가?",
-        scores: [0, 7, 13, 20]
-      }
-    ]
-  };
+  // const gradingData = {
+  //   formId: parseInt(formId),
+  //   title: "최종 발표 채점표(이우린)",
+  //   student_id: 17,
+  //   grader_counts: 7,
+  //   description: "dddd",
+  //   questions: [
+  //     {
+  //       questionId: 1,
+  //       question: "개발을 완성도 있게 하였는가?",
+  //       scores: [0, 8, 15, 23, 30]
+  //     },
+  //     {
+  //       questionId: 2,
+  //       question: "발표를 적절하게 하였는가?",
+  //       scores: [0, 7, 13, 20]
+  //     }
+  //   ]
+  // };
 
-  //const [gradingData, setGradingData] = useState(null);
-  // const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState(null);
+  const [gradingData, setGradingData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const [selectedScores, setSelectedScores] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // useEffect(() => {
-  //   const fetchSurveyData = async () => {
-  //     try {
-  //       setLoading(true);
-  //       const data = await getSurvey(parseInt(formId));
-  //       setGradingData(data);
-  //       setError(null);
-  //     } catch (err) {
-  //       console.error('설문 데이터 가져오기 실패:', err);
-  //       setError(err.message || '데이터를 가져오는데 실패했습니다.');
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchSurveyData = async () => {
+      try {
+        setLoading(true);
+        const data = await getSurvey(parseInt(formId));
+        setGradingData(data);
+        setError(null);
+      } catch (err) {
+        console.error('설문 데이터 가져오기 실패:', err);
+        setError(err.message || '데이터를 가져오는데 실패했습니다.');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  //   fetchSurveyData();
-  // }, [formId]);
+    fetchSurveyData();
+  }, [formId]);
 
   const handleScoreSelect = (questionId, score) => {
     setSelectedScores(prev => ({
@@ -75,22 +75,14 @@ const GradingPage = () => {
     }
   };
 
-  // if (loading) {
-  //   return (
-  //     <div style={{ padding: '2rem', textAlign: 'center' }}>
-  //       <h2>로딩 중...</h2>
-  //     </div>
-  //   );
-  // }
-
-  // if (error || !gradingData) {
-  //   return (
-  //     <div style={{ padding: '2rem', textAlign: 'center' }}>
-  //       <h2>오류가 발생했습니다</h2>
-  //       <p>{error || '데이터를 불러올 수 없습니다.'}</p>
-  //     </div>
-  //   );
-  // }
+  if (error || !gradingData) {
+    return (
+      <div style={{ padding: '2rem', textAlign: 'center' }}>
+        <h2>오류가 발생했습니다. 순서를 선택하였는지 확인해 주세요</h2>
+        <p>{error || '데이터를 불러올 수 없습니다.'}</p>
+      </div>
+    );
+  }
 
   const isAllAnswered = gradingData.questions.every(
     question => selectedScores[question.questionId] !== undefined
@@ -106,12 +98,6 @@ const GradingPage = () => {
       <S.BackgroundImage />
 
       <Header />
-      
-      {isSubmitted && (
-        <S.CompletionButton>
-          채점완료
-        </S.CompletionButton>
-      )}
 
       <S.MainContent>
         <S.GradingInfoCard>

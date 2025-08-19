@@ -24,6 +24,7 @@ import Error from './components/error/index.jsx';
 import Survey from './pages/survey/index.jsx';
 import SurveyLayout from "./pages/surveyLayout/index.jsx";
 import SurveyList from "./pages/surveyList/index.jsx";
+import SurveyForm from "./pages/survey/forms/index.jsx";
 createRoot(document.getElementById('root')).render(
    <RecoilRoot>
     <BrowserRouter>
@@ -39,12 +40,12 @@ createRoot(document.getElementById('root')).render(
                     <Route element={<Confirm role='ROLE_STUDENT, ROLE_ADMIN, ROLE_SUPERADMIN' />}>
                       <Route path='/write/:id' element={<Write />} />
                     </Route>
-                    <Route path="/survey/:formId" element={<Grading />} />
                     <Route element={<Confirm role='ROLE_ADMIN, ROLE_SUPERADMIN' />}>
                         <Route path="/proposer" element={<Proposer />} />
                         <Route path="/survey" element={<SurveyLayout/>}>
                             <Route path="add" element={<Survey/>} />
                             <Route path="list" element={<SurveyList/>} />
+                            <Route path=":formId" element={<SurveyForm/>} />
                         </Route>
                     </Route>
                     <Route element={<Confirm role='ROLE_SUPERADMIN' />}>
