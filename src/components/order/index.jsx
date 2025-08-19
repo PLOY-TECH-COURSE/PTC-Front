@@ -108,5 +108,4 @@ const Member = ({ setList, onClose, user ,idx, setMemberList,handleClick}) => {
         </_.UserSet>
     );
 };
-
 export default Order;
