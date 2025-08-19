@@ -27,6 +27,8 @@ export const UserOrderselectItemName = styled.div`
     padding: 4% 8%;
     border-radius: 10px;
     border: 1px solid #cccccc;
+    color: ${({ completed }) => (!completed ? "#000":"#fff")};
+    background-color: ${({ completed }) => (!completed ? "#fff":"#4970FB")};
 `
 export const UserSet = styled.div`
     position: absolute;

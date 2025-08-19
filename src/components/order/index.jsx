@@ -3,20 +3,37 @@ import {useEffect, useState} from "react";
 import Toggle from "../../assets/survey/toggle.svg";
 import ReverseToggle from "../../assets/survey/rToggle.svg";
 import {getStudentList} from "../../api/studentsList.js";
-import {decideOrder} from "../../api/surveyOrder.js";
+import {decideOrder, getStudentOrder} from "../../api/surveyOrder.js";
 
 const Order = ({form_id}) => {
     const [user, setUser] = useState([]);
+    const [openIndex, setOpenIndex] = useState(null);
+    const [isClick, setIsClick] = useState(Array(7).fill(false));
+    const [memberList, setMemberList] = useState(
+        () => Array.from({ length: 7 }, () => ({ name: null, completed: false }))
+    );
+    const [list, setList] = useState([]);
     useEffect(() => {
         getStudentList().then((data) => {
             console.log("수강  데이터:", data);
             setUser(data);
         })
+        getStudentOrder(form_id).then((data) => {
+            console.log("수강자 순서 조회:", data);
+            const next = Array.from({ length: 7 }, () => ({ name: null, completed:false }));
+            if (Array.isArray(data)) {
+                data.forEach(({ order, name ,completed}) => {
+                    const idx = (order ?? 0) - 1;
+                    if (idx >= 0 && idx < next.length) next[idx] = { name, completed };
+                });
+            } else if (data && typeof data === "object") {
+                const idx = (data.order ?? 0) - 1;
+                if (idx >= 0 && idx < next.length) next[idx] = { name: data.name, completed: data.completed };
+            }
+            setMemberList(next);
+        });
     },[])
-    const [openIndex, setOpenIndex] = useState(null);
-    const [isClick, setIsClick] = useState(Array(7).fill(false));
-    const [memberList, setMemberList] = useState(Array(7).fill({name:null}));
-    const [list, setList] = useState([]);
+    console.log("맴버",memberList);
     useEffect(() => {
         console.log(list)
     },[list])
@@ -41,11 +58,11 @@ const Order = ({form_id}) => {
             {memberList.map((item, index) => (
                 <_.UserOrderselectItem key={index}>
                     <div>{index + 1}</div>
-                    <_.UserOrderselectItemName onClick={(e) => handleClick(e,index)}>
+                    <_.UserOrderselectItemName completed={item.completed} onClick={(e) => handleClick(e,index)}>
                         <div>{item.name === null ? "멘티" : item.name}</div>
                         <img width={"12px"} src={isClick[index]?Toggle:ReverseToggle} alt={"토글"}/>
                     </_.UserOrderselectItemName>
-                    {openIndex === index && (
+                    {openIndex === index && !item.completed && (
                         <Member
                             list={list}
                             setList={setList}
