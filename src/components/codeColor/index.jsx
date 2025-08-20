@@ -29,7 +29,7 @@ const CodeContainer = styled.pre`
 
 const CodeHighlighter = ({ language, code }) => {
   const codeRef = useRef(null);
-  console.log(code)
+
   const extractCodeString = (codeArray) => {
     if (!Array.isArray(codeArray)) return '';
 

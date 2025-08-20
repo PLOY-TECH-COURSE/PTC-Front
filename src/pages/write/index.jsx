@@ -23,15 +23,16 @@ import PDFGray from '../../assets/write/pdf.svg';
 import PDFBlack from '../../assets/write/pdfBlack.svg';
 
 const codeList = [
-  'javascript',
-  'python',
-  'java',
-  'typescript',
-  'c',
-  'cpp',
-  'css',
-  'markup', // HTML
-  'sql'
+  { id: 1, language: 'javascript' },
+  { id: 2, language: 'python' },
+  { id: 3, language: 'java' },
+  { id: 10, language: 'markup', item : "text" },
+  { id: 4, language: 'typescript' },
+  { id: 5, language: 'c' },
+  { id: 6, language: 'cpp' },
+  { id: 7, language: 'css' },
+  { id: 8, language: 'markup',  item : "html" }, // HTML
+  { id: 9, language: 'sql' }
 ];
 export default function Write(){
     const navigate = useNavigate()
@@ -326,10 +327,12 @@ export default function Write(){
                                   {codeSelect &&
                                     <S.CodeBox onClick={(e)=>e.stopPropagation()}>
                                       {codeList.map((item) => (
-                                        <p onClick={()=>{
-                                          addText(`<코드 언어="${item}"></코드>`, content.length + item.length + 11)
+                                        <p
+                                        key={item.id}
+                                          onClick={()=>{
+                                          addText(`<코드 언어="${item.language}"></코드>`, content.length + item.language.length + 11)
                                           setCodeSelect(false)
-                                        }}>{item}</p>
+                                        }}>{item.item ? item.item : item.language}</p>
                                       ))}
                                     </S.CodeBox>
                                   }

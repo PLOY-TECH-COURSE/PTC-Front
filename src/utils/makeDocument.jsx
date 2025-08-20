@@ -48,6 +48,14 @@ export default function makeDocument(text = "") {
             }
         },
         {
+          pattern:/<코드>\n?([\s\S]*?)\n?<\/코드>/,
+          component: (text) => {
+            return (
+              <CodeHighlighter language={"markup"} code={text} />
+            );
+          }
+        },
+        {
             pattern:/<코드\s+언어="(.*?)">\n?([\s\S]*?)\n?<\/코드>/,
             component: (language, text) => {
               return (
