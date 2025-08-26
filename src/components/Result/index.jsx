@@ -69,8 +69,8 @@ export default function Result({ranking}) {
     };
   }, [rank]);
 
+  const isMounted = useRef(true);
   useEffect(() => {
-    let isMounted = true;
     let timeoutIds = [];
 
     const tryPlay = async (number) => {
@@ -93,41 +93,41 @@ export default function Result({ranking}) {
 
     async function playSequence() {
       try {
-        if (!isMounted) return;
+        if (!isMounted.current) return;
         await tryPlay(0);
 
         await delay(5000);
-        if (!isMounted) return;
+        if (!isMounted.current) return;
         setIsShow([true, false, false]);
         secondThirdSoundRef.current.play();
 
         await delay(3000);
-        if (!isMounted) return;
+        if (!isMounted.current) return;
         await tryPlay(1);
         setIsShow([false, false, false]);
 
         await delay(5000);
-        if (!isMounted) return;
+        if (!isMounted.current) return;
         setIsShow([false, true, false]);
         secondThirdSoundRef.current.play();
 
         await delay(3000);
-        if (!isMounted) return;
+        if (!isMounted.current) return;
         await tryPlay(2);
         setIsShow([false, false, false]);
 
         await delay(5000);
-        if (!isMounted) return;
+        if (!isMounted.current) return;
         playFirstSound();
         setIsShow([false, false, true]);
         setIsCongratulation(true);
 
         await delay(5000);
-        if (isMounted) {
+        if (isMounted.current) {
           setIsEnd(true);
         }
       } catch (error) {
-        if (isMounted) {
+        if (isMounted.current) {
           console.error(error);
         }
       }
@@ -136,7 +136,7 @@ export default function Result({ranking}) {
     playSequence();
 
     return () => {
-      isMounted = false;
+      isMounted.current = false
       timeoutIds.forEach(clearTimeout);
       if (audioRef.current) {
         audioRef.current.pause();
@@ -172,6 +172,10 @@ export default function Result({ranking}) {
 
     {/*에니메이션 구역*/}
       <S.Black $isEnd={isEnd}>
+        <S.Skip onClick={() => {
+          setIsEnd(true);
+          isMounted.current = false
+        }}/>
         {/*따단 오디오, 텍스트 에니메이션*/}
         <audio ref={audioRef} src={DuguDugu}/>
         <audio ref={secondThirdSoundRef} src={SecondThirdSound}/>

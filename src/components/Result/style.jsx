@@ -116,6 +116,14 @@ export const Black = styled.div`
           display: none;
         `}
 `
+export const Skip = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100px;
+  height: 100px;
+  z-index: 1000;
+`
 export const  CoolSlidingText = styled.div`
   position: absolute;
   top: 50%;
