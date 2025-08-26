@@ -9,6 +9,7 @@ export const Black = styled.div`
     align-items: center;
     position: absolute;
     top: 0;
+    z-index: 100;
 `
 const show = keyframes`
     0% {

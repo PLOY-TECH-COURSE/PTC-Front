@@ -62,8 +62,9 @@ export default function First({youtubeRef}){
 
   const [isLoading, setIsLoading] = useState(true);
   const getBroadcast = async () => {
-    const data = await getBroadcastList({start: 0});
-    setBroadcast(data);
+    const data = await getBroadcastList({ start: 0 });
+    const firstThree = data.slice(0, 3);
+    setBroadcast(firstThree);
   }
   useEffect(() => {
     setIsLoading(false)
