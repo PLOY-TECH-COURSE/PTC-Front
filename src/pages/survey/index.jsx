@@ -118,7 +118,7 @@ export default function Survey() {
     const ok = await createSurvey(title, g, desc, questions);
     if (ok) {
       alert('채점표가 생성되었습니다.');
-      nav("/survey")
+      nav("/survey/list")
     }
     else alert('생성에 실패했습니다.');
   };

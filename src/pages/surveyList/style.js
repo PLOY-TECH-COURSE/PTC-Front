@@ -10,7 +10,6 @@ export const Content = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    overflow-y: auto;
 `
 export const PostListTop = styled.div`
     width: 100%;
