@@ -441,8 +441,9 @@ const SelectRow = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
+  margin-top: 0.5rem;
   width: 100%;
-  max-width: 350px;
+  max-width: 28vw;
 `;
 
 const SelectBox = styled.select`
