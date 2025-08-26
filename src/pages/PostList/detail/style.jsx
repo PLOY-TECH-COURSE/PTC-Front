@@ -56,7 +56,7 @@ export const RightProfile = styled.div`
 
     p{
         font-size: 16px;
-        font-family: 'Courier New', Courier, monospace;
+        font-family: 'Pretendard', sans-serif;
         width: 5svw;
     }
 `
@@ -121,7 +121,7 @@ export const PostDetailData = styled.div`
         width: 100%;
         font-size: 16px;
         color: #000;
-        font-family: 'Courier New', Courier, monospace;
+        font-family: 'Pretendard', sans-serif;
         margin-top: 18px;
     }
 `
@@ -152,7 +152,7 @@ export const Edit = styled.div`
     margin-left: 9px;
 
     p{
-        font-family: 'Courier New', Courier, monospace;
+        font-family: 'Pretendard', sans-serif;
         color: #909090;
         cursor: pointer;
     }

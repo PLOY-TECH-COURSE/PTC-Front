@@ -36,8 +36,13 @@ const Img = styled.img`
   display: block;
   width: 220px;
   height: 40px;
-  margin-bottom: 30px;  
   object-fit: contain;
+`;
+
+const ButtonDiv = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
 `;
 
 const Text1 = styled.div`
@@ -45,21 +50,20 @@ const Text1 = styled.div`
   font-family: "Pretendard","Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", Arial, sans-serif;
   font-size: 28px;  
   font-weight: 700;
-  margin-top: 10px;
-  margin-bottom: 30px;
+  margin-bottom: 3rem;
 `;
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 100%;
 `;
 
 const Inp1 = styled.div`
   display: flex;
   flex-direction: column-reverse;
-  width: 100%;
-  margin: 0 auto 40px auto;
+  width: 90%;
   position: relative;
 `;
 
@@ -84,14 +88,14 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
-  width: 80%;
+  width: 90%;
   height: 50px;
   border-radius: 28px;
   background: #000;
   color: #FFF;
   font-size: 18px;  
   font-weight: medium;
-  margin: 0 auto;
+  margin-top: 2rem;
   border: none;
   justify-content: center;
   cursor: pointer;
@@ -109,7 +113,8 @@ const Text2 = styled.div`
   }
 `;
 
-const Login = ({ setIsModal, setIsSignupModal, setIsPwChangeModal }) => {  const [email, setEmail] = useState('');
+const Login = ({ setIsModal, setIsSignupModal, setIsPwChangeModal }) => {
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
@@ -117,7 +122,7 @@ const Login = ({ setIsModal, setIsSignupModal, setIsPwChangeModal }) => {  const
     e.preventDefault();
     const loginResponse = await postLogin({ email, password });
     if (loginResponse) {
-      setIsModal(false); 
+      setIsModal(false);
       navigate('/');
     } else {
       alert('이메일이나 비밀번호가 틀렸습니다.');
@@ -125,7 +130,7 @@ const Login = ({ setIsModal, setIsSignupModal, setIsPwChangeModal }) => {  const
   };
 
   const closeModal = () => {
-    setIsModal(false);  
+    setIsModal(false);
   };
 
   return (
@@ -157,20 +162,22 @@ const Login = ({ setIsModal, setIsSignupModal, setIsPwChangeModal }) => {  const
               로그인
             </Button>
           </Form>
-          <Text2
-          onClick={() => {
-            setIsModal(false);
-            setIsSignupModal(true);
-          }}
-        >
-          회원가입
-        </Text2>
-         <Text2 onClick={() => {
-           setIsModal(false);
-           setIsPwChangeModal(true);
-         }}>
-           비밀번호 변경
-         </Text2>
+          <ButtonDiv>
+            <Text2
+              onClick={() => {
+                setIsModal(false);
+                setIsSignupModal(true);
+              }}
+            >
+              회원가입
+            </Text2>
+            <Text2 onClick={() => {
+              setIsModal(false);
+              setIsPwChangeModal(true);
+            }}>
+              비밀번호 변경
+            </Text2>
+          </ButtonDiv>
         </Container>
       </ModalContent>
     </ModalBackground>

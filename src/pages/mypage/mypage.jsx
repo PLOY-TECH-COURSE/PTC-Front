@@ -16,7 +16,7 @@ import Confirm from "../../components/modal/confirm/index.jsx";
 import { authAtom } from "../../recoil/authAtom.js";
 
 const Container = styled.div`
-  max-width: 800px;
+  max-width: 88.5vw;
   margin: 0 auto;
   padding: 24px;
   
@@ -25,6 +25,7 @@ const Container = styled.div`
 const ProfileSection = styled.div`
   display: flex;
   align-items: center;
+  margin-left: 5rem;
   gap: 24px;
   ${({ isOwnProfile }) => 
     isOwnProfile && `
@@ -35,8 +36,9 @@ const ProfileSection = styled.div`
 
 
 const Avatar = styled.img`
-  width: 96px;
-  height: 96px;
+  width: 9rem;
+  height: 9rem;
+  margin-top: 1rem;
   background-color: #d1d5db;
   border-radius: 50%;
   cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
@@ -47,21 +49,29 @@ const Avatar = styled.img`
 `;
 
 const Info = styled.div`
-  margin-top: 24px;
+  margin-top: 1rem;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 1rem;
+
+  p{
+    color: gray;
+    font-size: 1rem;
+  }
 `;
 
 const Batch = styled.div`
   color: #4970FB;
-  font-size: large;
+  font-size: 1.5rem;
+  font-weight: 700;
 `;
 
 const Id = styled.div`
-  font-size: large;
+  font-size: 1.5rem;
   margin-left: 10px;
+  margin-top: -5px;
   color: #000000;
+  font-weight: 700;
 `;
 
 const Tie = styled.div`
@@ -73,7 +83,7 @@ const Tie = styled.div`
 const Stats = styled.div`
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 1.5rem;
   font-size: 14px;
 `;
 
@@ -81,17 +91,18 @@ const StatItem = styled.div`
   display: flex;
   align-items: center;
   gap: 4px;
+  font-weight: 600;
 `;
 
 const PostList = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  flex-wrap: wrap;
   gap: 16px;
   margin-top: 20px;
 `;
 
 const Tabs = styled.div`
-  margin-top: 24px;
+  margin-top: 3rem;
   display: flex;
   gap: 16px;
   border-top: 2px solid rgb(229, 231, 235);
@@ -99,9 +110,10 @@ const Tabs = styled.div`
 `;
 
 const TabButton = styled.button`
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 1.1rem;
   width: 5em;
-  height: 3em;
+  height: 2em;
   color: ${(props) => (props.$active === "true" ? "#4970FB" : "#6B7280")};
   background: none;
   border: none;
@@ -133,7 +145,8 @@ const Inputtag = styled.input`
 const NoFavoriteMessage = styled.p`
   text-align: center;
   color: #4970FB;
-  font-size: 16px;
+  font-size: 1.2rem;
+  margin-top: 1rem;
   font-weight: bold;
 `;
 
@@ -314,15 +327,15 @@ const Mypage = () => {
             </Tie>
             <Stats>
               <StatItem>
-                <span>이름: {userData?.name}</span>
+                <span>이름 : {userData?.name}</span>
               </StatItem>
               <StatItem>
                 <img src={book} alt="book icon" width="14" height="14" />
-                <span>글목록: {userData?.numberOfPosts}</span>
+                <span>글목록 : {userData?.numberOfPosts}</span>
               </StatItem>
               <StatItem>
                 <img src={like} alt="like icon" width="14" height="14" />
-                <span>누적 좋아요: {userData?.numberOfLove}</span>
+                <span>누적 좋아요 : {userData?.numberOfLove}</span>
               </StatItem>
             </Stats>
             {isEditing ? (
