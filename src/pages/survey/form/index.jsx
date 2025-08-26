@@ -20,17 +20,20 @@ const GradingPage = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
+    if (gradingData === null && !loading) {
+      alert("데이터를 불러올 수 없습니다.");
+      navigate('/survey/list');
+    }
+  }, [gradingData, loading, navigate]);
+
+  useEffect(() => {
     const fetchSurveyData = async () => {
       try {
-        setLoading(true);
         const data = await getSurvey(parseInt(formId));
         setGradingData(data);
-        setError(null);
       } catch (err) {
-        console.error('설문 데이터 가져오기 실패:', err);
-        setError(err.message || '데이터를 가져오는데 실패했습니다.');
-      } finally {
-        setLoading(false);
+        alert('순서가 선택되었는지 확인해주세요');
+        navigate('/survey/list');
       }
     };
 
@@ -71,7 +74,7 @@ const GradingPage = () => {
           navigate('/survey/list');
         } else {
           alert('채점 제출에 실패했습니다.');
-          
+
         }
       } catch (error) {
         console.error('채점 제출 오류:', error);
@@ -80,13 +83,9 @@ const GradingPage = () => {
     }
   };
 
-  if (error || !gradingData) {
-    return (
-      <div style={{ padding: '2rem', textAlign: 'center' }}>
-        <h2>오류가 발생했습니다. 순서가 선택되었는지 확인해 주세요</h2>
-        <p>{error || '데이터를 불러올 수 없습니다.'}</p>
-      </div>
-    );
+  if (!gradingData) {
+    navigate('/survey/list');
+    return null;
   }
 
   const isAllAnswered = gradingData.questions.every(
