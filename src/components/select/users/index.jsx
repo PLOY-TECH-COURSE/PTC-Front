@@ -4,7 +4,7 @@ import * as _ from "./style";
 import Dropdown from "../dropDown";
 import { updateUserRole } from "../../../api/permission";  
 
-const Users = ({ onClick, img, id, name, email, promise, auth, setAuth }) => {
+const Users = ({ id, name, email, promise, auth, setAuth }) => {
   const [view, setView] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -41,7 +41,6 @@ const Users = ({ onClick, img, id, name, email, promise, auth, setAuth }) => {
         <_.BtnDiv>
           <_.auth>권한</_.auth>
 
-          {/* ✅ 버튼 + 드롭다운 묶음만 ref로 감싸기 */}
           <div ref={dropdownRef} style={{ position: "relative", display: "inline-block" }}>
             <_.userDD onClick={() => setView(!view)}>
               {auth}
