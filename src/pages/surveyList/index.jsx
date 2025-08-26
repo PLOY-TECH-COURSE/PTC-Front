@@ -79,19 +79,13 @@ const SurveyList = () => {
                     </S.Search>
                 </S.PostListTop>
                 <S.PostListMain>
-                    {filteredPosts.length === 0 ? (
-                        <h2>{searchQuery ? "검색 결과가 없습니다." : "게시물이 없습니다."}</h2>
-                    ) : (
-                        <>
-                            {visiblePosts.map((post) => (
-                                <SurveyItem key={post.id} post={post} form_id={post.id} onClick={handleClick} />
-                            ))}
-                            {auth.role === "ROLE_SUPERADMIN" && (
-                                <S.ImageDiv onClick={handleAddSurvey}>
-                                    <S.AddImage src={AddSurvey} alt="채점 등록" />
-                                </S.ImageDiv>
-                            )}
-                        </>
+                    {visiblePosts.map((post) => (
+                        <SurveyItem key={post.id} post={post} form_id={post.id} onClick={handleClick} />
+                    ))}
+                    {auth.role === "ROLE_SUPERADMIN" && (
+                        <S.ImageDiv onClick={handleAddSurvey}>
+                            <S.AddImage src={AddSurvey} alt="채점 등록" />
+                        </S.ImageDiv>
                     )}
                 </S.PostListMain>
             </S.Content>
