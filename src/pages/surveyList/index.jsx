@@ -56,6 +56,13 @@ const SurveyList = () => {
         if (isNaN(numericId)) {
             return;
         }
+        
+        const selectedPost = posts.find(post => post.id === numericId);
+        if (selectedPost && selectedPost.completed) {
+            alert('이미 채점이 완료되었습니다.');
+            return;
+        }
+        
         navigate(`/survey/${numericId}`);
     };
     return (
