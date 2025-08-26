@@ -15,6 +15,22 @@ export const createSurvey = async (title, graderCounts, description, questions) 
   }
 };
 
+export const getSurvey = async (form_id) => {
+  try {
+      const res = await axiosInstance.get(`/grades/forms/${form_id}`);
+      if (res.status !== 200) {
+          return Promise.reject({
+              status: res.status,
+              message: res.message,
+          });
+      }
+      return res.data;
+  }
+  catch (err) {
+      return Promise.reject(err);
+  }
+};
+
 export const submitSurvey = async (form_id, submitData) => {
   try {
       const res = await axiosInstance.post(`/grades/forms/${form_id}/score`, submitData);
