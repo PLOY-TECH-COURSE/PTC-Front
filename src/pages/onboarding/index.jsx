@@ -115,7 +115,7 @@ const Main = () => {
             <S.HeaderBox>
                 <Header/>
             </S.HeaderBox>
-            {ok === null && isPost && <Congratulation onClose={() => setIsPost(false)} />}
+            {/*{ok === null && isPost && <Congratulation onClose={() => setIsPost(false)} />}*/}
             <FullPageWrapper>
                 <div id={'fullpage'}>
                     <div className={'section'}><First youtubeRef={youtubeRef}/></div>
