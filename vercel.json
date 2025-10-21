@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "http://kangsiwoo.com:8081/:path*"
+      "destination": "http://jjm.jojaemin.com:8081/:path*"
     },
     {
       "source": "/(.*)",
